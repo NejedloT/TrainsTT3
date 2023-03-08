@@ -1,0 +1,462 @@
+<model>
+	<layout>
+		<section id = "id196" type="track">
+			<prevsec> </prevsec>
+			<nextsec>id198</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id197" type="track">
+			<prevsec> </prevsec>
+			<nextsec>id199</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id198" type="track">
+			<prevsec>196</prevsec>
+			<nextsec>id1</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id199" type="track">
+			<prevsec>197</prevsec>
+			<nextsec>id2</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id1" type="track">
+			<prevsec>199</prevsec>
+			<nextsec>id3</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id2" type="track">
+			<prevsec>198</prevsec>
+			<nextsec>id4</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id3" type="switch">
+			<prevsections>
+				<prevsec1>id1</prevsec1>
+				<prevsec2>id4</prevsec2>
+			</prevsections>
+			<nextsections>
+				<nextsec1>id4</nextsec1>
+				<nextsec2>id5</nextsec2>
+				<nextsec3>id6</nextsec3>
+			</nextsections>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id4" type="switch">
+			<prevsections>
+				<prevsec1>id2</prevsec1>
+				<prevsec2>id3</prevsec2>
+			</prevsections>
+			<nextsections>
+				<nextsec1>id3</nextsec1>
+				<nextsec2>id7</nextsec2>
+				<nextsec3>id8</nextsec3>
+			</nextsections>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id5" type="switch">
+			<prevsec>id3</prevsec>
+			<nextsections>
+				<nextsec1>id9</nextsec1>
+				<nextsec2>id10</nextsec2>
+			</nextsections>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id6" type="track">
+			<prevsec>id3</prevsec>
+			<nextsec>id21</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id7" type="track">
+			<prevsec>id4</prevsec>
+			<nextsec>id22</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id8" type="switch">
+			<prevsec>id4</prevsec>
+			<nextsec>id11</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id9" type="switch">
+			<prevsec>id5</prevsec>
+			<nextsections>
+				<nextsec1>id12</nextsec1>
+				<nextsec2>id14</nextsec2>
+			</nextsections>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id10" type="track">
+			<prevsec>id5</prevsec>
+			<nextsec>id20</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id11" type="track">
+			<prevsec>id4</prevsec>
+			<nextsec>id11</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id12" type="switch">
+			<prevsections>
+				<prevsec1>id9</prevsec1>
+				<prevsec2>id16</prevsec2>
+			</prevsections>
+			<nextsec>id13</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id13" type="track">
+			<prevsec>id12</prevsec>
+			<nextsec>id18</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id14" type="track">
+			<prevsec>id9</prevsec>
+			<nextsec>id19</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id15" type="switch">
+			<prevsec>id11</prevsec>
+			<nextsections>
+				<nextsec1>id23</nextsec1>
+				<nextsec2>id24</nextsec2>
+			</nextsections>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id16" type="track">
+			<prevsec>id17</prevsec>
+			<nextsec>id12</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id17" type="track">
+			<prevsec></prevsec>
+			<nextsec>id16</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id18" type="track">
+			<prevsec>id13</prevsec>
+			<nextsec>id26</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id19" type="track">
+			<prevsec>id14</prevsec>
+			<nextsec>id27</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id20" type="track">
+			<prevsec>id10</prevsec>
+			<nextsec></nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id21" type="track">
+			<prevsec>id6</prevsec>
+			<nextsec>id30</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id22" type="track">
+			<prevsec>id7</prevsec>
+			<nextsec>id31</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id23" type="track">
+			<prevsec>id15</prevsec>
+			<nextsec>id25</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id24" type="track">
+			<prevsec>id15</prevsec>
+			<nextsec>id25</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id25" type="switch">
+			<prevsections>
+				<prevsec1>id23</prevsec1>
+				<prevsec2>id24</prevsec2>
+			</prevsections>
+			<nextsec>id13</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id26" type="track">
+			<prevsec>id18</prevsec>
+			<nextsec>id28</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+		<section id = "id27" type="track">
+			<prevsec>id19</prevsec>
+			<nextsec>id28</nextsec>
+			<moduleid></moduleid>
+			<moduleposition></moduleposition>
+		</section>
+	</layout>
+	
+	<routes>
+		<!-- Predefined routes for Beroun -->
+		<from id = "id1">
+			<to id = "id21">
+				<parts>
+					<part1>id3</part1>
+					<part2>id6</part2>
+				</parts>
+				<switches>
+				
+				</switches>
+				<toFinal>Karlstejn</toFinal>
+				<circuit>0</circuit>
+			</to>
+			<to id = "id19">
+				<parts>
+					<part1>id3</part1>
+					<part2>id5</part2>
+					<part3>id9</part3>
+					<part4>id14</part4>
+				</parts>
+				<switches>
+					
+				</switches>
+				<toFinal>Karlstejn</toFinal>
+				<circuit>0</circuit>
+			</to>
+			<to id = "id18">
+				<parts>
+					<part1>id3</part1>
+					<part2>id5</part2>
+					<part3>id9</part3>
+					<part4>id12</part4>
+					<part5>id13</part5>
+				</parts>
+				<switches>
+					
+				</switches>
+				<toFinal>Karlstejn</toFinal>
+				<circuit>0</circuit>
+			</to>
+			<to id = "id22">
+				<parts>
+					<part1>id3</part1>
+					<part2>id4</part2>
+					<part3>id7</part3>
+				</parts>
+				<switches>
+					
+				</switches>
+				<toFinal>Karlstejn</toFinal>
+				<circuit>0</circuit>
+			</to>
+		</from>
+		<from id = "id2">
+			<to id = "id21">
+				<parts>
+					<part1>id4</part1>
+					<part2>id3</part2>
+					<part3>id6</part3>
+				</parts>
+				<switches>
+					
+				</switches>
+				<toFinal>Karlstejn</toFinal>
+				<circuit>0</circuit>
+			</to>
+			<to id = "id19">
+				<parts>
+					<part1>id4</part1>
+					<part2>id3</part2>
+					<part3>id5</part3>
+					<part4>id9</part4>
+					<part5>id14</part5>
+				</parts>
+				<switches>
+					
+				</switches>
+				<toFinal>Karlstejn</toFinal>
+				<circuit>0</circuit>
+			</to>
+			<to id = "id18">
+				<parts>
+					<part1>id4</part1>
+					<part2>id3</part2>
+					<part3>id5</part3>
+					<part4>id9</part4>
+					<part5>id12</part5>
+					<part6>id13</part6>
+				</parts>
+				<switches>
+					
+				</switches>
+				<toFinal>Karlstejn</toFinal>
+				<circuit>0</circuit>
+			</to>			
+			<to id = "id22">
+				<parts>
+					<part1>id4</part1>
+					<part2>id7</part2>
+				</parts>
+				<switches>
+				
+				</switches>
+				<toFinal>Karlstejn</toFinal>
+				<circuit>0</circuit>
+			</to>
+		</from>
+		<from id = "id22">
+			<to id = "id35">
+				<parts>
+					<part1>id31</part1>
+					<part2>id34</part2>
+					<part2>id33</part2>
+				</parts>
+				<switches>
+				
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<circuit>3</circuit>
+			</to>
+			<to id = "id2">
+				<parts>
+					<part1>id6</part1>
+					<part2>id3</part2>
+					<part3>id4</part3>
+				</parts>
+				<switches>
+				
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<circuit>2</circuit>
+			</to>
+		</from>
+		<from id = "id21">
+			<to id = "id35">
+				<parts>
+					<part1>id30</part1>
+					<part2>id33</part2>
+				</parts>
+				<switches>
+				
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<circuit>3</circuit>
+			</to>
+			<to id = "id2">
+				<parts>
+					<part1>id6</part1>
+					<part2>id3</part2>
+					<part3>id4</part3>
+				</parts>
+				<switches>
+				
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<circuit>2</circuit>
+				
+			</to>
+		</from>
+	</routes>
+	
+	<!-- Predefined critical routes -->
+	<criticalroutes>
+		<crit id = "cr1">
+			<last>id198</last>
+			<current>id1</current>
+		</crit>
+		<crit id = "cr2">
+			<last>id199</last>
+			<current>id2</current>
+		</crit>
+	</criticalroutes>
+	
+	
+	
+	<!-- Definitions of possible final stations and tracks-->
+	<circuitsToFinal>
+		<fromCircuit id = "0">
+			<toCircuit name ="Lhota">
+				<item2>id18</item2>
+				<item3>id19</item3>
+			</toCircuit>
+			<toCircuit name ="Beroun">
+				<item2>id18</item2>
+				<item3>id19</item3>
+				<item4>id24</item4>
+				<item5>id21</item5>
+				<item6>id22</item6>
+				<item7>id23</item7>
+			</toCircuit>
+		</fromCircuit>
+		<fromCircuit id = "1">
+			<toCircuit name = "Karlstejn">
+				<item2>id18</item2>
+				<item3>id19</item3>
+				<item4>id21</item4>
+				<item5>id22</item5>
+				<item6>id23</item6>
+				<item7>id24</item7>
+				<item8>id25</item8>
+			</toCircuit>
+			<toCircuit name = "Beroun">
+				<item1>id100</item1>
+				<item2>id101</item2>
+			</toCircuit>
+		</fromCircuit>
+		<fromCircuit id = "2">
+			<toCircuit name =" Beroun">
+				<item1>id100</item1>
+				<item2>id101</item2>
+			</toCircuit>
+			<toCircuit name ="Karlstejn">
+				<item2>id18</item2>
+				<item3>id19</item3>
+				<item4>id21</item4>
+				<!--
+				<item5>id22</item5>
+				<item6>id23</item6>
+				<item7>id24</item7>
+				<item8>id25</item8>
+				-->
+			</toCircuit>
+		</fromCircuit>
+		
+	</circuitsToFinal>
+	
+	
+	
+	<!-- Definition of tracks for every station -->
+	<stationTracks>
+		<Beroun>
+			<item1>beroun</item1>
+			<item2>id18</item2>
+			<item3>id19</item3>
+			<item4>id21</item4>
+			<item5>id22</item5>
+			<item6>id23</item6>
+			<item7>id24</item7>
+			<item8>id25</item8>
+		</Beroun>
+	</stationTracks>
+</model>

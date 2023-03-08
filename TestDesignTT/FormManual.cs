@@ -1,0 +1,108 @@
+﻿using ControlLogic;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml;
+
+namespace TestDesignTT
+{
+    public partial class FormManual : Form
+    {
+
+        UCHome uCHome = new UCHome();
+        UCMap uCMap = new UCMap();
+        UCAddManualTrain uCAddManual = new UCAddManualTrain();
+        UCDisplayJson uCdisplayJson = new UCDisplayJson();
+
+
+        public FormManual()
+        {
+            InitializeComponent();
+            DisplayInstance(uCHome);
+            ControlLogic.MainLogic.Initialization();
+        }
+
+        private void FormManual_Load(object sender, EventArgs e)
+        {
+            uCAddManual.ButtonAddLocoClick += new EventHandler(UserControl_ButtonAddLocoClick);
+        }
+
+        private void DisplayInstance(UserControl uc)
+        {
+            if (!(panelDesktopPanel.Controls.Contains(uc)))
+            {
+                panelDesktopPanel.Controls.Add(uc);
+                uc.Dock = DockStyle.Fill;
+                uc.BringToFront();
+
+            }
+            else
+            {
+                uc.BringToFront();
+            }
+        }
+
+        private void btnAddLoco_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCAddManual);
+
+            //ControlLogic.MainLogic.controlLogic();
+
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCHome);
+
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnSections_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCMap);
+
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnJSON_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCdisplayJson);
+
+            labelTitle.Text = (sender as Button).Text;
+
+            uCdisplayJson.displayJson();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            //TODO - wait, until all locomotives are finished
+            FormMainMenu formmm = new FormMainMenu();
+            formmm.StartPosition = FormStartPosition.Manual;
+            formmm.Location = this.Location;
+            formmm.Size = this.Size;
+            this.Hide();
+            formmm.Show();
+            //FormMainMenu.;
+        }
+
+
+
+        protected void UserControl_ButtonAddLocoClick(object sender, EventArgs e)
+        {
+            List<AddDataToSend> addData = uCAddManual.addNewLocoData;
+
+            foreach (var item in addData)
+            {
+                ControlLogic.MainLogic.addNewTrainDataFromClient(item.Id, item.CurrentPosition,item.Speed, item.Direction,item.FinalPosition);
+            }
+            addData.Clear();
+        }
+    }
+}
