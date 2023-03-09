@@ -40,6 +40,8 @@
             this.panelTitle = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelDesktopPanel = new System.Windows.Forms.Panel();
+            this.btnUpdateJson = new FontAwesome.Sharp.IconButton();
+            this.btnCentralStop = new FontAwesome.Sharp.IconButton();
             this.panelSideMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelTitle.SuspendLayout();
@@ -49,6 +51,8 @@
             // 
             this.panelSideMenu.AutoScroll = true;
             this.panelSideMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(87)))), ((int)(((byte)(207)))));
+            this.panelSideMenu.Controls.Add(this.btnCentralStop);
+            this.panelSideMenu.Controls.Add(this.btnUpdateJson);
             this.panelSideMenu.Controls.Add(this.btnMultiTurnouts);
             this.panelSideMenu.Controls.Add(this.btnTurnouts);
             this.panelSideMenu.Controls.Add(this.btnExit);
@@ -252,6 +256,51 @@
             this.panelDesktopPanel.Size = new System.Drawing.Size(934, 791);
             this.panelDesktopPanel.TabIndex = 3;
             // 
+            // btnUpdateJson
+            // 
+            this.btnUpdateJson.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUpdateJson.FlatAppearance.BorderSize = 0;
+            this.btnUpdateJson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdateJson.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnUpdateJson.ForeColor = System.Drawing.Color.White;
+            this.btnUpdateJson.IconChar = FontAwesome.Sharp.IconChar.Java;
+            this.btnUpdateJson.IconColor = System.Drawing.Color.Red;
+            this.btnUpdateJson.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnUpdateJson.IconSize = 32;
+            this.btnUpdateJson.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdateJson.Location = new System.Drawing.Point(0, 320);
+            this.btnUpdateJson.Name = "btnUpdateJson";
+            this.btnUpdateJson.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnUpdateJson.Size = new System.Drawing.Size(250, 50);
+            this.btnUpdateJson.TabIndex = 21;
+            this.btnUpdateJson.Text = "Update JSON";
+            this.btnUpdateJson.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdateJson.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUpdateJson.UseVisualStyleBackColor = true;
+            // 
+            // btnCentralStop
+            // 
+            this.btnCentralStop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCentralStop.FlatAppearance.BorderSize = 0;
+            this.btnCentralStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCentralStop.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnCentralStop.ForeColor = System.Drawing.Color.White;
+            this.btnCentralStop.IconChar = FontAwesome.Sharp.IconChar.Stop;
+            this.btnCentralStop.IconColor = System.Drawing.Color.Red;
+            this.btnCentralStop.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnCentralStop.IconSize = 32;
+            this.btnCentralStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCentralStop.Location = new System.Drawing.Point(0, 370);
+            this.btnCentralStop.Name = "btnCentralStop";
+            this.btnCentralStop.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnCentralStop.Size = new System.Drawing.Size(250, 50);
+            this.btnCentralStop.TabIndex = 22;
+            this.btnCentralStop.Text = "Central stop";
+            this.btnCentralStop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCentralStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCentralStop.UseVisualStyleBackColor = true;
+            this.btnCentralStop.Click += new System.EventHandler(this.btnCentralStop_Click);
+            // 
             // FormDebug
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -289,5 +338,7 @@
         private Panel panelDesktopPanel;
         private FontAwesome.Sharp.IconButton btnTurnouts;
         private FontAwesome.Sharp.IconButton btnMultiTurnouts;
+        private FontAwesome.Sharp.IconButton btnCentralStop;
+        private FontAwesome.Sharp.IconButton btnUpdateJson;
     }
 }

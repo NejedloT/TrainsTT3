@@ -104,5 +104,11 @@ namespace TestDesignTT
             }
             addData.Clear();
         }
+
+        private void btnCentralStop_Click(object sender, EventArgs e)
+        {
+            //Stop everything
+
+        }
     }
 }

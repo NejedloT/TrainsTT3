@@ -7,6 +7,8 @@ using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Timers;
+using System.Threading;
 
 namespace ControlLogic
 {
@@ -28,6 +30,11 @@ namespace ControlLogic
         private static System.Timers.Timer timerCheck;
 
         public static bool testing = true;
+
+        private static System.Timers.Timer timeToStop;
+        private static Trains currentTrain;
+
+        private static object locking = new object();
 
         //static void Main(string[] args)
         public static void Initialization()
@@ -218,6 +225,23 @@ namespace ControlLogic
             }
         }
 
+        private static void Timer_Elapsed(object sender, ElapsedEventArgs e, Trains train)
+        {
+            // Stop the timer
+            timeToStop.Stop();
+
+            // Do something after the time interval (e.g., resume the train)
+            train.move = "2";
+
+            ((System.Timers.Timer)sender).Dispose();
+
+            //TODO
+            //Stop the train!
+
+
+        }
+
+
         //
         public static void InCritical(Trains train, bool fintrack)
         {
@@ -243,7 +267,17 @@ namespace ControlLogic
             {
                 //stop the train
                 //critical = 1
-                train.move = "2";
+
+                //train.move = "2";
+
+                timeToStop = new System.Timers.Timer(3000);
+
+                currentTrain = train;
+                // Set the event handler for the Elapsed event
+                timeToStop.Elapsed += (sender, e) => Timer_Elapsed(sender, e, currentTrain);
+
+                // Start the timer
+                timeToStop.Start();
             }
 
             else
@@ -519,6 +553,7 @@ namespace ControlLogic
 
         public static void addNewTrainDataFromClient(string name, string currentPosition, string speed, string direction, string final)
         {
+
             foreach (Trains train in trainsList)
             {
                 if (train.name == name)

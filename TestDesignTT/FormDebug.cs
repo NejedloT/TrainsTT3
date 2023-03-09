@@ -176,5 +176,10 @@ namespace TestDesignTT
             }
             turnouts.Clear();
         }
+
+        private void btnCentralStop_Click(object sender, EventArgs e)
+        {
+            //Stop all trains
+        }
     }
 }

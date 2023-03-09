@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panelSideMenu = new System.Windows.Forms.Panel();
+            this.btnCentralStop = new FontAwesome.Sharp.IconButton();
             this.btnJSON = new FontAwesome.Sharp.IconButton();
             this.btnExit = new FontAwesome.Sharp.IconButton();
             this.btnSections = new FontAwesome.Sharp.IconButton();
@@ -46,6 +47,7 @@
             // 
             this.panelSideMenu.AutoScroll = true;
             this.panelSideMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(87)))), ((int)(((byte)(207)))));
+            this.panelSideMenu.Controls.Add(this.btnCentralStop);
             this.panelSideMenu.Controls.Add(this.btnJSON);
             this.panelSideMenu.Controls.Add(this.btnExit);
             this.panelSideMenu.Controls.Add(this.btnSections);
@@ -57,6 +59,29 @@
             this.panelSideMenu.Name = "panelSideMenu";
             this.panelSideMenu.Size = new System.Drawing.Size(250, 861);
             this.panelSideMenu.TabIndex = 2;
+            // 
+            // btnCentralStop
+            // 
+            this.btnCentralStop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCentralStop.FlatAppearance.BorderSize = 0;
+            this.btnCentralStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCentralStop.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnCentralStop.ForeColor = System.Drawing.Color.White;
+            this.btnCentralStop.IconChar = FontAwesome.Sharp.IconChar.Stop;
+            this.btnCentralStop.IconColor = System.Drawing.Color.Red;
+            this.btnCentralStop.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnCentralStop.IconSize = 32;
+            this.btnCentralStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCentralStop.Location = new System.Drawing.Point(0, 270);
+            this.btnCentralStop.Name = "btnCentralStop";
+            this.btnCentralStop.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnCentralStop.Size = new System.Drawing.Size(250, 50);
+            this.btnCentralStop.TabIndex = 20;
+            this.btnCentralStop.Text = "Central stop";
+            this.btnCentralStop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCentralStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCentralStop.UseVisualStyleBackColor = true;
+            this.btnCentralStop.Click += new System.EventHandler(this.btnCentralStop_Click);
             // 
             // btnJSON
             // 
@@ -247,5 +272,6 @@
         private Label labelTitle;
         private Panel panelDesktopPanel;
         private FontAwesome.Sharp.IconButton btnJSON;
+        private FontAwesome.Sharp.IconButton btnCentralStop;
     }
 }
