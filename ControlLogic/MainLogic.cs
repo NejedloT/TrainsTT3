@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Timers;
 using System.Threading;
+using System.Net.WebSockets;
 
 namespace ControlLogic
 {
@@ -25,6 +26,8 @@ namespace ControlLogic
 
         //konfiguracni dokument s namapovanym kolejistem
         private static XDocument xdoc = new XDocument();
+
+        private static StoreJson storeJson = new StoreJson();
 
         //timer, po jake dobe bude probihat kontrola kolejiste
         private static System.Timers.Timer timerCheck;
@@ -142,15 +145,9 @@ namespace ControlLogic
             }
 
             //TODO
-            //StoreJson storeJson = new StoreJson(trainsList);
+            storeJson.SaveJson(trainsList);
 
-            var jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                Converters = { new JsonStringEnumConverter() }
-            };
-            string jsonData = JsonSerializer.Serialize(new TrainData { data = trainsList }, jsonOptions);
-            File.WriteAllText("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\train_data.json", jsonData);
+            
         }
         public static bool SameCircuitToMove(Trains train)
         {
@@ -680,6 +677,29 @@ namespace ControlLogic
             .Elements("toCircuit")
             .Where(tc => (string)tc.Attribute("name") == wantedName)
             .Elements();
+        }
+
+        public static IEnumerable<string> GetNextPositions(string position)
+        {
+            /*
+            
+            return xdoc.Descendants("section")
+                .Where(p => (string)p.Attribute("id") == position)
+                .Elements("prevsec")
+                .Elements()
+                .Concat(xdoc.Descendants("section")
+                    .Where(p => (string)p.Attribute("id") == position)
+                    .Elements("nextsec")
+                    .Elements())
+                .Select(e => (string)e)
+                .ToList();
+            */
+
+            return xdoc.Descendants()
+                .Where(e => e.Name.LocalName == "prevsec" || e.Name.LocalName == "nextsec" || e.Name.LocalName == "prevsections" || e.Name.LocalName == "nextsections")
+                .Where(e => e.Ancestors("section").Any(a => (string)a.Attribute("id") == position))
+                .Select(e => (string)e)
+                .ToList();
         }
     }
 

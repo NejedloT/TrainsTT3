@@ -146,14 +146,12 @@
             this.btnAddLocomotive.IconColor = System.Drawing.Color.Red;
             this.btnAddLocomotive.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnAddLocomotive.IconSize = 25;
-            this.btnAddLocomotive.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAddLocomotive.Location = new System.Drawing.Point(303, 3);
             this.btnAddLocomotive.Name = "btnAddLocomotive";
             this.btnAddLocomotive.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
             this.btnAddLocomotive.Size = new System.Drawing.Size(294, 74);
             this.btnAddLocomotive.TabIndex = 13;
             this.btnAddLocomotive.Text = "Add Locomotive";
-            this.btnAddLocomotive.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAddLocomotive.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddLocomotive.UseVisualStyleBackColor = true;
             this.btnAddLocomotive.Click += new System.EventHandler(this.btnAddTrain_Click);

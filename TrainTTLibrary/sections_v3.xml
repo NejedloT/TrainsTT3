@@ -1,0 +1,30 @@
+<model>
+	<parts>
+		<part type="track">
+			<name>A_1</name>
+			<nextpart>A_2</nextpart>
+			<prevpart>SW_1</prevpart>
+			<critical>1</critical>
+			<section>1</section>
+			<track_circuit>
+				<module_id>381</module_id>
+				<module_position>0</module_position>
+			</track_circuit>
+		</part>
+		<part type="switch">
+			<name>SW_1</name>
+			<nextpart>A_2</nextpart>
+			<prevpart1>BER_6</prevpart1>
+			<prevpart2>BER_4</prevpart2>
+			<critical>0</critical>
+			<section>1</section>
+			<track_circuit>
+				<module_id>381</module_id>
+				<module_position>0</module_position>
+			</track_circuit>
+			</part>
+	</parts>
+	<routes>
+		
+	</routes>
+</model>

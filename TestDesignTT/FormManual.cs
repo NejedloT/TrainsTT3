@@ -92,8 +92,6 @@ namespace TestDesignTT
             //FormMainMenu.;
         }
 
-
-
         protected void UserControl_ButtonAddLocoClick(object sender, EventArgs e)
         {
             List<AddDataToSend> addData = uCAddManual.addNewLocoData;

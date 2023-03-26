@@ -54,9 +54,19 @@ namespace ControlLogic
 
     public class StoreJson
     {
-        public StoreJson (Trains train)
-        {
+        private readonly string jsonPath = "C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\train_data.json";
 
+        public void SaveJson(List<Trains> data)
+        {
+            var trainData = new TrainData { data = data };
+            var jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                Converters = { new JsonStringEnumConverter() },
+                WriteIndented = true // optional, for pretty formatting
+            };
+            string jsonData = JsonSerializer.Serialize(trainData, jsonOptions);
+            File.WriteAllText(jsonPath, jsonData);
         }
     }
 }

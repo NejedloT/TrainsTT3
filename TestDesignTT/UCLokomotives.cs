@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControlLogic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,6 +20,7 @@ namespace TestDesignTT
         [Description("Invoked when user clicks button")]
         public event EventHandler ChangeOfTrainData;
 
+        private static List<Trains> trainsList = new List<Trains>();
 
         public List<ChangeTrainData> trainDataChange = new List<ChangeTrainData>();
         public UCLokomotives()
@@ -39,12 +41,23 @@ namespace TestDesignTT
 
         private void btnAddTrain_Click(object sender, EventArgs e)
         {
+            trainsList = ControlLogic.MainLogic.GetData();
             checkStartStopButton();
             int[] rowHeights = tableLayoutPanel1.GetRowHeights();
             for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
             {
                 if (rowHeights[i] < 0.5) {
                     tableLayoutPanel1.RowStyles[i] = new RowStyle(SizeType.Absolute, 35);
+                    ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
+                    cbTrain.Items.Clear();
+                    foreach (Trains train in trainsList)
+                    {
+                        if (train.move == "0")
+                        {
+                            cbTrain.Items.Add(train.name);
+                        }
+                    }
+
                     break;
                 }
 

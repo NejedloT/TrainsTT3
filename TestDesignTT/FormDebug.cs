@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControlLogic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,12 +23,35 @@ namespace TestDesignTT
         UCMap uCMap = new UCMap();
         UCLokomotives uCLocomotives = new UCLokomotives();
         UCMultiTurnout uCmulti = new UCMultiTurnout();
+        UCEditJson uCEditJson = new UCEditJson();
+
+
+        private static List<Trains> trainsList = new List<Trains>();
 
 
         public FormDebug()
         {
             InitializeComponent();
             DisplayInstance(uCHome);
+            ControlLogic.MainLogic.Initialization();
+        }
+
+        private void FormDebug_Load(object sender, EventArgs e)
+        {
+            uCmulti.ButtonAddClick += new EventHandler(UserControl_ButtonAddClick);
+            uCTurnouts.ButtonSendClick += new EventHandler(UserControl_ButtonSaveClick);
+            uCLocomotives.ChangeOfTrainData += new EventHandler(UserControl_TrainDataChange);
+            uCEditJson.ButtonChangeJsonClick += new EventHandler(UserControl_EditJsonClick);
+        }
+
+        private void FormDebug_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                uCMap.setLabels();
+                // form is in full screen mode
+                // do something here
+            }
         }
 
 
@@ -104,16 +128,6 @@ namespace TestDesignTT
             //uCLocomotives.setLabels();
         }
 
-        private void FormDebug_Resize(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                uCMap.setLabels();
-                // form is in full screen mode
-                // do something here
-            }
-        }
-
         private void btnHome_Click(object sender, EventArgs e)
         {
             DisplayInstance(uCHome);
@@ -137,18 +151,71 @@ namespace TestDesignTT
             uCmulti.ClearData();
         }
 
-        private void FormDebug_Load(object sender, EventArgs e)
+        private void btnCentralStop_Click(object sender, EventArgs e)
         {
-            uCmulti.ButtonAddClick += new EventHandler(UserControl_ButtonAddClick);
-            uCTurnouts.ButtonSendClick += new EventHandler(UserControl_ButtonSaveClick);
-            uCLocomotives.ChangeOfTrainData += new EventHandler(UserControl_TrainDataChange);
+            //Stop all trains
+
+        }
+
+        private void btnUpdateJson_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCEditJson);
+            labelTitle.Text = (sender as Button).Text;
+            uCEditJson.ClearData();
         }
 
         protected void UserControl_TrainDataChange(object sender, EventArgs e)
         {
             List<ChangeTrainData> trainDataChange = uCLocomotives.trainDataChange;
-            int i = 0;
+
+            bool foundMatch = false;
+
+            foreach (Trains train in trainsList)
+            {
+                foreach (ChangeTrainData data in trainDataChange)
+                {
+                    if (train.name == data.Lokomotive)
+                    {
+                        //train.direction = data.Reverze;
+                        foundMatch = true;
+                        break;
+                    }
+                }
+                if (foundMatch)
+                    break;
+            }
+            StoreJson sj = new StoreJson();
+            sj.SaveJson(trainsList);
             //TODO - send packet
+        }
+
+        protected void UserControl_EditJsonClick(object sender, EventArgs e)
+        {
+            List<ChangeJsonData> changeData = uCEditJson.changeJsonData;
+            //TODO - save into JSON
+            trainsList = ControlLogic.MainLogic.GetData();
+
+            bool foundMatch = false;
+
+            foreach (Trains train in trainsList)
+            {
+                foreach (ChangeJsonData data in changeData)
+                {
+                    if (train.name == data.Id)
+                    {
+                        train.currentPosition = data.CurrentPosition;
+                        train.lastPosition = data.PreviousPosition;
+                        train.direction = data.Direction;
+                        foundMatch = true;
+                        break;
+                    }
+                }
+                if (foundMatch) 
+                    break;
+            }
+            StoreJson sj = new StoreJson();
+            sj.SaveJson(trainsList);
+            changeData.Clear();
         }
 
         protected void UserControl_ButtonAddClick(object sender, EventArgs e)
@@ -175,11 +242,6 @@ namespace TestDesignTT
 
             }
             turnouts.Clear();
-        }
-
-        private void btnCentralStop_Click(object sender, EventArgs e)
-        {
-            //Stop all trains
         }
     }
 }

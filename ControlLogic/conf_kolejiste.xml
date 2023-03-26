@@ -13,25 +13,25 @@
 			<moduleposition></moduleposition>
 		</section>
 		<section id = "id198" type="track">
-			<prevsec>196</prevsec>
+			<prevsec>id196</prevsec>
 			<nextsec>id1</nextsec>
 			<moduleid></moduleid>
 			<moduleposition></moduleposition>
 		</section>
 		<section id = "id199" type="track">
-			<prevsec>197</prevsec>
+			<prevsec>id197</prevsec>
 			<nextsec>id2</nextsec>
 			<moduleid></moduleid>
 			<moduleposition></moduleposition>
 		</section>
 		<section id = "id1" type="track">
-			<prevsec>199</prevsec>
+			<prevsec>id199</prevsec>
 			<nextsec>id3</nextsec>
 			<moduleid></moduleid>
 			<moduleposition></moduleposition>
 		</section>
 		<section id = "id2" type="track">
-			<prevsec>198</prevsec>
+			<prevsec>id198</prevsec>
 			<nextsec>id4</nextsec>
 			<moduleid></moduleid>
 			<moduleposition></moduleposition>
@@ -64,10 +64,10 @@
 		</section>
 		<section id = "id5" type="switch">
 			<prevsec>id3</prevsec>
-			<nextsections>
+			<nextsec>
 				<nextsec1>id9</nextsec1>
 				<nextsec2>id10</nextsec2>
-			</nextsections>
+			</nextsec>
 			<moduleid></moduleid>
 			<moduleposition></moduleposition>
 		</section>
@@ -91,10 +91,10 @@
 		</section>
 		<section id = "id9" type="switch">
 			<prevsec>id5</prevsec>
-			<nextsections>
+			<nextsec>
 				<nextsec1>id12</nextsec1>
 				<nextsec2>id14</nextsec2>
-			</nextsections>
+			</nextsec>
 			<moduleid></moduleid>
 			<moduleposition></moduleposition>
 		</section>
@@ -111,10 +111,10 @@
 			<moduleposition></moduleposition>
 		</section>
 		<section id = "id12" type="switch">
-			<prevsections>
+			<prevsec>
 				<prevsec1>id9</prevsec1>
 				<prevsec2>id16</prevsec2>
-			</prevsections>
+			</prevsec>
 			<nextsec>id13</nextsec>
 			<moduleid></moduleid>
 			<moduleposition></moduleposition>
@@ -133,10 +133,10 @@
 		</section>
 		<section id = "id15" type="switch">
 			<prevsec>id11</prevsec>
-			<nextsections>
+			<nextsec>
 				<nextsec1>id23</nextsec1>
 				<nextsec2>id24</nextsec2>
-			</nextsections>
+			</nextsec>
 			<moduleid></moduleid>
 			<moduleposition></moduleposition>
 		</section>
@@ -195,10 +195,10 @@
 			<moduleposition></moduleposition>
 		</section>
 		<section id = "id25" type="switch">
-			<prevsections>
+			<prevsec>
 				<prevsec1>id23</prevsec1>
 				<prevsec2>id24</prevsec2>
-			</prevsections>
+			</prevsec>
 			<nextsec>id13</nextsec>
 			<moduleid></moduleid>
 			<moduleposition></moduleposition>
@@ -216,7 +216,7 @@
 			<moduleposition></moduleposition>
 		</section>
 	</layout>
-	
+
 	<routes>
 		<!-- Predefined routes for Beroun -->
 		<from id = "id1">
@@ -226,7 +226,7 @@
 					<part2>id6</part2>
 				</parts>
 				<switches>
-				
+
 				</switches>
 				<toFinal>Karlstejn</toFinal>
 				<circuit>0</circuit>
@@ -239,7 +239,7 @@
 					<part4>id14</part4>
 				</parts>
 				<switches>
-					
+
 				</switches>
 				<toFinal>Karlstejn</toFinal>
 				<circuit>0</circuit>
@@ -253,7 +253,7 @@
 					<part5>id13</part5>
 				</parts>
 				<switches>
-					
+
 				</switches>
 				<toFinal>Karlstejn</toFinal>
 				<circuit>0</circuit>
@@ -265,7 +265,7 @@
 					<part3>id7</part3>
 				</parts>
 				<switches>
-					
+
 				</switches>
 				<toFinal>Karlstejn</toFinal>
 				<circuit>0</circuit>
@@ -279,7 +279,7 @@
 					<part3>id6</part3>
 				</parts>
 				<switches>
-					
+
 				</switches>
 				<toFinal>Karlstejn</toFinal>
 				<circuit>0</circuit>
@@ -293,7 +293,7 @@
 					<part5>id14</part5>
 				</parts>
 				<switches>
-					
+
 				</switches>
 				<toFinal>Karlstejn</toFinal>
 				<circuit>0</circuit>
@@ -308,18 +308,18 @@
 					<part6>id13</part6>
 				</parts>
 				<switches>
-					
+
 				</switches>
 				<toFinal>Karlstejn</toFinal>
 				<circuit>0</circuit>
-			</to>			
+			</to>
 			<to id = "id22">
 				<parts>
 					<part1>id4</part1>
 					<part2>id7</part2>
 				</parts>
 				<switches>
-				
+
 				</switches>
 				<toFinal>Karlstejn</toFinal>
 				<circuit>0</circuit>
@@ -333,7 +333,7 @@
 					<part2>id33</part2>
 				</parts>
 				<switches>
-				
+
 				</switches>
 				<toFinal>Beroun</toFinal>
 				<circuit>3</circuit>
@@ -345,7 +345,7 @@
 					<part3>id4</part3>
 				</parts>
 				<switches>
-				
+
 				</switches>
 				<toFinal>Beroun</toFinal>
 				<circuit>2</circuit>
@@ -358,7 +358,7 @@
 					<part2>id33</part2>
 				</parts>
 				<switches>
-				
+
 				</switches>
 				<toFinal>Beroun</toFinal>
 				<circuit>3</circuit>
@@ -370,15 +370,15 @@
 					<part3>id4</part3>
 				</parts>
 				<switches>
-				
+
 				</switches>
 				<toFinal>Beroun</toFinal>
 				<circuit>2</circuit>
-				
+
 			</to>
 		</from>
 	</routes>
-	
+
 	<!-- Predefined critical routes -->
 	<criticalroutes>
 		<crit id = "cr1">
@@ -390,9 +390,9 @@
 			<current>id2</current>
 		</crit>
 	</criticalroutes>
-	
-	
-	
+
+
+
 	<!-- Definitions of possible final stations and tracks-->
 	<circuitsToFinal>
 		<fromCircuit id = "0">
@@ -441,11 +441,11 @@
 				-->
 			</toCircuit>
 		</fromCircuit>
-		
+
 	</circuitsToFinal>
-	
-	
-	
+
+
+
 	<!-- Definition of tracks for every station -->
 	<stationTracks>
 		<Beroun>
