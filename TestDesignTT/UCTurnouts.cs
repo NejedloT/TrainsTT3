@@ -18,7 +18,7 @@ namespace TestDesignTT
         [Browsable(true)]
         [Category("Action")]
         [Description("Invoked when user clicks button")]
-        public event EventHandler ButtonSendClick;
+        public event EventHandler TurnoutButtonSendClick;
 
         public List<Turnouts> turnouts = new List<Turnouts>();
 
@@ -213,7 +213,8 @@ namespace TestDesignTT
                     break;
 
                 byte value = (byte)(0x01 << cbTurnouts[i].SelectedIndex);
-                id = 0x381 + Convert.ToUInt32(cbUnits[i].Text, 16);
+                //id = 0x381 + Convert.ToUInt32(cbUnits[i].Text, 16);
+                id = Convert.ToUInt32(cbUnits[i].Text, 16);
                 Turnouts matchingTurnouts = turnouts.FirstOrDefault(t => t.UnitID == id);
 
                 if (matchingTurnouts != null)
@@ -232,7 +233,7 @@ namespace TestDesignTT
                     addTurnout(id, value, pos);
                 }
             }
-            ButtonSendClick?.Invoke(this, e);
+            TurnoutButtonSendClick?.Invoke(this, e);
         }
 
         public void addTurnout(UInt32 id, byte change, byte turnPosition)

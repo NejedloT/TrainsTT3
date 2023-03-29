@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Serialization;
 using static TrainTTLibrary.Packet;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace TrainTTLibrary
 {
@@ -18,7 +20,7 @@ namespace TrainTTLibrary
         public string Type { set; get; }
 
         public byte Head { set; get; }
-        
+
         public List<byte> Adress { set; get; }
 
         public List<byte> Data { set; get; }
@@ -119,8 +121,8 @@ namespace TrainTTLibrary
                     }
 
                 case (int)unitAdress.zesilovac_DCC_1_R: // message from DCC amplifier - odbery - DCC 1 R
-                    
-					if (Head == 0x08)
+
+                    if (Head == 0x08)
                     {
                         Type = dataType.occupancy_section.ToString(); //zprava od zesilovace - odbery proudu
                     }
@@ -128,12 +130,12 @@ namespace TrainTTLibrary
                     {
                         Type = dataType.unknow.ToString();
                     }
-                    
+
                     break;
 
-                case (int)unitAdress.zesilovac_DCC_2_R:	// message from DCC amplifier - stav/chyba - DCC 2 R
-					
-					if (Head == 0x04)
+                case (int)unitAdress.zesilovac_DCC_2_R: // message from DCC amplifier - stav/chyba - DCC 2 R
+
+                    if (Head == 0x04)
                     {
                         Type = dataType.unit_info.ToString(); //zprava od ridiciho zesilovace - aktualni stav ci chyba
                     }
@@ -144,37 +146,38 @@ namespace TrainTTLibrary
                     break;
 
                 case (int)unitAdress.zesilovac_DCC_1_W:
-                        if (Head == 0x04)
-                        {
-                            Type = dataType.unit_instruction.ToString(); //konfiguraci data zesilovaci
-                        }
-                        else
-                        {
-                            Type = dataType.unknow.ToString();
-                        }
-                        break;
+                    if (Head == 0x04)
+                    {
+                        Type = dataType.unit_instruction.ToString(); //konfiguraci data zesilovaci
+                    }
+                    else
+                    {
+                        Type = dataType.unknow.ToString();
+                    }
+                    break;
 
                 case (int)unitAdress.zesilovac_DCC_2_W:
-					
+
                     Type = dataType.unknow.ToString();
+
                     break;
 
                 case (int)unitAdress.vyhybky_W:
-					if (Head == 0x08)
-						Type = dataType.turnout_instruction.ToString();
-					
-					else
-						Type = dataType.unknow.ToString();
-					
+                    if (Head == 0x08)
+                        Type = dataType.turnout_instruction.ToString();
+
+                    else
+                        Type = dataType.unknow.ToString();
+
                     break;
 
                 case (int)unitAdress.vyhybky_R:
-					if (Head == 0x08)
-						Type = dataType.turnout_info.ToString();
-					
-					else
-						Type = dataType.unknow.ToString();
-					
+                    if (Head == 0x08)
+                        Type = dataType.turnout_info.ToString();
+
+                    else
+                        Type = dataType.unknow.ToString();
+
                     break;
 
                 case (int)unitAdress.navestidla_W:
@@ -212,10 +215,10 @@ namespace TrainTTLibrary
                 return dataType.unknow;
             }
 
-            return type ;
+            return type;
 
         }
-        
+
         public static byte VypocetCRC(List<byte> paket)
         {
             byte crc = 0;
@@ -328,13 +331,13 @@ namespace TrainTTLibrary
             watchdog,
             occupancy_section,
             unit_info,
-			turnout_info,
+            turnout_info,
             // zprávy odesílané řídící jednotkou
             train_move,
             train_function,
             train_move_to_place,
             unit_instruction,
-			turnout_instruction,
+            turnout_instruction,
             // zprávy pro řídící jednotku
             unknow, // neznámý typ zprávy
             oled_info, // textové zprávy mezi TCP uživateli s bíže nespecifikovanými parametry
@@ -361,48 +364,48 @@ namespace TrainTTLibrary
 
         public enum unitInstruction
         {
-			restart_jednotky = 0x01,
+            restart_jednotky = 0x01,
             prodleva_odesilani_zmerenych_proudu = 0x02,
             restart_H_mustku = 0x03,
             nastaveni_zdroje = 0x04,
-			mereni_na_zvolenych_kanalech = 0x05,
+            mereni_na_zvolenych_kanalech = 0x05,
             precteni_stavu_jednotky = 0x10,
-			err,
+            err,
         }
-		
-		public enum unitInfo
-		{
-			aktualni_stav = 0x10,
-			chyba = 0xFF,
-			err,
-		}
-		
-		public enum turnoutInstruction
-		{
-			//[EnumMember(Value = "0x00-0xB5")]
-			presna_poloha_serv,
-			restart_jednotky = 0xB6,
-			nastaveni_prodlevy_pred_natocenim = 0xB7,
-			precteni_stavu_natoceni = 0xB8,
-			nastaveni_dorazu = 0xB9,
-			nastaveni_vyhybky = 0xBA,
-			err,
-		}
-		
-		public enum turnoutInfo
-		{
-			natoceni_vlevo_vpravo,
-			natoceni_ve_stupnich,
-			chyba = 0xFF,
-			err,
-		}
+
+        public enum unitInfo
+        {
+            aktualni_stav = 0x10,
+            chyba = 0xFF,
+            err,
+        }
+
+        public enum turnoutInstruction
+        {
+            //[EnumMember(Value = "0x00-0xB5")]
+            presna_poloha_serv,
+            restart_jednotky = 0xB6,
+            nastaveni_prodlevy_pred_natocenim = 0xB7,
+            precteni_stavu_natoceni = 0xB8,
+            nastaveni_dorazu = 0xB9,
+            nastaveni_vyhybky = 0xBA,
+            err,
+        }
+
+        public enum turnoutInfo
+        {
+            natoceni_vlevo_vpravo,
+            natoceni_ve_stupnich,
+            chyba = 0xFF,
+            err,
+        }
     }
 
     public class UnitInstructionPacket : Packet
     {
         unitInstruction UnitInstruction { set; get; }
-		
-        public UnitInstructionPacket(unitInstruction type, uint numberOfUnit,byte data)
+
+        public UnitInstructionPacket(unitInstruction type, uint numberOfUnit, byte data)
         {
 
             BytePacket = new List<byte>();
@@ -416,71 +419,71 @@ namespace TrainTTLibrary
             NumberOfAdress = (uint)unitAdress.zesilovac_DCC_1_W;
 
             NumberOfUnit = numberOfUnit;
-			
-			Head = 0x04;
-			
-			AssingType();
-							
+
+            Head = 0x04;
+
+            AssingType();
+
             NumberOfAdressAndUnitToAdress();
-			
-			if (type == unitInstruction.restart_jednotky)
-			{
-				Data.Add(0x01);
+
+            if (type == unitInstruction.restart_jednotky)
+            {
+                Data.Add(0x01);
 
                 Data.Add(0x01);
-			}
+            }
 
             else if (type == unitInstruction.prodleva_odesilani_zmerenych_proudu)
-			{				
-				Data.Add(0x02);
-				
-				if (data <= 0xFA || data == 0xFF)
-					Data.Add(data);				
-					
-				else
-					Data.Add(0x32);
-			}
-			
-			else if (type == unitInstruction.restart_H_mustku)
-			{				
-				Data.Add(0x03);
-				
-				Data.Add(0x01);
-			}
-			
-			else if (type == unitInstruction.nastaveni_zdroje)
-			{				
-				Data.Add(0x04);
-				
-				if (data == 0x01 || data == 0x00)
-					Data.Add(data);
-				
-				else
-					Data.Add(0x00);
-			}
-			
-			else if (type == unitInstruction.mereni_na_zvolenych_kanalech)
-			{
-				Data.Add(0x05);
-				
-				Data.Add(data);
-			}
-			
-			else if (type == unitInstruction.precteni_stavu_jednotky)
-			{								
-				Data.Add(0x10);
-				
-				Data.Add(0x01);
-				
-			}
-			else
-			{
-				//chyba
-				TCPPacket += ("Chyba v UnitInstructionPacket (unitInstruction type,uint numberOfUnit,byte data)\n");
-				return;
-			}
-			
-			SetBytePacket();
+            {
+                Data.Add(0x02);
+
+                if (data <= 0xFA || data == 0xFF)
+                    Data.Add(data);
+
+                else
+                    Data.Add(0x32);
+            }
+
+            else if (type == unitInstruction.restart_H_mustku)
+            {
+                Data.Add(0x03);
+
+                Data.Add(0x01);
+            }
+
+            else if (type == unitInstruction.nastaveni_zdroje)
+            {
+                Data.Add(0x04);
+
+                if (data == 0x01 || data == 0x00)
+                    Data.Add(data);
+
+                else
+                    Data.Add(0x00);
+            }
+
+            else if (type == unitInstruction.mereni_na_zvolenych_kanalech)
+            {
+                Data.Add(0x05);
+
+                Data.Add(data);
+            }
+
+            else if (type == unitInstruction.precteni_stavu_jednotky)
+            {
+                Data.Add(0x10);
+
+                Data.Add(0x01);
+
+            }
+            else
+            {
+                //chyba
+                TCPPacket += ("Chyba v UnitInstructionPacket (unitInstruction type,uint numberOfUnit,byte data)\n");
+                return;
+            }
+
+            SetBytePacket();
 
             TCPPacket = (Type + ":" + UnitInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
 
@@ -489,20 +492,20 @@ namespace TrainTTLibrary
         public UnitInstructionPacket(byte[] bytePacket)
         {
             SetPropetiesFromByte(bytePacket);
-			
-			if (Enum.IsDefined(typeof(unitInfo), Data[0]))
-			{
-				UnitInstruction = (unitInstruction)Data[0];
-			}
-			else
-			{
-				UnitInstruction = unitInstruction.err;
-			}
+
+            if (Enum.IsDefined(typeof(unitInfo), Data[0]))
+            {
+                UnitInstruction = (unitInstruction)Data[0];
+            }
+            else
+            {
+                UnitInstruction = unitInstruction.err;
+            }
             //UnitInstruction = (unitInstruction)Enum.ToObject(typeof(unitInstruction),Data[0]);                        
             TCPPacket += (UnitInstruction.ToString() + "," + NumberOfUnit + ", Data 0:" + Data[0] + ", Data 1:" + Data[1] + "\n");
         }
 
-		//pro zpravu z TCP terminalu
+        //pro zpravu z TCP terminalu
         public UnitInstructionPacket(string tcpPacket)
         {
             SetPropetiesFromTCP(tcpPacket);
@@ -510,7 +513,7 @@ namespace TrainTTLibrary
             string[] s = tcpPacket.Split(':');
 
             tcpPacket = s[1];
-                       
+
             s = tcpPacket.Split(',');
 
             UnitInstruction = stringToUnitInstruction(s[0]);
@@ -526,7 +529,7 @@ namespace TrainTTLibrary
 
             uint a;
 
-			//number of unit
+            //number of unit
             if (!uint.TryParse(s[1], out a))
             {
                 TCPPacket = UnknowPacket(TCPPacket);
@@ -536,26 +539,26 @@ namespace TrainTTLibrary
 
             NumberOfUnit = a;
 
-			Head = 0x04;
-			
+            Head = 0x04;
+
             Data.Add((byte)UnitInstruction);
-			
+
             NumberOfAdressAndUnitToAdress();
 
-			//data - definovany 4 byty, ale vyuzity vzdy jen 2
-			for (int i = 0; i < 2; i++)
-			{
-				byte b;
-				
-				//data0 (unit instruction je znama z vyse)
-				if (!byte.TryParse(s[2+i], out b))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
-				Data.Add(b);
-			}
+            //data - definovany 4 byty, ale vyuzity vzdy jen 2
+            for (int i = 0; i < 2; i++)
+            {
+                byte b;
+
+                //data0 (unit instruction je znama z vyse)
+                if (!byte.TryParse(s[2 + i], out b))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
+                Data.Add(b);
+            }
 
             SetBytePacket();
         }
@@ -574,28 +577,28 @@ namespace TrainTTLibrary
         }
 
     }
-	
-	public class UnitInfoPacket : Packet
+
+    public class UnitInfoPacket : Packet
     {
         public unitInfo UnitInfo { set; get; }
 
         public UnitInfoPacket(byte[] bytePacket)
         {
             SetPropetiesFromByte(bytePacket);
-    
-			if (Enum.IsDefined(typeof(unitInfo), Data[0]))
-			{
-				UnitInfo = (unitInfo)Data[0];
-			}
-			else
-			{
-				UnitInfo = unitInfo.err;
-			}
 
-			TCPPacket += (UnitInfo.ToString() + "," + NumberOfUnit + "\n");
+            if (Enum.IsDefined(typeof(unitInfo), Data[0]))
+            {
+                UnitInfo = (unitInfo)Data[0];
+            }
+            else
+            {
+                UnitInfo = unitInfo.err;
+            }
+
+            TCPPacket += (UnitInfo.ToString() + "," + NumberOfUnit + "\n");
 
         }
-		
+
 
         public UnitInfoPacket(string tcpPacket)
         {
@@ -608,13 +611,13 @@ namespace TrainTTLibrary
             s = tcpPacket.Split(',');
 
             UnitInfo = stringToUnitInfo(s[0]);
-			
-			if (UnitInfo == unitInfo.err)
+
+            if (UnitInfo == unitInfo.err)
             {
                 TCPPacket = UnknowPacket(TCPPacket);
-				
+
                 Type = dataType.unknow.ToString();
-				
+
                 return;
             }
 
@@ -625,12 +628,12 @@ namespace TrainTTLibrary
             if (!uint.TryParse(s[1], out a))
             {
                 TCPPacket = UnknowPacket(TCPPacket);
-				
+
                 Type = dataType.unknow.ToString();
-				
+
                 return;
             }
-			
+
             NumberOfUnit = a;
 
             Data.Add((byte)UnitInfo);
@@ -639,20 +642,20 @@ namespace TrainTTLibrary
 
             NumberOfAdressAndUnitToAdress();
 
-			for (int i = 0; i < 4; i++)
-			{
-				byte b;
-				
-				if (!byte.TryParse(s[2+i], out b))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					
-					Type = dataType.unknow.ToString();
-					
-					return;
-				}
-				Data.Add(b);
-			}   
+            for (int i = 0; i < 4; i++)
+            {
+                byte b;
+
+                if (!byte.TryParse(s[2 + i], out b))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+
+                    Type = dataType.unknow.ToString();
+
+                    return;
+                }
+                Data.Add(b);
+            }
 
             SetBytePacket();
         }
@@ -684,8 +687,8 @@ namespace TrainTTLibrary
 
             TCPPacket = (Type + ":" + UnitInfo.ToString() + "," + NumberOfUnit + "\n");
         }
-		
-		public static unitInfo stringToUnitInfo(string str)
+
+        public static unitInfo stringToUnitInfo(string str)
         {
             unitInfo type;
 
@@ -698,493 +701,397 @@ namespace TrainTTLibrary
 
         }
     }
-	
 
-    public class OccupancySectionPacket : Packet
+    public class TurnoutInstructionPacket : Packet
     {
-        public List<Section> Sections { set; get; }
+        turnoutInstruction TurnoutInstruction { set; get; }
 
-        public OccupancySectionPacket(byte[] bytePacket)
+        //TODO or Change
+        public TurnoutInstructionPacket(string tcpPacket)
         {
-            Sections = new List<Section>();
-
-            SetPropetiesFromByte(bytePacket);
-
-            RecognizeUnit();
-
-            foreach (Section s in Sections)
-            {
-                s.Current = Data[Sections.IndexOf(s)];
-                TCPPacket += (s.Name + "=" + s.Current + ",");
-            }
-
-            TCPPacket = TCPPacket.Substring(0, TCPPacket.Length - 1);
-
-            TCPPacket += "\n";
-        }
-
-        public OccupancySectionPacket(string tcpPacket)
-        {
-            Sections = new List<Section>();
-
             SetPropetiesFromTCP(tcpPacket);
 
-            NumberOfAdress = (uint)unitAdress.zesilovac_DCC_1_R;
+            string[] s = tcpPacket.Split(':');
 
-            RecognizeSection(tcpPacket);
+            tcpPacket = s[1];
+
+            s = tcpPacket.Split(',');
+
+            TurnoutInstruction = stringToTurnoutInstruction(s[0]);
+
+            if (TurnoutInstruction == turnoutInstruction.err)
+            {
+                TCPPacket = UnknowPacket(TCPPacket);
+                Type = dataType.unknow.ToString();
+                return;
+            }
+
+            NumberOfAdress = (uint)unitAdress.vyhybky_W;
+
+            uint a;
+            if (!uint.TryParse(s[1], out a))
+            {
+                TCPPacket = UnknowPacket(TCPPacket);
+                Type = dataType.unknow.ToString();
+                return;
+            }
+            NumberOfUnit = a;
+
+            //pocet prvku
+            int numberOfValues = s.Length;
 
             NumberOfAdressAndUnitToAdress();
 
             Head = 0x08;
 
-            foreach (Section section in Sections)
+            if (TurnoutInstruction == turnoutInstruction.presna_poloha_serv)
             {
-                Data.Add((byte)section.Current);
-            }
-
-        }
-
-        private void RecognizeSection(string tcpPacket)
-        {
-            string[] s = tcpPacket.Split(':');
-
-            tcpPacket = s[1];
-
-            string[] sec = tcpPacket.Split(',');
-
-            string[] sectio = sec[0].Split('=');
-
-            foreach (Section section in SectionInfo.listOfSection)
-            {
-                if (section.Name == sectio[0])
+                for (int i = 0; i < 8; i++)
                 {
-                    NumberOfUnit = section.NumberOfUnit;
-                    break;
+                    byte b;
+
+                    if (!byte.TryParse(s[2 + i], out b))
+                    {
+                        TCPPacket = UnknowPacket(TCPPacket);
+                        Type = dataType.unknow.ToString();
+                        return;
+                    }
+
+                    if (b <= 0xB4)
+                        Data.Add(b);
+
+                    else
+                        Data.Add(0xB5);
                 }
             }
 
-            foreach (string sect in sec)
+            else if (TurnoutInstruction == turnoutInstruction.nastaveni_vyhybky)
             {
-                string[] secti = sect.Split('=');
+                Data.Add((byte)TurnoutInstruction);
 
-                Sections.Add(new Section(secti[0], NumberOfUnit, uint.Parse(secti[1])));
+                byte b;
+
+                if (!byte.TryParse(s[2], out b))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
+
+                Data.Add(b);
+
+                byte c;
+
+                if (!byte.TryParse(s[3], out c))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
+
+                Data.Add(c);
             }
-        }
 
-        private void RecognizeUnit()
-        {
-            switch (NumberOfUnit)
+            else if (TurnoutInstruction == turnoutInstruction.restart_jednotky)
             {
-                case 3:
-                    {
-                        for (int i = 0; i < 8; i++)
-                        {
-                            Sections.Add(SectionInfo.listOfSection[i]);
-                        }
-                        break;
-                    }
-                // pouze ukázka, až se zde přidá další úseková jednotka, např. num. 4, připíšou se do konfiguráku section další názvy úseků 
-                  /*                
-                  case 4: 
-                    {
-                        for (int i = 8; i < 16; i++)
-                        {
-                            Sections.Add(SectionInfo.listOfSection[i]);
-                        }
-                        break;
-                    }
-                    */
+                Data.Add((byte)TurnoutInstruction);
+
+                byte b;
+
+                if (!byte.TryParse(s[2], out b))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
+                Data.Add(b);
             }
-        }
-    }
-	
-	public class TurnoutInstructionPacket : Packet
-	{
-		turnoutInstruction TurnoutInstruction { set; get; }
-		
-		//TODO or Change
-		public TurnoutInstructionPacket(string tcpPacket)
-		{
-			SetPropetiesFromTCP(tcpPacket);
 
-            string[] s = tcpPacket.Split(':');
-
-            tcpPacket = s[1];
-                       
-            s = tcpPacket.Split(',');
-			
-			TurnoutInstruction = stringToTurnoutInstruction(s[0]);
-			
-			if (TurnoutInstruction == turnoutInstruction.err)
+            else if (TurnoutInstruction == turnoutInstruction.nastaveni_prodlevy_pred_natocenim)
             {
-                TCPPacket = UnknowPacket(TCPPacket);
-                Type = dataType.unknow.ToString();
-                return;
+                Data.Add((byte)TurnoutInstruction); //0xB7
+
+                byte b;
+
+                if (!byte.TryParse(s[2], out b))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
+
+                if (b > 0xFA)
+                    Data.Add(0xFA);
+                else
+                    Data.Add(b);
             }
-			
-			NumberOfAdress = (uint)unitAdress.vyhybky_W;
-						
-			uint a;
-			if (!uint.TryParse(s[1], out a))
+
+            else if (TurnoutInstruction == turnoutInstruction.precteni_stavu_natoceni)
             {
-                TCPPacket = UnknowPacket(TCPPacket);
-                Type = dataType.unknow.ToString();
-                return;
+                Data.Add((byte)TurnoutInstruction); //0xB8
+
+                byte b;
+
+                if (!byte.TryParse(s[2], out b))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
+
+                if (b == 0x02)
+                    Data.Add(b);
+
+                else
+                    Data.Add(0x01);
             }
-			NumberOfUnit = a;					
-				
-			//pocet prvku
-			int numberOfValues = s.Length;
-			
-			NumberOfAdressAndUnitToAdress();
-			
-			Head = 0x08;
 
-			if (TurnoutInstruction == turnoutInstruction.presna_poloha_serv)
-			{
-				for (int i = 0; i < numberOfValues; i++) 
-				{
-					byte b;
-					
-					if (!byte.TryParse(s[2+i], out b))
-					{
-						TCPPacket = UnknowPacket(TCPPacket);
-						Type = dataType.unknow.ToString();
-						return;
-					}
+            else if (TurnoutInstruction == turnoutInstruction.nastaveni_dorazu)
+            {
+                Data.Add((byte)TurnoutInstruction); //0xB9
 
-					if (b <= 0xB4)
-						Data.Add(b);
-				
-					else
-						Data.Add(0xB5);
-				}				
-			}
-			
-			else if (TurnoutInstruction == turnoutInstruction.nastaveni_vyhybky)
-			{				
-				Data.Add((byte)TurnoutInstruction);
+                byte b;
 
-				byte b;
-					
-				if (!byte.TryParse(s[2], out b))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
-
-				Data.Add(b);
-				
-				byte c;
-					
-				if (!byte.TryParse(s[3], out c))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
-
-				Data.Add(c);
-			}
-			
-			else if (TurnoutInstruction == turnoutInstruction.restart_jednotky)
-			{				
-				Data.Add((byte)TurnoutInstruction);
-				
-				byte b;
-				
-				if (!byte.TryParse(s[2], out b))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
-				Data.Add(b);
-			}
-			
-			else if (TurnoutInstruction == turnoutInstruction.nastaveni_prodlevy_pred_natocenim)
-			{				
-				Data.Add((byte)TurnoutInstruction); //0xB7
-				
-				byte b;
-					
-				if (!byte.TryParse(s[2], out b))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
-				
-				if (b > 0xFA)
-					Data.Add(0xFA);
-				else
-					Data.Add(b);
-			}
-			
-			else if (TurnoutInstruction == turnoutInstruction.precteni_stavu_natoceni)
-			{				
-				Data.Add((byte)TurnoutInstruction); //0xB8
-				
-				byte b;
-					
-				if (!byte.TryParse(s[2], out b))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
-				
-				if (b == 0x02)
-					Data.Add(b);
-				
-				else
-					Data.Add(0x01);
-			}
-			
-			else if (TurnoutInstruction == turnoutInstruction.nastaveni_dorazu)
-			{		
-				Data.Add((byte)TurnoutInstruction); //0xB9
-				
-				byte b;
-					
-				if (!byte.TryParse(s[2], out b))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
+                if (!byte.TryParse(s[2], out b))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
 
                 if (b >= 0x00 && b <= 0x07)
                     Data.Add(b);
                 else
                     Data.Add(0xAA);
-				
-				byte c;
-					
-				if (!byte.TryParse(s[3], out c))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
 
-				if (c >= 0x00 && c <= 0xB4)
-					Data.Add(c);
-				else
-					Data.Add(0x5A);
-				
-				byte d;
-					
-				if (!byte.TryParse(s[4], out d))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
+                byte c;
+
+                if (!byte.TryParse(s[3], out c))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
+
+                if (c >= 0x00 && c <= 0xB4)
+                    Data.Add(c);
+                else
+                    Data.Add(0x5A);
+
+                byte d;
+
+                if (!byte.TryParse(s[4], out d))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
 
                 if (d >= 0x00 && d <= 0xB4)
                     Data.Add(d);
                 else
                     Data.Add(0x6E);
-			}
-			else {
-				TCPPacket = UnknowPacket(TCPPacket);
-				Type = dataType.unknow.ToString();
-				return;
-			}
-			
-			SetBytePacket();
-			
-			TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + Data[1] + ".\n");
-		}
-		
-		public TurnoutInstructionPacket(byte[] bytePacket)
-		{
-			SetPropetiesFromByte(bytePacket);
-    
-			if (Enum.IsDefined(typeof(turnoutInstruction), Data[0]))
-			{
-				TurnoutInstruction = (turnoutInstruction)Data[0];
-			}
-			else if (Data[0] >= 0x00 && Data[0] <= 0xB5) {
-                TurnoutInstruction = turnoutInstruction.presna_poloha_serv;
-			}
-			else
-			{
-				TurnoutInstruction = turnoutInstruction.err;
-			}
-			
-			TCPPacket = (TurnoutInstruction.ToString() + "," + NumberOfUnit + TurnoutInstruction + "\n");
-		}
-		
-		//presne polohovani mikro servo pohonu
-		public TurnoutInstructionPacket (turnoutInstruction type, uint numberOfUnit, byte data0, byte data1, byte data2, byte data3, byte data4, byte data5, byte data6, byte data7)
-		{
-			BytePacket = new List<byte>();
-
-            Adress = new List<byte>();
-
-            Data = new List<byte>();
-
-            TurnoutInstruction = type;
-			
-			NumberOfAdress = (uint)unitAdress.vyhybky_W;
-			
-			NumberOfUnit = numberOfUnit;
-			
-			Head = 0x08;
-			
-			AssingType();
-				
-			NumberOfAdressAndUnitToAdress();
-            for (int i = 0; i < 8; i++)
+            }
+            else
             {
-				byte data = (byte)(typeof(turnoutInstruction).GetField("data" + i).GetValue(this));
-				
-				if (data <= 0xB4)
-					Data.Add(data);
-				
-				else
-					Data.Add(0xB5);
-			}
-			
-			SetBytePacket();
-				
-			TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + ", Presne natoceni. " + "\n");
-		}
-		
-		//nastaveni vyhybek
-		public TurnoutInstructionPacket (turnoutInstruction type, uint numberOfUnit, byte data1, byte data2)
-		{
-			BytePacket = new List<byte>();
+                TCPPacket = UnknowPacket(TCPPacket);
+                Type = dataType.unknow.ToString();
+                return;
+            }
+
+            SetBytePacket();
+
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + Data[1] + ".\n");
+        }
+
+        public TurnoutInstructionPacket(byte[] bytePacket)
+        {
+            SetPropetiesFromByte(bytePacket);
+
+            if (Enum.IsDefined(typeof(turnoutInstruction), Data[0]))
+            {
+                TurnoutInstruction = (turnoutInstruction)Data[0];
+            }
+            else if (Data[0] >= 0x00 && Data[0] <= 0xB5)
+            {
+                TurnoutInstruction = turnoutInstruction.presna_poloha_serv;
+            }
+            else
+            {
+                TurnoutInstruction = turnoutInstruction.err;
+            }
+
+            TCPPacket = (TurnoutInstruction.ToString() + "," + NumberOfUnit + TurnoutInstruction + "\n");
+        }
+
+        //presne polohovani mikro servo pohonu
+        public TurnoutInstructionPacket(turnoutInstruction type, uint numberOfUnit, byte data0, byte data1, byte data2, byte data3, byte data4, byte data5, byte data6, byte data7)
+        {
+            BytePacket = new List<byte>();
 
             Adress = new List<byte>();
 
             Data = new List<byte>();
 
             TurnoutInstruction = type;
-			
-			NumberOfAdress = (uint)unitAdress.vyhybky_W;
-			
-			NumberOfUnit = numberOfUnit;
-			
-			Head = 0x08;
-				
-			AssingType();
-				
-			NumberOfAdressAndUnitToAdress();
-				
-			Data.Add(0xBA);
-				
-			Data.Add(data1);
-				
-			Data.Add(data2);
-				
-			SetBytePacket();
 
-            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[1] + "," + Data[2] + "\n");
+            NumberOfAdress = (uint)unitAdress.vyhybky_W;
 
-		}
-		
-		//restart jednotky, nastaveni prodlevy a precteni stavu natoceni
-		public TurnoutInstructionPacket (turnoutInstruction type, uint numberOfUnit, byte data)
-        { 
-			BytePacket = new List<byte>();
+            NumberOfUnit = numberOfUnit;
 
-            Adress = new List<byte>();
-
-            Data = new List<byte>();
-
-            TurnoutInstruction = type;
-			
-			NumberOfAdress = (uint)unitAdress.vyhybky_W;
-			
-			NumberOfUnit = numberOfUnit;
-			
-			Head = 0x08;
-			
-			AssingType();
-				
-			NumberOfAdressAndUnitToAdress();
-			
-			if (type == turnoutInstruction.restart_jednotky)
-			{
-				Data.Add(0xB6);
-				
-				Data.Add(0x01);		
-			}
-			
-			else if (type == turnoutInstruction.nastaveni_prodlevy_pred_natocenim)
-			{
-				Data.Add(0xB7);
-				
-				if (data > 0xFA)
-					Data.Add(0xFA);
-				else
-					Data.Add(data);
-			}
-			
-			else if (type == turnoutInstruction.precteni_stavu_natoceni)
-			{
-				Data.Add(0xB8);
-				
-				if (data == 0x02)
-					Data.Add(0x02);
-				
-				else
-					Data.Add(0x01);
-			}
-			SetBytePacket();
-				
-			TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");			
-			
-		}
-		
-		//nastaveni dorazu
-		public TurnoutInstructionPacket (turnoutInstruction type, uint numberOfUnit, byte data1, byte data2, byte data3)
-		{
-			BytePacket = new List<byte>();
-
-            Adress = new List<byte>();
-
-            Data = new List<byte>();
-
-            TurnoutInstruction = type;
-			
-			NumberOfAdress = (uint)unitAdress.vyhybky_W;
-			
-			NumberOfUnit = numberOfUnit;
-			
-			Head = 0x08;
+            Head = 0x08;
 
             AssingType();
 
             NumberOfAdressAndUnitToAdress();
-			
-			Data.Add(0xB9);
+
+            for (int i = 0; i < 8; i++)
+            {
+                byte data = (byte)(typeof(turnoutInstruction).GetField("data" + i).GetValue(this));
+
+                if (data <= 0xB4)
+                    Data.Add(data);
+
+                else
+                    Data.Add(0xB5);
+            }
+
+            SetBytePacket();
+
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + ", Presne natoceni. " + "\n");
+        }
+
+        //nastaveni vyhybek
+        public TurnoutInstructionPacket(turnoutInstruction type, uint numberOfUnit, byte data1, byte data2)
+        {
+            BytePacket = new List<byte>();
+
+            Adress = new List<byte>();
+
+            Data = new List<byte>();
+
+            TurnoutInstruction = type;
+
+            NumberOfAdress = (uint)unitAdress.vyhybky_W;
+
+            NumberOfUnit = numberOfUnit;
+
+            Head = 0x08;
+
+            AssingType();
+
+            NumberOfAdressAndUnitToAdress();
+
+            Data.Add(0xBA);
+
+            Data.Add(data1);
+
+            Data.Add(data2);
+
+            SetBytePacket();
+
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[1] + "," + Data[2] + "\n");
+
+        }
+
+        //restart jednotky, nastaveni prodlevy a precteni stavu natoceni
+        public TurnoutInstructionPacket(turnoutInstruction type, uint numberOfUnit, byte data)
+        {
+            BytePacket = new List<byte>();
+
+            Adress = new List<byte>();
+
+            Data = new List<byte>();
+
+            TurnoutInstruction = type;
+
+            NumberOfAdress = (uint)unitAdress.vyhybky_W;
+
+            NumberOfUnit = numberOfUnit;
+
+            Head = 0x08;
+
+            AssingType();
+
+            NumberOfAdressAndUnitToAdress();
+
+            if (type == turnoutInstruction.restart_jednotky)
+            {
+                Data.Add(0xB6);
+
+                Data.Add(0x01);
+            }
+
+            else if (type == turnoutInstruction.nastaveni_prodlevy_pred_natocenim)
+            {
+                Data.Add(0xB7);
+
+                if (data > 0xFA)
+                    Data.Add(0xFA);
+                else
+                    Data.Add(data);
+            }
+
+            else if (type == turnoutInstruction.precteni_stavu_natoceni)
+            {
+                Data.Add(0xB8);
+
+                if (data == 0x02)
+                    Data.Add(0x02);
+
+                else
+                    Data.Add(0x01);
+            }
+            SetBytePacket();
+
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
+
+        }
+
+        //nastaveni dorazu
+        public TurnoutInstructionPacket(turnoutInstruction type, uint numberOfUnit, byte data1, byte data2, byte data3)
+        {
+            BytePacket = new List<byte>();
+
+            Adress = new List<byte>();
+
+            Data = new List<byte>();
+
+            TurnoutInstruction = type;
+
+            NumberOfAdress = (uint)unitAdress.vyhybky_W;
+
+            NumberOfUnit = numberOfUnit;
+
+            Head = 0x08;
+
+            AssingType();
+
+            NumberOfAdressAndUnitToAdress();
+
+            Data.Add(0xB9);
 
             if (data1 >= 0x00 && data1 <= 0x07)
                 Data.Add(data1);
             else
                 Data.Add(0xAA);
-			
-			if (data2 >= 0x00 && data2 <= 0xB4)
-				Data.Add(data2);
-			else
-				Data.Add(0x5A);
-			
-			if (data3 >= 0x00 && data3 <= 0xB4)
-				Data.Add(data3);
-			else
-				Data.Add(0x6E);
-			
-			SetBytePacket();
-				
-			TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
-		}
-		
-		public static turnoutInstruction stringToTurnoutInstruction(string str)
+
+            if (data2 >= 0x00 && data2 <= 0xB4)
+                Data.Add(data2);
+            else
+                Data.Add(0x5A);
+
+            if (data3 >= 0x00 && data3 <= 0xB4)
+                Data.Add(data3);
+            else
+                Data.Add(0x6E);
+
+            SetBytePacket();
+
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
+        }
+
+        public static turnoutInstruction stringToTurnoutInstruction(string str)
         {
             turnoutInstruction type;
 
@@ -1195,158 +1102,158 @@ namespace TrainTTLibrary
 
             return type;
         }
-	}
-	
-	public class TurnoutInfoPacket : Packet
-	{
-		turnoutInfo TurnoutInfo { set; get; }
-		
-		public TurnoutInfoPacket(string tcpPacket)
-		{
-			SetPropetiesFromTCP(tcpPacket);
+    }
+
+    public class TurnoutInfoPacket : Packet
+    {
+        turnoutInfo TurnoutInfo { set; get; }
+
+        public TurnoutInfoPacket(string tcpPacket)
+        {
+            SetPropetiesFromTCP(tcpPacket);
 
             string[] s = tcpPacket.Split(':');
 
             tcpPacket = s[1];
-                       
+
             s = tcpPacket.Split(',');
-			
-			TurnoutInfo = stringToTurnoutInfo(s[0]);
-			
-			//kontrola, ze to neni error
-			if (TurnoutInfo == turnoutInfo.err)
+
+            TurnoutInfo = stringToTurnoutInfo(s[0]);
+
+            //kontrola, ze to neni error
+            if (TurnoutInfo == turnoutInfo.err)
             {
                 TCPPacket = UnknowPacket(TCPPacket);
                 Type = dataType.unknow.ToString();
                 return;
             }
-			
-			NumberOfAdress = (uint)unitAdress.vyhybky_R;
-			
-			int numberOfValues = s.Length;
-			
-			//cislo jednotky
-			uint a;
-			if (!uint.TryParse(s[1], out a))
+
+            NumberOfAdress = (uint)unitAdress.vyhybky_R;
+
+            int numberOfValues = s.Length;
+
+            //cislo jednotky
+            uint a;
+            if (!uint.TryParse(s[1], out a))
             {
                 TCPPacket = UnknowPacket(TCPPacket);
                 Type = dataType.unknow.ToString();
                 return;
             }
-			NumberOfUnit = a;					
-			
-			NumberOfAdressAndUnitToAdress();
-			
-			Head = 0x08;
+            NumberOfUnit = a;
 
-			if (TurnoutInfo == turnoutInfo.natoceni_vlevo_vpravo)
-			{
-				for (int i = 0; i < numberOfValues; i++) 
-				{
-					byte b;
-					
-					if (!byte.TryParse(s[2+i], out b))
-					{
-						TCPPacket = UnknowPacket(TCPPacket);
-						Type = dataType.unknow.ToString();
-						return;
-					}
+            NumberOfAdressAndUnitToAdress();
 
-					if (b == 0xF0 || b == 0xF1 || b == 0xF2 || b == 0xF3)
-					{
-						Data.Add(b);
-					}
-					
-					else
-					{
-						TCPPacket = UnknowPacket(TCPPacket);
-						Type = dataType.unknow.ToString();
-						return;
-					}						
-				}
-			}
-			
-			else if (TurnoutInfo == turnoutInfo.natoceni_ve_stupnich)
-			{
-				for (int i = 0; i < numberOfValues; i++) 
-				{
-					byte b;
-					
-					if (!byte.TryParse(s[2+i], out b))
-					{
-						TCPPacket = UnknowPacket(TCPPacket);
-						Type = dataType.unknow.ToString();
-						return;
-					}
-					
-					if (b >= 0x00 && b <= 0xB5)
-					{
-						Data.Add(b);
-					}
-					else
-					{
-						TCPPacket = UnknowPacket(TCPPacket);
-						Type = dataType.unknow.ToString();
-						return;
-					}
-				
-				}
-			}
-			
-			else if (TurnoutInfo == turnoutInfo.chyba)
-			{
-				Data.Add((byte)TurnoutInfo);
-				
-				byte b;
-				if (!byte.TryParse(s[1], out b))
-				{
-					TCPPacket = UnknowPacket(TCPPacket);
-					Type = dataType.unknow.ToString();
-					return;
-				}
+            Head = 0x08;
+
+            if (TurnoutInfo == turnoutInfo.natoceni_vlevo_vpravo)
+            {
+                for (int i = 0; i < numberOfValues; i++)
+                {
+                    byte b;
+
+                    if (!byte.TryParse(s[2 + i], out b))
+                    {
+                        TCPPacket = UnknowPacket(TCPPacket);
+                        Type = dataType.unknow.ToString();
+                        return;
+                    }
+
+                    if (b == 0xF0 || b == 0xF1 || b == 0xF2 || b == 0xF3)
+                    {
+                        Data.Add(b);
+                    }
+
+                    else
+                    {
+                        TCPPacket = UnknowPacket(TCPPacket);
+                        Type = dataType.unknow.ToString();
+                        return;
+                    }
+                }
+            }
+
+            else if (TurnoutInfo == turnoutInfo.natoceni_ve_stupnich)
+            {
+                for (int i = 0; i < numberOfValues; i++)
+                {
+                    byte b;
+
+                    if (!byte.TryParse(s[2 + i], out b))
+                    {
+                        TCPPacket = UnknowPacket(TCPPacket);
+                        Type = dataType.unknow.ToString();
+                        return;
+                    }
+
+                    if (b >= 0x00 && b <= 0xB5)
+                    {
+                        Data.Add(b);
+                    }
+                    else
+                    {
+                        TCPPacket = UnknowPacket(TCPPacket);
+                        Type = dataType.unknow.ToString();
+                        return;
+                    }
+
+                }
+            }
+
+            else if (TurnoutInfo == turnoutInfo.chyba)
+            {
+                Data.Add((byte)TurnoutInfo);
+
+                byte b;
+                if (!byte.TryParse(s[1], out b))
+                {
+                    TCPPacket = UnknowPacket(TCPPacket);
+                    Type = dataType.unknow.ToString();
+                    return;
+                }
 
                 Data.Add(b);
-				
-				Data.Add(0xFF);		
-			}
-			
-			else
-            { 
-				TCPPacket = UnknowPacket(TCPPacket);
-				Type = dataType.unknow.ToString();
-				return;
-			}
-			
-			SetBytePacket();
-		}
-		
-		public TurnoutInfoPacket(byte[] bytePacket)
-		{
-			SetPropetiesFromByte(bytePacket);
-    
-			if (Enum.IsDefined(typeof(turnoutInfo),Data[0]))
-			{
-				TurnoutInfo = (turnoutInfo)Data[0];
-			}
-			else if (Data[0] >= 0xF0 && Data[0] <= 0xF3) 
-            {
-				TurnoutInfo = turnoutInfo.natoceni_vlevo_vpravo;
-			}
-			else if (Data[0] >= 0x00 && Data[0] <= 0xB5)
-			{
-				TurnoutInfo = turnoutInfo.natoceni_ve_stupnich;
-			}
-			else
-			{
-				TurnoutInfo = turnoutInfo.err;
-			}
 
-			TCPPacket = (TurnoutInfo.ToString() + "," + NumberOfUnit + TurnoutInfo + "\n");
-		}
-		
-		public static turnoutInfo stringToTurnoutInfo(string str)
-		{
-			turnoutInfo type;
+                Data.Add(0xFF);
+            }
+
+            else
+            {
+                TCPPacket = UnknowPacket(TCPPacket);
+                Type = dataType.unknow.ToString();
+                return;
+            }
+
+            SetBytePacket();
+        }
+
+        public TurnoutInfoPacket(byte[] bytePacket)
+        {
+            SetPropetiesFromByte(bytePacket);
+
+            if (Enum.IsDefined(typeof(turnoutInfo), Data[0]))
+            {
+                TurnoutInfo = (turnoutInfo)Data[0];
+            }
+            else if (Data[0] >= 0xF0 && Data[0] <= 0xF3)
+            {
+                TurnoutInfo = turnoutInfo.natoceni_vlevo_vpravo;
+            }
+            else if (Data[0] >= 0x00 && Data[0] <= 0xB5)
+            {
+                TurnoutInfo = turnoutInfo.natoceni_ve_stupnich;
+            }
+            else
+            {
+                TurnoutInfo = turnoutInfo.err;
+            }
+
+            TCPPacket = (TurnoutInfo.ToString() + "," + NumberOfUnit + TurnoutInfo + "\n");
+        }
+
+        public static turnoutInfo stringToTurnoutInfo(string str)
+        {
+            turnoutInfo type;
 
             if (!Enum.TryParse(str, out type))
             {
@@ -1354,8 +1261,8 @@ namespace TrainTTLibrary
             }
 
             return type;
-		}
-	}
+        }
+    }
 
     public class TrainMotionPacket : Packet
     {
@@ -1372,14 +1279,14 @@ namespace TrainTTLibrary
             SetPropetiesFromByte(bytePacket);
 
             Name = LocomotiveInfo.IDToName(Data[0]);
-            
+
             ID = Data[0];
 
             Speed = (byte)(Data[1] & 0x1f);
 
-            Reverse = (((Data[1] >> 5) & 0x1) == 1) ? false : true ;
+            Reverse = (((Data[1] >> 5) & 0x1) == 1) ? false : true;
 
-            TCPPacket += (Name + "," + Speed + "," + ((Reverse)? "reverse\n" : "ahead\n"));
+            TCPPacket += (Name + "," + Speed + "," + ((Reverse) ? "reverse\n" : "ahead\n"));
 
         }
 
@@ -1402,9 +1309,9 @@ namespace TrainTTLibrary
             ComposeByte();
 
             AssingType();
-            
+
             TCPPacket = (Type + ":" + Name + "," + Speed + "," + ((Reverse) ? "reverse\n" : "ahead\n"));
-            
+
 
         }
 
@@ -1421,7 +1328,7 @@ namespace TrainTTLibrary
             Name = s[0];
 
             ID = LocomotiveInfo.NameToID(Name);
-            
+
             byte a;
 
             if (!byte.TryParse(s[1], out a))
@@ -1506,7 +1413,7 @@ namespace TrainTTLibrary
 
             return (byte)Convert.ToUInt32(secondDataByte, 2);
         }
-       
+
     }
 
     public class TrainMotionInstructionPacket : Packet
@@ -1612,7 +1519,7 @@ namespace TrainTTLibrary
         }
 
         public TrainFunctionPacket(Locomotive locomotive, bool lights)
-        {            
+        {
             BytePacket = new List<byte>();
 
             Adress = new List<byte>();
@@ -1628,9 +1535,9 @@ namespace TrainTTLibrary
             ComposeByte();
 
             AssingType();
-                        
+
             TCPPacket += (Type + ":" + Name + "," + ((Lights) ? "on\n" : "off\n"));
-            
+
         }
 
         public TrainFunctionPacket(string tcpPacket)
@@ -1708,21 +1615,21 @@ namespace TrainTTLibrary
 
             secondDataByte += "0000";
 
-           return (byte)Convert.ToUInt32(secondDataByte, 2);
+            return (byte)Convert.ToUInt32(secondDataByte, 2);
         }
     }
 
- 
+
 
     public class OLEDInformationPacket : Packet
     {
         public List<string> Messages { set; get; }
-        
+
         public OLEDInformationPacket(string tcpPacket)
         {
 
             TCPPacket = tcpPacket;
-            
+
             string[] s = TCPPacket.Split(':');
 
             Type = (s[0] + ":");
@@ -1733,7 +1640,7 @@ namespace TrainTTLibrary
             }
 
             string str = tcpPacket.Substring(8);
-            
+
             s = str.Split('*');
 
             Messages = new List<string>();
@@ -1749,14 +1656,14 @@ namespace TrainTTLibrary
         {
 
             Messages = messages;
-            
+
             Type = dataType.oled_info.ToString();
 
             TCPPacket = (Type + ":");
 
-            for (int i = 0; i < Messages.Count-1; i++)
+            for (int i = 0; i < Messages.Count - 1; i++)
             {
-                TCPPacket += (Messages[i]+"*");
+                TCPPacket += (Messages[i] + "*");
             }
 
             TCPPacket += (Messages[Messages.Count - 1]);
@@ -1766,27 +1673,250 @@ namespace TrainTTLibrary
         }
     }
 
+    public class OccupancySectionPacket : Packet
+    {
+        public List<Section> Sections { set; get; }
+
+        public OccupancySectionPacket(byte[] bytePacket)
+        {
+            Sections = new List<Section>();
+
+            SetPropetiesFromByte(bytePacket);
+
+            RecognizeUnit();
+
+            foreach (Section s in Sections)
+            {
+                s.Current = Data[Sections.IndexOf(s)];
+                TCPPacket += (s.Name + "=" + s.Current + ",");
+            }
+
+            TCPPacket = TCPPacket.Substring(0, TCPPacket.Length - 1);
+
+            TCPPacket += "\n";
+        }
+
+        public OccupancySectionPacket(string tcpPacket)
+        {
+            Sections = new List<Section>();
+
+            SetPropetiesFromTCP(tcpPacket);
+
+            NumberOfAdress = (uint)unitAdress.zesilovac_DCC_1_R;
+
+            RecognizeSection(tcpPacket);
+
+            NumberOfAdressAndUnitToAdress();
+
+            Head = 0x08;
+
+            foreach (Section section in Sections)
+            {
+                Data.Add((byte)section.Current);
+            }
+
+        }
+
+        private void RecognizeSection(string tcpPacket)
+        {
+            string[] s = tcpPacket.Split(':');
+
+            tcpPacket = s[1];
+
+            string[] sec = tcpPacket.Split(',');
+
+            string[] sectio = sec[0].Split('=');
+
+            foreach (Section section in SectionInfo.listOfSection)
+            {
+                if (section.Name == sectio[0])
+                {
+                    NumberOfUnit = section.NumberOfUnit;
+                    break;
+                }
+            }
+
+            foreach (string sect in sec)
+            {
+                string[] secti = sect.Split('=');
+
+                Sections.Add(new Section(secti[0], NumberOfUnit, uint.Parse(secti[1])));
+            }
+        }
+
+        private void RecognizeUnit()
+        {
+            switch (NumberOfUnit)
+            {
+                case 3:
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            Sections.Add(SectionInfo.listOfSection[i]);
+                        }
+                        break;
+                    }
+                    // pouze ukázka, až se zde přidá další úseková jednotka, např. num. 4, připíšou se do konfiguráku section další názvy úseků 
+                    /*                
+                    case 4: 
+                      {
+                          for (int i = 8; i < 16; i++)
+                          {
+                              Sections.Add(SectionInfo.listOfSection[i]);
+                          }
+                          break;
+                      }
+                      */
+            }
+        }
+    }
+
+    public class Section
+    {
+        public string Name { set; get; }
+        public uint NumberOfUnit { set; get; }
+        public uint ModulePosition { set; get; }
+
+        public uint current;
+        public uint Current
+        {
+            set
+            {
+                current = value;
+                OccupancySection();
+
+            }
+            get
+            {
+                return current;
+            }
+        }
+        public bool Occupancy { set; get; }
+
+        public Section(string name, uint numberOfUnit, uint modulePosition)
+        {
+            Name = name;
+            NumberOfUnit = numberOfUnit;
+            ModulePosition = modulePosition;
+            Current = 0;
+            Occupancy = false;
+            //ModulePosition = modulePosition;
+        }
+
+        public Section(string name, uint numberOfUnit, uint modulePosition, uint current)
+        {
+            Name = name;
+            NumberOfUnit = numberOfUnit;
+            ModulePosition = modulePosition;
+            Current = current;
+            OccupancySection();
+
+        }
+
+        public Section(string name)
+        {
+            Name = name;
+
+            foreach (Section section in SectionInfo.listOfSection)
+            {
+                if (section.Name == name)
+                {
+                    NumberOfUnit = section.NumberOfUnit;
+                    break;
+                }
+            }
+            Current = 0;
+            OccupancySection();
+
+        }
+
+        private void OccupancySection()
+        {
+            Occupancy = (Current > 40) ? true : false;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    public class SectionInfo
+    {
+        public static List<Section> listOfSection = InitSections();
+
+        public static List<Section> InitSections()
+        {
+            if (listOfSection != null)
+            {
+                return listOfSection;
+            }
+
+            List<Section> list = new List<Section>();
+
+            XmlDocument doc = new XmlDocument();
+
+            //doc.Load("C:\\Train_2.0\\TrainTTLibrary\\sections.xml");
+            doc.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+
+            XmlNodeList sectionNodes = doc.SelectNodes("//section");
+
+            foreach (XmlNode sectionNode in sectionNodes)
+            {
+                string name = sectionNode.Attributes["id"].Value;
+
+                uint numberOfUnit = uint.Parse(sectionNode.SelectSingleNode("moduleid").InnerText);
+
+                uint modulePosition = uint.Parse(sectionNode.SelectSingleNode("moduleposition").InnerText);
+
+                list.Add(new Section(name, numberOfUnit, modulePosition));
+            }
+
+            list.Sort((a, b) =>
+            {
+                if (a.NumberOfUnit == b.NumberOfUnit)
+                {
+                    return a.ModulePosition.CompareTo(b.ModulePosition);
+                }
+                else
+                {
+                    return a.NumberOfUnit.CompareTo(b.NumberOfUnit);
+                }
+            });
+
+            listOfSection = list;
+
+            return listOfSection;
+        }
+    }
+
     public class LocomotiveInfo
     {
         public static List<Locomotive> listOfLocomotives = Initloco();
-            
+
         private static List<Locomotive> Initloco()
         {
-            
+            if (listOfLocomotives != null)
+            {
+                return listOfLocomotives;
+            }
+
             List<Locomotive> list = new List<Locomotive>();
 
-            ConfigItem configItems = new ConfigItem("C:\\Train_2.0\\TrainTTLibrary\\locomotives.xml");
-            
+            //C:\Users\Tomáš\Documents\ZCU_FEL\v1_diplomka\TestDesign\TestDesignTT\TrainTTLibrary
+
+            ConfigItem configItems = new ConfigItem("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\TrainTTLibrary\\locomotives.xml");
+
             foreach (Item item in configItems.Items)
             {
-                list.Add(new Locomotive(item.Str,item.Num));
+                list.Add(new Locomotive(item.Str, item.Num));
             }
-            
-            return list;
-           
+            listOfLocomotives = list;
+
+            return listOfLocomotives;
         }
 
-        public static string IDToName(uint id) 
+        public static string IDToName(uint id)
         {
 
             foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
@@ -1820,93 +1950,6 @@ namespace TrainTTLibrary
 
         }
 
-    }
-
-    public class SectionInfo
-    {
-        public static List<Section> listOfSection = InitSection();
-
-        private static List<Section> InitSection()
-        {
-
-            List<Section> list = new List<Section>();
-
-            ConfigItem configItems = new ConfigItem("C:\\Train_2.0\\TrainTTLibrary\\sections.xml");
-
-            foreach (Item item in configItems.Items)
-            {
-                list.Add(new Section(item.Str, item.Num));
-            }
-
-            return list;
-
-        }
-    }
-	
-	public class Section
-    {
-        public string Name { set; get; }
-        public uint NumberOfUnit { set; get; }
-
-        public uint current;
-        public uint Current
-        {
-            set
-            {
-                current = value;
-                OccupancySection();
-
-            }
-            get
-            {
-                return current;
-            }
-        }
-        public bool Occupancy { set; get; }
-
-        public Section(string name, uint numberOfUnit)
-        {
-            Name = name;
-            NumberOfUnit = numberOfUnit;
-            Current = 0;
-            Occupancy =  false;
-        }
-
-        public Section(string name,uint numberOfUnit,uint current)
-        {
-            Name = name;
-            NumberOfUnit = numberOfUnit;
-            Current = current;
-            OccupancySection();
-
-        }
-
-        public Section(string name)
-        {
-            Name = name;
-
-            foreach (Section section in SectionInfo.listOfSection)
-            {
-                if(section.Name == name)
-                {
-                    NumberOfUnit = section.NumberOfUnit;
-                    break;
-                }
-            }
-            Current = 0;
-            OccupancySection();
-
-        }
-
-        private void OccupancySection()
-        {
-            Occupancy = (Current > 40) ? true : false;
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
     }
 
     public class Locomotive
@@ -1944,7 +1987,7 @@ namespace TrainTTLibrary
     {
         public string Str { get; set; }
         public uint Num { get; set; }
-       
+
     }
 
     public class ConfigItem
@@ -1969,24 +2012,6 @@ namespace TrainTTLibrary
             {
 
             }
-        }
-      
-        public void Serialize()
-        {
-
-            Items.Add(new Item() { Str ="Karlstejn", Num = 3 });
-            Items.Add(new Item() { Str = "Beroun", Num = 12 });
-
-
-
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Item>));
-
-                using (StreamWriter sw = new StreamWriter("C:\\Train_2.0\\TrainTTLibrary\\sections.xml"))
-                {
-
-                    serializer.Serialize(sw, Items);
-                }
-            
         }
     }
 }

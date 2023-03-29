@@ -9,18 +9,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Forms;
+using TrainTTLibrary;
 
 namespace TestDesignTT
 {
     public partial class UCLokomotives : UserControl
     {
-
         [Browsable(true)]
         [Category("Action")]
         [Description("Invoked when user clicks button")]
         public event EventHandler ChangeOfTrainData;
 
         private static List<Trains> trainsList = new List<Trains>();
+
+        private static HashSet<string> addedLocomotives = new HashSet<string>();
 
         public List<ChangeTrainData> trainDataChange = new List<ChangeTrainData>();
         public UCLokomotives()
@@ -38,7 +40,88 @@ namespace TestDesignTT
             }
         }
 
+        private void updateHashLoco(object sender, EventArgs e)
+        {
+            ComboBox combo = sender as ComboBox;
+            int rowIndex = tableLayoutPanel1.GetRow(combo);
+            addedLocomotives.Clear();
 
+            for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
+            {
+                if (i == rowIndex)
+                    continue;
+
+                ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
+                if (cbTrain.SelectedIndex > -1)
+                    addedLocomotives.Add(cbTrain.SelectedItem.ToString());
+            }
+
+            for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
+            {
+                if (i == rowIndex)
+                {
+                    ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
+                    cbTrain.Items.Clear();
+                    for (int j = 0; j < LocomotiveInfo.listOfLocomotives.Count; j++)
+                    {
+                        string loco = Packet.UnderLineToGap(LocomotiveInfo.listOfLocomotives[j].Name);
+
+                        if (!addedLocomotives.Contains(loco))
+                        {
+                            cbTrain.Items.Add(loco);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnAddTrain_Click(object sender, EventArgs e)
+        {
+            trainsList = ControlLogic.MainLogic.GetData();
+            checkStartStopButton();
+            int[] rowHeights = tableLayoutPanel1.GetRowHeights();
+
+            for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
+            {
+                ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
+                if (cbTrain.SelectedIndex > -1)
+                    addedLocomotives.Add(cbTrain.SelectedItem.ToString());
+            }
+
+            for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
+            {
+                if (rowHeights[i] < 0.5)
+                {
+                    tableLayoutPanel1.RowStyles[i] = new RowStyle(SizeType.Absolute, 35);
+                    /*
+                    ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
+                    cbTrain.Items.Clear();
+                    for (int j = 0; j < LocomotiveInfo.listOfLocomotives.Count; j++)
+                    {
+                        string loco = Packet.UnderLineToGap(LocomotiveInfo.listOfLocomotives[j].Name);
+
+                        if (!addedLocomotives.Contains(loco))
+                        {
+                            cbTrain.Items.Add(loco);
+                        }
+                    }
+                    */
+
+                    break;
+                }
+                /*
+                else
+                {
+                    ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
+                    addedLocomotives.Add(cbTrain.SelectedItem.ToString());
+                }
+                */
+
+            }
+            //tableLayoutPanel1.RowStyles[1] = new RowStyle(SizeType.Absolute, 35);
+        }
+
+        /*
         private void btnAddTrain_Click(object sender, EventArgs e)
         {
             trainsList = ControlLogic.MainLogic.GetData();
@@ -64,55 +147,101 @@ namespace TestDesignTT
             }
             //tableLayoutPanel1.RowStyles[1] = new RowStyle(SizeType.Absolute, 35);
         }
+        */
 
         #region Buttons Start/Stop click events
         private void btnStartStop1_Click(object sender, EventArgs e)
         {
-            startStopAction(sender,e);
+            startStopAction(sender, e);
         }
 
         private void btnStartStop2_Click(object sender, EventArgs e)
         {
-            startStopAction(sender,e);
+            startStopAction(sender, e);
         }
 
         private void btnStartStop3_Click(object sender, EventArgs e)
         {
-            startStopAction(sender,e);
+            startStopAction(sender, e);
         }
 
         private void btnStartStop4_Click(object sender, EventArgs e)
         {
-            startStopAction(sender,e);
+            startStopAction(sender, e);
         }
 
         private void btnStartStop5_Click(object sender, EventArgs e)
         {
-            startStopAction(sender,e);
+            startStopAction(sender, e);
         }
 
         private void btnStartStop6_Click(object sender, EventArgs e)
         {
-            startStopAction(sender,e);
+            startStopAction(sender, e);
         }
 
         private void btnStartStop7_Click(object sender, EventArgs e)
         {
-            startStopAction(sender,e);
+            startStopAction(sender, e);
         }
 
         private void btnStartStop8_Click(object sender, EventArgs e)
         {
-            startStopAction(sender,e);
+            startStopAction(sender, e);
         }
 
         private void btnStartStop9_Click(object sender, EventArgs e)
         {
-            startStopAction(sender,e);
+            startStopAction(sender, e);
         }
         #endregion
 
         #region Comboboxes for train and speed, click events and logic
+
+        private void cbTrain1_Click(object sender, EventArgs e)
+        {
+            updateHashLoco(sender,e);
+        }
+
+        private void cbTrain2_Click(object sender, EventArgs e)
+        {
+            updateHashLoco(sender, e);
+        }
+
+        private void cbTrain3_Click(object sender, EventArgs e)
+        {
+            updateHashLoco(sender, e);
+        }
+
+        private void cbTrain4_Click(object sender, EventArgs e)
+        {
+            updateHashLoco(sender, e);
+        }
+
+        private void cbTrain5_Click(object sender, EventArgs e)
+        {
+            updateHashLoco(sender, e);
+        }
+
+        private void cbTrain6_Click(object sender, EventArgs e)
+        {
+            updateHashLoco(sender, e);
+        }
+
+        private void cbTrain7_Click(object sender, EventArgs e)
+        {
+            updateHashLoco(sender, e);
+        }
+
+        private void cbTrain8_Click(object sender, EventArgs e)
+        {
+            updateHashLoco(sender, e);
+        }
+
+        private void cbTrain9_Click(object sender, EventArgs e)
+        {
+            updateHashLoco(sender, e);
+        }
         private void cbTrain1_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
@@ -237,12 +366,12 @@ namespace TestDesignTT
             else
                 btnAddLocomotive.Enabled = true;
         }
-        
+
 
         private void startStopAction(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            if (button == null) 
+            if (button == null)
                 return; // Exit if sender is not a button
 
             // Find the row index of the button's parent control in the table layout
@@ -264,7 +393,7 @@ namespace TestDesignTT
                 button.ForeColor = Color.Red;
                 button.Font = new Font(button.Font, FontStyle.Bold);
                 //Send data to start locomotive
-                
+
             }
             else
             {
@@ -276,31 +405,38 @@ namespace TestDesignTT
                 button.Font = new Font(button.Font, FontStyle.Bold);
                 //Stop locomotive
             }
+
+            byte speedToByte;
+
+            byte.TryParse(cbSpeed.SelectedItem.ToString(), out speedToByte);
+
             ChangeTrainData matchingTrain = trainDataChange.FirstOrDefault(t => t.Lokomotive == cbTrain.SelectedItem.ToString());
             if (matchingTrain != null)
             {
-                matchingTrain.Speed = cbSpeed.SelectedItem.ToString();
+
+                matchingTrain.Speed = speedToByte;
                 matchingTrain.Reverze = cbReverse.Checked ? true : false;
                 matchingTrain.StartStop = button.Text == "Stop" ? true : false;
             }
             else
             {
-                addTrainData(cbTrain.SelectedItem.ToString(), cbSpeed.SelectedItem.ToString(), cbReverse.Checked ? true : false, button.Text == "Stop" ? true : false);
+
+                addTrainData(cbTrain.SelectedItem.ToString(), speedToByte, cbReverse.Checked ? true : false, button.Text == "Stop" ? true : false);
             }
 
             ChangeOfTrainData?.Invoke(this, e);
         }
 
-        public void addTrainData(string locomotive, string speed, bool reverze, bool startStop)
+        public void addTrainData(string locomotive, byte speed, bool reverze, bool startStop)
         {
-            trainDataChange.Add(new ChangeTrainData { Lokomotive = locomotive, Speed = speed, Reverze = reverze, StartStop = startStop});
+            trainDataChange.Add(new ChangeTrainData { Lokomotive = locomotive, Speed = speed, Reverze = reverze, StartStop = startStop });
         }
     }
 
     public class ChangeTrainData
     {
         public string Lokomotive;
-        public string Speed;
+        public byte Speed;
         public bool Reverze;
         public bool StartStop;
     }

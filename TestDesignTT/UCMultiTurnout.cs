@@ -16,7 +16,7 @@ namespace TestDesignTT
         [Browsable(true)]
         [Category("Action")]
         [Description("Invoked when user clicks button")]
-        public event EventHandler ButtonAddClick;
+        public event EventHandler MultiTurnoutButtonAddClick;
 
         public List<Turnouts> turnouts = new List<Turnouts>();
 
@@ -114,7 +114,8 @@ namespace TestDesignTT
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            UInt32 id = Convert.ToByte(tbChange.Text, 2);
+            //UInt32 id = 0x381 + Convert.ToUInt32(tbChange.Text, 16);
+            UInt32 id = Convert.ToUInt32(tbChange.Text, 16);
             byte choose = Convert.ToByte(tbChoose.Text, 2);
             byte position = Convert.ToByte(tbChange.Text, 2);
 
@@ -125,7 +126,7 @@ namespace TestDesignTT
             this.Choose = Convert.ToByte(tbChoose.Text, 2);
             this.UnitID = 0x380 + Convert.ToUInt32(cbUnit.Text, 16);
             */
-            ButtonAddClick?.Invoke(this, e);
+            MultiTurnoutButtonAddClick?.Invoke(this, e);
             // nasazena jednotka odberu 00110000 01100000 → 0011 | 0000011 → 0x183 (3 a 3)
             // nasazena jednotka prestavniku - pro zapis: 01110000 00100000 → 0111 | 0000001 → 0x381 (7 a 1) - pro cteni
             // nasazena jednotka prestavniku - pro cteni: 10000000 00100000 → 1000 | 0000001 → 0x401 (8 a 1) - pro cteni

@@ -1,19 +1,28 @@
 ﻿using ControlLogic;
+using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO.Packaging;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using TrainTTLibrary;
 
 namespace TestDesignTT
 {
     public partial class FormDebug : Form
     {
+        private bool IsConnect = false;
+
+        private static TCPClient klient = null;
+
+
         UCEditTimetable ucEditTimetable = new UCEditTimetable();
         UCTrainTimetable ucTrainTimetable = new UCTrainTimetable();
         UCEditMoving ucEditMoving = new UCEditMoving();
@@ -24,6 +33,7 @@ namespace TestDesignTT
         UCLokomotives uCLocomotives = new UCLokomotives();
         UCMultiTurnout uCmulti = new UCMultiTurnout();
         UCEditJson uCEditJson = new UCEditJson();
+        UCOccupancy uCOccupancy = new UCOccupancy();
 
 
         private static List<Trains> trainsList = new List<Trains>();
@@ -34,14 +44,35 @@ namespace TestDesignTT
             InitializeComponent();
             DisplayInstance(uCHome);
             ControlLogic.MainLogic.Initialization();
+
+            //List<Section> si = SectionInfo.listOfSection;
         }
 
+        #region Form actions (Load, Init, Closed, Resized)
         private void FormDebug_Load(object sender, EventArgs e)
         {
-            uCmulti.ButtonAddClick += new EventHandler(UserControl_ButtonAddClick);
-            uCTurnouts.ButtonSendClick += new EventHandler(UserControl_ButtonSaveClick);
+            uCmulti.MultiTurnoutButtonAddClick += new EventHandler(UserControl_MultiTurnoutClick);
+            uCTurnouts.TurnoutButtonSendClick += new EventHandler(UserControl_TurnoutClick);
             uCLocomotives.ChangeOfTrainData += new EventHandler(UserControl_TrainDataChange);
             uCEditJson.ButtonChangeJsonClick += new EventHandler(UserControl_EditJsonClick);
+            StartTCPClient();
+        }
+
+        private void FormDebug_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (IsConnect)
+            {
+                StopAll();
+            }
+
+            Thread.Sleep(30);
+
+
+            if (klient != null)
+            {
+                klient.Dispose();
+                klient = null;
+            }
         }
 
         private void FormDebug_Resize(object sender, EventArgs e)
@@ -54,6 +85,101 @@ namespace TestDesignTT
             }
         }
 
+        private void FormDebug_SizeChanged(object sender, EventArgs e)
+        {
+            if (panelDesktopPanel.Controls.Contains(ucEditMoving))
+                ucEditMoving.changeSize();
+            if (panelDesktopPanel.Controls.Contains(ucTrainTimetable))
+                ucTrainTimetable.changeSize();
+            if (panelDesktopPanel.Controls.Contains(ucEditTimetable))
+                ucEditTimetable.changeSize();
+            if (panelDesktopPanel.Controls.Contains(ucTrainMoving))
+                ucTrainMoving.changeSize();
+        }
+
+        #endregion
+
+        #region TCP server (Start, Connect, Disconnect, Send Data)
+        private void StartTCPClient()
+        {
+
+            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            IPAddress ipAddress = ipHostInfo.AddressList[1];
+
+            klient = new TCPClient(ipAddress, 8080);
+
+            klient.DataType = eRecvDataType.dataStringNL;
+            klient.OnClientConnected += KlientConnected;
+            klient.OnClientDisconnected += TCPDisconnectClient;
+            if (!klient.Connect())
+            {
+                KlientCleanUp();
+            }
+        }
+
+        private void TCPDisconnectClient(object sender, TCPClientConnectedEventArgs e)
+        {
+            IsConnect = false;
+        }
+
+        private void KlientConnected(object sender, TCPClientConnectedEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<object, TCPClientConnectedEventArgs>(KlientConnected),
+                  new object[] { sender, e });
+                return;
+            }
+
+
+            if (e == null)
+            {
+                IsConnect = false;
+
+                KlientCleanUp();
+            }
+            else
+            {
+                //log.Add("Client connected to " + e.clientIPE);
+                IsConnect = true;
+            }
+        }
+
+        private void KlientCleanUp()
+        {
+            if (klient != null)
+            {
+                klient.Disconnect();
+
+                klient.OnClientConnected -= KlientConnected;
+                klient.OnClientDisconnected -= TCPDisconnectClient;
+
+                klient.Dispose();
+                klient = null;
+            }
+        }
+
+        private void SendTCPData(string str)
+        {
+            while ((!IsConnect) || !klient.Send(str))
+            {
+                if (DialogResult.Cancel == MessageBox.Show("Server not found\nDo you want to try to reconnect?", "Error: Server not found", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning))
+                {
+
+                    Close();
+
+                }
+
+                StartTCPClient();
+                Thread.Sleep(200);
+
+            }
+
+        }
+
+        #endregion
+
+        #region Definition of buttons in the left menu and user control
 
         private void DisplayInstance(UserControl uc)
         {
@@ -68,20 +194,6 @@ namespace TestDesignTT
             {
                 uc.BringToFront();
             }
-        }
-
-
-
-        private void FormDebug_SizeChanged(object sender, EventArgs e)
-        {
-            if (panelDesktopPanel.Controls.Contains(ucEditMoving))
-                ucEditMoving.changeSize();
-            if (panelDesktopPanel.Controls.Contains(ucTrainTimetable))
-                ucTrainTimetable.changeSize();
-            if (panelDesktopPanel.Controls.Contains(ucEditTimetable))
-                ucEditTimetable.changeSize();
-            if (panelDesktopPanel.Controls.Contains(ucTrainMoving))
-                ucTrainMoving.changeSize();
         }
 
         /*
@@ -154,7 +266,7 @@ namespace TestDesignTT
         private void btnCentralStop_Click(object sender, EventArgs e)
         {
             //Stop all trains
-
+            StopAll();
         }
 
         private void btnUpdateJson_Click(object sender, EventArgs e)
@@ -164,19 +276,63 @@ namespace TestDesignTT
             uCEditJson.ClearData();
         }
 
+        private void btnOccupancy_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCOccupancy);
+            labelTitle.Text = (sender as Button).Text;
+
+            //List<Section> occupancySections = TCPServerTrainTT.Program.GetOccupancySections();
+            List<Section> occupancySections = TrainTTLibrary.SectionInfo.listOfSection;
+
+        }
+
+        #endregion
+
+        private void StopAll()
+        {
+            foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
+            {
+
+                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 3);
+
+                SendTCPData(trainMotionPacket.TCPPacket);
+            }
+
+        }
+
         protected void UserControl_TrainDataChange(object sender, EventArgs e)
         {
             List<ChangeTrainData> trainDataChange = uCLocomotives.trainDataChange;
 
             bool foundMatch = false;
 
-            foreach (Trains train in trainsList)
+            foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
             {
+                string loco = locomotive.Name.ToString();
+
                 foreach (ChangeTrainData data in trainDataChange)
                 {
-                    if (train.name == data.Lokomotive)
+                    string loc = Packet.GapToUnderLine(data.Lokomotive);
+
+                    if (loco == loc)
                     {
                         //train.direction = data.Reverze;
+                        if (data.StartStop && data.Speed > 3)
+                        {
+                            bool reverse = data.Reverze;
+
+                            byte speed = data.Speed;
+
+                            TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, reverse, speed);
+
+                            SendTCPData(trainMotionPacket.TCPPacket);
+                        }
+                        else
+                        {
+                            TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 0);
+
+                            SendTCPData(trainMotionPacket.TCPPacket);
+                        }
                         foundMatch = true;
                         break;
                     }
@@ -184,9 +340,6 @@ namespace TestDesignTT
                 if (foundMatch)
                     break;
             }
-            StoreJson sj = new StoreJson();
-            sj.SaveJson(trainsList);
-            //TODO - send packet
         }
 
         protected void UserControl_EditJsonClick(object sender, EventArgs e)
@@ -210,7 +363,7 @@ namespace TestDesignTT
                         break;
                     }
                 }
-                if (foundMatch) 
+                if (foundMatch)
                     break;
             }
             StoreJson sj = new StoreJson();
@@ -218,28 +371,44 @@ namespace TestDesignTT
             changeData.Clear();
         }
 
-        protected void UserControl_ButtonAddClick(object sender, EventArgs e)
+        protected void UserControl_MultiTurnoutClick(object sender, EventArgs e)
         {
             //handle the event
             //TODO - send packets (or maybe firtstly just check to values? But probably not needed)
             List<Turnouts> turnouts = uCmulti.turnouts;
             for (int i = 0; i < turnouts.Count; i++)
             {
+                uint numberOfUnit = turnouts[i].UnitID;
 
+                byte data1 = turnouts[i].Change;
+
+                byte data2 = turnouts[i].Position;
+
+                TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket(Packet.turnoutInstruction.nastaveni_vyhybky, numberOfUnit, data1, data2);
+
+                SendTCPData(turnoutInstructionPacket.TCPPacket);
             }
             turnouts.Clear();
         }
 
-        protected void UserControl_ButtonSaveClick(object sender, EventArgs e)
+        protected void UserControl_TurnoutClick(object sender, EventArgs e)
         {
-            //TODO
-            //Get values from list and send packets
-            //Update
 
             List<Turnouts> turnouts = uCTurnouts.turnouts;
             for (int i = 0; i < turnouts.Count; i++)
             {
+                uint numberOfUnit = turnouts[i].UnitID;
 
+                byte data1 = turnouts[i].Change;
+
+                byte data2 = turnouts[i].Position;
+
+                //TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket("turnout_instruction:presna_poloha_serv,897,160,161,162,163,164,165,166,167");
+
+                //TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket("turnout_instruction:presna_poloha_serv,897,0xA0,0xA1,0xA2,0xA3,0xA4,0xA5,0xA6,0xA7");
+                TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket(Packet.turnoutInstruction.nastaveni_vyhybky, numberOfUnit, data1, data2);
+
+                SendTCPData(turnoutInstructionPacket.TCPPacket);
             }
             turnouts.Clear();
         }

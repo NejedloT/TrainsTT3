@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panelSideMenu = new System.Windows.Forms.Panel();
+            this.btnOccupancy = new FontAwesome.Sharp.IconButton();
             this.btnCentralStop = new FontAwesome.Sharp.IconButton();
             this.btnUpdateJson = new FontAwesome.Sharp.IconButton();
             this.btnMultiTurnouts = new FontAwesome.Sharp.IconButton();
@@ -51,6 +52,7 @@
             // 
             this.panelSideMenu.AutoScroll = true;
             this.panelSideMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(87)))), ((int)(((byte)(207)))));
+            this.panelSideMenu.Controls.Add(this.btnOccupancy);
             this.panelSideMenu.Controls.Add(this.btnCentralStop);
             this.panelSideMenu.Controls.Add(this.btnUpdateJson);
             this.panelSideMenu.Controls.Add(this.btnMultiTurnouts);
@@ -65,6 +67,29 @@
             this.panelSideMenu.Name = "panelSideMenu";
             this.panelSideMenu.Size = new System.Drawing.Size(250, 861);
             this.panelSideMenu.TabIndex = 1;
+            // 
+            // btnOccupancy
+            // 
+            this.btnOccupancy.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnOccupancy.FlatAppearance.BorderSize = 0;
+            this.btnOccupancy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOccupancy.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnOccupancy.ForeColor = System.Drawing.Color.White;
+            this.btnOccupancy.IconChar = FontAwesome.Sharp.IconChar.Bolt;
+            this.btnOccupancy.IconColor = System.Drawing.Color.Red;
+            this.btnOccupancy.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnOccupancy.IconSize = 32;
+            this.btnOccupancy.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOccupancy.Location = new System.Drawing.Point(0, 420);
+            this.btnOccupancy.Name = "btnOccupancy";
+            this.btnOccupancy.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnOccupancy.Size = new System.Drawing.Size(250, 50);
+            this.btnOccupancy.TabIndex = 23;
+            this.btnOccupancy.Text = "Occupancy";
+            this.btnOccupancy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOccupancy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnOccupancy.UseVisualStyleBackColor = true;
+            this.btnOccupancy.Click += new System.EventHandler(this.btnOccupancy_Click);
             // 
             // btnCentralStop
             // 
@@ -313,6 +338,7 @@
             this.MinimumSize = new System.Drawing.Size(1200, 900);
             this.Name = "FormDebug";
             this.Text = "FormDebug";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormDebug_FormClosing);
             this.Load += new System.EventHandler(this.FormDebug_Load);
             this.SizeChanged += new System.EventHandler(this.FormDebug_SizeChanged);
             this.Resize += new System.EventHandler(this.FormDebug_Resize);
@@ -341,5 +367,6 @@
         private FontAwesome.Sharp.IconButton btnMultiTurnouts;
         private FontAwesome.Sharp.IconButton btnCentralStop;
         private FontAwesome.Sharp.IconButton btnUpdateJson;
+        private FontAwesome.Sharp.IconButton btnOccupancy;
     }
 }

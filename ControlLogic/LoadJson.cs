@@ -29,6 +29,10 @@ namespace ControlLogic
 
     }
 
+    public class TrainData
+    {
+        public List<Trains> data { get; set; }
+    }
 
     public class LoadJson
     {
@@ -45,11 +49,6 @@ namespace ControlLogic
             var trainData = JsonSerializer.Deserialize<TrainData>(jsonData, jsonOptions);
             data = trainData.data;
         }
-    }
-
-    public class TrainData
-    {
-        public List<Trains> data { get; set; }
     }
 
     public class StoreJson

@@ -260,6 +260,8 @@
             this.cbIdUnit1.FormattingEnabled = true;
             this.cbIdUnit1.ItemHeight = 23;
             this.cbIdUnit1.Items.AddRange(new object[] {
+            "1",
+            "2",
             "3",
             "4",
             "5",
@@ -388,6 +390,8 @@
             this.cbIdUnit2.FormattingEnabled = true;
             this.cbIdUnit2.ItemHeight = 23;
             this.cbIdUnit2.Items.AddRange(new object[] {
+            "1",
+            "2",
             "3",
             "4",
             "5",
@@ -567,6 +571,8 @@
             this.cbIdUnit3.FormattingEnabled = true;
             this.cbIdUnit3.ItemHeight = 23;
             this.cbIdUnit3.Items.AddRange(new object[] {
+            "1",
+            "2",
             "3",
             "4",
             "5",
@@ -820,6 +826,8 @@
             this.cbIdUnit4.FormattingEnabled = true;
             this.cbIdUnit4.ItemHeight = 23;
             this.cbIdUnit4.Items.AddRange(new object[] {
+            "1",
+            "2",
             "3",
             "4",
             "5",
@@ -999,6 +1007,8 @@
             this.cbIdUnit5.FormattingEnabled = true;
             this.cbIdUnit5.ItemHeight = 23;
             this.cbIdUnit5.Items.AddRange(new object[] {
+            "1",
+            "2",
             "3",
             "4",
             "5",

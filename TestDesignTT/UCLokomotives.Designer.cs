@@ -284,19 +284,12 @@
             this.cbTrain9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbTrain9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrain9.FormattingEnabled = true;
-            this.cbTrain9.Items.AddRange(new object[] {
-            "Loco 1",
-            "Loco 2",
-            "Loco 3",
-            "Loco 4",
-            "Loco 5",
-            "Loco 6",
-            "Loco 7"});
             this.cbTrain9.Location = new System.Drawing.Point(173, 283);
             this.cbTrain9.Name = "cbTrain9";
             this.cbTrain9.Size = new System.Drawing.Size(244, 23);
             this.cbTrain9.TabIndex = 60;
             this.cbTrain9.SelectedIndexChanged += new System.EventHandler(this.cbTrain9_SelectedIndexChanged);
+            this.cbTrain9.Click += new System.EventHandler(this.cbTrain9_Click);
             // 
             // label10
             // 
@@ -368,19 +361,12 @@
             this.cbTrain8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbTrain8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrain8.FormattingEnabled = true;
-            this.cbTrain8.Items.AddRange(new object[] {
-            "Loco 1",
-            "Loco 2",
-            "Loco 3",
-            "Loco 4",
-            "Loco 5",
-            "Loco 6",
-            "Loco 7"});
             this.cbTrain8.Location = new System.Drawing.Point(173, 248);
             this.cbTrain8.Name = "cbTrain8";
             this.cbTrain8.Size = new System.Drawing.Size(244, 23);
             this.cbTrain8.TabIndex = 54;
             this.cbTrain8.SelectedIndexChanged += new System.EventHandler(this.cbTrain8_SelectedIndexChanged);
+            this.cbTrain8.Click += new System.EventHandler(this.cbTrain8_Click);
             // 
             // label9
             // 
@@ -452,19 +438,12 @@
             this.cbTrain7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbTrain7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrain7.FormattingEnabled = true;
-            this.cbTrain7.Items.AddRange(new object[] {
-            "Loco 1",
-            "Loco 2",
-            "Loco 3",
-            "Loco 4",
-            "Loco 5",
-            "Loco 6",
-            "Loco 7"});
             this.cbTrain7.Location = new System.Drawing.Point(173, 213);
             this.cbTrain7.Name = "cbTrain7";
             this.cbTrain7.Size = new System.Drawing.Size(244, 23);
             this.cbTrain7.TabIndex = 48;
             this.cbTrain7.SelectedIndexChanged += new System.EventHandler(this.cbTrain7_SelectedIndexChanged);
+            this.cbTrain7.Click += new System.EventHandler(this.cbTrain7_Click);
             // 
             // label8
             // 
@@ -536,19 +515,12 @@
             this.cbTrain6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbTrain6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrain6.FormattingEnabled = true;
-            this.cbTrain6.Items.AddRange(new object[] {
-            "Loco 1",
-            "Loco 2",
-            "Loco 3",
-            "Loco 4",
-            "Loco 5",
-            "Loco 6",
-            "Loco 7"});
             this.cbTrain6.Location = new System.Drawing.Point(173, 178);
             this.cbTrain6.Name = "cbTrain6";
             this.cbTrain6.Size = new System.Drawing.Size(244, 23);
             this.cbTrain6.TabIndex = 42;
             this.cbTrain6.SelectedIndexChanged += new System.EventHandler(this.cbTrain6_SelectedIndexChanged);
+            this.cbTrain6.Click += new System.EventHandler(this.cbTrain6_Click);
             // 
             // label7
             // 
@@ -621,19 +593,12 @@
             this.cbTrain5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbTrain5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrain5.FormattingEnabled = true;
-            this.cbTrain5.Items.AddRange(new object[] {
-            "Loco 1",
-            "Loco 2",
-            "Loco 3",
-            "Loco 4",
-            "Loco 5",
-            "Loco 6",
-            "Loco 7"});
             this.cbTrain5.Location = new System.Drawing.Point(173, 143);
             this.cbTrain5.Name = "cbTrain5";
             this.cbTrain5.Size = new System.Drawing.Size(244, 23);
             this.cbTrain5.TabIndex = 36;
             this.cbTrain5.SelectedIndexChanged += new System.EventHandler(this.cbTrain5_SelectedIndexChanged);
+            this.cbTrain5.Click += new System.EventHandler(this.cbTrain5_Click);
             // 
             // label6
             // 
@@ -706,19 +671,12 @@
             this.cbTrain4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbTrain4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrain4.FormattingEnabled = true;
-            this.cbTrain4.Items.AddRange(new object[] {
-            "Loco 1",
-            "Loco 2",
-            "Loco 3",
-            "Loco 4",
-            "Loco 5",
-            "Loco 6",
-            "Loco 7"});
             this.cbTrain4.Location = new System.Drawing.Point(173, 108);
             this.cbTrain4.Name = "cbTrain4";
             this.cbTrain4.Size = new System.Drawing.Size(244, 23);
             this.cbTrain4.TabIndex = 30;
             this.cbTrain4.SelectedIndexChanged += new System.EventHandler(this.cbTrain4_SelectedIndexChanged);
+            this.cbTrain4.Click += new System.EventHandler(this.cbTrain4_Click);
             // 
             // label5
             // 
@@ -791,19 +749,12 @@
             this.cbTrain3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbTrain3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrain3.FormattingEnabled = true;
-            this.cbTrain3.Items.AddRange(new object[] {
-            "Loco 1",
-            "Loco 2",
-            "Loco 3",
-            "Loco 4",
-            "Loco 5",
-            "Loco 6",
-            "Loco 7"});
             this.cbTrain3.Location = new System.Drawing.Point(173, 73);
             this.cbTrain3.Name = "cbTrain3";
             this.cbTrain3.Size = new System.Drawing.Size(244, 23);
             this.cbTrain3.TabIndex = 24;
             this.cbTrain3.SelectedIndexChanged += new System.EventHandler(this.cbTrain3_SelectedIndexChanged);
+            this.cbTrain3.Click += new System.EventHandler(this.cbTrain3_Click);
             // 
             // label4
             // 
@@ -876,19 +827,12 @@
             this.cbTrain2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbTrain2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrain2.FormattingEnabled = true;
-            this.cbTrain2.Items.AddRange(new object[] {
-            "Loco 1",
-            "Loco 2",
-            "Loco 3",
-            "Loco 4",
-            "Loco 5",
-            "Loco 6",
-            "Loco 7"});
             this.cbTrain2.Location = new System.Drawing.Point(173, 38);
             this.cbTrain2.Name = "cbTrain2";
             this.cbTrain2.Size = new System.Drawing.Size(244, 23);
             this.cbTrain2.TabIndex = 18;
             this.cbTrain2.SelectedIndexChanged += new System.EventHandler(this.cbTrain2_SelectedIndexChanged);
+            this.cbTrain2.Click += new System.EventHandler(this.cbTrain2_Click);
             // 
             // label3
             // 
@@ -907,19 +851,12 @@
             this.cbTrain1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbTrain1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrain1.FormattingEnabled = true;
-            this.cbTrain1.Items.AddRange(new object[] {
-            "Loco 1",
-            "Loco 2",
-            "Loco 3",
-            "Loco 4",
-            "Loco 5",
-            "Loco 6",
-            "Loco 7"});
             this.cbTrain1.Location = new System.Drawing.Point(173, 3);
             this.cbTrain1.Name = "cbTrain1";
             this.cbTrain1.Size = new System.Drawing.Size(244, 23);
             this.cbTrain1.TabIndex = 0;
             this.cbTrain1.SelectedIndexChanged += new System.EventHandler(this.cbTrain1_SelectedIndexChanged);
+            this.cbTrain1.Click += new System.EventHandler(this.cbTrain1_Click);
             // 
             // cbReverse1
             // 
