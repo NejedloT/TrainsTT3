@@ -223,7 +223,7 @@ namespace TCPServerTrainTT
                     if (Packet.RecognizeTCPType(p.Type) == Packet.dataType.unit_info)
                     {
                         UnitInfoPacket unitInfoPacket = new UnitInfoPacket(p.BytePacket.ToArray());
-                        if (unitInfoPacket.UnitInfo == Packet.unitInstruction.restart_mikroprocesoru)
+                        if (unitInfoPacket.UnitInfo == Packet.unitInfo.err)
                         {
                             Console.Write("DATA SEND: " + unitInfoPacket.TCPPacket, TCPError);
                         }
@@ -238,7 +238,7 @@ namespace TCPServerTrainTT
 					{
 						TurnoutInfoPacket turnoutInfoPacket = new TurnoutInfoPacket(p.BytePacket.ToArray());
 						Console.Write("DATA SEND: " + turnoutInfoPacket.TCPPacket, TCPDataSend);
-						server.Send(turnoutInfoPacket.TCPPacket, TCPDataSend);
+						server.Send(turnoutInfoPacket.TCPPacket, null);
 					}
                 }
             }
@@ -314,7 +314,7 @@ namespace TCPServerTrainTT
         {
             for (int i = 0; i < trainMotionPackets.Count; i++)
             {
-
+                Console.WriteLine("Train motion packet\n");
                 SendSerialData(trainMotionPackets[i].BytePacket);
 
 
@@ -635,7 +635,6 @@ namespace TCPServerTrainTT
                         {
                             return;
                         }
-
                         SendSerialData(turnoutInstructionPacket.BytePacket);
 						
 					}

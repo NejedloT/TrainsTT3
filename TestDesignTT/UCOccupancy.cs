@@ -31,6 +31,7 @@ namespace TestDesignTT
 
             occupancyTimer.Enabled = true;
             */
+            
         }
 
         private void UCOccupancy_Tick(object source, System.Timers.ElapsedEventArgs e)

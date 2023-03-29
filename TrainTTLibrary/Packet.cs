@@ -483,6 +483,9 @@ namespace TrainTTLibrary
                 return;
             }
 
+            for (int i = 0; i < 2; i++)
+                Data.Add(0);
+
             SetBytePacket();
 
             TCPPacket = (Type + ":" + UnitInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
@@ -559,6 +562,9 @@ namespace TrainTTLibrary
                 }
                 Data.Add(b);
             }
+
+            for (int i = 0; i < 2; i++)
+                Data.Add(0);
 
             SetBytePacket();
         }
@@ -660,7 +666,7 @@ namespace TrainTTLibrary
             SetBytePacket();
         }
 
-        public UnitInfoPacket(unitInfo type, uint numberOfUnit, byte data)
+        public UnitInfoPacket(unitInfo type, uint numberOfUnit, byte data1, byte data2, byte data3, byte data4)
         {
 
             BytePacket = new List<byte>();
@@ -681,7 +687,13 @@ namespace TrainTTLibrary
 
             NumberOfAdressAndUnitToAdress();
 
-            Data.Add(data);
+            Data.Add(data1);
+
+            Data.Add(data2);
+
+            Data.Add(data3);
+
+            Data.Add(data4);
 
             SetBytePacket();
 
@@ -790,6 +802,9 @@ namespace TrainTTLibrary
                 }
 
                 Data.Add(c);
+
+                for (int i = 0; i < 6; i++)
+                    Data.Add(0);
             }
 
             else if (TurnoutInstruction == turnoutInstruction.restart_jednotky)
@@ -805,6 +820,9 @@ namespace TrainTTLibrary
                     return;
                 }
                 Data.Add(b);
+
+                for (int i = 0; i < 6; i++)
+                    Data.Add(0);
             }
 
             else if (TurnoutInstruction == turnoutInstruction.nastaveni_prodlevy_pred_natocenim)
@@ -824,6 +842,9 @@ namespace TrainTTLibrary
                     Data.Add(0xFA);
                 else
                     Data.Add(b);
+
+                for (int i = 0; i < 6; i++)
+                    Data.Add(0);
             }
 
             else if (TurnoutInstruction == turnoutInstruction.precteni_stavu_natoceni)
@@ -844,6 +865,9 @@ namespace TrainTTLibrary
 
                 else
                     Data.Add(0x01);
+
+                for (int i = 0; i < 6; i++)
+                    Data.Add(0);
             }
 
             else if (TurnoutInstruction == turnoutInstruction.nastaveni_dorazu)
@@ -891,6 +915,9 @@ namespace TrainTTLibrary
                     Data.Add(d);
                 else
                     Data.Add(0x6E);
+
+                for (int i = 0; i < 4; i++)
+                    Data.Add(0);
             }
             else
             {
@@ -901,7 +928,7 @@ namespace TrainTTLibrary
 
             SetBytePacket();
 
-            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + Data[1] + ".\n");
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
         }
 
         public TurnoutInstructionPacket(byte[] bytePacket)
@@ -958,8 +985,8 @@ namespace TrainTTLibrary
 
             SetBytePacket();
 
-            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + ", Presne natoceni. " + "\n");
-        }
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "," + Data[2] + "," + Data[3] + "," + Data[4] + "," + Data[5] + "," + Data[6] + "," + Data[7] + "\n");
+        } 
 
         //nastaveni vyhybek
         public TurnoutInstructionPacket(turnoutInstruction type, uint numberOfUnit, byte data1, byte data2)
@@ -987,6 +1014,9 @@ namespace TrainTTLibrary
             Data.Add(data1);
 
             Data.Add(data2);
+
+            for (int i = 0; i < 5; i++)
+                Data.Add(0);
 
             SetBytePacket();
 
@@ -1042,6 +1072,10 @@ namespace TrainTTLibrary
                 else
                     Data.Add(0x01);
             }
+
+            for (int i = 0; i < 6; i++)
+                Data.Add(0);
+
             SetBytePacket();
 
             TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
@@ -1086,9 +1120,12 @@ namespace TrainTTLibrary
             else
                 Data.Add(0x6E);
 
+            for (int i = 0; i < 4; i++)
+                Data.Add(0);
+
             SetBytePacket();
 
-            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "," + Data[2] + "," + Data[3] + "\n");
         }
 
         public static turnoutInstruction stringToTurnoutInstruction(string str)
@@ -1215,6 +1252,9 @@ namespace TrainTTLibrary
                 Data.Add(b);
 
                 Data.Add(0xFF);
+
+                for (int i = 0; i < 5; i++)
+                    Data.Add(0);
             }
 
             else

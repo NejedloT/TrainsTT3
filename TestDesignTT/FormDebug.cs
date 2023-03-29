@@ -406,9 +406,18 @@ namespace TestDesignTT
                 //TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket("turnout_instruction:presna_poloha_serv,897,160,161,162,163,164,165,166,167");
 
                 //TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket("turnout_instruction:presna_poloha_serv,897,0xA0,0xA1,0xA2,0xA3,0xA4,0xA5,0xA6,0xA7");
+
+
+                
                 TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket(Packet.turnoutInstruction.nastaveni_vyhybky, numberOfUnit, data1, data2);
 
                 SendTCPData(turnoutInstructionPacket.TCPPacket);
+                
+                /*
+                UnitInstructionPacket unitInst = new UnitInstructionPacket(Packet.unitInstruction.prodleva_odesilani_zmerenych_proudu, 3, 100);
+                
+                SendTCPData(unitInst.TCPPacket);
+                */
             }
             turnouts.Clear();
         }
