@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.panelSideMenu = new System.Windows.Forms.Panel();
-            this.btnOccupancy = new FontAwesome.Sharp.IconButton();
             this.btnCentralStop = new FontAwesome.Sharp.IconButton();
+            this.btnUnitInstruction = new FontAwesome.Sharp.IconButton();
+            this.btnOccupancy = new FontAwesome.Sharp.IconButton();
             this.btnUpdateJson = new FontAwesome.Sharp.IconButton();
             this.btnMultiTurnouts = new FontAwesome.Sharp.IconButton();
             this.btnTurnouts = new FontAwesome.Sharp.IconButton();
@@ -52,8 +53,9 @@
             // 
             this.panelSideMenu.AutoScroll = true;
             this.panelSideMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(87)))), ((int)(((byte)(207)))));
-            this.panelSideMenu.Controls.Add(this.btnOccupancy);
             this.panelSideMenu.Controls.Add(this.btnCentralStop);
+            this.panelSideMenu.Controls.Add(this.btnUnitInstruction);
+            this.panelSideMenu.Controls.Add(this.btnOccupancy);
             this.panelSideMenu.Controls.Add(this.btnUpdateJson);
             this.panelSideMenu.Controls.Add(this.btnMultiTurnouts);
             this.panelSideMenu.Controls.Add(this.btnTurnouts);
@@ -68,29 +70,6 @@
             this.panelSideMenu.Size = new System.Drawing.Size(250, 861);
             this.panelSideMenu.TabIndex = 1;
             // 
-            // btnOccupancy
-            // 
-            this.btnOccupancy.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnOccupancy.FlatAppearance.BorderSize = 0;
-            this.btnOccupancy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOccupancy.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnOccupancy.ForeColor = System.Drawing.Color.White;
-            this.btnOccupancy.IconChar = FontAwesome.Sharp.IconChar.Bolt;
-            this.btnOccupancy.IconColor = System.Drawing.Color.Red;
-            this.btnOccupancy.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnOccupancy.IconSize = 32;
-            this.btnOccupancy.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOccupancy.Location = new System.Drawing.Point(0, 420);
-            this.btnOccupancy.Name = "btnOccupancy";
-            this.btnOccupancy.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.btnOccupancy.Size = new System.Drawing.Size(250, 50);
-            this.btnOccupancy.TabIndex = 23;
-            this.btnOccupancy.Text = "Occupancy";
-            this.btnOccupancy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOccupancy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnOccupancy.UseVisualStyleBackColor = true;
-            this.btnOccupancy.Click += new System.EventHandler(this.btnOccupancy_Click);
-            // 
             // btnCentralStop
             // 
             this.btnCentralStop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -103,16 +82,62 @@
             this.btnCentralStop.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnCentralStop.IconSize = 32;
             this.btnCentralStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCentralStop.Location = new System.Drawing.Point(0, 370);
+            this.btnCentralStop.Location = new System.Drawing.Point(0, 470);
             this.btnCentralStop.Name = "btnCentralStop";
             this.btnCentralStop.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnCentralStop.Size = new System.Drawing.Size(250, 50);
-            this.btnCentralStop.TabIndex = 22;
+            this.btnCentralStop.TabIndex = 51;
             this.btnCentralStop.Text = "Central stop";
             this.btnCentralStop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCentralStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCentralStop.UseVisualStyleBackColor = true;
             this.btnCentralStop.Click += new System.EventHandler(this.btnCentralStop_Click);
+            // 
+            // btnUnitInstruction
+            // 
+            this.btnUnitInstruction.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUnitInstruction.FlatAppearance.BorderSize = 0;
+            this.btnUnitInstruction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnitInstruction.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnUnitInstruction.ForeColor = System.Drawing.Color.White;
+            this.btnUnitInstruction.IconChar = FontAwesome.Sharp.IconChar.Info;
+            this.btnUnitInstruction.IconColor = System.Drawing.Color.Red;
+            this.btnUnitInstruction.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnUnitInstruction.IconSize = 32;
+            this.btnUnitInstruction.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUnitInstruction.Location = new System.Drawing.Point(0, 420);
+            this.btnUnitInstruction.Name = "btnUnitInstruction";
+            this.btnUnitInstruction.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnUnitInstruction.Size = new System.Drawing.Size(250, 50);
+            this.btnUnitInstruction.TabIndex = 24;
+            this.btnUnitInstruction.Text = "Unit settings";
+            this.btnUnitInstruction.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUnitInstruction.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUnitInstruction.UseVisualStyleBackColor = true;
+            this.btnUnitInstruction.Click += new System.EventHandler(this.btnUnitInstruction_Click);
+            // 
+            // btnOccupancy
+            // 
+            this.btnOccupancy.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnOccupancy.FlatAppearance.BorderSize = 0;
+            this.btnOccupancy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOccupancy.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnOccupancy.ForeColor = System.Drawing.Color.White;
+            this.btnOccupancy.IconChar = FontAwesome.Sharp.IconChar.Bolt;
+            this.btnOccupancy.IconColor = System.Drawing.Color.Red;
+            this.btnOccupancy.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnOccupancy.IconSize = 32;
+            this.btnOccupancy.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOccupancy.Location = new System.Drawing.Point(0, 370);
+            this.btnOccupancy.Name = "btnOccupancy";
+            this.btnOccupancy.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnOccupancy.Size = new System.Drawing.Size(250, 50);
+            this.btnOccupancy.TabIndex = 23;
+            this.btnOccupancy.Text = "Occupancy";
+            this.btnOccupancy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOccupancy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnOccupancy.UseVisualStyleBackColor = true;
+            this.btnOccupancy.Click += new System.EventHandler(this.btnOccupancy_Click);
             // 
             // btnUpdateJson
             // 
@@ -365,8 +390,9 @@
         private Panel panelDesktopPanel;
         private FontAwesome.Sharp.IconButton btnTurnouts;
         private FontAwesome.Sharp.IconButton btnMultiTurnouts;
-        private FontAwesome.Sharp.IconButton btnCentralStop;
         private FontAwesome.Sharp.IconButton btnUpdateJson;
         private FontAwesome.Sharp.IconButton btnOccupancy;
+        private FontAwesome.Sharp.IconButton btnUnitInstruction;
+        private FontAwesome.Sharp.IconButton btnCentralStop;
     }
 }

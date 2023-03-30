@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using TrainTTLibrary;
+using static TrainTTLibrary.Packet;
 
 namespace TestDesignTT
 {
@@ -34,6 +35,7 @@ namespace TestDesignTT
         UCMultiTurnout uCmulti = new UCMultiTurnout();
         UCEditJson uCEditJson = new UCEditJson();
         UCOccupancy uCOccupancy = new UCOccupancy();
+        UCUnitSet uCUnitSet = new UCUnitSet();
 
 
         private static List<Trains> trainsList = new List<Trains>();
@@ -55,6 +57,7 @@ namespace TestDesignTT
             uCTurnouts.TurnoutButtonSendClick += new EventHandler(UserControl_TurnoutClick);
             uCLocomotives.ChangeOfTrainData += new EventHandler(UserControl_TrainDataChange);
             uCEditJson.ButtonChangeJsonClick += new EventHandler(UserControl_EditJsonClick);
+            uCUnitSet.UnitInstructionEventClick += new EventHandler(UserControl_UnitInstructionClick);
             StartTCPClient();
         }
 
@@ -263,12 +266,6 @@ namespace TestDesignTT
             uCmulti.ClearData();
         }
 
-        private void btnCentralStop_Click(object sender, EventArgs e)
-        {
-            //Stop all trains
-            StopAll();
-        }
-
         private void btnUpdateJson_Click(object sender, EventArgs e)
         {
             DisplayInstance(uCEditJson);
@@ -285,6 +282,20 @@ namespace TestDesignTT
             List<Section> occupancySections = TrainTTLibrary.SectionInfo.listOfSection;
 
         }
+
+        private void btnUnitInstruction_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCUnitSet);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+
+        private void btnCentralStop_Click(object sender, EventArgs e)
+        {
+            //Stop all trains
+            StopAll();
+        }
+
 
         #endregion
 
@@ -326,6 +337,26 @@ namespace TestDesignTT
                             TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, reverse, speed);
 
                             SendTCPData(trainMotionPacket.TCPPacket);
+
+                            //int pr = 220;
+
+                            //byte prodleva = (byte)pr;
+
+
+                            //UnitInstructionPacket unitInst = new UnitInstructionPacket(Packet.unitInstruction.precteni_stavu_jednotky, 3, 0xFA);
+                            //SendTCPData(unitInst.TCPPacket);
+
+                            //funkcni zmena rychlosti zasilani dat
+                            //UnitInstructionPacket unitInst = new UnitInstructionPacket(Packet.unitInstruction.prodleva_odesilani_zmerenych_proudu, 3, 0xFA);
+                            //SendTCPData(unitInst.TCPPacket);
+
+
+
+                            //H mustek restart v poradku!!
+                            //UnitInstructionPacket unitInst = new UnitInstructionPacket(Packet.unitInstruction.restart_H_mustku, 3, 1);
+                            //SendTCPData(unitInst.TCPPacket);
+
+
                         }
                         else
                         {
@@ -403,23 +434,40 @@ namespace TestDesignTT
 
                 byte data2 = turnouts[i].Position;
 
-                //TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket("turnout_instruction:presna_poloha_serv,897,160,161,162,163,164,165,166,167");
-
-                //TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket("turnout_instruction:presna_poloha_serv,897,0xA0,0xA1,0xA2,0xA3,0xA4,0xA5,0xA6,0xA7");
-
-
                 
                 TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket(Packet.turnoutInstruction.nastaveni_vyhybky, numberOfUnit, data1, data2);
 
                 SendTCPData(turnoutInstructionPacket.TCPPacket);
                 
-                /*
-                UnitInstructionPacket unitInst = new UnitInstructionPacket(Packet.unitInstruction.prodleva_odesilani_zmerenych_proudu, 3, 100);
                 
-                SendTCPData(unitInst.TCPPacket);
-                */
+                
+                //UnitInstructionPacket unitInst = new UnitInstructionPacket(Packet.unitInstruction.nastaveni_zdroje, 3, 0);
+                
+                //SendTCPData(unitInst.TCPPacket);
+                
             }
             turnouts.Clear();
+        }
+
+        protected void UserControl_UnitInstructionClick(object sender, EventArgs e)
+        {
+            List<SetNewUnitData> newUnit = uCUnitSet.newUnit;
+
+            for (int i = 0; i < newUnit.Count; i++)
+            {
+                unitInstruction ui = newUnit[i].Unit;
+
+                byte data0 = newUnit[i].Data0;
+
+                byte data1 = newUnit[i].Data1;
+
+                UnitInstructionPacket unitInst = new UnitInstructionPacket(ui, data0, data1);
+
+                SendTCPData(unitInst.TCPPacket);
+
+            }
+            newUnit.Clear();
+
         }
     }
 }

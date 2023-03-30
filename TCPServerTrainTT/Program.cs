@@ -56,7 +56,7 @@ namespace TCPServerTrainTT
             try
             {
 
-                serialPort.PortName = Settings.Default.VirtualPort; //Port jsou vláčky, VirtualPort je můj virtuální pro odladování
+                serialPort.PortName = Settings.Default.Port; //Port jsou vláčky, VirtualPort je můj virtuální pro odladování
                 serialPort.BaudRate = 115200;
                 serialPort.ReadBufferSize = 4096;
                 serialPort.Open();

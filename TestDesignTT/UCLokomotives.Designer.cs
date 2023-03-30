@@ -815,7 +815,8 @@
             "12",
             "13",
             "14",
-            "15"});
+            "15",
+            "30"});
             this.cbSpeed2.Location = new System.Drawing.Point(423, 38);
             this.cbSpeed2.Name = "cbSpeed2";
             this.cbSpeed2.Size = new System.Drawing.Size(174, 23);
@@ -891,7 +892,8 @@
             "12",
             "13",
             "14",
-            "15"});
+            "15",
+            "30"});
             this.cbSpeed1.Location = new System.Drawing.Point(423, 3);
             this.cbSpeed1.Name = "cbSpeed1";
             this.cbSpeed1.Size = new System.Drawing.Size(174, 23);

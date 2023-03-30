@@ -362,7 +362,7 @@ namespace TrainTTLibrary
             tocna_R,
         };
 
-        public enum unitInstruction
+        public enum unitInstruction : byte
         {
             restart_jednotky = 0x01,
             prodleva_odesilani_zmerenych_proudu = 0x02,
@@ -373,14 +373,14 @@ namespace TrainTTLibrary
             err,
         }
 
-        public enum unitInfo
+        public enum unitInfo : byte
         {
             aktualni_stav = 0x10,
-            chyba = 0xFF,
             err,
+            chyba = 0xFF,
         }
 
-        public enum turnoutInstruction
+        public enum turnoutInstruction : byte
         {
             //[EnumMember(Value = "0x00-0xB5")]
             presna_poloha_serv,
@@ -392,12 +392,12 @@ namespace TrainTTLibrary
             err,
         }
 
-        public enum turnoutInfo
+        public enum turnoutInfo : byte
         {
             natoceni_vlevo_vpravo,
             natoceni_ve_stupnich,
-            chyba = 0xFF,
             err,
+            chyba = 0xFF,
         }
     }
 
@@ -549,7 +549,7 @@ namespace TrainTTLibrary
             NumberOfAdressAndUnitToAdress();
 
             //data - definovany 4 byty, ale vyuzity vzdy jen 2
-            for (int i = 0; i < 2; i++)
+            for (int i = 1; i < 2; i++)
             {
                 byte b;
 
@@ -648,7 +648,7 @@ namespace TrainTTLibrary
 
             NumberOfAdressAndUnitToAdress();
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 1; i < 4; i++)
             {
                 byte b;
 

@@ -23,6 +23,7 @@ namespace TestDesignTT
             InitializeComponent();
 
             /*
+            
             occupancyTimer = new System.Timers.Timer(1000);
 
             occupancyTimer.Elapsed += UCOccupancy_Tick;
@@ -30,7 +31,9 @@ namespace TestDesignTT
             occupancyTimer.AutoReset = true;
 
             occupancyTimer.Enabled = true;
+
             */
+            
             
         }
 
