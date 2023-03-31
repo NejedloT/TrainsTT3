@@ -505,7 +505,7 @@ namespace TrainTTLibrary
                 UnitInstruction = unitInstruction.err;
             }
             //UnitInstruction = (unitInstruction)Enum.ToObject(typeof(unitInstruction),Data[0]);                        
-            TCPPacket += (UnitInstruction.ToString() + "," + NumberOfUnit + ", Data 0:" + Data[0] + ", Data 1:" + Data[1] + "\n");
+            TCPPacket += (UnitInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
         }
 
         //pro zpravu z TCP terminalu
@@ -601,7 +601,7 @@ namespace TrainTTLibrary
                 UnitInfo = unitInfo.err;
             }
 
-            TCPPacket += (UnitInfo.ToString() + "," + NumberOfUnit + "\n");
+            TCPPacket += (UnitInfo.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "," + Data[2] + "," + Data[3] + "\n");
 
         }
 
@@ -697,7 +697,7 @@ namespace TrainTTLibrary
 
             SetBytePacket();
 
-            TCPPacket = (Type + ":" + UnitInfo.ToString() + "," + NumberOfUnit + "\n");
+            TCPPacket = (Type + ":" + UnitInfo.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "," + Data[2] + "," + Data[3] + "\n");
         }
 
         public static unitInfo stringToUnitInfo(string str)
@@ -1326,7 +1326,7 @@ namespace TrainTTLibrary
 
             Reverse = (((Data[1] >> 5) & 0x1) == 1) ? false : true;
 
-            TCPPacket += (Name + "," + Speed + "," + ((Reverse) ? "reverse\n" : "ahead\n"));
+            TCPPacket += (Name + ","  + Speed + "," + ((Reverse) ? "reverse\n" : "ahead\n"));
 
         }
 
@@ -1350,7 +1350,7 @@ namespace TrainTTLibrary
 
             AssingType();
 
-            TCPPacket = (Type + ":" + Name + "," + Speed + "," + ((Reverse) ? "reverse\n" : "ahead\n"));
+            TCPPacket = (Type + ":" + Name + "," +  Speed + "," + ((Reverse) ? "reverse\n" : "ahead\n"));
 
 
         }
@@ -1788,6 +1788,14 @@ namespace TrainTTLibrary
         {
             switch (NumberOfUnit)
             {
+                case 2:
+                    {
+                        for (int i = 8; i < 16; i++)
+                        {
+                            Sections.Add(SectionInfo.listOfSection[i]);
+                        }
+                        break;
+                    }
                 case 3:
                     {
                         for (int i = 0; i < 8; i++)

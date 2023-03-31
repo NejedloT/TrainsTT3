@@ -659,7 +659,8 @@
             "12",
             "13",
             "14",
-            "15"});
+            "15",
+            "28"});
             this.cbSpeed4.Location = new System.Drawing.Point(423, 108);
             this.cbSpeed4.Name = "cbSpeed4";
             this.cbSpeed4.Size = new System.Drawing.Size(174, 23);
@@ -737,7 +738,8 @@
             "12",
             "13",
             "14",
-            "15"});
+            "15",
+            "28"});
             this.cbSpeed3.Location = new System.Drawing.Point(423, 73);
             this.cbSpeed3.Name = "cbSpeed3";
             this.cbSpeed3.Size = new System.Drawing.Size(174, 23);
@@ -816,7 +818,7 @@
             "13",
             "14",
             "15",
-            "30"});
+            "28"});
             this.cbSpeed2.Location = new System.Drawing.Point(423, 38);
             this.cbSpeed2.Name = "cbSpeed2";
             this.cbSpeed2.Size = new System.Drawing.Size(174, 23);
@@ -893,7 +895,7 @@
             "13",
             "14",
             "15",
-            "30"});
+            "28"});
             this.cbSpeed1.Location = new System.Drawing.Point(423, 3);
             this.cbSpeed1.Name = "cbSpeed1";
             this.cbSpeed1.Size = new System.Drawing.Size(174, 23);

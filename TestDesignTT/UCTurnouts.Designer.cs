@@ -248,7 +248,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(132, 34);
             this.label6.TabIndex = 1;
-            this.label6.Text = "Unit:";
+            this.label6.Text = "Type:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit1
@@ -378,7 +378,7 @@
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(133, 34);
             this.label16.TabIndex = 2;
-            this.label16.Text = "Unit:";
+            this.label16.Text = "Type:";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit2
@@ -559,7 +559,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(133, 34);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Unit:";
+            this.label2.Text = "Type:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit3
@@ -814,7 +814,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(133, 34);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Unit:";
+            this.label4.Text = "Type:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit4
@@ -995,7 +995,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(133, 34);
             this.label7.TabIndex = 5;
-            this.label7.Text = "Unit:";
+            this.label7.Text = "Type:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit5

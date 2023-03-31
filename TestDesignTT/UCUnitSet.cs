@@ -15,6 +15,7 @@ namespace TestDesignTT
 {
     public partial class UCUnitSet : UserControl
     {
+        //Event handler pro data na zmenu ridici jednotky
         [Browsable(true)]
         [Category("Action")]
         [Description("Invoked when user clicks button")]
@@ -28,6 +29,7 @@ namespace TestDesignTT
             CheckStates();
         }
 
+        #region Click events on buttons and comboboxes
         private void cbUnitNumber_Click(object sender, EventArgs e)
         {
             cbUnitNumber.SelectedIndex = -1;
@@ -74,7 +76,12 @@ namespace TestDesignTT
             CheckStates();
             Control_Click(sender, e);
         }
+        #endregion
 
+        /// <summary>
+        /// Metoda pro kontrolu stavu
+        /// Pokud neni vybrana jednotka, tak ostatni buttony/comboboxy jsou neaktivni
+        /// </summary>
         private void CheckStates()
         {
             bool bb = false;
@@ -93,79 +100,114 @@ namespace TestDesignTT
             btnResetProcessor.Enabled = bb;
             btnResetH.Enabled = bb;
             btnReadUnitInstruction.Enabled = bb;
-            
         }
 
+        /// <summary>
+        /// Metoda vyvolana stisknutim tlaticka ci vybranim hodnoty v comboboxu
+        /// Dle stisknuteho controlu je zjisten konkretni typ a data jsou ulozena
+        /// Poto nasleduje odeslani ridici jednotce
+        /// </summary>
+        /// <param name="sender">Event stisknutim nejakeho controlu</param>
+        /// <param name="e">Event stisknutim nejakeho controlu</param>
         private void Control_Click(object sender, EventArgs e)
         {
             var control = sender as Control;
 
+            string selectedItem = cbUnitNumber.SelectedItem as string;
+
+            if (selectedItem == null)
+                return;
+
+            //vybrane  cislo jednotky z comboboxu
+            byte numberOfUnit = byte.Parse(selectedItem);
+
+            //pozadavek na zmenu prodlevy odesilani proudu
             if (control == cbCurrentConsumption)
-            {
+            { 
                 unitInstruction ui = Packet.unitInstruction.prodleva_odesilani_zmerenych_proudu;
-                byte data0 = 0x02;
 
                 string value = cbCurrentConsumption.SelectedItem.ToString();
 
-                // Extract the numeric portion of the string (i.e. "500")
+                //extrakce doby prodlevy ze stringu stisknuteho
                 string numericString = value.Split(' ')[0];
 
                 // Parse the numeric string into an integer
                 int myValue = int.Parse(numericString)/10;
 
-                byte data1 = (byte)myValue;
-                addUnitInstruction(ui, data0, data1);
+                byte data = (byte)myValue;
+                addUnitInstruction(ui, numberOfUnit, data);
             }
+            //pozadavek na restart procesoru ridici jednotky
             else if (control == btnResetProcessor)
             {
                 unitInstruction ui = Packet.unitInstruction.restart_jednotky;
-                byte data0 = 0x01;
-                byte data1 = 0x01;
-                addUnitInstruction(ui, data0, data1);
+
+                byte data = 0x01;
+
+                addUnitInstruction(ui, numberOfUnit, data);
             }
+            //pozadavek na restarh H mustku
             else if (control == btnResetH)
             {
                 unitInstruction ui = Packet.unitInstruction.restart_H_mustku;
-                byte data0 = 0x03;
-                byte data1 = 0x01;
-                addUnitInstruction(ui, data0, data1);
+
+                byte data = 0x01;
+
+                addUnitInstruction(ui, numberOfUnit, data);
             }
+            //pozadavek na vypnuti napajeni
             else if (control == btnPowerOff)
             {
                 unitInstruction ui = Packet.unitInstruction.nastaveni_zdroje;
-                byte data0 = 0x04;
-                byte data1 = 0x00;
-                addUnitInstruction(ui, data0, data1);
+
+                byte data = 0x00;
+
+                addUnitInstruction(ui, numberOfUnit, data);
             }
+            //pozadavek na zapnuti napajeni
             else if (control == btnPowerOn)
             {
                 unitInstruction ui = Packet.unitInstruction.nastaveni_zdroje;
-                byte data0 = 0x04;
-                byte data1 = 0x01;
-                addUnitInstruction(ui, data0, data1);
+
+                byte data = 0x01;
+
+                addUnitInstruction(ui, numberOfUnit, data);
             }
+            //pozadavek na ziskani dat z ridici jednotky
             else if (control == btnReadUnitInstruction)
             {
                 unitInstruction ui = Packet.unitInstruction.precteni_stavu_jednotky;
-                byte data0 = 0x10;
-                byte data1 = 0x01;
-                addUnitInstruction(ui, data0, data1);
+
+                byte data = 0x01;
+
+                addUnitInstruction(ui, numberOfUnit, data);
             }
 
+            //data byla ulozena, nyni vymazani jednotky a zrusit zaktivneni tlacitek
+            cbUnitNumber.SelectedIndex = -1;
+            CheckStates();
+
+            //vyvolani eventu, aby byl vytvoren paket a data zaslana
             UnitInstructionEventClick?.Invoke(this, e);
         }
 
-        public void addUnitInstruction(unitInstruction unit, byte data0, byte data1)
+        /// <summary>
+        /// Ulozeni dat k zaslani konkretni ridici jednotce
+        /// </summary>
+        /// <param name="type">Typ instrukce</param>
+        /// <param name="numberOfUnit">Cislo jednotky</param>
+        /// <param name="data1">Data do prvniho bytu</param>
+        public void addUnitInstruction(unitInstruction type, byte numberOfUnit, byte data1)
         {
-            newUnit.Add(new SetNewUnitData { Unit = unit, Data0 = data0, Data1 = data1 });
+            newUnit.Add(new SetNewUnitData { Type = type, NumberOfUnit = numberOfUnit, Data = data1 });
         }
 
     }
 
     public class SetNewUnitData
     {
-        public unitInstruction Unit { get; set; }
-        public byte Data0 { get; set; }
-        public byte Data1 { get; set; }
+        public unitInstruction Type { get; set; }
+        public byte NumberOfUnit { get; set; }
+        public byte Data { get; set; }
     }
 }

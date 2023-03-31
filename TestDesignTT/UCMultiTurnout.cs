@@ -13,6 +13,7 @@ namespace TestDesignTT
 {
     public partial class UCMultiTurnout : UserControl
     {
+        //Event handler znacici, ze byla zvolena data pro vyhybky
         [Browsable(true)]
         [Category("Action")]
         [Description("Invoked when user clicks button")]
@@ -25,6 +26,9 @@ namespace TestDesignTT
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Vymazani dat v jednotlivych polich
+        /// </summary>
         public void ClearData()
         {
             cbUnit.SelectedIndex = -1;
@@ -33,6 +37,9 @@ namespace TestDesignTT
             checkAddButton();
         }
 
+        /// <summary>
+        /// Testovani, zdali je mozne ulozit vepsana data
+        /// </summary>
         public void checkAddButton()
         {
             if (tbChange.TextLength == 8)
@@ -49,12 +56,23 @@ namespace TestDesignTT
             btnSave.Enabled = false;
 
         }
-
+        /// <summary>
+        /// Stisknutim tlacitka je zavolana metoda, ktera smaze veskera data
+        /// </summary>
+        /// <param name="sender">Event stisknuti tlacitka na smazani vepsanych dat</param>
+        /// <param name="e">Event stisknuti tlacitka na smazani vepsanych dat</param>
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearData();
         }
 
+        /// <summary>
+        /// Metoda, ktera umoznuje psani bytu do pole
+        /// Testuje, zdali jsou vepsany pouze 0 a 1
+        /// Pro nastaveni bitovych pozic vyhybek, ktere se maji prenastavit
+        /// </summary>
+        /// <param name="sender">Event handler pro psani do pole na vybrani vyhybek k prehozeni</param>
+        /// <param name="e">Event handler pro psani do pole na vybrani vyhybek k prehozeni</param>
         private void tbChoose_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == '\b' || e.KeyChar == '\u007F')
@@ -62,34 +80,42 @@ namespace TestDesignTT
                 return;
             }
 
-            // Check if the key is a valid binary digit.
+            //OVereni, jestli je stisknuta klavesa 1 nebo 0
             if (e.KeyChar != '0' && e.KeyChar != '1')
             {
-                e.Handled = true;  // Block the key press.
+                e.Handled = true;  //Zablokovat stisknuti klaves
             }
 
-            // Check if the input is exactly 8 characters long.
+            //Test, ze je delka 8 bitu
             string input = tbChoose.Text + e.KeyChar;
             if (input.Length > 8)
             {
-                e.Handled = true;  // Block the key press.
+                e.Handled = true;  //Zablokovat stisknuti klaves
             }
         }
 
+        /// <summary>
+        /// Metoda, ktera umoznuje psani bytu do pole
+        /// Testuje, zdali jsou vepsany pouze 0 a 1
+        /// Pro nastaveni jiz vybranych vyhybek vlevo/vpravo
+        /// </summary>
+        /// <param name="sender">Event handler pro psani do pole nastaveni hodnot danych vyhybek k prehozeni</param>
+        /// <param name="e">Event handler pro psani do pole nastaveni hodnot danych vyhybek k prehozeni</param>
         private void tbChange_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //povoleni mazani znaku
             if (e.KeyChar == '\b' || e.KeyChar == '\u007F')
             {
                 return;
             }
 
-            // Check if the key is a valid binary digit.
+            //OVereni, jestli je stisknuta klavesa 1 nebo 0
             if (e.KeyChar != '0' && e.KeyChar != '1')
             {
                 e.Handled = true;  // Block the key press.
             }
 
-            // Check if the input is exactly 8 characters long.
+            //Test, ze je delka 8 bitu
             string input = tbChange.Text + e.KeyChar;
             if (input.Length > 8)
             {
@@ -97,6 +123,7 @@ namespace TestDesignTT
             }
         }
 
+        #region Combobox a pole eventy
         private void cbUnit_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkAddButton();
@@ -111,23 +138,25 @@ namespace TestDesignTT
         {
             checkAddButton();
         }
+        #endregion
 
+        /// <summary>
+        /// Akce po stiusknuti tlacitka ulozit
+        /// Zadana data jsou ulozena a je vyvolan event, aby data byla zpracovana dale
+        /// </summary>
+        /// <param name="sender">Event stisknutim tlacitka</param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
             //UInt32 id = 0x381 + Convert.ToUInt32(tbChange.Text, 16);
-            //UInt32 id = Convert.ToUInt32((UInt32)cbUnit.SelectedItem);
             UInt32 id = UInt32.Parse((string)cbUnit.SelectedItem);
             byte choose = Convert.ToByte(tbChoose.Text, 2);
             byte position = Convert.ToByte(tbChange.Text, 2);
 
             addTurnout(id, choose, position);
            
-            /*
-            this.Change = Convert.ToByte(tbChange.Text, 2);
-            this.Choose = Convert.ToByte(tbChoose.Text, 2);
-            this.UnitID = 0x380 + Convert.ToUInt32(cbUnit.Text, 16);
-            */
             MultiTurnoutButtonAddClick?.Invoke(this, e);
+
             // nasazena jednotka odberu 00110000 01100000 → 0011 | 0000011 → 0x183 (3 a 3)
             // nasazena jednotka prestavniku - pro zapis: 01110000 00100000 → 0111 | 0000001 → 0x381 (7 a 1) - pro cteni
             // nasazena jednotka prestavniku - pro cteni: 10000000 00100000 → 1000 | 0000001 → 0x401 (8 a 1) - pro cteni

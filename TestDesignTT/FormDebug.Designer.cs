@@ -110,7 +110,7 @@
             this.btnUnitInstruction.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnUnitInstruction.Size = new System.Drawing.Size(250, 50);
             this.btnUnitInstruction.TabIndex = 24;
-            this.btnUnitInstruction.Text = "Unit settings";
+            this.btnUnitInstruction.Text = "Type settings";
             this.btnUnitInstruction.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnUnitInstruction.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnUnitInstruction.UseVisualStyleBackColor = true;
@@ -234,6 +234,7 @@
             // btnSections
             // 
             this.btnSections.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSections.Enabled = false;
             this.btnSections.FlatAppearance.BorderSize = 0;
             this.btnSections.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSections.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);

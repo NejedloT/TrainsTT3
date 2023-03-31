@@ -15,15 +15,17 @@ namespace TestDesignTT
 {
     public partial class UCLokomotives : UserControl
     {
+
+        // Event Handler, ktery znaci, ze doslo k pozadavku na rozjeti ci zastaveni lokomotivy
         [Browsable(true)]
         [Category("Action")]
         [Description("Invoked when user clicks button")]
         public event EventHandler ChangeOfTrainData;
 
-        private static List<Trains> trainsList = new List<Trains>();
-
+        //seznam lokomotiv, ktere jsou vlozeny v jinem radku
         private static HashSet<string> addedLocomotives = new HashSet<string>();
 
+        //list s daty na zmenu lokomotivy
         public List<ChangeTrainData> trainDataChange = new List<ChangeTrainData>();
         public UCLokomotives()
         {
@@ -31,6 +33,9 @@ namespace TestDesignTT
             hideAll();
         }
 
+        /// <summary>
+        /// Smazani vsech radku z layoutu po inicializaci
+        /// </summary>
         public void hideAll()
         {
             for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
@@ -40,10 +45,20 @@ namespace TestDesignTT
             }
         }
 
+        /// <summary>
+        /// Metoda, ktera zjisti, ktere vlaky jsou jiz v tabulce zobrazeny a nemohou byt dale vlozeny
+        /// Nasledne jsou do kliknuteho comboboxu vlozeny nova data
+        /// </summary>
+        /// <param name="sender">Event vyvolany vybranim nejake lokomotivy</param>
+        /// <param name="e"></param>
         private void updateHashLoco(object sender, EventArgs e)
         {
             ComboBox combo = sender as ComboBox;
+
+            //zjisteni indexu comboboxu s vlakem
             int rowIndex = tableLayoutPanel1.GetRow(combo);
+
+            //smazani zaznamu vsech lokomotiv
             addedLocomotives.Clear();
 
             for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
@@ -51,6 +66,7 @@ namespace TestDesignTT
                 if (i == rowIndex)
                     continue;
 
+                //pokud je zvoleny dany vlak, pridej ho do listu a nebude ho mozne znovu zvolit
                 ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
                 if (cbTrain.SelectedIndex > -1)
                     addedLocomotives.Add(cbTrain.SelectedItem.ToString());
@@ -60,6 +76,7 @@ namespace TestDesignTT
             {
                 if (i == rowIndex)
                 {
+                    //vymaz data pro dany vlak a nasun nova (nova data jsou data vlaku, ktere nebyly jeste vybrany)
                     ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
                     cbTrain.Items.Clear();
                     for (int j = 0; j < LocomotiveInfo.listOfLocomotives.Count; j++)
@@ -75,79 +92,38 @@ namespace TestDesignTT
             }
         }
 
+        /// <summary>
+        /// Metoda vyvolana stisknutim tlacitka pro pridani nove lokomotivy
+        /// </summary>
+        /// <param name="sender">Event na stisknuti tlacitka pro pridani lokomotivy</param>
+        /// <param name="e">Event na stisknuti tlacitka pro pridani lokomotivy</param>
         private void btnAddTrain_Click(object sender, EventArgs e)
         {
-            trainsList = ControlLogic.MainLogic.GetData();
+            //otestovani moznosti pro spusteni lokomotivy a zda jsou pritomna vsechna data umoznujici spusteni lokomotivy
             checkStartStopButton();
+
+            //nacti velikost radku
             int[] rowHeights = tableLayoutPanel1.GetRowHeights();
 
+            /*
             for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
             {
                 ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
                 if (cbTrain.SelectedIndex > -1)
                     addedLocomotives.Add(cbTrain.SelectedItem.ToString());
             }
+            */
 
             for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
             {
                 if (rowHeights[i] < 0.5)
                 {
+                    //zobraz novy radek
                     tableLayoutPanel1.RowStyles[i] = new RowStyle(SizeType.Absolute, 35);
-                    /*
-                    ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
-                    cbTrain.Items.Clear();
-                    for (int j = 0; j < LocomotiveInfo.listOfLocomotives.Count; j++)
-                    {
-                        string loco = Packet.UnderLineToGap(LocomotiveInfo.listOfLocomotives[j].Name);
-
-                        if (!addedLocomotives.Contains(loco))
-                        {
-                            cbTrain.Items.Add(loco);
-                        }
-                    }
-                    */
-
                     break;
                 }
-                /*
-                else
-                {
-                    ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
-                    addedLocomotives.Add(cbTrain.SelectedItem.ToString());
-                }
-                */
-
             }
-            //tableLayoutPanel1.RowStyles[1] = new RowStyle(SizeType.Absolute, 35);
         }
-
-        /*
-        private void btnAddTrain_Click(object sender, EventArgs e)
-        {
-            trainsList = ControlLogic.MainLogic.GetData();
-            checkStartStopButton();
-            int[] rowHeights = tableLayoutPanel1.GetRowHeights();
-            for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
-            {
-                if (rowHeights[i] < 0.5) {
-                    tableLayoutPanel1.RowStyles[i] = new RowStyle(SizeType.Absolute, 35);
-                    ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
-                    cbTrain.Items.Clear();
-                    foreach (Trains train in trainsList)
-                    {
-                        if (train.move == "0")
-                        {
-                            cbTrain.Items.Add(train.name);
-                        }
-                    }
-
-                    break;
-                }
-
-            }
-            //tableLayoutPanel1.RowStyles[1] = new RowStyle(SizeType.Absolute, 35);
-        }
-        */
 
         #region Buttons Start/Stop click events
         private void btnStartStop1_Click(object sender, EventArgs e)
@@ -333,15 +309,20 @@ namespace TestDesignTT
         }
         #endregion
 
+        /// <summary>
+        /// Metoda, ktera zkouma logiku spusteni/zastaveni lokomotivy
+        /// Pokud nema lokomotiva vsechna data, nebude umozneno jeji spusteni a button bude neaktivni
+        /// </summary>
         private void checkStartStopButton()
         {
             for (int i = 0; i < 8; i++)
             {
+                //ziskani vlastnosti comboboxu a tlacitek
                 ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
                 ComboBox cbSpeed = tableLayoutPanel1.GetControlFromPosition(2, i) as ComboBox;
-
                 Button btnStartStop = tableLayoutPanel1.GetControlFromPosition(4, i) as Button;
 
+                //je zvolen vlak a jsou vyplnena data? Povol stisknuti tlacitka Start
                 if ((cbSpeed.SelectedIndex > -1) && (cbTrain.SelectedIndex > -1))
                 {
                     if (btnStartStop.Text != "Stop")
@@ -351,6 +332,8 @@ namespace TestDesignTT
                         btnStartStop.Font = new Font(btnStartStop.Font, FontStyle.Bold);
                     }
                 }
+
+                //button Start bude neaktivni
                 else
                 {
                     btnStartStop.Enabled = false;
@@ -358,6 +341,7 @@ namespace TestDesignTT
                 }
             }
 
+            //omezeni mozneho poctu lokomotiv pro rizeni
             int[] rowHeights = tableLayoutPanel1.GetRowHeights();
             if (rowHeights[8] > 20)
             {
@@ -367,23 +351,27 @@ namespace TestDesignTT
                 btnAddLocomotive.Enabled = true;
         }
 
-
+        /// <summary>
+        /// Ulozi data ktera byla pritomna po stisknuti tlacitka Start/Stop
+        /// Vyvola Event, aby tato data byla dale zpracovana
+        /// </summary>
+        /// <param name="sender">Event vyvolany stisknutim tlaticka Start/Stop</param>
+        /// <param name="e">Event vyvolany stisknutim tlaticka Start/Stop</param>
         private void startStopAction(object sender, EventArgs e)
         {
             Button button = sender as Button;
             if (button == null)
                 return; // Exit if sender is not a button
 
-            // Find the row index of the button's parent control in the table layout
-            //int rowIndex = tableLayoutPanel1.GetRow(button.Parent);
+            //radek daneho tlacitka
             int rowIndex = tableLayoutPanel1.GetRow(button);
 
-            // Find the comboboxes in the same row as the button
+            //ziskani vlastnosti comboboxu a tlacitek
             ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, rowIndex) as ComboBox;
             ComboBox cbSpeed = tableLayoutPanel1.GetControlFromPosition(2, rowIndex) as ComboBox;
             CheckBox cbReverse = tableLayoutPanel1.GetControlFromPosition(3, rowIndex) as CheckBox;
 
-            // Do something with the comboboxes
+            //Zmena textu Start/Stop a deaktivace ostatnich tlacitek/comboboxu, pokud vlak jede
             if (button.Text == "Start")
             {
                 button.Text = "Stop";
@@ -392,8 +380,6 @@ namespace TestDesignTT
                 cbReverse.Enabled = false;
                 button.ForeColor = Color.Red;
                 button.Font = new Font(button.Font, FontStyle.Bold);
-                //Send data to start locomotive
-
             }
             else
             {
@@ -406,33 +392,47 @@ namespace TestDesignTT
                 //Stop locomotive
             }
 
+            //ziskani rychlosti z comboboxu
             byte speedToByte;
-
             byte.TryParse(cbSpeed.SelectedItem.ToString(), out speedToByte);
 
+            //Najit konkretni lokomotivu z konfiguracniho seznamu
             ChangeTrainData matchingTrain = trainDataChange.FirstOrDefault(t => t.Lokomotive == cbTrain.SelectedItem.ToString());
+
+            //pokud data jsou nulova (mela by byt na 100%, ale overeni, ze nebudou dva pozadavky na stejnou lokomotivu)
             if (matchingTrain != null)
             {
-
                 matchingTrain.Speed = speedToByte;
                 matchingTrain.Reverze = cbReverse.Checked ? true : false;
                 matchingTrain.StartStop = button.Text == "Stop" ? true : false;
             }
+
+            //prirad data pro lokomotivu
             else
             {
-
                 addTrainData(cbTrain.SelectedItem.ToString(), speedToByte, cbReverse.Checked ? true : false, button.Text == "Stop" ? true : false);
             }
 
+            //vyvolej event handler
             ChangeOfTrainData?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Ulozeni dat, ktera budou dale zpracovana a zaslana
+        /// </summary>
+        /// <param name="locomotive">Jmeno lokomotivy</param>
+        /// <param name="speed">Rychlost vlaku</param>
+        /// <param name="reverze">Smer vlaku</param>
+        /// <param name="startStop">Zdali je pozadavek na rozjezd vlaku nebo zastaveni</param>
         public void addTrainData(string locomotive, byte speed, bool reverze, bool startStop)
         {
             trainDataChange.Add(new ChangeTrainData { Lokomotive = locomotive, Speed = speed, Reverze = reverze, StartStop = startStop });
         }
     }
 
+    /// <summary>
+    /// Trida slouzici pro ulozeni dat
+    /// </summary>
     public class ChangeTrainData
     {
         public string Lokomotive;

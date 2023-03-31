@@ -33,41 +33,60 @@
             this.labelTime = new System.Windows.Forms.Label();
             this.labelDate = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.labelTestCount = new System.Windows.Forms.Label();
-            this.labelMyTest = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox2
             // 
+            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox2.Image = global::TestDesignTT.Properties.Resources.zcu_logo2;
-            this.pictureBox2.Location = new System.Drawing.Point(261, 56);
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(417, 154);
+            this.pictureBox2.Size = new System.Drawing.Size(934, 150);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
             // labelTime
             // 
             this.labelTime.AutoSize = true;
+            this.labelTime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelTime.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelTime.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.labelTime.Location = new System.Drawing.Point(130, 346);
+            this.labelTime.Location = new System.Drawing.Point(3, 0);
             this.labelTime.Name = "labelTime";
-            this.labelTime.Size = new System.Drawing.Size(90, 37);
+            this.labelTime.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.labelTime.Size = new System.Drawing.Size(414, 50);
             this.labelTime.TabIndex = 2;
             this.labelTime.Text = "label1";
+            this.labelTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // labelDate
             // 
             this.labelDate.AutoSize = true;
+            this.labelDate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelDate.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelDate.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.labelDate.Location = new System.Drawing.Point(130, 402);
+            this.labelDate.Location = new System.Drawing.Point(423, 0);
             this.labelDate.Name = "labelDate";
-            this.labelDate.Size = new System.Drawing.Size(90, 37);
+            this.labelDate.Size = new System.Drawing.Size(508, 50);
             this.labelDate.TabIndex = 3;
             this.labelDate.Text = "label2";
+            this.labelDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // timer1
             // 
@@ -75,40 +94,117 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // labelTestCount
+            // panel1
             // 
-            this.labelTestCount.AutoSize = true;
-            this.labelTestCount.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelTestCount.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.labelTestCount.Location = new System.Drawing.Point(135, 292);
-            this.labelTestCount.Name = "labelTestCount";
-            this.labelTestCount.Size = new System.Drawing.Size(65, 28);
-            this.labelTestCount.TabIndex = 4;
-            this.labelTestCount.Text = "label1";
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(934, 70);
+            this.panel1.TabIndex = 6;
             // 
-            // labelMyTest
+            // panel2
             // 
-            this.labelMyTest.AutoSize = true;
-            this.labelMyTest.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.labelMyTest.Location = new System.Drawing.Point(135, 253);
-            this.labelMyTest.Name = "labelMyTest";
-            this.labelMyTest.Size = new System.Drawing.Size(38, 15);
-            this.labelMyTest.TabIndex = 5;
-            this.labelMyTest.Text = "label1";
+            this.panel2.Controls.Add(this.pictureBox2);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 70);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(934, 150);
+            this.panel2.TabIndex = 7;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.tableLayoutPanel1);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(0, 220);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(934, 50);
+            this.panel3.TabIndex = 8;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.tableLayoutPanel1.Controls.Add(this.labelTime, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.labelDate, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(934, 50);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel4.Location = new System.Drawing.Point(0, 270);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(934, 50);
+            this.panel4.TabIndex = 9;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.label1);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel5.Location = new System.Drawing.Point(0, 320);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(934, 120);
+            this.panel5.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(934, 120);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Poznámka: Pokud používáte DEBUG mode, aktualizuje před ukončením pozice vlaků pře" +
+    "s tlačítku Update JSON a nastavte jejich současnou polohu, směr atd. !!!";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.label2);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel6.Location = new System.Drawing.Point(0, 520);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(934, 50);
+            this.panel6.TabIndex = 11;
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(934, 50);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Tomáš Nejedlo, 2023";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // UCHome
             // 
             this.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.Controls.Add(this.labelMyTest);
-            this.Controls.Add(this.labelTestCount);
-            this.Controls.Add(this.labelDate);
-            this.Controls.Add(this.labelTime);
-            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.panel6);
+            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Name = "UCHome";
             this.Size = new System.Drawing.Size(934, 570);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -119,7 +215,14 @@
         //private PictureBox pictureZCU;
         private PictureBox pictureBox2;
         private System.Windows.Forms.Timer timer1;
-        private Label labelTestCount;
-        private Label labelMyTest;
+        private Panel panel1;
+        private Panel panel2;
+        private Panel panel3;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Panel panel4;
+        private Panel panel5;
+        private Label label1;
+        private Panel panel6;
+        private Label label2;
     }
 }

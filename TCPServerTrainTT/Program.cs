@@ -49,7 +49,11 @@ namespace TCPServerTrainTT
         private static Color TCPError = Color.Red;
         private static Color TCPDataRecived = Color.LightSkyBlue;
         private static Color TCPDataSend = Color.LightGreen;
-        
+
+        private static Dictionary<uint, DateTime> lastPacketTimeByNumberOfUnit = new Dictionary<uint, DateTime>();
+        private static Dictionary<uint, System.Timers.Timer> timersByNumberOfUnit = new Dictionary<uint, System.Timers.Timer>();
+
+
         private static void ConnectToSerialPort()
         {
 
@@ -190,11 +194,26 @@ namespace TCPServerTrainTT
             }
 
         }
+        private static void OnTimerElapsed(uint numberOfUnit)
+        {
+            DateTime lastPacketTime;
+            if (!lastPacketTimeByNumberOfUnit.TryGetValue(numberOfUnit, out lastPacketTime))
+            {
+                // No packets received for this NumberOfUnit yet, so do nothing
+                return;
+            }
+
+            // Check if the last packet was received more than 5 seconds ago
+            if ((DateTime.Now - lastPacketTime).TotalSeconds >= 5)
+            {
+                Console.WriteLine($"No packets received for NumberOfUnit {numberOfUnit} in the last 5 seconds, stopped all trains and all bridges restarted!", TCPError);
+            }
+        }
+
+
 
         private static void SendTCPData_Tick(object source, System.Timers.ElapsedEventArgs e)
         {
-
-
             while (packet.Count > 0)
             {
                 lock (locking)
@@ -213,23 +232,47 @@ namespace TCPServerTrainTT
                     if (Packet.RecognizeTCPType(p.Type) == Packet.dataType.occupancy_section)
                     {
                         OccupancySectionPacket occupancySectionPacket = new OccupancySectionPacket(p.BytePacket.ToArray());
-                        Console.Write("DATA SEND: " + occupancySectionPacket.TCPPacket, TCPDataSend);
+                        Console.Write("DATA SEND: NumberOfUnit:" + occupancySectionPacket.NumberOfUnit + ", " + occupancySectionPacket.TCPPacket, TCPDataSend);
                         server.Send(occupancySectionPacket.TCPPacket, null);
 
                         SaveOccupancySection(occupancySectionPacket.Sections);
+
+                        //timers
+
+                        // Update the last packet time for this NumberOfUnit
+                        lastPacketTimeByNumberOfUnit[(uint)occupancySectionPacket.NumberOfUnit] = DateTime.Now;
+
+                        System.Timers.Timer timer = new System.Timers.Timer();
+
+                        // Check if there is a timer already running for this NumberOfUnit
+                        if (!timersByNumberOfUnit.ContainsKey((uint)occupancySectionPacket.NumberOfUnit))
+                        {
+                            // Create a new timer for this NumberOfUnit and start it
+                            
+                            timer.Interval = 5000; // 5 seconds
+                            timer.Elapsed += (sender, ev) => OnTimerElapsed((uint)occupancySectionPacket.NumberOfUnit);
+                            timersByNumberOfUnit[(uint)occupancySectionPacket.NumberOfUnit] = timer;
+                            timer.Start();
+                        }
+                        else
+                        {
+                            // Reset the existing timer for this NumberOfUnit
+                            timersByNumberOfUnit[(uint)occupancySectionPacket.NumberOfUnit].Stop();
+                            timersByNumberOfUnit[(uint)occupancySectionPacket.NumberOfUnit].Start();
+                        }
 
                     }
 
                     if (Packet.RecognizeTCPType(p.Type) == Packet.dataType.unit_info)
                     {
                         UnitInfoPacket unitInfoPacket = new UnitInfoPacket(p.BytePacket.ToArray());
-                        if (unitInfoPacket.UnitInfo == Packet.unitInfo.err)
+                        if (unitInfoPacket.UnitInfo == Packet.unitInfo.err || unitInfoPacket.UnitInfo == Packet.unitInfo.chyba)
                         {
-                            Console.Write("DATA SEND: " + unitInfoPacket.TCPPacket, TCPError);
+                            Console.Write("DATA SEND: NumberOfUnit:" + unitInfoPacket.NumberOfUnit + ", " + unitInfoPacket.TCPPacket, TCPError);
                         }
                         else
                         {
-                            Console.Write("DATA SEND: " + unitInfoPacket.TCPPacket, TCPDataSend);
+                            Console.Write("DATA SEND: NumberOfUnit:" + unitInfoPacket.NumberOfUnit + ", " + unitInfoPacket.TCPPacket, TCPDataSend);
                         }
                         server.Send(unitInfoPacket.TCPPacket, null);
                     }
@@ -237,11 +280,16 @@ namespace TCPServerTrainTT
 					if (Packet.RecognizeTCPType(p.Type) == Packet.dataType.turnout_info)
 					{
 						TurnoutInfoPacket turnoutInfoPacket = new TurnoutInfoPacket(p.BytePacket.ToArray());
-						Console.Write("DATA SEND: " + turnoutInfoPacket.TCPPacket, TCPDataSend);
+                        Console.Write("DATA SEND: NumberOfUnit:" + turnoutInfoPacket.NumberOfUnit + ", " + turnoutInfoPacket.TCPPacket, TCPDataSend);
 						server.Send(turnoutInfoPacket.TCPPacket, null);
 					}
                 }
             }
+        }
+
+        public static void WriteBridgeError (uint numberOfUnit)
+        {
+            Console.WriteLine($"No packets received for NumberOfUnit {numberOfUnit} in the last 5 seconds, stoping all trains!", TCPError);
         }
 
         private static void SaveOccupancySection(List<Section> newOccupancySection)

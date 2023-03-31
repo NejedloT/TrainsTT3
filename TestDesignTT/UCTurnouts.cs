@@ -15,6 +15,7 @@ namespace TestDesignTT
 {
     public partial class UCTurnouts : UserControl
     {
+        //Event handler znacici, ze byla zvolena data pro vyhybky
         [Browsable(true)]
         [Category("Action")]
         [Description("Invoked when user clicks button")]
@@ -27,6 +28,9 @@ namespace TestDesignTT
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Vymazani dat v jednotlivych polich
+        /// </summary>
         public void clearData()
         {
             cbIdUnit1.SelectedIndex = -1;
@@ -50,6 +54,9 @@ namespace TestDesignTT
             //addButtonReady();
         }
 
+        /// <summary>
+        /// Deaktivace vsech comboboxu, ktere nejsou potreba po vynulovani dat
+        /// </summary>
         private void disableButtons()
         {
             cbIdUnit2.Enabled = false;
@@ -69,6 +76,10 @@ namespace TestDesignTT
             btnSave.Enabled = false;
         }
 
+        /// <summary>
+        /// Testovani, zdali ma byt aktivni tlacitko na ulozeni dat.
+        /// Tlacitko pro ulozeni dat je aktivni vzdy, kdyz je vyplnen cely radek, jinak je neaktivni
+        /// </summary>
         private void saveButtonReady()
         {
             btnSave.Enabled = true;
@@ -86,13 +97,11 @@ namespace TestDesignTT
                 btnSave.Enabled = false;
         }
 
+        #region Definice eventu po stisknuti jednotlivych comboboxu a povoleni nasledujiciho comboboxu
         private void btnClear_Click(object sender, EventArgs e)
         {
             clearData();
         }
-
-
-
 
         private void cbIdUnit1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -196,10 +205,18 @@ namespace TestDesignTT
         {
             saveButtonReady();
         }
+        #endregion
 
+        /// <summary>
+        /// Vyplnena data jsou ulozena a je z nich vytvoren novy objekt
+        /// Tato data jsou pote v hlavni forme zpracovana a je z nich vytvoren paket a jsou odeslana
+        /// </summary>
+        /// <param name="sender">Event pro stisknuti tlacitka na ulozeni dat</param>
+        /// <param name="e">Event pro stisknuti tlacitka na ulozeni dat</param>
         private void btnSave_Click(object sender, EventArgs e)
         {
 
+            //preddefinovane hodnoty
             ComboBox[] cbValues = { cbValue1, cbValue2, cbValue3, cbValue4, cbValue5 };
             ComboBox[] cbUnits = { cbIdUnit1, cbIdUnit2, cbIdUnit3, cbIdUnit4, cbIdUnit5 };
             ComboBox[] cbTurnouts = { cbTurnout1, cbTurnout2, cbTurnout3, cbTurnout4, cbTurnout5 };
@@ -209,23 +226,32 @@ namespace TestDesignTT
 
             for (int i = 0; i < 5; i++)
             {
+                //testovani, zdali je radek vyplnen
                 if (!(cbValues[i].SelectedIndex > -1))
                     break;
 
+                //zvoleni polohy konkretniho bitu
                 byte value = (byte)(0x01 << cbTurnouts[i].SelectedIndex);
                 //id = 0x381 + Convert.ToUInt32(cbUnits[i].Text, 16);
+
+                //id ridici jednotky
                 id = Convert.ToUInt32(cbUnits[i].Text, 16);
+
+                //zjisteni, zdali jiz data pro jednotku existuji
                 Turnouts matchingTurnouts = turnouts.FirstOrDefault(t => t.UnitID == id);
 
                 if (matchingTurnouts != null)
                 {
+                    //pridani vybrane pozice do jiz ziskane hodnoty
                     matchingTurnouts.Change = (byte)(value | matchingTurnouts.Change);
 
+                    //nastaveni bitu pro nastaveni polohu
                     if (cbValues[i].SelectedIndex != 0)
                         matchingTurnouts.Position |= (byte)(1 << cbTurnouts[i].SelectedIndex);
                 }
                 else
                 {
+                    //pridani novych dat
                     byte pos = 0x00;
                     if (cbValues[i].SelectedIndex != 0)
                         pos |= (byte)(1 << cbTurnouts[i].SelectedIndex);
@@ -233,9 +259,17 @@ namespace TestDesignTT
                     addTurnout(id, value, pos);
                 }
             }
+
+            //vyvolani eventu, ze data byla ulozena
             TurnoutButtonSendClick?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Ulozeni dat pro zmenu vyhybek
+        /// </summary>
+        /// <param name="id">ID jednotky</param>
+        /// <param name="change">Pozice, ktera se ma zmenit</param>
+        /// <param name="turnPosition">Hodnota na pozici "change"</param>
         public void addTurnout(UInt32 id, byte change, byte turnPosition)
         {
             turnouts.Add(new Turnouts { UnitID = id, Change = change, Position = turnPosition });
