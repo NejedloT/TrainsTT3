@@ -81,6 +81,7 @@ namespace TestDesignTT
         /// <summary>
         /// Metoda pro kontrolu stavu
         /// Pokud neni vybrana jednotka, tak ostatni buttony/comboboxy jsou neaktivni
+        /// Tim je docileno spravneho chovani a ulozeni zvolenych dat
         /// </summary>
         private void CheckStates()
         {

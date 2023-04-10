@@ -153,6 +153,8 @@ namespace TestDesignTT
             byte choose = Convert.ToByte(tbChoose.Text, 2);
             byte position = Convert.ToByte(tbChange.Text, 2);
 
+            //turnouts.Add(new Turnouts { UnitID = id, Change = choose, Position = position });
+
             addTurnout(id, choose, position);
            
             MultiTurnoutButtonAddClick?.Invoke(this, e);

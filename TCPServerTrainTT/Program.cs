@@ -194,23 +194,6 @@ namespace TCPServerTrainTT
             }
 
         }
-        private static void OnTimerElapsed(uint numberOfUnit)
-        {
-            DateTime lastPacketTime;
-            if (!lastPacketTimeByNumberOfUnit.TryGetValue(numberOfUnit, out lastPacketTime))
-            {
-                // No packets received for this NumberOfUnit yet, so do nothing
-                return;
-            }
-
-            // Check if the last packet was received more than 5 seconds ago
-            if ((DateTime.Now - lastPacketTime).TotalSeconds >= 5)
-            {
-                Console.WriteLine($"No packets received for NumberOfUnit {numberOfUnit} in the last 5 seconds, stopped all trains and all bridges restarted!", TCPError);
-            }
-        }
-
-
 
         private static void SendTCPData_Tick(object source, System.Timers.ElapsedEventArgs e)
         {
@@ -237,30 +220,6 @@ namespace TCPServerTrainTT
 
                         SaveOccupancySection(occupancySectionPacket.Sections);
 
-                        //timers
-
-                        // Update the last packet time for this NumberOfUnit
-                        lastPacketTimeByNumberOfUnit[(uint)occupancySectionPacket.NumberOfUnit] = DateTime.Now;
-
-                        System.Timers.Timer timer = new System.Timers.Timer();
-
-                        // Check if there is a timer already running for this NumberOfUnit
-                        if (!timersByNumberOfUnit.ContainsKey((uint)occupancySectionPacket.NumberOfUnit))
-                        {
-                            // Create a new timer for this NumberOfUnit and start it
-                            
-                            timer.Interval = 5000; // 5 seconds
-                            timer.Elapsed += (sender, ev) => OnTimerElapsed((uint)occupancySectionPacket.NumberOfUnit);
-                            timersByNumberOfUnit[(uint)occupancySectionPacket.NumberOfUnit] = timer;
-                            timer.Start();
-                        }
-                        else
-                        {
-                            // Reset the existing timer for this NumberOfUnit
-                            timersByNumberOfUnit[(uint)occupancySectionPacket.NumberOfUnit].Stop();
-                            timersByNumberOfUnit[(uint)occupancySectionPacket.NumberOfUnit].Start();
-                        }
-
                     }
 
                     if (Packet.RecognizeTCPType(p.Type) == Packet.dataType.unit_info)
@@ -285,11 +244,6 @@ namespace TCPServerTrainTT
 					}
                 }
             }
-        }
-
-        public static void WriteBridgeError (uint numberOfUnit)
-        {
-            Console.WriteLine($"No packets received for NumberOfUnit {numberOfUnit} in the last 5 seconds, stoping all trains!", TCPError);
         }
 
         private static void SaveOccupancySection(List<Section> newOccupancySection)
@@ -318,11 +272,6 @@ namespace TCPServerTrainTT
             }
 
         }
-		
-		public static List<Section> GetOccupancySections()
-		{
-			return occupancySections;
-		}
 
         static void Main(string[] args)
         {
@@ -362,7 +311,7 @@ namespace TCPServerTrainTT
         {
             for (int i = 0; i < trainMotionPackets.Count; i++)
             {
-                Console.WriteLine("Train motion packet\n");
+                //Console.WriteLine("Train motion packet\n");
                 SendSerialData(trainMotionPackets[i].BytePacket);
 
 

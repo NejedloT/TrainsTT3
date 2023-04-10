@@ -265,11 +265,20 @@ namespace TrainTTLibrary
 
         protected void NumberOfAdressAndUnitToAdress() // z čísla jednotky a adresy jednotky vytvořit HEX adresu pro paket 
         {
-            UInt32 i = ((NumberOfAdress << 12) | (NumberOfUnit << 5));
+            //UInt32 i = ((NumberOfAdress << 12) | (NumberOfUnit << 5));
+
+            UInt16 i = (UInt16)(NumberOfAdress << 12);
+            i = (ushort)(i | ((UInt16)(NumberOfUnit << 5)));
+
+            //uint i = ((NumberOfAdress << 12) | (NumberOfUnit << 5));
 
             Adress.Add((byte)(i >> 8));
 
-            Adress.Add((byte)(i & 0xff));
+            Adress.Add((byte)(i));
+
+            //int u = 0;
+
+            //Adress.Add((byte)(i & 0xff));
 
         }
 
@@ -1789,16 +1798,19 @@ namespace TrainTTLibrary
             switch (NumberOfUnit)
             {
                 case 2:
+                    
+                     //TODO dodelat sekce!!
                     {
-                        for (int i = 8; i < 16; i++)
+                        for (int i = 0; i < 8; i++)
                         {
                             Sections.Add(SectionInfo.listOfSection[i]);
                         }
                         break;
                     }
+                    
                 case 3:
                     {
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 8; i < 16; i++)
                         {
                             Sections.Add(SectionInfo.listOfSection[i]);
                         }

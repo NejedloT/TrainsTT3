@@ -1,3 +1,79 @@
 {
-  "data": []
+  "data": [
+    {
+      "id": "0x03",
+      "name": "Brejlovec",
+      "currentPosition": "id6",
+      "lastPosition": "id5",
+      "nextPosition": "id3",
+      "move": "0",
+      "speed": "0.7",
+      "direction": "Direct",
+      "mapOrientation": "nextConnection",
+      "circuit": "1",
+      "critical": "true",
+      "startPosition": "Beroun",
+      "finalPosition": "Karlstejn"
+    },
+    {
+      "id": "0x09",
+      "name": "Ragulin",
+      "currentPosition": "id15",
+      "lastPosition": "id6",
+      "nextPosition": null,
+      "move": "0",
+      "speed": "0.7",
+      "direction": "Direct",
+      "mapOrientation": "nextConnection",
+      "circuit": "0",
+      "critical": "false",
+      "startPosition": null,
+      "finalPosition": "id21"
+    },
+    {
+      "id": "0x0A",
+      "name": "ICE",
+      "currentPosition": "id7",
+      "lastPosition": "id6",
+      "nextPosition": null,
+      "move": "0",
+      "speed": "0.7",
+      "direction": "Reverse",
+      "mapOrientation": "prevConnection",
+      "circuit": "0",
+      "critical": "true",
+      "startPosition": null,
+      "finalPosition": "id19"
+    },
+    {
+      "id": "0x0C",
+      "name": "Herkules_Priessnitz",
+      "currentPosition": "id18",
+      "lastPosition": "id13",
+      "nextPosition": null,
+      "move": "0",
+      "speed": "0.7",
+      "direction": "Reverse",
+      "mapOrientation": "prevConnection",
+      "circuit": "0",
+      "critical": "false",
+      "startPosition": null,
+      "finalPosition": "id18"
+    },
+    {
+      "id": "0x10",
+      "name": "Taurus_EVB",
+      "currentPosition": "id24",
+      "lastPosition": "id7",
+      "nextPosition": null,
+      "move": "0",
+      "speed": "0.7",
+      "direction": "Reverse",
+      "mapOrientation": "prevConnection",
+      "circuit": "0",
+      "critical": "false",
+      "startPosition": null,
+      "finalPosition": "id24"
+    }
+  ]
 }

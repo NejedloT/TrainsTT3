@@ -15,7 +15,8 @@ namespace TestDesignTT
 {
     public partial class UCAddManualTrain : UserControl
     {
-        private LoadJson loadJson;
+        //private LoadJson loadJson;
+        private TrainDataJSON loadJson;
 
         bool testing = false;
 
@@ -209,7 +210,7 @@ namespace TestDesignTT
             cbFinalStation.Items.Clear();
             if (!toNames.Any())
             {
-                if (cbDirect.SelectedItem.ToString() == train.direction)
+                if (cbDirect.SelectedItem.ToString() == train.direct)
                 {
                     string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
                     if (validPositions.Contains(train.finalPosition))
@@ -251,8 +252,8 @@ namespace TestDesignTT
                 int i = 0;
                 foreach (string toName in toNames)
                 {
-                    if ((toName == "Lhota" && (((train.mapOrientation == "prevConnection") && (cbDirect.SelectedItem.ToString() == train.direction))
-                        || ((train.mapOrientation == "nextConnection") && (cbDirect.SelectedItem.ToString()) != train.direction))))
+                    if ((toName == "Lhota" && (((train.mapOrientation == "prevConnection") && (cbDirect.SelectedItem.ToString() == train.direct))
+                        || ((train.mapOrientation == "nextConnection") && (cbDirect.SelectedItem.ToString()) != train.direct))))
                         i++;
                     else
                         cbFinalStation.Items.Add(toName);
@@ -279,11 +280,11 @@ namespace TestDesignTT
                                    .ToList();
 
                         //pokud to obsahuje pozici a orientace bude opacna
-                        if (reserveSections.Any(t => t.Contains(train.lastPosition) && cbDirect.SelectedItem.ToString() != train.direction))
+                        if (reserveSections.Any(t => t.Contains(train.lastPosition) && cbDirect.SelectedItem.ToString() != train.direct))
                         {
                             cbExitPoint.Items.Add(getToId);
                         }
-                        else if ((!(reserveSections.Any(t => t.Contains(train.lastPosition))) && cbDirect.SelectedItem.ToString() == train.direction))
+                        else if ((!(reserveSections.Any(t => t.Contains(train.lastPosition))) && cbDirect.SelectedItem.ToString() == train.direct))
                         {
                             cbExitPoint.Items.Add(getToId);
                         }

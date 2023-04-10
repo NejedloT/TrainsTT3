@@ -41,6 +41,7 @@ namespace TestDesignTT
         UCEditJson uCEditJson = new UCEditJson();
         UCOccupancy uCOccupancy = new UCOccupancy();
         UCUnitSet uCUnitSet = new UCUnitSet();
+        UCTurnoutSet uCTurnoutSet = new UCTurnoutSet();
 
 
         private static List<Trains> trainsList = new List<Trains>();
@@ -51,6 +52,7 @@ namespace TestDesignTT
             InitializeComponent();
             DisplayInstance(uCHome);
             ControlLogic.MainLogic.Initialization();
+            //ControlLogic.ProcessDataFromTCP.Initialization();
         }
 
         #region Form actions (Load, Init, Closed, Resized)
@@ -68,15 +70,11 @@ namespace TestDesignTT
             uCLocomotives.ChangeOfTrainData += new EventHandler(UserControl_TrainDataChange); //user control pro zmenu rizeni vlaku
             uCEditJson.ButtonChangeJsonClick += new EventHandler(UserControl_EditJsonClick); //user control pro zmenu dat v JSONu
             uCUnitSet.UnitInstructionEventClick += new EventHandler(UserControl_UnitInstructionClick); //user control pro zmenu nastaveni ridici jednotky
+            uCTurnoutSet.TurnoutDefinitionStopsClick += new EventHandler(UserControl_TurnoutInstructionStops);
+            uCTurnoutSet.TurnoutInstructionSetClick += new EventHandler(UserControl_TurnoutInstructionSet);
 
             //spusteni tcp serveru
-            StartTCPClient();
-
-            //pocatecni spusteni timeru sledujici odbery proudu
-            for (int i = 1; i < 3; i++)
-            {
-                SetTimers((uint)i);
-            }
+            //StartTCPClient();
         }
 
         /// <summary>
@@ -147,6 +145,8 @@ namespace TestDesignTT
         /// <summary>
         /// Spusteni a vytvoreni TCP serveru
         /// </summary>
+        /// 
+        
         private void StartTCPClient()
         {
             //vytvoreni TCP klienta
@@ -239,12 +239,16 @@ namespace TestDesignTT
         }
 
         /// <summary>
-        /// zpracovani dat ze serioveho portu
+        /// zpracovani dat prijatych
         /// </summary>
         /// <param name="e">Event na prichozi data z portu</param>
         private void DataProcessing(TCPReceivedEventArgs e)
         {
+            //ControlLogic.ProcessDataFromTCP.ProcessData(e);
+            ProcessDataFromTCP.ProcessData(e);
 
+
+            /*
             if (e.data is String)
             {
                 String s = e.data as String;
@@ -255,61 +259,11 @@ namespace TestDesignTT
                     //packet obsahujici data o usecich
                     OccupancySectionPacket occupancySectionPacket = new OccupancySectionPacket(s);
 
-                    //uloz cas prijatych dat od ridici jednotky
-                    lastPacketTimeByNumberOfUnit[(uint)occupancySectionPacket.NumberOfUnit] = DateTime.Now;
-
-                    //nastav timery
-                    SetTimers((uint)occupancySectionPacket.NumberOfUnit);
-
                 }
             }
+            */
         }
-
-        /// <summary>
-        /// Nastaveni timeru jednotek posilani kolejovych useku
-        /// </summary>
-        /// <param name="numberOfUnit">Cislo sledovane ridici jednotky</param>
-        private void SetTimers(uint numberOfUnit)
-        {
-            System.Timers.Timer timer = new System.Timers.Timer();
-
-            // Je funkcni timer merici interval o obsazenosti useku daneho?
-            if (!timersByNumberOfUnit.ContainsKey(numberOfUnit))
-            {
-                timer.Interval = 3500; // 4.5 sekundy
-                timer.Elapsed += (sender, ev) => OnTimerElapsed(numberOfUnit);
-                timersByNumberOfUnit[numberOfUnit] = timer;
-                timer.Start();
-            }
-            else
-            {
-                // reset timeru pro danou jednotku
-                timersByNumberOfUnit[numberOfUnit].Stop();
-                timersByNumberOfUnit[numberOfUnit].Start();
-            }
-        }
-
-        /// <summary>
-        /// Vyhodnoceni casu od poslednich prijatych dat
-        /// </summary>
-        /// <param name="numberOfUnit">Cislo sledovane ridici jednotky</param>
-        private void OnTimerElapsed(uint numberOfUnit)
-        {
-            DateTime lastPacketTime;
-
-            //Pokud zadna data jeste nikdy neprisla (nemelo by nastat)
-            if (!lastPacketTimeByNumberOfUnit.TryGetValue(numberOfUnit, out lastPacketTime))
-            {
-                return;
-            }
-
-            //Pokud byl prekroceny interval (nejaka porucha), tak zastav vlaky a vyrestartuj h-mustek
-            if ((DateTime.Now - lastPacketTime).TotalSeconds >= 3.5)
-            {
-                StopAll();
-                ResetAllBridges();
-            }
-        }
+        
 
         /// <summary>
         /// Metoda pro posilani dat
@@ -330,7 +284,7 @@ namespace TestDesignTT
             }
 
         }
-
+        
         #endregion
 
         #region Definition of buttons in the left menu and user control
@@ -382,7 +336,8 @@ namespace TestDesignTT
                 formmm.StartPosition = FormStartPosition.Manual;
                 formmm.Location = this.Location;
                 formmm.Size = this.Size;
-                this.Hide();
+                //this.Hide();
+                this.Close();
                 formmm.Show();
             }
         }
@@ -473,11 +428,16 @@ namespace TestDesignTT
         /// <param name="e">Event na stisknuti tlacitka</param>
         private void btnOccupancy_Click(object sender, EventArgs e)
         {
-            DisplayInstance(uCOccupancy);
-            labelTitle.Text = (sender as Button).Text;
+            //DisplayInstance(uCOccupancy);
+            //labelTitle.Text = (sender as Button).Text;
 
             //List<Section> occupancySections = TCPServerTrainTT.Program.GetOccupancySections();
-            List<Section> occupancySections = TrainTTLibrary.SectionInfo.listOfSection;
+            //List<Section> occupancySections = TCPServerTrainTT.Program.GetOccupancySections();
+
+            //TODO
+            //Snimat odbery proudu ve sve "funkci"
+
+            int u = 0;
 
         }
 
@@ -493,10 +453,21 @@ namespace TestDesignTT
         }
 
         /// <summary>
+        /// Akce na button, ktery slouzi pro nastaveni jednotek pro vyhybky
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTurnoutInstruction_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCTurnoutSet);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        /// <summary>
         /// Akce na button, ktery slouzi na vypnuti a zastaveni vsech lokomotiv
         /// </summary>
-        /// <param name="sender">Event na stisknuti tlacitka</param>
-        /// <param name="e">Event na stisknuti tlacitka</param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCentralStop_Click(object sender, EventArgs e)
         {
             //Stop all trains
@@ -506,31 +477,7 @@ namespace TestDesignTT
 
         #endregion
 
-        /// <summary>
-        /// Metoda, ktera zastavi vsechny lokomotivy z konfiguracniho souboru
-        /// </summary>
-        private void StopAll()
-        {
-            foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
-            {
-                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 3);
-
-                SendTCPData(trainMotionPacket.TCPPacket);
-            }
-        }
-
-        /// <summary>
-        /// Metoda, ktera restartuje vsechny definovane H-mustky
-        /// </summary>
-        private void ResetAllBridges()
-        {
-            for (int i = 2; i < 4; i++)
-            {
-                UnitInstructionPacket unitInstructionPacket = new UnitInstructionPacket(unitInstruction.restart_H_mustku, (uint)i, (byte)1);
-                SendTCPData(unitInstructionPacket.TCPPacket);
-            }
-        }
-
+        #region Zpracovani eventu a odeslani dat, eventy vyvolany v user controlech
         /// <summary>
         /// Metoda vyvolana Event Handlerem
         /// Rozjede nebo zastavi lokomotivu podle stisknuti tlacitka start/stop dane lokomotivy o dane rychlosti a smeru
@@ -566,6 +513,10 @@ namespace TestDesignTT
                             TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, reverse, speed);
 
                             SendTCPData(trainMotionPacket.TCPPacket);
+
+                            TrainFunctionPacket trainFunctionPacket = new TrainFunctionPacket(locomotive, true);
+
+                            SendTCPData(trainFunctionPacket.TCPPacket);
                         }
 
                         //zastavit lokomotivu, pro niz byla poslana data
@@ -574,6 +525,10 @@ namespace TestDesignTT
                             TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 0);
 
                             SendTCPData(trainMotionPacket.TCPPacket);
+
+                            TrainFunctionPacket trainFunctionPacket = new TrainFunctionPacket(locomotive, false);
+
+                            SendTCPData(trainFunctionPacket.TCPPacket);
                         }
                         foundMatch = true;
                         break;
@@ -612,7 +567,7 @@ namespace TestDesignTT
                         //aktualizace dat, aby bylo mozne automaticke rizeni
                         train.currentPosition = data.CurrentPosition;
                         train.lastPosition = data.PreviousPosition;
-                        train.direction = data.Direction;
+                        train.direct = data.Direction;
                         foundMatch = true;
                         break;
                     }
@@ -621,8 +576,9 @@ namespace TestDesignTT
                     break;
             }
             //uloz zpet do JSONu
-            StoreJson sj = new StoreJson();
-            sj.SaveJson(trainsList);
+            TrainDataJSON td = new TrainDataJSON();
+
+            td.SaveJson(trainsList);
 
             //vycisti prijata data
             changeData.Clear();
@@ -648,6 +604,7 @@ namespace TestDesignTT
                 TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket(Packet.turnoutInstruction.nastaveni_vyhybky, numberOfUnit, data1, data2);
 
                 SendTCPData(turnoutInstructionPacket.TCPPacket);
+
             }
             //vymaz prijata data
             turnouts.Clear();
@@ -708,6 +665,80 @@ namespace TestDesignTT
 
             //smazani prijatych dat pro nastaveni ridici jednotky
             newUnit.Clear();
+        }
+
+        /// <summary>
+        /// Metoda vyvolana Event Handlerem na zmenu nastaveni softwarovych dorazu
+        /// Prisel pozadavek na nove nastaveni dorazu nejake vyhybky
+        /// Data budou vlozena do packetu a zaslana prislusne jednotce
+        /// </summary>
+        /// <param name="sender">Event Handler z user controlu</param>
+        /// <param name="e">Event Handler z user controlu</param>
+        protected void UserControl_TurnoutInstructionStops(object sender, EventArgs e)
+        {
+            List<SetNewTurnoutStops> newTurnoutStops = uCTurnoutSet.newTurnoutStops;
+
+            for (int i = 0; i < newTurnoutStops.Count; i++)
+            {
+                turnoutInstruction ti = newTurnoutStops[i].Type;
+
+                byte numberOfUnit = newTurnoutStops[i].NumberOfUnit;
+
+                byte numberOfTurnout = newTurnoutStops[i].NumberOfTurnout;
+
+                byte left = newTurnoutStops[i].LeftStop;
+
+                byte right = newTurnoutStops[i].RightStop;
+
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti,numberOfUnit, numberOfTurnout, left, right);
+
+                SendTCPData(turnoutInst.TCPPacket);
+
+            }
+
+            newTurnoutStops.Clear();
+        }
+
+        /// <summary>
+        /// Metoda vyvolana Event Handlerem na zmenu nastaveni jednotky vyhybek (mimo dorazy a zmeny polohy vyhybek)
+        /// Prisel pozadavek na nastaveni nejake turnout instruction
+        /// Data budou vlozena do packetu a zaslana prislusne jednotce
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void UserControl_TurnoutInstructionSet(object sender, EventArgs e)
+        {
+            List<SetNewTurnoutUnitData> newTurnoutData = uCTurnoutSet.newTurnoutData;
+
+            for (int i = 0; i < newTurnoutData.Count; i++)
+            {
+                turnoutInstruction ti = newTurnoutData[i].Type;
+
+                byte numberOfUnit = newTurnoutData[i].NumberOfUnit;
+
+                byte data = newTurnoutData[i].Data;
+
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, numberOfUnit, data);
+
+                SendTCPData(turnoutInst.TCPPacket);
+
+            }
+
+            newTurnoutData.Clear();
+        }
+        #endregion
+
+        /// <summary>
+        /// Metoda, ktera zastavi vsechny lokomotivy z konfiguracniho souboru
+        /// </summary>
+        private void StopAll()
+        {
+            foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
+            {
+                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 3);
+
+                SendTCPData(trainMotionPacket.TCPPacket);
+            }
         }
     }
 }

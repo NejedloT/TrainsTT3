@@ -103,6 +103,10 @@ namespace TestDesignTT
         private void cbCurrentPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Najde casti, ktere se nachazi na minule a soucasne pozici
+
+            if (cbCurrentPosition.SelectedItem == null)
+                return;
+
             IEnumerable<string> nextPositions = ControlLogic.MainLogic.GetNextPositions(cbCurrentPosition.SelectedItem.ToString());
             cbPreviousPosition.Items.Clear();
             foreach (string position in nextPositions)
@@ -150,6 +154,7 @@ namespace TestDesignTT
         /// <param name="e">Event kliknuti na vyber soucasne pozice</param>
         private void cbCurrentPosition_Click(object sender, EventArgs e)
         {
+            cbCurrentPosition.Items.Clear();
             foreach (Section sec in SectionInfo.listOfSection)
             {
                 cbCurrentPosition.Items.Add(sec.Name);
@@ -170,6 +175,7 @@ namespace TestDesignTT
         {
             addJsonChange(cbPickTrain.SelectedItem.ToString(), cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString(), cbDirection.SelectedItem.ToString());
             ButtonChangeJsonClick?.Invoke(this, e);
+            ClearData();
         }
 
         /// <summary>

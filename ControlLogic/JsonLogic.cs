@@ -6,17 +6,16 @@ using System.Windows;
 
 namespace ControlLogic
 {
-    
     public class Trains
     {
-        public string id { get; set; }
+        public uint id { get; set; }
         public string name { get; set; }
         public string currentPosition { get; set; }
         public string lastPosition { get; set; }
         public string nextPosition { get; set; }
         public string move { get; set; }
         public string speed { get; set; }
-        public string direction { get; set; }
+        public string direct { get; set; }
         public string mapOrientation { get; set; }
         public string circuit { get; set; }
         public string critical { get; set; }
@@ -33,6 +32,7 @@ namespace ControlLogic
     {
         public List<Trains> data { get; set; }
     }
+    /*
 
     public class LoadJson
     {
@@ -68,4 +68,43 @@ namespace ControlLogic
             File.WriteAllText(jsonPath, jsonData);
         }
     }
+    */
+	
+	public class TrainDataJSON
+	{
+		private readonly string jsonPath = "C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\train_data.json";
+		
+		private static object lockObject = new object();
+
+		public List<Trains> LoadJson()
+		{
+			lock (lockObject)
+			{
+				string jsonData = File.ReadAllText(jsonPath);
+				var jsonOptions = new JsonSerializerOptions
+				{
+					PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+					Converters = { new JsonStringEnumConverter() }
+				};
+				var trainData = JsonSerializer.Deserialize<TrainData>(jsonData, jsonOptions);
+				return trainData.data;
+			}
+		}
+
+		public void SaveJson(List<Trains> data)
+		{
+			lock (lockObject)
+			{
+				var trainData = new TrainData { data = data };
+				var jsonOptions = new JsonSerializerOptions
+				{
+					PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+					Converters = { new JsonStringEnumConverter() },
+					WriteIndented = true // optional, for pretty formatting
+				};
+				string jsonData = JsonSerializer.Serialize(trainData, jsonOptions);
+				File.WriteAllText(jsonPath, jsonData);
+			}
+		}
+	}
 }

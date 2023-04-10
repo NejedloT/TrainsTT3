@@ -20,6 +20,8 @@ namespace TestDesignTT
         UCAddManualTrain uCAddManual = new UCAddManualTrain();
         UCDisplayJson uCdisplayJson = new UCDisplayJson();
 
+        MainLogic ml = new MainLogic();
+
 
         public FormManual()
         {
@@ -31,6 +33,15 @@ namespace TestDesignTT
         private void FormManual_Load(object sender, EventArgs e)
         {
             uCAddManual.ButtonAddLocoClick += new EventHandler(UserControl_ButtonAddLocoClick);
+
+            ml.LocomotiveDataEvent += new EventHandler<LocomotiveDataSend>(EventHandlerNewLocoData);
+
+
+        }
+
+        protected void EventHandlerNewLocoData(object sender, LocomotiveDataSend e)
+        {
+            //Locomotive loco = e.L
         }
 
         private void DisplayInstance(UserControl uc)

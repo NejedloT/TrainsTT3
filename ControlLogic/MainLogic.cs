@@ -10,11 +10,20 @@ using System.Xml.Serialization;
 using System.Timers;
 using System.Threading;
 using System.Net.WebSockets;
+using TrainTTLibrary;
+using System.ComponentModel;
 
 namespace ControlLogic
 {
     public class MainLogic
     {
+        [Browsable(true)]
+        [Category("Action")]
+        [Description("Invoked when user clicks button")]
+        public event EventHandler<LocomotiveDataSend> LocomotiveDataEvent;
+
+        public List<LocomotiveDataSend> dataToSendLoco = new List<LocomotiveDataSend>();
+
         //list s odbery proudu
         private static List<CurrentDrain> currentDrain = new List<CurrentDrain>();
 
@@ -26,8 +35,8 @@ namespace ControlLogic
 
         //konfiguracni dokument s namapovanym kolejistem
         private static XDocument xdoc = new XDocument();
-
-        private static StoreJson storeJson = new StoreJson();
+        
+        private static TrainDataJSON td = new TrainDataJSON();
 
         //timer, po jake dobe bude probihat kontrola kolejiste
         private static System.Timers.Timer timerCheck;
@@ -47,8 +56,8 @@ namespace ControlLogic
             //StartTimers();
 
             //nacist posledni ulozena data
-            LoadJson loadJson = new LoadJson();
-            trainsList = loadJson.data;
+            TrainDataJSON td = new TrainDataJSON();
+            trainsList = td.LoadJson();
 
             //nacteni configurace namapovaneho kolejiste
             xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
@@ -60,7 +69,11 @@ namespace ControlLogic
                 AddCurrentDrain(train.id, train.currentPosition);
                 AddCurrentDrain(train.id, train.lastPosition);
             }
+
+            //LocomotiveDataEvent?.Invoke(this, e);
         }
+
+
 
         //nastaveni timeru, ktery kontroluje logiku
 
@@ -86,16 +99,15 @@ namespace ControlLogic
             //pokud se pri inicializaci nenacetly data, nacti je jeste jednou
             if (!(trainsList.Count > 0))
             {
-                LoadJson loadJson = new LoadJson();
-
-                trainsList = loadJson.data;
+                TrainDataJSON td = new TrainDataJSON();
+                trainsList = td.LoadJson();
             }
 
             if (testing)
             {
-                AddCurrentDrain("0x11", "id1");
-                AddCurrentDrain("0x11", "id198");
-                AddReservedSections("0x31", "id12");
+                AddCurrentDrain(0x11, "id1");
+                AddCurrentDrain(0x11, "id198");
+                AddReservedSections(0x31, "id12");
             }
 
 
@@ -144,8 +156,8 @@ namespace ControlLogic
                 }
             }
 
-            //TODO
-            storeJson.SaveJson(trainsList);
+            td.SaveJson(trainsList);
+            //storeJson.SaveJson(trainsList);
 
             
         }
@@ -234,20 +246,21 @@ namespace ControlLogic
 
             //TODO
             //Stop the train!
+            Locomotive locomotive = new Locomotive(train.name);
 
+            //bool reverze = train.direct;
+
+            MainLogic mainLogic = new MainLogic();
+
+            mainLogic.OnMyEvent(new LocomotiveDataSend { Loco = locomotive });
 
         }
-
 
         //
         public static void InCritical(Trains train, bool fintrack)
         {
 
             //int countReserved = reservedSections.Count(t => t.TrainIdReserved == train.id);
-
-            AddReservedSections("0x25", "id5");
-            AddReservedSections("0x25", "id105");
-
 
             //list obsahujici informace, jestli ma testovany vlak jet pres rezervovany usek, ktery byl rezervovan drive
             var reservationCheck = reservedSections
@@ -289,9 +302,8 @@ namespace ControlLogic
         {
             if (!(trainsList.Count > 0))
             {
-                LoadJson loadJson = new LoadJson();
-
-                trainsList = loadJson.data;
+                TrainDataJSON td = new TrainDataJSON();
+                trainsList = td.LoadJson();
             }
 
 
@@ -338,7 +350,7 @@ namespace ControlLogic
                             for (int i = 0; i < reserveSections.Count; i++)
                             {
                                 if (i == 1)
-                                    AddReservedSections("0x38", "id9");
+                                    AddReservedSections(0x11, "id9");
                                 AddReservedSections(train.id, reserveSections[i]);
                             }
 
@@ -406,7 +418,7 @@ namespace ControlLogic
         public static void CheckColision(Trains train)
         {
             //neni odber proudu v nadchazejicim useku od jineho vlaku a jestli v nadchazejicim useku neni jiny vlak?
-            if ((!(currentDrain.Any(cd => cd.Section == train.nextPosition))) && !(trainsList.Any(tl => tl.currentPosition == train.nextPosition)))
+            if ((!(currentDrain.Any(cd => cd.Section == train.nextPosition))) && !(trainsList.Any(tl => tl.currentPosition == train.nextPosition)) && !(trainsList.Any(t => t.lastPosition == train.nextPosition)))
             {
                 //najdi, jestli nejaky jiny jedouci vlak jeste ma stejnou nextPosition (jedou do stejneho useku)
                 var collidingTrainsNext = trainsList.Where(t => t.id != train.id
@@ -431,6 +443,8 @@ namespace ControlLogic
             //TODO
             //stop the train
             //TrainMotion (train, speed 0)
+			//MainLogic ml = new MainLogic();
+			
             train.move = "2";
         }
 
@@ -533,12 +547,12 @@ namespace ControlLogic
             }
         }
 
-        public static void AddCurrentDrain(string id, string section)
+        public static void AddCurrentDrain(uint id, string section)
         {
             currentDrain.Add(new CurrentDrain { TrainIdDrain = id, Section = section });
         }
 
-        public static void AddReservedSections(string id, string section)
+        public static void AddReservedSections(uint id, string section)
         {
             reservedSections.Add(new ReservedSections { TrainIdReserved = id, Section = section });
         }
@@ -555,9 +569,9 @@ namespace ControlLogic
             {
                 if (train.name == name)
                 {
-                    string orientation = train.direction;
+                    string orientation = train.direct;
 
-                    if (!(train.direction == direction))
+                    if (!(train.direct == direction))
                     {
                         if (train.mapOrientation == "nextConnection")
                             orientation = "prevConnection";
@@ -607,8 +621,8 @@ namespace ControlLogic
                                        .ToList();
 
                                     //otestovani zvoleni spravne cesty - pokud jede vlak stejnym smerem, tak nesmi obsahovat list minulou pozici
-                                    if (((reserveSections.Contains(train.lastPosition)) && train.direction != direction) ||
-                                        (!reserveSections.Contains(train.lastPosition) && train.direction == direction))
+                                    if (((reserveSections.Contains(train.lastPosition)) && train.direct != direction) ||
+                                        (!reserveSections.Contains(train.lastPosition) && train.direct == direction))
                                     {
                                         /*
                                          * prepared for switches to add
@@ -633,7 +647,7 @@ namespace ControlLogic
                         }
                     }
                     train.currentPosition = currentPosition;
-                    train.direction = direction;
+                    train.direct = direction;
                     train.speed = speed;
                     train.finalPosition = final;
                     train.mapOrientation = orientation;
@@ -701,11 +715,26 @@ namespace ControlLogic
                 .Select(e => (string)e)
                 .ToList();
         }
+
+        protected void OnMyEvent(LocomotiveDataSend e)
+        {
+            LocomotiveDataEvent?.Invoke(this, e);
+        }
+    }
+
+    public class LocomotiveDataSend
+    {
+        public Locomotive Loco { get; set; }
+
+        public bool Reverze { get; set; }
+
+        public byte Speed { get; set; }
+
     }
 
     public class CurrentDrain
     {
-        public string TrainIdDrain { get; set; }
+        public uint TrainIdDrain { get; set; }
         public string Section { get; set; }
 
 
@@ -713,7 +742,7 @@ namespace ControlLogic
 
     public class ReservedSections
     {
-        public string TrainIdReserved { get; set; }
+        public uint TrainIdReserved { get; set; }
         public string Section { get; set; }
 
     }
