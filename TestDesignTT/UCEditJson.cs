@@ -139,7 +139,7 @@ namespace TestDesignTT
 
             foreach (Trains train in trainsList)
             {
-                if (train.move == "0")
+                if (train.move == 0)
                 {
                     cbPickTrain.Items.Add(train.name);
                 }
@@ -173,7 +173,7 @@ namespace TestDesignTT
         /// <param name="e">Kliknuti na ulozit</param>
         private void btnSaveData_Click(object sender, EventArgs e)
         {
-            addJsonChange(cbPickTrain.SelectedItem.ToString(), cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString(), cbDirection.SelectedItem.ToString());
+            addJsonChange(cbPickTrain.SelectedItem.ToString(), cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString(), cbDirection.SelectedItem.ToString() == "Direct" ? false : true);
             ButtonChangeJsonClick?.Invoke(this, e);
             ClearData();
         }
@@ -186,9 +186,9 @@ namespace TestDesignTT
         /// <param name="currentPosition">Soucasna pozice</param>
         /// <param name="previousPosition">Minula pozice</param>
         /// <param name="direction">Dostal se vlak do teto pozice popredu/pozadu</param>
-        public void addJsonChange(string id, string currentPosition, string previousPosition, string direction)
+        public void addJsonChange(string id, string currentPosition, string previousPosition, bool direction)
         {
-            changeJsonData.Add(new ChangeJsonData { Id = id, CurrentPosition = currentPosition, PreviousPosition = previousPosition, Direction = direction });
+            changeJsonData.Add(new ChangeJsonData { Id = id, CurrentPosition = currentPosition, PreviousPosition = previousPosition, Reverse = direction });
         }
     }
 
@@ -197,6 +197,6 @@ namespace TestDesignTT
         public string Id { get; set; }
         public string CurrentPosition { get; set; }
         public string PreviousPosition { get; set; }
-        public string Direction { get; set; }
+        public bool Reverse { get; set; }
     }
 }

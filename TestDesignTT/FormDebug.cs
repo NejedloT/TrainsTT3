@@ -37,11 +37,11 @@ namespace TestDesignTT
         UCTurnouts uCTurnouts = new UCTurnouts();
         UCMap uCMap = new UCMap();
         UCLokomotives uCLocomotives = new UCLokomotives();
-        UCMultiTurnout uCmulti = new UCMultiTurnout();
+        UCTurnoutsMulti uCmulti = new UCTurnoutsMulti();
         UCEditJson uCEditJson = new UCEditJson();
         UCOccupancy uCOccupancy = new UCOccupancy();
         UCUnitSet uCUnitSet = new UCUnitSet();
-        UCTurnoutSet uCTurnoutSet = new UCTurnoutSet();
+        UCTurnoutsSettings uCTurnoutSet = new UCTurnoutsSettings();
 
 
         private static List<Trains> trainsList = new List<Trains>();
@@ -74,7 +74,7 @@ namespace TestDesignTT
             uCTurnoutSet.TurnoutInstructionSetClick += new EventHandler(UserControl_TurnoutInstructionSet);
 
             //spusteni tcp serveru
-            //StartTCPClient();
+            StartTCPClient();
         }
 
         /// <summary>
@@ -91,12 +91,14 @@ namespace TestDesignTT
             }
 
             //zastav timery, jak dlouho neposlali ridici jednotky zadna data
+            /*
             foreach (var timer in timersByNumberOfUnit.Values)
             {
                 timer.Stop();
             }
+            */
 
-            Thread.Sleep(30);
+            Thread.Sleep(500);
 
             //vycisti klienta
             KlientCleanUp();
@@ -145,8 +147,6 @@ namespace TestDesignTT
         /// <summary>
         /// Spusteni a vytvoreni TCP serveru
         /// </summary>
-        /// 
-        
         private void StartTCPClient()
         {
             //vytvoreni TCP klienta
@@ -322,13 +322,13 @@ namespace TestDesignTT
 
             if (result == DialogResult.Yes)
             {
-                StopAll(); //zastav vlaky
+                //StopAll(); //zastav vlaky
 
                 //vynulovani priznaku jizdy vsech vlaku (nemusi byt ale pro jistotu)
                 trainsList = ControlLogic.MainLogic.GetData();
                 foreach (Trains train in trainsList)
                 {
-                    train.move = "0";
+                    train.move = 0;
                 }
 
                 //zobrazeni hlavniho menu
@@ -337,6 +337,7 @@ namespace TestDesignTT
                 formmm.Location = this.Location;
                 formmm.Size = this.Size;
                 //this.Hide();
+                //KlientCleanUp();
                 this.Close();
                 formmm.Show();
             }
@@ -497,7 +498,9 @@ namespace TestDesignTT
                 string loco = locomotive.Name.ToString();
 
                 foreach (ChangeTrainData data in trainDataChange)
+                //for (int i = 0; i <trainDataChange.Count - 1; i++)
                 {
+                    //ChangeTrainData data = trainDataChange[i];
                     string loc = Packet.GapToUnderLine(data.Lokomotive);
 
                     //nalezena shoda mezi lokomotivou v konfiguracnim souboru a lokomotivou, jejiz data byla vlozena
@@ -530,6 +533,10 @@ namespace TestDesignTT
 
                             SendTCPData(trainFunctionPacket.TCPPacket);
                         }
+
+                        //trainDataChange.RemoveAt(i);
+                        //i--;
+
                         foundMatch = true;
                         break;
                     }
@@ -567,7 +574,7 @@ namespace TestDesignTT
                         //aktualizace dat, aby bylo mozne automaticke rizeni
                         train.currentPosition = data.CurrentPosition;
                         train.lastPosition = data.PreviousPosition;
-                        train.direct = data.Direction;
+                        train.reverse = data.Reverse;
                         foundMatch = true;
                         break;
                     }

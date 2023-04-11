@@ -368,7 +368,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(120, 30);
             this.label8.TabIndex = 1;
-            this.label8.Text = "Direction:";
+            this.label8.Text = "Reverse:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel9

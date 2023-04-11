@@ -13,12 +13,12 @@ namespace ControlLogic
         public string currentPosition { get; set; }
         public string lastPosition { get; set; }
         public string nextPosition { get; set; }
-        public string move { get; set; }
-        public string speed { get; set; }
-        public string direct { get; set; }
+        public int move { get; set; }
+        public byte speed { get; set; }
+        public bool reverse { get; set; }
         public string mapOrientation { get; set; }
-        public string circuit { get; set; }
-        public string critical { get; set; }
+        public int circuit { get; set; }
+        public bool critical { get; set; }
         public string startPosition { get; set; }
         public string finalPosition { get; set; }
 

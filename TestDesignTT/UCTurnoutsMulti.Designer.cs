@@ -1,6 +1,6 @@
 ﻿namespace TestDesignTT
 {
-    partial class UCMultiTurnout
+    partial class UCTurnoutsMulti
     {
         /// <summary> 
         /// Required designer variable.

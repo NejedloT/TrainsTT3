@@ -14,6 +14,8 @@ namespace ControlLogic
 
         public static List<String> tcpData = new List<String>();
 
+        public static bool isHWError = false;
+
 
         /// <summary>
         /// zpracovani dat TCP komunikace
@@ -42,13 +44,21 @@ namespace ControlLogic
                 {
                     UnitInfoPacket unitInfoPacket = new UnitInfoPacket(s);
 
+                    if (unitInfoPacket.UnitInfo == Packet.unitInfo.err || unitInfoPacket.UnitInfo == Packet.unitInfo.chyba)
+
+                        isHWError = true;
+
                     tcpData.Add(time + " " + unitInfoPacket.TCPPacket);
                 }
 
                 if (Packet.RecognizeTCPType(s) == Packet.dataType.turnout_info)
                 {
                     TurnoutInfoPacket turnoutInfoPacket = new TurnoutInfoPacket(s);
-                    
+
+                    if (turnoutInfoPacket.TurnoutInfo == Packet.turnoutInfo.err || turnoutInfoPacket.TurnoutInfo == Packet.turnoutInfo.chyba)
+
+                        isHWError = true;
+
                     tcpData.Add(time + " " + turnoutInfoPacket.TCPPacket);
                 }
             }

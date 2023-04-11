@@ -11,7 +11,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace TestDesignTT
 {
-    public partial class UCMultiTurnout : UserControl
+    public partial class UCTurnoutsMulti : UserControl
     {
         //Event handler znacici, ze byla zvolena data pro vyhybky
         [Browsable(true)]
@@ -21,7 +21,7 @@ namespace TestDesignTT
 
         public List<Turnouts> turnouts = new List<Turnouts>();
 
-        public UCMultiTurnout()
+        public UCTurnoutsMulti()
         {
             InitializeComponent();
         }

@@ -12,7 +12,7 @@ using static TrainTTLibrary.Packet;
 
 namespace TestDesignTT
 {
-    public partial class UCTurnoutSet : UserControl
+    public partial class UCTurnoutsSettings : UserControl
     {
         [Browsable(true)]
         [Category("Action")]
@@ -29,7 +29,7 @@ namespace TestDesignTT
         public List<SetNewTurnoutStops> newTurnoutStops = new List<SetNewTurnoutStops>(); //pro ulozeni dat na nastaveni dorazu
 
 
-        public UCTurnoutSet()
+        public UCTurnoutsSettings()
         {
             InitializeComponent();
             CheckStates();

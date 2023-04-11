@@ -115,7 +115,7 @@ namespace ControlLogic
             foreach (Trains train in trainsList)
             {
                 //jestli vlak jede:
-                if (train.move == "1")
+                if (train.move == 1)
                 {
                     //kontrola odberu proudu daneho vlaku
                     CheckCurrentDrain(train);
@@ -136,7 +136,7 @@ namespace ControlLogic
             foreach (Trains train in trainsList)
             {
                 //jestli vlak jede:
-                if (train.move == "2")
+                if (train.move == 2)
                 {
                     //kontrola rezervovanych useku
                     if (!TrainWantsToMove(train, true))
@@ -240,7 +240,7 @@ namespace ControlLogic
             timeToStop.Stop();
 
             // Do something after the time interval (e.g., resume the train)
-            train.move = "2";
+            train.move = 2;
 
             ((System.Timers.Timer)sender).Dispose();
 
@@ -248,7 +248,7 @@ namespace ControlLogic
             //Stop the train!
             Locomotive locomotive = new Locomotive(train.name);
 
-            //bool reverze = train.direct;
+            //bool reverze = train.reverse;
 
             MainLogic mainLogic = new MainLogic();
 
@@ -294,7 +294,7 @@ namespace ControlLogic
             {
                 //pokracuj v jizde
                 //nastav vyhybky pokud budou
-                train.critical = "0";
+                train.critical = false;
             }
         }
 
@@ -422,7 +422,7 @@ namespace ControlLogic
             {
                 //najdi, jestli nejaky jiny jedouci vlak jeste ma stejnou nextPosition (jedou do stejneho useku)
                 var collidingTrainsNext = trainsList.Where(t => t.id != train.id
-                                            && t.move == "1"
+                                            && t.move == 1
                                             && t.nextPosition == train.nextPosition)
                               .ToList();
                 //nema zadny jedouci vlak stejnou nadchazejici polohu?
@@ -445,7 +445,7 @@ namespace ControlLogic
             //TrainMotion (train, speed 0)
 			//MainLogic ml = new MainLogic();
 			
-            train.move = "2";
+            train.move = 2;
         }
 
         //metoda pro neustale updatovani pozice vlaku
@@ -459,7 +459,7 @@ namespace ControlLogic
                 int currentDrainCount = currentDrain.Where(x => x.TrainIdDrain == train.id).Count();
                 if (currentDrainCount == 1)
                 {
-                    train.move = "0";
+                    train.move = 0;
                     //trainMotion (speed 0)
                 }
             }
@@ -547,11 +547,21 @@ namespace ControlLogic
             }
         }
 
+        /// <summary>
+        /// Metoda na pridani useku odberu proudu do seznamu listu
+        /// </summary>
+        /// <param name="id">ID lokomotivy, ktera je v useku</param>
+        /// <param name="section">nazev useku</param>
         public static void AddCurrentDrain(uint id, string section)
         {
             currentDrain.Add(new CurrentDrain { TrainIdDrain = id, Section = section });
         }
 
+        /// <summary>
+        /// metoda na pridani rezervovanych useku lokomotivou do seznamu useku
+        /// </summary>
+        /// <param name="id">ID lokomotivy, ktera je v useku</param>
+        /// <param name="section">nazev useku</param>
         public static void AddReservedSections(uint id, string section)
         {
             reservedSections.Add(new ReservedSections { TrainIdReserved = id, Section = section });
@@ -562,16 +572,16 @@ namespace ControlLogic
             return trainsList;
         }
 
-        public static void addNewTrainDataFromClient(string name, string currentPosition, string speed, string direction, string final)
+        public static void addNewTrainDataFromClient(string name, string currentPosition, byte speed, bool reverse, string final)
         {
 
             foreach (Trains train in trainsList)
             {
                 if (train.name == name)
                 {
-                    string orientation = train.direct;
+                    string orientation = train.mapOrientation;
 
-                    if (!(train.direct == direction))
+                    if (!(train.reverse == reverse))
                     {
                         if (train.mapOrientation == "nextConnection")
                             orientation = "prevConnection";
@@ -587,7 +597,7 @@ namespace ControlLogic
                     */
 
                     var toCircuit = xdoc.Descendants("fromCircuit")
-                        .Where(fc => fc.Attribute("id")?.Value == train.circuit)
+                        .Where(fc => fc.Attribute("id")?.Value == train.circuit.ToString())
                         .Descendants("toCircuit")
                         .FirstOrDefault(tc => tc.Elements()
                         .Any(e => e.Value == final));
@@ -612,7 +622,10 @@ namespace ControlLogic
                                 {
 
                                     //znam cestu dle chtene cilove polohy a hodnotu circuit z jsonu
-                                    var getCircuit = toElement.Element("circuit");
+                                    var getVarCircuit = toElement.Element("circuit");
+
+                                    int getCircuit = int.Parse(getVarCircuit.Value);
+
 
 
                                     var reserveSections = toElement.Element("parts")
@@ -621,8 +634,8 @@ namespace ControlLogic
                                        .ToList();
 
                                     //otestovani zvoleni spravne cesty - pokud jede vlak stejnym smerem, tak nesmi obsahovat list minulou pozici
-                                    if (((reserveSections.Contains(train.lastPosition)) && train.direct != direction) ||
-                                        (!reserveSections.Contains(train.lastPosition) && train.direct == direction))
+                                    if (((reserveSections.Contains(train.lastPosition)) && train.reverse != reverse) ||
+                                        (!reserveSections.Contains(train.lastPosition) && train.reverse == reverse))
                                     {
                                         /*
                                          * prepared for switches to add
@@ -638,7 +651,7 @@ namespace ControlLogic
                                             AddReservedSections(train.id, reserveSections[i]);
                                         }
 
-                                        train.circuit = getCircuit.Value;
+                                        train.circuit = getCircuit;
                                     }
 
 
@@ -647,11 +660,11 @@ namespace ControlLogic
                         }
                     }
                     train.currentPosition = currentPosition;
-                    train.direct = direction;
+                    train.reverse = reverse;
                     train.speed = speed;
                     train.finalPosition = final;
                     train.mapOrientation = orientation;
-                    train.move = "2";
+                    train.move = 2;
                 }
             }
         }
@@ -661,6 +674,12 @@ namespace ControlLogic
             return xdoc.Descendants("from").Where(e => (string)e.Attribute("id") == train.currentPosition);
         }
 
+
+        /// <summary>
+        /// Najde mozne finalni stanice, ktere jsou zadefinovane
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public static IEnumerable<XElement> GetFinalStation(string position)
         {
             return xdoc.Descendants("toCircuit")
@@ -668,13 +687,23 @@ namespace ControlLogic
                 .Any(item => (string)item == position));
         }
 
-        //return fromCircuit
+        /// <summary>
+        /// Metoda, ktera hleda v konfiguracnim souboru fromCircuit
+        /// </summary>
+        /// <param name="train">vlak</param>
+        /// <returns>Mozne cilove stanice</returns>
         public static IEnumerable<XElement> getFromCircuit(Trains train)
         {
             return xdoc.Descendants("fromCircuit")
-                          .Where(e => (string)e.Attribute("id") == train.circuit);
-
+                          .Where(e => (string)e.Attribute("id") == train.circuit.ToString());
         }
+
+        /// <summary>
+        /// Metoda, ktera najde moznou finalni stanici dle aktualni stanice
+        /// </summary>
+        /// <param name="train">konkretni vlak, ktery si vybere uzivatel</param>
+        /// <param name="wantedName">Pozadovana kolej ve vybrane stanici</param>
+        /// <returns></returns>
         public static IEnumerable<XElement> GetFinalTrack(Trains train, string wantedName)
         {
             /*
@@ -687,28 +716,20 @@ namespace ControlLogic
                 .Cast<XElement>();
             */
             return xdoc.Descendants("fromCircuit")
-            .Where(fc => (string)fc.Attribute("id") == train.circuit)
+            .Where(fc => (string)fc.Attribute("id") == train.circuit.ToString())
             .Elements("toCircuit")
             .Where(tc => (string)tc.Attribute("name") == wantedName)
             .Elements();
         }
 
+        /// <summary>
+        /// Metoda, ktera najde v konfiguracnim souboru nasledujici usek
+        /// Vstupem do metody je vybrana polohy na screenu pro aktualizaci polohy manualne
+        /// </summary>
+        /// <param name="position">String hodnota soucasne pozice, kterou vybral uzivatel</param>
+        /// <returns>Vedlejsi pozici z obou stran</returns>
         public static IEnumerable<string> GetNextPositions(string position)
         {
-            /*
-            
-            return xdoc.Descendants("section")
-                .Where(p => (string)p.Attribute("id") == position)
-                .Elements("prevsec")
-                .Elements()
-                .Concat(xdoc.Descendants("section")
-                    .Where(p => (string)p.Attribute("id") == position)
-                    .Elements("nextsec")
-                    .Elements())
-                .Select(e => (string)e)
-                .ToList();
-            */
-
             return xdoc.Descendants()
                 .Where(e => e.Name.LocalName == "prevsec" || e.Name.LocalName == "nextsec" || e.Name.LocalName == "prevsections" || e.Name.LocalName == "nextsections")
                 .Where(e => e.Ancestors("section").Any(a => (string)a.Attribute("id") == position))

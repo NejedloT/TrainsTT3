@@ -109,7 +109,8 @@ namespace TestDesignTT
 
             foreach (var item in addData)
             {
-                ControlLogic.MainLogic.addNewTrainDataFromClient(item.Id, item.CurrentPosition,item.Speed, item.Direction,item.FinalPosition);
+                //updating values in json
+                ControlLogic.MainLogic.addNewTrainDataFromClient(item.Id, item.CurrentPosition,item.Speed, item.Reverse,item.FinalPosition);
             }
             addData.Clear();
         }

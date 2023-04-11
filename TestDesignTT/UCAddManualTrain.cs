@@ -168,7 +168,7 @@ namespace TestDesignTT
             cbPickTrain.Items.Clear();
             foreach (Trains train in trainsList)
             {
-                if (train.move == "0")
+                if (train.move == 0)
                 {
                     cbPickTrain.Items.Add(train.name);
                 }
@@ -210,7 +210,13 @@ namespace TestDesignTT
             cbFinalStation.Items.Clear();
             if (!toNames.Any())
             {
-                if (cbDirect.SelectedItem.ToString() == train.direct)
+                bool direction;
+                if (cbDirect.SelectedItem.ToString() == "Direct")
+                    direction = false;
+                else
+                    direction = true;
+
+                if (direction == train.reverse)
                 {
                     string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
                     if (validPositions.Contains(train.finalPosition))
@@ -250,10 +256,16 @@ namespace TestDesignTT
             else
             {
                 int i = 0;
+                bool reverze;
+                if (cbDirect.SelectedItem.ToString() == "Direct")
+                    reverze = false;
+                else
+                    reverze = true;
+
                 foreach (string toName in toNames)
                 {
-                    if ((toName == "Lhota" && (((train.mapOrientation == "prevConnection") && (cbDirect.SelectedItem.ToString() == train.direct))
-                        || ((train.mapOrientation == "nextConnection") && (cbDirect.SelectedItem.ToString()) != train.direct))))
+                    if ((toName == "Lhota" && (((train.mapOrientation == "prevConnection") && (reverze == train.reverse))
+                        || ((train.mapOrientation == "nextConnection") && reverze != train.reverse))))
                         i++;
                     else
                         cbFinalStation.Items.Add(toName);
@@ -280,11 +292,11 @@ namespace TestDesignTT
                                    .ToList();
 
                         //pokud to obsahuje pozici a orientace bude opacna
-                        if (reserveSections.Any(t => t.Contains(train.lastPosition) && cbDirect.SelectedItem.ToString() != train.direct))
+                        if (reserveSections.Any(t => t.Contains(train.lastPosition) && cbDirect.SelectedItem.ToString() != train.reverse))
                         {
                             cbExitPoint.Items.Add(getToId);
                         }
-                        else if ((!(reserveSections.Any(t => t.Contains(train.lastPosition))) && cbDirect.SelectedItem.ToString() == train.direct))
+                        else if ((!(reserveSections.Any(t => t.Contains(train.lastPosition))) && cbDirect.SelectedItem.ToString() == train.reverse))
                         {
                             cbExitPoint.Items.Add(getToId);
                         }
@@ -405,13 +417,28 @@ namespace TestDesignTT
             else
                 final = cbFinalStation.SelectedItem.ToString();
 
-            addTrainInfoData(cbPickTrain.SelectedItem.ToString(),tbStartPosition.Text,cbSpeed.SelectedItem.ToString(),cbDirect.SelectedItem.ToString(), final);
+
+            string name = cbPickTrain.SelectedItem.ToString();
+
+            string currentPosition = tbStartPosition.Text;
+
+            string spd = cbSpeed.SelectedItem.ToString();
+            byte speed = byte.Parse(spd);
+
+            bool reverse;
+            if (cbDirect.SelectedItem.ToString() == "Direct")
+                reverse = false;
+            else
+                reverse = true;
+
+            addTrainInfoData(name, currentPosition, speed, reverse, final);
+            //addTrainInfoData(cbPickTrain.SelectedItem.ToString(),tbStartPosition.Text,cbSpeed.SelectedItem.ToString(),cbDirect.SelectedItem.ToString(), final);
             ButtonAddLocoClick?.Invoke(this, e);
         }
 
-        public void addTrainInfoData(string id, string currentPosition, string speed, string direction, string final)
+        public void addTrainInfoData(string id, string currentPosition, byte speed, bool direction, string final)
         {
-            addNewLocoData.Add(new AddDataToSend { Id = id, CurrentPosition = currentPosition, Speed = speed, Direction = direction, FinalPosition = final });
+            addNewLocoData.Add(new AddDataToSend { Id = id, CurrentPosition = currentPosition, Speed = speed, Reverse = direction, FinalPosition = final });
         }
     }
 
@@ -419,8 +446,8 @@ namespace TestDesignTT
     {
         public string Id { get; set; }
         public string CurrentPosition { get; set; }
-        public string Speed { get; set; }
-        public string Direction { get; set; }
+        public byte Speed { get; set; }
+        public bool Reverse { get; set; }
         public string FinalPosition { get; set; }
     }
 }

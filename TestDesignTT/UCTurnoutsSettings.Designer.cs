@@ -1,6 +1,6 @@
 ﻿namespace TestDesignTT
 {
-    partial class UCTurnoutSet
+    partial class UCTurnoutsSettings
     {
         /// <summary> 
         /// Required designer variable.

@@ -208,7 +208,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(350, 35);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Pick last locomotive direct:";
+            this.label5.Text = "Pick last locomotive reverse:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label4

@@ -12,11 +12,8 @@ using System.Collections.Concurrent;
 using TrainTTLibrary;
 using Console = Colorful.Console;
 
-
-
 namespace TCPServerTrainTT
 {
-
     public class Program
     {
         private static TCPServer server = null;
@@ -50,16 +47,13 @@ namespace TCPServerTrainTT
         private static Color TCPDataRecived = Color.LightSkyBlue;
         private static Color TCPDataSend = Color.LightGreen;
 
-        private static Dictionary<uint, DateTime> lastPacketTimeByNumberOfUnit = new Dictionary<uint, DateTime>();
-        private static Dictionary<uint, System.Timers.Timer> timersByNumberOfUnit = new Dictionary<uint, System.Timers.Timer>();
-
-
+        /// <summary>
+        /// Metoda pro pripojeni se k seriovemu portu
+        /// </summary>
         private static void ConnectToSerialPort()
         {
-
             try
             {
-
                 serialPort.PortName = Settings.Default.Port; //Port jsou vláčky, VirtualPort je můj virtuální pro odladování
                 serialPort.BaudRate = 115200;
                 serialPort.ReadBufferSize = 4096;
@@ -76,14 +70,14 @@ namespace TCPServerTrainTT
                 Console.ReadKey();
 
                 Environment.Exit(0);
-
             }
-
         }
 
+        /// <summary>
+        /// Metoda pro spusteni TCP serveru
+        /// </summary>
         private static void StartTCPServer()
         {
-
             server = new TCPServer();
 
             server.DataType = eRecvDataType.dataStringNL;
@@ -94,9 +88,11 @@ namespace TCPServerTrainTT
             server.Listen(8080);
 
             Console.WriteLine("TCP server ready on port " + 8080 , TCPInfo);
-
         }
 
+        /// <summary>
+        /// Metoda, ktera slouzi pro inicializaci casovacu
+        /// </summary>
         private static void StartTimers()
         {
             foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
@@ -106,7 +102,6 @@ namespace TCPServerTrainTT
                 t.Interval = 10;
                 t.Elapsed += MyTimer_Elapsed;
                 
-
                 StopTimers.Add(t);
             }
 
@@ -123,6 +118,11 @@ namespace TCPServerTrainTT
             timerTCPsend.Enabled = true;
         }
 
+        /// <summary>
+        /// Metoda pro zpracovani dat ze serioveho portu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void SerialDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
 
@@ -195,23 +195,28 @@ namespace TCPServerTrainTT
 
         }
 
+        /// <summary>
+        /// Metoda, ktera odesle data jednotlivym TCP klientum
+        /// Jedna se o data, ktera prisla pres seriovy port
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private static void SendTCPData_Tick(object source, System.Timers.ElapsedEventArgs e)
         {
             while (packet.Count > 0)
             {
                 lock (locking)
                 {
-
                     Packet p;
 
                     if (!packet.TryDequeue(out p))
                     {
-
                         Console.Write("Error, data from queue are not retrieved", TCPError);
 
                         return;
                     }
 
+                    //data o obsazenosti useku co prisla ze serioveho portu
                     if (Packet.RecognizeTCPType(p.Type) == Packet.dataType.occupancy_section)
                     {
                         OccupancySectionPacket occupancySectionPacket = new OccupancySectionPacket(p.BytePacket.ToArray());
@@ -219,9 +224,9 @@ namespace TCPServerTrainTT
                         server.Send(occupancySectionPacket.TCPPacket, null);
 
                         SaveOccupancySection(occupancySectionPacket.Sections);
-
                     }
 
+                    //data od usekove jednotky co prisla pres seriovy port
                     if (Packet.RecognizeTCPType(p.Type) == Packet.dataType.unit_info)
                     {
                         UnitInfoPacket unitInfoPacket = new UnitInfoPacket(p.BytePacket.ToArray());
@@ -235,17 +240,25 @@ namespace TCPServerTrainTT
                         }
                         server.Send(unitInfoPacket.TCPPacket, null);
                     }
-					
-					if (Packet.RecognizeTCPType(p.Type) == Packet.dataType.turnout_info)
+
+                    //data od jednotky vyhybek co prisla pres seriovy port
+                    if (Packet.RecognizeTCPType(p.Type) == Packet.dataType.turnout_info)
 					{
 						TurnoutInfoPacket turnoutInfoPacket = new TurnoutInfoPacket(p.BytePacket.ToArray());
-                        Console.Write("DATA SEND: NumberOfUnit:" + turnoutInfoPacket.NumberOfUnit + ", " + turnoutInfoPacket.TCPPacket, TCPDataSend);
-						server.Send(turnoutInfoPacket.TCPPacket, null);
+                        if (turnoutInfoPacket.TurnoutInfo == Packet.turnoutInfo.err || turnoutInfoPacket.TurnoutInfo == Packet.turnoutInfo.chyba)
+                            Console.Write("DATA SEND: NumberOfUnit:" + turnoutInfoPacket.NumberOfUnit + ", " + turnoutInfoPacket.TCPPacket, TCPError);
+                        else
+                            Console.Write("DATA SEND: NumberOfUnit:" + turnoutInfoPacket.NumberOfUnit + ", " + turnoutInfoPacket.TCPPacket, TCPDataSend);
+                        server.Send(turnoutInfoPacket.TCPPacket, null);
 					}
                 }
             }
         }
 
+        /// <summary>
+        /// Metoda pro ulozeni Occupancy Section
+        /// </summary>
+        /// <param name="newOccupancySection"></param>
         private static void SaveOccupancySection(List<Section> newOccupancySection)
         {
             bool alreadyInPackets = false;
@@ -307,13 +320,15 @@ namespace TCPServerTrainTT
             server = null;
         }
 
+        /// <summary>
+        /// Metoda periodicky odesilajici data pro TrainMotion Packet
+        /// </summary>
         private static void SendTrainMotionPacket()
         {
             for (int i = 0; i < trainMotionPackets.Count; i++)
             {
                 //Console.WriteLine("Train motion packet\n");
                 SendSerialData(trainMotionPackets[i].BytePacket);
-
 
                 if (trainMotionPackets[i].Speed < 4)
                 {
@@ -337,6 +352,9 @@ namespace TCPServerTrainTT
             }
         }
 
+        /// <summary>
+        /// Metoda periodicky odesilajici data pro TrainMotionInstruction
+        /// </summary>
         private static void SendTrainMotionInstruction()
         {
             if (occupancySections.Count > 0)
@@ -399,6 +417,11 @@ namespace TCPServerTrainTT
             }
         }
 
+        /// <summary>
+        /// Metoda pro periodicke odesilani dat jednotlivym lokomotivam
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private static void SendSerialData_Tick(object source, System.Timers.ElapsedEventArgs e)
         {
             lock (locking)
@@ -410,6 +433,11 @@ namespace TCPServerTrainTT
             }
         }
 
+        /// <summary>
+        /// Casovac pro zastaveni vlaku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void MyTimer_Elapsed(object sender, EventArgs e) // časovač pro zastavení vlaku
         {
             lock (locking)
@@ -439,21 +467,36 @@ namespace TCPServerTrainTT
             }
         }
 
+        /// <summary>
+        /// Metoda pro zobrazeni noveho pripojeneho klienta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TCP_NewClient(object sender, TCPClientConnectedEventArgs e)
         {
             Console.WriteLine("Client: " + e.clientIPE.Port + " is connected", TCPInfo);
         }
 
+        /// <summary>
+        /// Metoda pro zobrazeni odpojeneho klienta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TCP_DisconnectClient(object sender, TCPClientConnectedEventArgs e)
         {
             Console.WriteLine("Client: " + e.clientIPE.Port + " is disconnected", TCPInfo);
         }
 
+        /// <summary>
+        /// Metoda, ktera zpracovava prijata TCP data od jednoho z klientu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TCP_DataRecv(object sender, TCPReceivedEventArgs e)
         {
             lock (locking)
             {
-
+                //vyzvednuti informaci o odesilateli
                 IPEndPoint ipeClient = null;
 
                 SocketObject so = sender as SocketObject;
@@ -463,13 +506,14 @@ namespace TCPServerTrainTT
                     ipeClient = so.sock.RemoteEndPoint as IPEndPoint;
                 }
 
+                //pretypovani dat na string a nasledne zpracovani
                 if (e.data is String)
                 {
-
                     String s = e.data as String;
 
                     Console.Write("DATA RECEIVED: Client: " + ipeClient.Port + " send: ", TCPDataRecived);
 
+                    //pozadavek na rozjezd ci zastaveni vlaku od klienta
                     if (Packet.RecognizeTCPType(s) == (Packet.dataType.train_move))
                     {
                         TrainMotionPacket trainMotionPacket = new TrainMotionPacket(s);
@@ -482,11 +526,9 @@ namespace TCPServerTrainTT
                         }
 
 
-                        // pokud měl vlak instrukci o dojetí někam, na tuhle insktrukci se dál vyprdne a bude jezdit jak mu říkám 
-
+                        // pokud měl vlak instrukci o dojetí někam, na tuhle insktrukci se dál vykasle a bude jezdit jak mu říkám 
                         for (int i = 0; i < trainMotionInstructions.Count; i++)
                         {
-
                             if (trainMotionInstructions[i].TrainMoveInfo.ID == trainMotionPacket.ID)
                             {
                                 trainMotionInstructions.RemoveAt(i);
@@ -495,6 +537,7 @@ namespace TCPServerTrainTT
                             }
                         }
 
+                        //otestovani, jestli uz je pozadavek na dany vlak a aktualizace dat, pripadne vlozeni novych dat
                         bool alreadyInPackets = false;
 
                         for (int i = 0; i < trainMotionPackets.Count; i++)
@@ -514,8 +557,9 @@ namespace TCPServerTrainTT
                         {
                             trainMotionPackets.Add(trainMotionPacket);
                         }
-
                     }
+
+                    //pozadavek na rozjezd ci zastaveni vlaku od klienta dle jizdniho radu
                     else if (Packet.RecognizeTCPType(s) == (Packet.dataType.train_move_to_place))
                     {
                         TrainMotionInstructionPacket trainMotionInstruction = new TrainMotionInstructionPacket(s);
@@ -528,7 +572,6 @@ namespace TCPServerTrainTT
                         }
 
                         // pokud byl vlak řízený, to jak byl řízený se ignoruje a splní instrukci 
-
                         for (int i = 0; i < trainMotionPackets.Count; i++)
                         {
 
@@ -537,7 +580,6 @@ namespace TCPServerTrainTT
                                 trainMotionPackets.RemoveAt(i);
 
                                 break;
-
                             }
                         }
 
@@ -571,9 +613,9 @@ namespace TCPServerTrainTT
                                     break;
                                 }
                             }
-
                         }
 
+                        //otestovani, jestli uz je pozadavek na dany vlak a aktualizace dat, pripadne vlozeni novych dat
                         bool alreadyInPackets = false;
 
                         for (int i = 0; i < trainMotionInstructions.Count; i++)
@@ -591,8 +633,9 @@ namespace TCPServerTrainTT
                         {
                             trainMotionInstructions.Add(trainMotionInstruction);
                         }
-
                     }
+
+                    //pozadavek na funkce vlaku (rozsviceni svetel), pozadavek vypsan do konzole a zaslan pres seriovy port
                     else if (Packet.RecognizeTCPType(s) == (Packet.dataType.train_function))
                     {
                         TrainFunctionPacket trainFunctionPacket = new TrainFunctionPacket(s);
@@ -605,8 +648,9 @@ namespace TCPServerTrainTT
                         }
 
                         SendSerialData(trainFunctionPacket.BytePacket);
-
                     }
+
+                    //pozadavek usekove jednotce, pozadavek vypsan do konzole a zaslan pres seriovy port
                     else if (Packet.RecognizeTCPType(s) == (Packet.dataType.unit_instruction))
                     {
                         UnitInstructionPacket unitInstructionPacket = new UnitInstructionPacket(s);
@@ -617,12 +661,11 @@ namespace TCPServerTrainTT
                         {
                             return;
                         }
-
                         SendSerialData(unitInstructionPacket.BytePacket);
-
                     }
-					
-					else if (Packet.RecognizeTCPType(s) == (Packet.dataType.turnout_instruction))
+
+                    //pozadavek jednotce vyhybek, pozadavek vypsan do konzole a zaslan pres seriovy port
+                    else if (Packet.RecognizeTCPType(s) == (Packet.dataType.turnout_instruction))
 					{
 						TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket(s);
 						
@@ -633,9 +676,9 @@ namespace TCPServerTrainTT
                             return;
                         }
                         SendSerialData(turnoutInstructionPacket.BytePacket);
-						
 					}
-					
+
+                    //pozadavek una oled display, pozadavek vypsan do konzole a zaslan pres seriovy port
                     else if (Packet.RecognizeTCPType(s) == (Packet.dataType.oled_info))
                     {
                         OLEDInformationPacket oledInformationPacket = new OLEDInformationPacket(s);
@@ -653,14 +696,15 @@ namespace TCPServerTrainTT
                     else
                     {
                         Console.WriteLine("unknow:" + s, TCPError);
-
                     }
-
-
                 }
             }
         }
 
+        /// <summary>
+        /// Metoda pro zaslani dat pres seriovy port
+        /// </summary>
+        /// <param name="p"></param>
         private static void SendSerialData(List<byte> p)
         {
             lock (locking)
@@ -669,7 +713,7 @@ namespace TCPServerTrainTT
 
                 byte[] array = p.ToArray();
 
-                serialPort.Write(array, 0, array.Length);
+                //serialPort.Write(array, 0, array.Length);
             }
         }
     }

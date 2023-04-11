@@ -90,6 +90,8 @@ namespace TestDesignTT
                     }
                 }
             }
+            checkStartStopButton();
+
         }
 
         /// <summary>
@@ -307,6 +309,60 @@ namespace TestDesignTT
         {
             checkStartStopButton();
         }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            speedChanged(sender, e);
+            checkStartStopButton();
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            speedChanged(sender, e);
+            checkStartStopButton();
+        }
+
+        private void trackBar3_Scroll(object sender, EventArgs e)
+        {
+            speedChanged(sender, e);
+            checkStartStopButton();
+        }
+
+        private void trackBar4_Scroll(object sender, EventArgs e)
+        {
+            speedChanged(sender, e);
+            checkStartStopButton();
+        }
+
+        private void trackBar5_Scroll(object sender, EventArgs e)
+        {
+            speedChanged(sender, e);
+            checkStartStopButton();
+        }
+
+        private void trackBar6_Scroll(object sender, EventArgs e)
+        {
+            speedChanged(sender, e);
+            checkStartStopButton();
+        }
+
+        private void trackBar7_Scroll(object sender, EventArgs e)
+        {
+            speedChanged(sender, e);
+            checkStartStopButton();
+        }
+
+        private void trackBar8_Scroll(object sender, EventArgs e)
+        {
+            speedChanged(sender, e);
+            checkStartStopButton();
+        }
+
+        private void trackBar9_Scroll(object sender, EventArgs e)
+        {
+            speedChanged(sender, e);
+            checkStartStopButton();
+        }
         #endregion
 
         /// <summary>
@@ -319,24 +375,33 @@ namespace TestDesignTT
             {
                 //ziskani vlastnosti comboboxu a tlacitek
                 ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
-                ComboBox cbSpeed = tableLayoutPanel1.GetControlFromPosition(2, i) as ComboBox;
+                TrackBar tbSpeed = tableLayoutPanel1.GetControlFromPosition(2, i) as TrackBar;
+                CheckBox reverse = tableLayoutPanel1.GetControlFromPosition(3, i) as CheckBox;
                 Button btnStartStop = tableLayoutPanel1.GetControlFromPosition(4, i) as Button;
 
                 //je zvolen vlak a jsou vyplnena data? Povol stisknuti tlacitka Start
-                if ((cbSpeed.SelectedIndex > -1) && (cbTrain.SelectedIndex > -1))
+                //if ((tbSpeed.SelectedIndex > -1) && (cbTrain.SelectedIndex > -1))
+                if (cbTrain.SelectedIndex > -1)
                 {
                     if (btnStartStop.Text != "Stop")
                     {
                         btnStartStop.Enabled = true;
                         btnStartStop.ForeColor = Color.DarkOliveGreen;
                         btnStartStop.Font = new Font(btnStartStop.Font, FontStyle.Bold);
+                        reverse.Enabled = true;
                     }
+                    tbSpeed.Enabled = true;
+
                 }
 
                 //button Start bude neaktivni
                 else
                 {
                     btnStartStop.Enabled = false;
+                    tbSpeed.Value = tbSpeed.Minimum;
+                    tbSpeed.Enabled = false;
+                    reverse.Enabled = false;
+
                     //btnStartStop.ForeColor = SystemColors.ControlDark;
                 }
             }
@@ -368,7 +433,7 @@ namespace TestDesignTT
 
             //ziskani vlastnosti comboboxu a tlacitek
             ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, rowIndex) as ComboBox;
-            ComboBox cbSpeed = tableLayoutPanel1.GetControlFromPosition(2, rowIndex) as ComboBox;
+            TrackBar tbSpeed = tableLayoutPanel1.GetControlFromPosition(2, rowIndex) as TrackBar;
             CheckBox cbReverse = tableLayoutPanel1.GetControlFromPosition(3, rowIndex) as CheckBox;
 
             //Zmena textu Start/Stop a deaktivace ostatnich tlacitek/comboboxu, pokud vlak jede
@@ -376,7 +441,7 @@ namespace TestDesignTT
             {
                 button.Text = "Stop";
                 cbTrain.Enabled = false;
-                cbSpeed.Enabled = false;
+                //tbSpeed.Enabled = false;
                 cbReverse.Enabled = false;
                 button.ForeColor = Color.Red;
                 button.Font = new Font(button.Font, FontStyle.Bold);
@@ -386,15 +451,15 @@ namespace TestDesignTT
                 button.Text = "Start";
                 cbTrain.Enabled = true;
                 cbReverse.Enabled = true;
-                cbSpeed.Enabled = true;
+                //tbSpeed.Enabled = true;
                 button.ForeColor = Color.DarkOliveGreen;
                 button.Font = new Font(button.Font, FontStyle.Bold);
                 //Stop locomotive
             }
 
-            //ziskani rychlosti z comboboxu
-            byte speedToByte;
-            byte.TryParse(cbSpeed.SelectedItem.ToString(), out speedToByte);
+            //ziskani rychlosti z trackbaru
+            byte speedToByte = (byte)tbSpeed.Value;
+            //byte.TryParse(value, out speedToByte);
 
             //Najit konkretni lokomotivu z konfiguracniho seznamu
             ChangeTrainData matchingTrain = trainDataChange.FirstOrDefault(t => t.Lokomotive == cbTrain.SelectedItem.ToString());
@@ -427,6 +492,48 @@ namespace TestDesignTT
         public void addTrainData(string locomotive, byte speed, bool reverze, bool startStop)
         {
             trainDataChange.Add(new ChangeTrainData { Lokomotive = locomotive, Speed = speed, Reverze = reverze, StartStop = startStop });
+        }
+
+        private void speedChanged(object sender, EventArgs e)
+        {
+            TrackBar trackBar = sender as TrackBar;
+            if (trackBar == null)
+                return; // Exit if sender is not a button
+
+            int rowIndex = tableLayoutPanel1.GetRow(trackBar);
+
+            Button btn = tableLayoutPanel1.GetControlFromPosition(4, rowIndex) as Button;
+            if (btn.Text == "Start")
+                return;
+
+            ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, rowIndex) as ComboBox;
+            TrackBar tbSpeed = tableLayoutPanel1.GetControlFromPosition(2, rowIndex) as TrackBar;
+            CheckBox cbReverse = tableLayoutPanel1.GetControlFromPosition(3, rowIndex) as CheckBox;
+
+            byte speedToByte = (byte)tbSpeed.Value;
+            //byte.TryParse(value, out speedToByte);
+
+            //Najit konkretni lokomotivu z konfiguracniho seznamu
+            ChangeTrainData matchingTrain = trainDataChange.FirstOrDefault(t => t.Lokomotive == cbTrain.SelectedItem.ToString());
+
+            cbReverse.Enabled = false;
+
+            //pokud data jsou nulova (mela by byt na 100%, ale overeni, ze nebudou dva pozadavky na stejnou lokomotivu)
+            if (matchingTrain != null)
+            {
+                matchingTrain.Speed = speedToByte;
+                matchingTrain.Reverze = cbReverse.Checked ? true : false;
+                matchingTrain.StartStop = btn.Text == "Stop" ? true : false;
+            }
+
+            //prirad data pro lokomotivu
+            else
+            {
+                addTrainData(cbTrain.SelectedItem.ToString(), speedToByte, cbReverse.Checked ? true : false, btn.Text == "Stop" ? true : false);
+            }
+            
+            //vyvolej event handler
+            ChangeOfTrainData?.Invoke(this, e);
         }
     }
 
