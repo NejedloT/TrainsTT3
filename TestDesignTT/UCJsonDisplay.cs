@@ -13,18 +13,21 @@ using System.Xml;
 namespace TestDesignTT
 {
 
-    public partial class UCDisplayJson : UserControl
+    public partial class UCJsonDisplay : UserControl
     {
         private static List<Trains> trainsList = new List<Trains>();
 
-        public UCDisplayJson()
+        public UCJsonDisplay()
         {
             InitializeComponent();
         }
 
         public void displayJson()
         {
-            trainsList = ControlLogic.MainLogic.GetData();
+            //data z JSONu
+            TrainDataJSON td = new TrainDataJSON();
+            trainsList = td.LoadJson();
+
             dataGridView1.DataSource = trainsList;
 
             BindingList<Trains> data = new BindingList<Trains>();

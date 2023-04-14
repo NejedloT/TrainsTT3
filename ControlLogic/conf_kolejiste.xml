@@ -1,274 +1,406 @@
 <model>
 	<layout>
-		<section id = "id1" type="track">
-			<prevsec> </prevsec>
-			<nextsec>id2</nextsec>
+		<section id = "u001" type="switch">
+			<prevsections> </prevsections>
+			<nextsec>u002</nextsec>
+			<circuit>0</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>0</moduleposition>
 		</section>
-		<section id = "id2" type="track">
-			<prevsec>id1</prevsec>
-			<nextsec>id3</nextsec>
+		<section id = "u002" type="switch">
+			<prevsec>u001</prevsec>
+			<nextsections>
+				<nextsec1>u010</nextsec1>
+				<nextsec2>u003</nextsec2>
+			</nextsections>
+			<circuit>0</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>1</moduleposition>
 		</section>
-		<section id = "id3" type="track">
-			<prevsec>id2</prevsec>
-			<nextsec>id4</nextsec>
+		<section id = "u003" type="switch">
+			<prevsections>
+				<prevsec1>u002</prevsec1>
+				<prevsec2>u012</prevsec2>
+			</prevsections>
+			<nextsec>u004</nextsec>
+			<circuit>0</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>2</moduleposition>
 		</section>
-		<section id = "id4" type="track">
-			<prevsec>id3</prevsec>
-			<nextsec></nextsec>
+		<section id = "u004" type="switch">
+			<prevsec>u003</prevsec>
+			<nextsec>u_okruh1</nextsec>
+			<circuit>1</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>3</moduleposition>
 		</section>
-		<section id = "id5" type="track">
+		<section id = "u005" type="track">
 			<prevsec></prevsec>
-			<nextsec>id6</nextsec>
+			<nextsec>u006</nextsec>
+			<circuit>3</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>4</moduleposition>
 		</section>
-		<section id = "id6" type="track">
-			<prevsec>id5</prevsec>
-			<nextsec>id7</nextsec>
+		<section id = "u006" type="track">
+			<prevsec>u005</prevsec>
+			<nextsec>u007</nextsec>
+			<circuit>3</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>5</moduleposition>
 		</section>
-		<section id = "id7" type="track">
-			<prevsec>id6</prevsec>
-			<nextsec>id8</nextsec>
+		<section id = "u007" type="track">
+			<prevsec>u006</prevsec>
+			<nextsec>u008</nextsec>
+			<circuit>3</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>6</moduleposition>
 		</section>
-		<section id = "id8" type="track">
-			<prevsec>id7</prevsec>
+		<section id = "u008" type="track">
+			<prevsec>u007</prevsec>
 			<nextsec></nextsec>
+			<circuit>3</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>7</moduleposition>
 		</section>
-		<section id = "id11" type="track">
-			<prevsec> </prevsec>
-			<nextsec>id2</nextsec>
+		<section id = "u009" type="switch">
+			<prevsections>
+			</prevsections>
+			<nextsec>u010</nextsec>
+			<circuit>0</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>0</moduleposition>
 		</section>
-		<section id = "id12" type="track">
-			<prevsec>id1</prevsec>
-			<nextsec>id3</nextsec>
+		<section id = "u010" type="switch">
+			<prevsections>
+				<prevsec1>u002</prevsec1>
+				<prevsec2>u009</prevsec2>
+			</prevsections>
+			<nextsec>u011</nextsec>
+			<circuit>0</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>1</moduleposition>
 		</section>
-		<section id = "id13" type="track">
-			<prevsec>id2</prevsec>
-			<nextsec>id4</nextsec>
+		<section id = "u011" type="switch">
+			<prevsec>u010</prevsec>
+			<nextsections>
+				<nextsec1>u012</nextsec1>
+				<nextsec2>u014</nextsec2>
+			</nextsections>
+			<circuit>0</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>2</moduleposition>
 		</section>
-		<section id = "id14" type="track">
-			<prevsec>id3</prevsec>
-			<nextsec></nextsec>
+		<section id = "u012" type="switch">
+			<prevsec>u011</prevsec>
+			<nextsections>
+				<nextsec1>u003</nextsec1>
+				<nextsec2>u013</nextsec2>
+			</nextsections>
+			<circuit>0</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>3</moduleposition>
 		</section>
-		<section id = "id15" type="track">
-			<prevsec></prevsec>
-			<nextsec>id6</nextsec>
+		<section id = "u013" type="track">
+			<prevsec>u012</prevsec>
+			<nextsec>u_okruh2</nextsec>
+			<circuit>2</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>4</moduleposition>
 		</section>
-		<section id = "id16" type="track">
-			<prevsec>id5</prevsec>
-			<nextsec>id7</nextsec>
+		<section id = "u014" type="track">
+			<prevsec>u011</prevsec>
+			<nextsec>u015</nextsec>
+			<circuit>0</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>5</moduleposition>
 		</section>
-		<section id = "id17" type="track">
-			<prevsec>id6</prevsec>
-			<nextsec>id8</nextsec>
+		<section id = "u015" type="track">
+			<prevsec>u014</prevsec>
+			<nextsec>u016</nextsec>
+			<circuit>0</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>6</moduleposition>
 		</section>
-		<section id = "id18" type="track">
-			<prevsec>id7</prevsec>
+		<section id = "u016" type="track">
+			<prevsec>u015</prevsec>
 			<nextsec></nextsec>
+			<circuit>0</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>7</moduleposition>
-		</section>		
+		</section>	
 	</layout>
 
 	<routes>
 		<!-- Predefined routes for Beroun -->
-		<from id = "id1">
-			<to id = "id21">
+		<from id = "u013">
+			<to id = "Beroun_kolej_1">
 				<parts>
-					<part1>id3</part1>
-					<part2>id6</part2>
+					<part1>u012</part1>
+					<part2>u011</part2>
+					<part3>u010</part3>
+					<part4>u009</part4>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>26</turnouts>
+						<value>18</value>
+					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
 				<circuit>0</circuit>
 			</to>
-			<to id = "id19">
+			<to id = "Beroun_kolej_3">
 				<parts>
-					<part1>id3</part1>
-					<part2>id5</part2>
-					<part3>id9</part3>
-					<part4>id14</part4>
+					<part1>u012</part1>
+					<part2>u011</part2>
+					<part3>u010</part3>
+					<part4>u009</part4>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>26</turnouts>
+						<value>16</value>
+					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
 				<circuit>0</circuit>
 			</to>
-			<to id = "id18">
+			<to id = "Beroun_kolej_2">
 				<parts>
-					<part1>id3</part1>
-					<part2>id5</part2>
-					<part3>id9</part3>
-					<part4>id12</part4>
-					<part5>id13</part5>
+					<part1>u012</part1>
+					<part2>u011</part2>
+					<part3>u010</part3>
+					<part4>u002</part4>
+					<part5>u001</part5>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>29</turnouts>
+						<value>15</value>
+					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
 				<circuit>0</circuit>
 			</to>
-			<to id = "id22">
+			<to id = "Beroun_kolej_4">
 				<parts>
-					<part1>id3</part1>
-					<part2>id4</part2>
-					<part3>id7</part3>
+					<part1>u012</part1>
+					<part2>u011</part2>
+					<part3>u010</part3>
+					<part4>u002</part4>
+					<part5>u001</part5>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>221</turnouts>
+						<value>89</value>
+					</unit1>
+					<unit2>
+						<unit>2</unit>
+						<turnouts>100</turnouts>
+						<value>150</value>
+					</unit2>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
+				<circuit>0</circuit>
+			</to>
+			<to id = "Beroun_kolej_6">
+				<parts>
+					<part1>u012</part1>
+					<part2>u011</part2>
+					<part3>u010</part3>
+					<part4>u002</part4>
+					<part5>u001</part5>
+				</parts>
+				<switches>
+					<unit1>
+						<unit>1</unit>
+						<turnouts>221</turnouts>
+						<value>217</value>
+					</unit1>
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
 				<circuit>0</circuit>
 			</to>
 		</from>
-		<from id = "id2">
-			<to id = "id21">
+		<from id = "u004">
+			<to id = "Beroun_kolej_2">
 				<parts>
-					<part1>id4</part1>
-					<part2>id3</part2>
-					<part3>id6</part3>
+					<part1>u003</part1>
+					<part2>u002</part2>
+					<part3>u001</part3>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>37</turnouts>
+						<value>32</value>
+					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
 				<circuit>0</circuit>
 			</to>
-			<to id = "id19">
+			<to id = "Beroun_kolej_4">
 				<parts>
-					<part1>id4</part1>
-					<part2>id3</part2>
-					<part3>id5</part3>
-					<part4>id9</part4>
-					<part5>id14</part5>
+					<part1>u003</part1>
+					<part2>u002</part2>
+					<part3>u001</part3>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>229</turnouts>
+						<value>100</value>
+					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
 				<circuit>0</circuit>
 			</to>
-			<to id = "id18">
+			<to id = "Beroun_kolej_6">
 				<parts>
-					<part1>id4</part1>
-					<part2>id3</part2>
-					<part3>id5</part3>
-					<part4>id9</part4>
-					<part5>id12</part5>
-					<part6>id13</part6>
+					<part1>u003</part1>
+					<part2>u002</part2>
+					<part3>u001</part3>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>221</turnouts>
+						<value>217</value>
+					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
 				<circuit>0</circuit>
 			</to>
-			<to id = "id22">
+			<to id = "Beroun_kolej_1">
 				<parts>
-					<part1>id4</part1>
-					<part2>id7</part2>
+					<part1>u003</part1>
+					<part2>u012</part2>
+					<part3>u011</part3>
+					<part4>u010</part4>
+					<part5>u009</part5>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>58</turnouts>
+						<value>1</value>
+					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
+				<circuit>0</circuit>
+			</to>
+			<to id = "Beroun_kolej_3">
+				<parts>
+					<part1>u003</part1>
+					<part2>u012</part2>
+					<part3>u011</part3>
+					<part4>u010</part4>
+					<part5>u009</part5>
+				</parts>
+				<switches>
+					<unit1>
+						<unit>1</unit>
+						<turnouts>58</turnouts>
+						<value>0</value>
+					</unit1>
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
 				<circuit>0</circuit>
 			</to>
 		</from>
-		<from id = "id22">
-			<to id = "id35">
+		<from id = "u006">
+			<to id = "Beroun_kolej_4">
 				<parts>
-					<part1>id31</part1>
-					<part2>id34</part2>
-					<part2>id33</part2>
+					<part1>u005</part1>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>192</turnouts>
+						<value>0</value>
+					</unit1>
+					<unit2>
+						<unit>2</unit>
+						<turnouts>100</turnouts>
+						<value>150</value>
+					</unit2>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<circuit>3</circuit>
+				<fromStart>Lhota</fromStart>
+				<circuit>0</circuit>
 			</to>
-			<to id = "id2">
+			<to id = "Beroun_kolej_6">
 				<parts>
-					<part1>id6</part1>
-					<part2>id3</part2>
-					<part3>id4</part3>
+					<part1>u007</part1>
+					<part2>u006</part2>
+					<part3>u005</part3>
 				</parts>
 				<switches>
-
+					<unit1>
+						<unit>1</unit>
+						<turnouts>192</turnouts>
+						<value>128</value>
+					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<circuit>2</circuit>
-			</to>
-		</from>
-		<from id = "id21">
-			<to id = "id35">
-				<parts>
-					<part1>id30</part1>
-					<part2>id33</part2>
-				</parts>
-				<switches>
-
-				</switches>
-				<toFinal>Beroun</toFinal>
-				<circuit>3</circuit>
-			</to>
-			<to id = "id2">
-				<parts>
-					<part1>id6</part1>
-					<part2>id3</part2>
-					<part3>id4</part3>
-				</parts>
-				<switches>
-
-				</switches>
-				<toFinal>Beroun</toFinal>
-				<circuit>2</circuit>
-
+				<fromStart>Lhota</fromStart>
+				<circuit>0</circuit>
 			</to>
 		</from>
 	</routes>
+	
+	<!-- Predefined circuits between stations -->
+	<circuits>
+		<cir id = "3">
+			<fromStartOutside id = "Beroun">
+				<items>
+					<item1>u005</item1>
+					<item2>u006</item2>
+					<item3>u007</item3>
+					<item4>u008</item4>
+				</items>
+				<toFinalPosition>Lhota</toFinalPosition>
+			</fromStartOutside>
+			<fromStartOutside id = "Lhota">
+				<items>
+					<item4>u008</item4>
+					<item3>u007</item3>
+					<item2>u006</item2>
+					<item1>u005</item1>
+				</items>
+				<toFinalPosition>Beroun</toFinalPosition>
+			</fromStartOutside>
+		</cir>
+	</circuits>
 
 	<!-- Predefined critical routes -->
 	<criticalroutes>
 		<crit id = "cr1">
-			<last>id198</last>
-			<current>id1</current>
+			<last>u_okruh2</last>
+			<current>u013</current>
 		</crit>
 		<crit id = "cr2">
-			<last>id199</last>
-			<current>id2</current>
+			<last>u_okruh1</last>
+			<current>u004</current>
+		</crit>
+		<crit id = "cr2">
+			<last>u007</last>
+			<current>u006</current>
 		</crit>
 	</criticalroutes>
 
@@ -278,51 +410,54 @@
 	<circuitsToFinal>
 		<fromCircuit id = "0">
 			<toCircuit name ="Lhota">
-				<item2>id18</item2>
-				<item3>id19</item3>
+				<item1>LhotaOsazena1</item1>
+				<item2>LhotaOsazena2</item2>
 			</toCircuit>
 			<toCircuit name ="Beroun">
-				<item2>id18</item2>
-				<item3>id19</item3>
-				<item4>id24</item4>
-				<item5>id21</item5>
-				<item6>id22</item6>
-				<item7>id23</item7>
+				<item1>Beroun_kolej_1</item1>
+				<item2>Beroun_kolej_3</item2>
+				<item3>Beroun_kolej_2</item3>
+				<item4>Beroun_kolej_4</item4>
+				<item5>Beroun_kolej_6</item5>
 			</toCircuit>
 		</fromCircuit>
 		<fromCircuit id = "1">
-			<toCircuit name = "Karlstejn">
-				<item2>id18</item2>
-				<item3>id19</item3>
-				<item4>id21</item4>
-				<item5>id22</item5>
-				<item6>id23</item6>
-				<item7>id24</item7>
-				<item8>id25</item8>
-			</toCircuit>
 			<toCircuit name = "Beroun">
-				<item1>id100</item1>
-				<item2>id101</item2>
+				<item1>Beroun_kolej_1</item1>
+				<item2>Beroun_kolej_3</item2>
+				<item3>Beroun_kolej_2</item3>
+				<item4>Beroun_kolej_4</item4>
+				<item5>Beroun_kolej_6</item5>
+			</toCircuit>
+			<toCircuit name = "Karlstejn">
+				<item1>KarlstejnOsazena1</item1>
+				<item2>KarlstejnOsazena2</item2>
 			</toCircuit>
 		</fromCircuit>
 		<fromCircuit id = "2">
-			<toCircuit name =" Beroun">
-				<item1>id100</item1>
-				<item2>id101</item2>
+			<toCircuit name = "Beroun">
+				<item1>Beroun_kolej_1</item1>
+				<item2>Beroun_kolej_3</item2>
+				<item3>Beroun_kolej_2</item3>
+				<item4>Beroun_kolej_4</item4>
+				<item5>Beroun_kolej_6</item5>
 			</toCircuit>
 			<toCircuit name ="Karlstejn">
-				<item2>id18</item2>
-				<item3>id19</item3>
-				<item4>id21</item4>
-				<!--
-				<item5>id22</item5>
-				<item6>id23</item6>
-				<item7>id24</item7>
-				<item8>id25</item8>
-				-->
+				<item1>KarlstejnOsazena1</item1>
+				<item2>KarlstejnOsazena2</item2>
 			</toCircuit>
 		</fromCircuit>
-
+		<fromCircuit id = "3">
+			<toCircuit name = "Beroun">
+				<item1>Beroun_kolej_2</item1>
+				<item2>Beroun_kolej_4</item2>
+				<item3>Beroun_kolej_6</item3>
+			</toCircuit>
+			<toCircuit name ="Lhota">
+				<item1>LhotaOsazena1</item1>
+				<item2>LhotaOsazena2</item2>
+			</toCircuit>
+		</fromCircuit>
 	</circuitsToFinal>
 
 
@@ -331,13 +466,11 @@
 	<stationTracks>
 		<Beroun>
 			<item1>beroun</item1>
-			<item2>id18</item2>
-			<item3>id19</item3>
-			<item4>id21</item4>
-			<item5>id22</item5>
-			<item6>id23</item6>
-			<item7>id24</item7>
-			<item8>id25</item8>
+			<item1>Beroun_kolej_1</item1>
+			<item2>Beroun_kolej_2</item2>
+			<item3>Beroun_kolej_3</item3>
+			<item4>Beroun_kolej_4</item4>
+			<item5>Beroun_kolej_5</item5>
 		</Beroun>
 	</stationTracks>
 </model>

@@ -1,6 +1,6 @@
 ﻿namespace TestDesignTT
 {
-    partial class UCDisplayJson
+    partial class UCJsonDisplay
     {
         /// <summary> 
         /// Required designer variable.
@@ -68,6 +68,7 @@
             this.dataGridView1.GridColor = System.Drawing.Color.DodgerBlue;
             this.dataGridView1.Location = new System.Drawing.Point(0, 100);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 25;
@@ -75,14 +76,14 @@
             this.dataGridView1.Size = new System.Drawing.Size(893, 436);
             this.dataGridView1.TabIndex = 5;
             // 
-            // UCDisplayJson
+            // UCJsonDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.HotTrack;
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.titleDisplayData);
-            this.Name = "UCDisplayJson";
+            this.Name = "UCJsonDisplay";
             this.Size = new System.Drawing.Size(893, 536);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

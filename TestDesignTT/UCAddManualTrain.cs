@@ -154,17 +154,11 @@ namespace TestDesignTT
 
         private void cbPickTrain_Click(object sender, EventArgs e)
         {
-            /*
-            LoadJson loadJson = new LoadJson();
-            List<Trains> trainsList = loadJson.data;
-            this.loadJson = loadJson;
-            */
-
-            //dodelano
-            trainsList = ControlLogic.MainLogic.GetData();
+            //data z JSONu
+            TrainDataJSON td = new TrainDataJSON();
+            trainsList = td.LoadJson();
 
             // filter the list based on the conditions
-            //List<string> names = new List<string>();
             cbPickTrain.Items.Clear();
             foreach (Trains train in trainsList)
             {
@@ -182,10 +176,9 @@ namespace TestDesignTT
             ComboBox cb = (ComboBox)sender;
             string selectedTrainName = (string)cb.SelectedItem;
 
-            //List<Trains> trainsList = loadJson.data;
-
-            //dodelano
-            trainsList = ControlLogic.MainLogic.GetData();
+            //data z JSONu
+            TrainDataJSON td = new TrainDataJSON();
+            trainsList = td.LoadJson();
 
             foreach (Trains train in trainsList)
             {
@@ -195,33 +188,101 @@ namespace TestDesignTT
                     tbStartPosition.Text = train.currentPosition;
                 }
             }
-
             CheckValues();
         }
 
         private void getFinalStation(Trains train)
         {
-            fromCircuit = ControlLogic.MainLogic.getFromCircuit(train);
+            string fromStart = null;
+            bool crit = false;
+
+            cbFinalStation.Items.Clear();
+
+            if (train.circuit == 0)
+            {
+                crit = true;
+                fromStart = MainLogic.GetStartStationInCritical(train.currentPosition, train.lastPosition);
+                //string fromStart = toElement.FirstOrDefault();
+
+            }
+            else
+            {
+                crit = false;
+                fromStart = MainLogic.GetStartStationOutside(train.currentPosition, train.lastPosition);
+                //string fromStart = toElement.FirstOrDefault();
+            }
+
+            bool reverse;
+            if (cbDirect.SelectedItem.ToString() == "Direct")
+                reverse = false;
+            else
+                reverse = true;
+
+            IEnumerable<string> final = null;
+
+            //vlak pojede stejnym smerem jako mel jet
+            if (reverse == train.reverse)
+            {
+                if (crit)
+                {
+                    final = MainLogic.GetFinalStationInCritical(train.currentPosition, train.lastPosition);
+                    //cbFinalStation.Items.Add(final);
+                }
+                else
+                {
+                    final = MainLogic.GetFinalStationOutside(train.currentPosition, train.lastPosition);
+                    //final = MainLogic.GetFinalStationOutside("u006", "u005");
+                }
+            }
+            else
+            {
+                //IEnumerable<string> final = null;
+                if (crit)
+                {
+                    final = MainLogic.GetFinalStationInCritical(train.lastPosition, train.currentPosition);
+                    //cbFinalStation.Items.Add(final);
+                }
+                else
+                {
+                    final = MainLogic.GetFinalStationOutside(train.lastPosition, train.currentPosition);
+                    //cbFinalStation.Items.Add(final);
+                }
+            }
+
+            foreach (string s in final)
+            {
+                if (!cbFinalStation.Items.Contains(s))
+                    cbFinalStation.Items.Add(s);
+            }
+
+
+
+
+            /*
+            fromCircuit = MainLogic.getFromCircuit(train);
             IEnumerable<XElement> toCircuits = fromCircuit.Descendants("toCircuit")
                             .Where(e => e.Elements().Any(c => (string)c == train.currentPosition));
 
-            IEnumerable<string> toNames = toCircuits.Select(e => (string)e.Attribute("name"));
+            IEnumerable<string> toNames = fromCircuit.Select(e => (string)e.Attribute("name"));
+
+            IEnumerable<string> toNames = fromCircuit.Elements("toCircuit")
+                                         .Select(e => (string)e.Attribute("name"));
 
             cbFinalStation.Items.Clear();
             if (!toNames.Any())
             {
-                bool direction;
+                bool reverse;
                 if (cbDirect.SelectedItem.ToString() == "Direct")
-                    direction = false;
+                    reverse = false;
                 else
-                    direction = true;
+                    reverse = true;
 
-                if (direction == train.reverse)
+                string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
+
+                if (reverse == train.reverse)
                 {
-                    string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
                     if (validPositions.Contains(train.finalPosition))
                     {
-                        
                         cbFinalStation.Items.Add(train.finalPosition);
                     }
                     else
@@ -236,7 +297,6 @@ namespace TestDesignTT
                 }
                 else
                 {
-                    string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
                     if (validPositions.Contains(train.startPosition))
                     {
                         string final = train.finalPosition;
@@ -271,63 +331,14 @@ namespace TestDesignTT
                         cbFinalStation.Items.Add(toName);
                 }
             }
-            /*
-            routes = ControlLogic.MainLogic.GetFromElements(train);
-            if (cbDirect.SelectedIndex < 0)
-            {
-                cbExitPoint.Items.Clear();
-
-                foreach (XElement element in routes)
-                {
-                    foreach (XElement toElement in element.Elements("to"))
-                    {
-                        //vraci postupne jednotlive id definovanych finalnich koleji
-                        string getToId = (string)toElement.Attribute("id");
-
-                        //najdi, jestli ma nejaky vlak stejnou finalni pozici (ta bude zmenena pri vytvoreni prikazu pro jizdu),
-                        //takze by se cekalo, nez vlak odjede
-                        var reserveSections = toElement.Element("parts")
-                                   .Elements()
-                                   .Select(e => e.Value)
-                                   .ToList();
-
-                        //pokud to obsahuje pozici a orientace bude opacna
-                        if (reserveSections.Any(t => t.Contains(train.lastPosition) && cbDirect.SelectedItem.ToString() != train.reverse))
-                        {
-                            cbExitPoint.Items.Add(getToId);
-                        }
-                        else if ((!(reserveSections.Any(t => t.Contains(train.lastPosition))) && cbDirect.SelectedItem.ToString() == train.reverse))
-                        {
-                            cbExitPoint.Items.Add(getToId);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                IEnumerable<XElement> matchingRoutes = routes
-                    .Where(r => (string)r.Element("from").Attribute("id") == tbStartPosition.Text
-                    && (string)r.Element("to").Attribute("id") == cbExitPoint.SelectedItem.ToString());
-
-                foreach (XElement route in matchingRoutes)
-                {
-                    // Access the values in the XML elements here
-                    string toFinal = (string)route.Element("to").Element("toFinal");
-                    int circuit = (int)route.Element("to").Element("circuit");
-
-                    List<string> parts = route.Element("to").Element("parts")
-                        .Elements()
-                        .Select(e => (string)e)
-                        .ToList();
-                }
-            }
             */
+
 
         }
         private void getFinalTrack(Trains train)
         {
             cbFinalTrack.Items.Clear();
-            IEnumerable<XElement> finTrack = ControlLogic.MainLogic.GetFinalTrack(train, cbFinalStation.SelectedItem.ToString());
+            IEnumerable<XElement> finTrack = MainLogic.GetFinalTrack(train, cbFinalStation.SelectedItem.ToString());
             foreach (XElement x in finTrack)
                 cbFinalTrack.Items.Add(x.Value);
         }
@@ -368,7 +379,7 @@ namespace TestDesignTT
                     }
                 }
             }
-
+            radioButtonNo.Checked = true;
             CheckValues();
 
         }

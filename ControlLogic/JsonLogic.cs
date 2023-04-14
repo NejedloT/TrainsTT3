@@ -106,5 +106,31 @@ namespace ControlLogic
 				File.WriteAllText(jsonPath, jsonData);
 			}
 		}
-	}
+
+        public void UpdateTrainData(string trainName, Action<Trains> updateAction)
+        {
+            lock (lockObject)
+            {
+                var jsonOptions = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    Converters = { new JsonStringEnumConverter() }
+                };
+                string jsonData = File.ReadAllText(jsonPath);
+                var trainData = JsonSerializer.Deserialize<TrainData>(jsonData, jsonOptions);
+
+                // Find the train data where the name is "Taurus_EVB".
+                var trainToUpdate = trainData.data.FirstOrDefault(t => t.name == trainName);
+                if (trainToUpdate != null)
+                {
+                    // Update the required properties of the found train data.
+                    updateAction(trainToUpdate);
+
+                    // Serialize the updated List<Trains> object back to JSON and write it to the file.
+                    jsonData = JsonSerializer.Serialize(trainData, jsonOptions);
+                    File.WriteAllText(jsonPath, jsonData);
+                }
+            }
+        }
+    }
 }

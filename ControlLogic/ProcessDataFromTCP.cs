@@ -90,6 +90,16 @@ namespace ControlLogic
             }
         }
 
+        public static void setErrors(bool b)
+        {
+            isHWError = false;
+        }
+
+        public static bool getErrors()
+        {
+            return isHWError;
+        }
+
         public static List<String> GetSavedTCPData()
         {
             return tcpData;

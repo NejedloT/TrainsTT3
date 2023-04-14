@@ -24,8 +24,8 @@ namespace TestDesignTT
 
         private static TCPClient klient = null;
 
-        private static Dictionary<uint, DateTime> lastPacketTimeByNumberOfUnit = new Dictionary<uint, DateTime>();
-        private static Dictionary<uint, System.Timers.Timer> timersByNumberOfUnit = new Dictionary<uint, System.Timers.Timer>();
+        //private static Dictionary<uint, DateTime> lastPacketTimeByNumberOfUnit = new Dictionary<uint, DateTime>();
+        //private static Dictionary<uint, System.Timers.Timer> timersByNumberOfUnit = new Dictionary<uint, System.Timers.Timer>();
 
 
 
@@ -38,7 +38,7 @@ namespace TestDesignTT
         UCMap uCMap = new UCMap();
         UCLokomotives uCLocomotives = new UCLokomotives();
         UCTurnoutsMulti uCmulti = new UCTurnoutsMulti();
-        UCEditJson uCEditJson = new UCEditJson();
+        UCJsonEdit uCEditJson = new UCJsonEdit();
         UCOccupancy uCOccupancy = new UCOccupancy();
         UCUnitSet uCUnitSet = new UCUnitSet();
         UCTurnoutsSettings uCTurnoutSet = new UCTurnoutsSettings();
@@ -51,7 +51,7 @@ namespace TestDesignTT
         {
             InitializeComponent();
             DisplayInstance(uCHome);
-            ControlLogic.MainLogic.Initialization();
+            MainLogic.Initialization();
             //ControlLogic.ProcessDataFromTCP.Initialization();
         }
 
@@ -229,7 +229,6 @@ namespace TestDesignTT
         /// <param name="e">Event handler na prichodi data ze serioveho portu</param>
         private void TCP_DataRecv(object sender, TCPReceivedEventArgs e)
         {
-
             if (this.InvokeRequired)
             {
                 this.BeginInvoke(new Action<TCPReceivedEventArgs>(DataProcessing), new object[] { e });
@@ -244,24 +243,15 @@ namespace TestDesignTT
         /// <param name="e">Event na prichozi data z portu</param>
         private void DataProcessing(TCPReceivedEventArgs e)
         {
-            //ControlLogic.ProcessDataFromTCP.ProcessData(e);
             ProcessDataFromTCP.ProcessData(e);
 
+            bool testError = ProcessDataFromTCP.getErrors();
 
-            /*
-            if (e.data is String)
+            if (testError)
             {
-                String s = e.data as String;
-
-                //zjisteni, zdali se jedna o zpravu o obsazenosti useku
-                if (Packet.RecognizeTCPType(s) == Packet.dataType.occupancy_section)
-                {
-                    //packet obsahujici data o usecich
-                    OccupancySectionPacket occupancySectionPacket = new OccupancySectionPacket(s);
-
-                }
+                StopAll();
+                ProcessDataFromTCP.setErrors(false);
             }
-            */
         }
         
 
@@ -275,14 +265,11 @@ namespace TestDesignTT
             {
                 if (DialogResult.Cancel == MessageBox.Show("Server not found\nDo you want to try to reconnect?", "Error: Server not found", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning))
                 {
-
                     Close();
-
                 }
                 StartTCPClient();
                 Thread.Sleep(200);
             }
-
         }
         
         #endregion
@@ -325,7 +312,10 @@ namespace TestDesignTT
                 //StopAll(); //zastav vlaky
 
                 //vynulovani priznaku jizdy vsech vlaku (nemusi byt ale pro jistotu)
-                trainsList = ControlLogic.MainLogic.GetData();
+                //trainsList = ControlLogic.JsonLogic.LoadJson();
+
+                TrainDataJSON td = new TrainDataJSON();
+                trainsList = td.LoadJson();
                 foreach (Trains train in trainsList)
                 {
                     train.move = 0;
@@ -336,8 +326,7 @@ namespace TestDesignTT
                 formmm.StartPosition = FormStartPosition.Manual;
                 formmm.Location = this.Location;
                 formmm.Size = this.Size;
-                //this.Hide();
-                //KlientCleanUp();
+
                 this.Close();
                 formmm.Show();
             }
@@ -525,7 +514,7 @@ namespace TestDesignTT
                         //zastavit lokomotivu, pro niz byla poslana data
                         else
                         {
-                            TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 0);
+                            TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 3);
 
                             SendTCPData(trainMotionPacket.TCPPacket);
 
@@ -544,7 +533,6 @@ namespace TestDesignTT
                 if (foundMatch)
                     break;
             }
-
             //vycisti seznam pozadavku na zmenu
             trainDataChange.Clear();
         }
@@ -560,7 +548,9 @@ namespace TestDesignTT
             List<ChangeJsonData> changeData = uCEditJson.changeJsonData;
 
             //data z JSONu
-            trainsList = ControlLogic.MainLogic.GetData();
+            TrainDataJSON td = new TrainDataJSON();
+            trainsList = td.LoadJson();
+
 
             bool foundMatch = false;
 
@@ -574,7 +564,12 @@ namespace TestDesignTT
                         //aktualizace dat, aby bylo mozne automaticke rizeni
                         train.currentPosition = data.CurrentPosition;
                         train.lastPosition = data.PreviousPosition;
+                        train.nextPosition = null;
+                        train.finalPosition = null;
                         train.reverse = data.Reverse;
+                        train.circuit = MainLogic.GetCurrentCircuit(train.currentPosition);
+                        train.startPosition = data.StartPosition;
+                        train.critical = false;
                         foundMatch = true;
                         break;
                     }
@@ -583,8 +578,6 @@ namespace TestDesignTT
                     break;
             }
             //uloz zpet do JSONu
-            TrainDataJSON td = new TrainDataJSON();
-
             td.SaveJson(trainsList);
 
             //vycisti prijata data
@@ -728,9 +721,7 @@ namespace TestDesignTT
                 TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, numberOfUnit, data);
 
                 SendTCPData(turnoutInst.TCPPacket);
-
             }
-
             newTurnoutData.Clear();
         }
         #endregion
@@ -742,7 +733,7 @@ namespace TestDesignTT
         {
             foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
             {
-                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 3);
+                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 0);
 
                 SendTCPData(trainMotionPacket.TCPPacket);
             }

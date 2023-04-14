@@ -9,13 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using TrainTTLibrary;
 
 namespace TestDesignTT
 {
-    public partial class UCEditJson : UserControl
+    public partial class UCJsonEdit : UserControl
     {
         [Browsable(true)]
         [Category("Action")]
@@ -27,7 +28,7 @@ namespace TestDesignTT
 
         public List<ChangeJsonData> changeJsonData = new List<ChangeJsonData>();
 
-        public UCEditJson()
+        public UCJsonEdit()
         {
             InitializeComponent();
             ClearData();
@@ -40,6 +41,7 @@ namespace TestDesignTT
         public void ClearData()
         {
             cbPickTrain.SelectedIndex = -1;
+            cbStart.Enabled = false;
             ClearAllExceptTrain();
             checkSaveButton();
         }
@@ -52,6 +54,7 @@ namespace TestDesignTT
             cbCurrentPosition.SelectedIndex = -1;
             cbDirection.SelectedIndex = -1;
             cbPreviousPosition.SelectedIndex = -1;
+            cbStart.SelectedIndex = -1;
             checkSaveButton();
         }
 
@@ -63,7 +66,8 @@ namespace TestDesignTT
             if ((cbPickTrain.SelectedIndex > -1) &&
                     (cbCurrentPosition.SelectedIndex > -1) &&
                     (cbPreviousPosition.SelectedIndex > -1) &&
-                    (cbDirection.SelectedIndex > -1))
+                    (cbDirection.SelectedIndex > -1) &&
+                    (cbStart.SelectedIndex > -1))
             {
                 //pokud jsou vsechna data vyplnena
                 btnSaveData.Enabled = true;
@@ -109,9 +113,13 @@ namespace TestDesignTT
 
             IEnumerable<string> nextPositions = ControlLogic.MainLogic.GetNextPositions(cbCurrentPosition.SelectedItem.ToString());
             cbPreviousPosition.Items.Clear();
+            cbStart.SelectedIndex = -1;
             foreach (string position in nextPositions)
             {
-                cbPreviousPosition.Items.Add(position);
+                if (!cbPreviousPosition.Items.Contains(position) && position != "")
+                {
+                    cbPreviousPosition.Items.Add(position);
+                }
             }
             checkSaveButton();
         }
@@ -119,6 +127,20 @@ namespace TestDesignTT
         private void cbPreviousPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkSaveButton();
+
+            int circuit = MainLogic.GetCurrentCircuit(cbCurrentPosition.SelectedItem.ToString());
+            if (circuit == 0)
+            {
+                string fromStart = MainLogic.GetStartStationInCritical(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
+                //string fromStart = toElement.FirstOrDefault();
+                cbStart.Text = fromStart;
+            }
+            else
+            {
+                string fromStart = MainLogic.GetStartStationOutside(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
+                //string fromStart = toElement.FirstOrDefault();
+                cbStart.Text = fromStart;
+            }
         }
 
         private void cbDirection_SelectedIndexChanged(object sender, EventArgs e)
@@ -133,7 +155,8 @@ namespace TestDesignTT
         /// <param name="e">Event po kliknuti do comboboxu pro vyber vlaku</param>
         private void cbPickTrain_Click(object sender, EventArgs e)
         {
-            trainsList = ControlLogic.MainLogic.GetData();
+            TrainDataJSON td = new TrainDataJSON();
+            trainsList = td.LoadJson();
 
             cbPickTrain.Items.Clear();
 
@@ -161,6 +184,16 @@ namespace TestDesignTT
             }
         }
 
+        /// <summary>
+        /// Zmena startu lokomotivy, odkud tam dojela
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbStart_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkSaveButton();
+        }
+
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearData();
@@ -173,7 +206,7 @@ namespace TestDesignTT
         /// <param name="e">Kliknuti na ulozit</param>
         private void btnSaveData_Click(object sender, EventArgs e)
         {
-            addJsonChange(cbPickTrain.SelectedItem.ToString(), cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString(), cbDirection.SelectedItem.ToString() == "Direct" ? false : true);
+            addJsonChange(cbPickTrain.SelectedItem.ToString(), cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString(), cbDirection.SelectedItem.ToString() == "Direct" ? false : true, cbStart.SelectedItem.ToString());
             ButtonChangeJsonClick?.Invoke(this, e);
             ClearData();
         }
@@ -186,9 +219,9 @@ namespace TestDesignTT
         /// <param name="currentPosition">Soucasna pozice</param>
         /// <param name="previousPosition">Minula pozice</param>
         /// <param name="direction">Dostal se vlak do teto pozice popredu/pozadu</param>
-        public void addJsonChange(string id, string currentPosition, string previousPosition, bool direction)
+        public void addJsonChange(string id, string currentPosition, string previousPosition, bool direction, string startPosition)
         {
-            changeJsonData.Add(new ChangeJsonData { Id = id, CurrentPosition = currentPosition, PreviousPosition = previousPosition, Reverse = direction });
+            changeJsonData.Add(new ChangeJsonData { Id = id, CurrentPosition = currentPosition, PreviousPosition = previousPosition, Reverse = direction, StartPosition = startPosition });
         }
     }
 
@@ -198,5 +231,6 @@ namespace TestDesignTT
         public string CurrentPosition { get; set; }
         public string PreviousPosition { get; set; }
         public bool Reverse { get; set; }
+        public string StartPosition { get; set; }
     }
 }

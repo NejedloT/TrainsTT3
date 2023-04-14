@@ -52,6 +52,7 @@ namespace TCPServerTrainTT
         /// </summary>
         private static void ConnectToSerialPort()
         {
+            /*
             try
             {
                 serialPort.PortName = Settings.Default.Port; //Port jsou vláčky, VirtualPort je můj virtuální pro odladování
@@ -71,6 +72,7 @@ namespace TCPServerTrainTT
 
                 Environment.Exit(0);
             }
+            */
         }
 
         /// <summary>

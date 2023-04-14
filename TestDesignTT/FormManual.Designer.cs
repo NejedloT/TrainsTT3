@@ -251,7 +251,10 @@
             this.MinimumSize = new System.Drawing.Size(1200, 900);
             this.Name = "FormManual";
             this.Text = "FormManual";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormManual_FormClosing);
             this.Load += new System.EventHandler(this.FormManual_Load);
+            this.SizeChanged += new System.EventHandler(this.FormManual_SizeChanged);
+            this.Resize += new System.EventHandler(this.FormManual_Resize);
             this.panelSideMenu.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

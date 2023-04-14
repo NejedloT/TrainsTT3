@@ -1,6 +1,6 @@
 ﻿namespace TestDesignTT
 {
-    partial class UCEditJson
+    partial class UCJsonEdit
     {
         /// <summary> 
         /// Required designer variable.
@@ -36,6 +36,8 @@
             this.btnSaveData = new FontAwesome.Sharp.IconButton();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbStart = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.cbDirection = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -162,6 +164,8 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 350F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 350F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel2.Controls.Add(this.cbStart, 2, 4);
+            this.tableLayoutPanel2.Controls.Add(this.label6, 1, 4);
             this.tableLayoutPanel2.Controls.Add(this.cbDirection, 2, 3);
             this.tableLayoutPanel2.Controls.Add(this.label5, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.label4, 1, 2);
@@ -173,15 +177,45 @@
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 50);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 6;
+            this.tableLayoutPanel2.RowCount = 7;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(996, 325);
             this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // cbStart
+            // 
+            this.cbStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbStart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStart.FormattingEnabled = true;
+            this.cbStart.Items.AddRange(new object[] {
+            "Beroun",
+            "Karlstejn",
+            "Lhota"});
+            this.cbStart.Location = new System.Drawing.Point(471, 143);
+            this.cbStart.Name = "cbStart";
+            this.cbStart.Size = new System.Drawing.Size(344, 23);
+            this.cbStart.TabIndex = 16;
+            this.cbStart.SelectedIndexChanged += new System.EventHandler(this.cbStart_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label6.Location = new System.Drawing.Point(118, 140);
+            this.label6.Margin = new System.Windows.Forms.Padding(0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(350, 35);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Start position:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbDirection
             // 
@@ -208,7 +242,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(350, 35);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Pick last locomotive reverse:";
+            this.label5.Text = "Previous locomotive direction:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label4
@@ -296,7 +330,7 @@
             this.panel4.Size = new System.Drawing.Size(996, 50);
             this.panel4.TabIndex = 0;
             // 
-            // UCEditJson
+            // UCJsonEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -304,7 +338,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Name = "UCEditJson";
+            this.Name = "UCJsonEdit";
             this.Size = new System.Drawing.Size(996, 575);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -336,5 +370,7 @@
         private Label label2;
         private ComboBox cbDirection;
         private Label label5;
+        private ComboBox cbStart;
+        private Label label6;
     }
 }

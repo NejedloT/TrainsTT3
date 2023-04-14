@@ -18,7 +18,7 @@ namespace TestDesignTT
         UCHome uCHome = new UCHome();
         UCMap uCMap = new UCMap();
         UCAddManualTrain uCAddManual = new UCAddManualTrain();
-        UCDisplayJson uCdisplayJson = new UCDisplayJson();
+        UCJsonDisplay uCdisplayJson = new UCJsonDisplay();
 
         MainLogic ml = new MainLogic();
 
@@ -27,7 +27,7 @@ namespace TestDesignTT
         {
             InitializeComponent();
             DisplayInstance(uCHome);
-            ControlLogic.MainLogic.Initialization();
+            MainLogic.Initialization();
         }
 
         private void FormManual_Load(object sender, EventArgs e)
@@ -35,7 +35,6 @@ namespace TestDesignTT
             uCAddManual.ButtonAddLocoClick += new EventHandler(UserControl_ButtonAddLocoClick);
 
             ml.LocomotiveDataEvent += new EventHandler<LocomotiveDataSend>(EventHandlerNewLocoData);
-
 
         }
 
@@ -98,7 +97,7 @@ namespace TestDesignTT
             formmm.StartPosition = FormStartPosition.Manual;
             formmm.Location = this.Location;
             formmm.Size = this.Size;
-            this.Hide();
+            this.Close();
             formmm.Show();
             //FormMainMenu.;
         }
@@ -110,7 +109,7 @@ namespace TestDesignTT
             foreach (var item in addData)
             {
                 //updating values in json
-                ControlLogic.MainLogic.addNewTrainDataFromClient(item.Id, item.CurrentPosition,item.Speed, item.Reverse,item.FinalPosition);
+                MainLogic.addNewTrainDataFromClient(item.Id, item.CurrentPosition,item.Speed, item.Reverse,item.FinalPosition);
             }
             addData.Clear();
         }
@@ -119,6 +118,22 @@ namespace TestDesignTT
         {
             //Stop everything
 
+        }
+
+        private void FormManual_Resize(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormManual_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void FormManual_SizeChanged(object sender, EventArgs e)
+        {
+            //vypni timery - logika nebude bezet dale
+            MainLogic.StopTimers();
         }
     }
 }

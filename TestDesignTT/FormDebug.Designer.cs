@@ -259,7 +259,6 @@
             // btnSections
             // 
             this.btnSections.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSections.Enabled = false;
             this.btnSections.FlatAppearance.BorderSize = 0;
             this.btnSections.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSections.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -278,6 +277,7 @@
             this.btnSections.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSections.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSections.UseVisualStyleBackColor = true;
+            this.btnSections.Visible = false;
             this.btnSections.Click += new System.EventHandler(this.btnSections_Click);
             // 
             // btnAddLoco
