@@ -58,7 +58,7 @@ namespace ControlLogic
         {
             //nastaveni timeru, ktery kontroluje logiku
 
-            StartTimers();
+            //StartTimers();
 
             //nacist posledni ulozena data
             TrainDataJSON td = new TrainDataJSON();
@@ -70,11 +70,63 @@ namespace ControlLogic
 
             foreach (Trains train in trainsList)
             {
-                //jestli vlak jede:
+                //Vlozeni proudoveho odberu soucasneho a minuleho useku:
                 AddCurrentDrain(train.id, train.currentPosition);
                 AddCurrentDrain(train.id, train.lastPosition);
+
+                //zjisteni, jestli je vlak v kritickem useku
+                /*
+                if (train.circuit == 0)
+                {
+                    //najdi cesty
+                    IEnumerable<XElement> critical = GetCriticalReservedSection(train);
+                    if (FindRouteInCritical(critical, train))
+                        continue;
+
+
+                }*/
             }
+            controlLogic();
             //LocomotiveDataEvent?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Metoda, která hledá kritické úseky, když se vlak nachází v kritickém úseku vjezdu do kritického úseku nebo
+        /// </summary>
+        /// <param name="currentPosition">Soucasna poloha vlaku</param>
+        /// <param name="previousPosition">Nadchazejici poloha vlaku</param>
+        /// <param name="final">Cilova stanice/kolej</param>
+        /// <returns></returns>
+        public static IEnumerable<XElement> GetCriticalReservedSection(Trains train)
+        {
+            string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
+            if (!(validPositions.Contains(train.finalPosition)) && train.finalPosition != null && train.circuit == 0)
+            {
+                var matchingToElements = xdoc.Descendants("to")
+                .Where(t => t.Element("id").Value == train.finalPosition
+                && t.Element("parts")?.Descendants().Select(p => p.Value).Contains(train.lastPosition) == true // check if previousPosition is present
+                && t.Element("parts")?.Descendants().Select(p => p.Value).Contains(train.currentPosition) == true // check if currentPosition is present
+                && t.Element("parts")?.Descendants().Select(p => p.Value).ToList().IndexOf(train.lastPosition) + 1 == t.Element("parts")?.Descendants().Select(p => p.Value).ToList().IndexOf(train.currentPosition) // check if previousPosition is earlier than currentPosition and they are next to each other
+                );
+                /*
+                .Select(t => t.Element("parts").Value)
+                .ToList();
+                */
+                if (matchingToElements.Any())
+                {
+                    return matchingToElements;
+                }
+            }
+            var matchingToElem = xdoc.Descendants("to")
+                .Where(t => t.Element("parts")?.Descendants().Select(p => p.Value).Contains(train.lastPosition) == true // check if previousPosition is present
+                && t.Element("parts")?.Descendants().Select(p => p.Value).Contains(train.currentPosition) == true // check if currentPosition is present
+                && t.Element("parts")?.Descendants().Select(p => p.Value).ToList().IndexOf(train.lastPosition) + 1 == t.Element("parts")?.Descendants().Select(p => p.Value).ToList().IndexOf(train.currentPosition) // check if previousPosition is earlier than currentPosition and they are next to each other
+                );
+            /*
+                .Select(t => t.Element("parts"))
+                .ToList();
+            */
+            return matchingToElem;
         }
 
 
@@ -85,7 +137,7 @@ namespace ControlLogic
         {
             timerCheck = new System.Timers.Timer(1000);
 
-            timerCheck.Elapsed += ControlLogic_Tick;
+            //timerCheck.Elapsed += ControlLogic_Tick;
 
             timerCheck.AutoReset = true;
 
@@ -138,8 +190,8 @@ namespace ControlLogic
         /// <param name="source"></param>
         /// <param name="e"></param>
 
-        //public static void controlLogic()
-        private static void ControlLogic_Tick(object source, System.Timers.ElapsedEventArgs e)
+        public static void controlLogic()
+        //private static void ControlLogic_Tick(object source, System.Timers.ElapsedEventArgs e)
         {
             //nacti aktualni data o poloze
 
@@ -171,7 +223,7 @@ namespace ControlLogic
 
                     //kontrola kritickych casti
                     if (CheckCritical(train))
-                        FindRoute(train);
+                        FindRouteOutsideCritical(train);
                 }
             }
 
@@ -277,10 +329,11 @@ namespace ControlLogic
                     {
                         t.currentPosition = train.currentPosition;
                         t.lastPosition = train.lastPosition;
-                        t.nextPosition = train.nextPosition;
+                        t.nextPosition = null;
                         t.move = 0;
                         t.circuit = train.circuit;
                         t.critical = train.critical;
+                        t.finalPosition = null;
                     });
 
                     MainLogic ml = new MainLogic();
@@ -306,6 +359,12 @@ namespace ControlLogic
                         //Doslo ke zmene polohy. Poloha udavajici jako budouci (nadchazejici) je jiz soucasna
                         train.currentPosition = train.nextPosition;
 
+                        var mapSection = xdoc.Descendants("section")
+                                .FirstOrDefault(e => e.Element("id")?.Value == train.currentPosition);
+
+                        // Get the value of the `circuit` element
+                        train.circuit = (int)mapSection.Element("circuit");
+
                         AddCurrentDrain(train.id, train.currentPosition);
 
                         //jsou nejake rezervovane sekce?
@@ -324,9 +383,6 @@ namespace ControlLogic
                         else
                         {
                             //najdi novou nasledujici (budouci) polohu z konfiguracniho souboru
-                            var x = train.currentPosition;
-                            var mapSection = xdoc.Descendants("section")
-                                .FirstOrDefault(e => e.Attribute("id")?.Value == train.currentPosition);
                             string nextSecId;
                             if (train.mapOrientation == "nextConnection")
                             {
@@ -337,6 +393,18 @@ namespace ControlLogic
                                 nextSecId = mapSection.Element("prevsec")?.Value;
                             }
                         }
+                    }
+
+                    //test, jestli ejdouci vlak ma alespon v jednom useku odber proudu, jinak zastavit!
+                    bool testCurrent = currentDrain.Any(cd => cd.TrainIdDrain == train.id);
+                    if (!testCurrent)
+                    {
+                        MainLogic ml = new MainLogic();
+
+                        Locomotive locomotive = new Locomotive(train.name);
+
+                        dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 3 });
+                        ml.OnMyEvent(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 3 });
                     }
                 }
             }
@@ -391,8 +459,6 @@ namespace ControlLogic
         /// <returns></returns>
         public static bool CheckCritical(Trains train)
         {
-            //vrati hodnoty, pokud vlak vjizdi do kritickeho useku
-            //var trainInfo = xdoc.Descendants("crit").Where(e => e.Attribute("last")?.Value == train.lastPosition && e.Attribute("current")?.Value == train.currentPosition).ToList();
             var trainInfo = xdoc.Descendants("crit")
                 .Where(e => (string)e.Element("last") == train.lastPosition && (string)e.Element("current") == train.currentPosition)
                 .ToList();
@@ -400,7 +466,7 @@ namespace ControlLogic
             int alreadyReserved = reservedSections.Count(cd => cd.TrainIdReserved == train.id);
 
             //vjizdim do kritickeho useku? (ANO = v listu jsou nejake hodnoty) - testuju pouze vjezd
-            if (trainInfo.Any() && alreadyReserved < 2)
+            if (trainInfo.Any() && alreadyReserved < 1)
             {
                 //pokud obsahuje cilovou stanici a ne kolej, najdi kolej
                 return true;
@@ -412,7 +478,7 @@ namespace ControlLogic
         /// Najde cestu na nadrazi
         /// </summary>
         /// <param name="train"></param>
-        public static void FindRoute(Trains train)
+        public static void FindRouteOutsideCritical(Trains train)
         {
             if (!(trainsList.Count > 0))
             {
@@ -423,10 +489,6 @@ namespace ControlLogic
 
             //bool testujici volnou cilovou kolej ci ze vlak bude odjizdet
             bool fintrack = false;
-
-            //hodnoty, pokud z nejake koleje ma jet vlak, ale zadna kolej neni volna
-            bool potfintrack = false;
-            string potToTrack;
 
             if (new[] { "Beroun", "Karlstejn", "Lhota" }.Contains(train.finalPosition))
             {
@@ -483,10 +545,6 @@ namespace ControlLogic
                                 {
                                     AddSwitchesReservation(train.id, reserveSwitches[i].UnitNum, reserveSwitches[i].Turnouts, reserveSwitches[i].Value);
                                 }
-
-                                // now you can use the reserveSwitches list to create the command to control the switches
-                                // for example, you can loop over the reserveSwitches and create a string representation of
-                                // the command, or pass the reserveSwitches list to a method that creates the command string
                             }
 
 
@@ -544,14 +602,7 @@ namespace ControlLogic
                         })
                        .ToList();
 
-                /*
-                 * prepared for switches to add
-                var reserveSwitches = toElement.Element("switches")
-                   .Elements()
-                   .Select(e => e.Value)
-                   .ToList();
-                */
-
+                int bflm = 0;
                 //vytvor rezervovane useky
                 for (int i = 0; i < resSections.Count; i++)
                 {
@@ -569,6 +620,72 @@ namespace ControlLogic
             //zkontroluj jestli vlak muze jet dal, kdyz uz je URCITE v kritickem useku
             InCritical(train, fintrack);
 
+        }
+
+        public static bool FindRouteInCritical(IEnumerable<XElement> critical, Trains train)
+        {
+            foreach (XElement s in critical)
+            {
+                //string toValue = s.Element("to")?.Attribute("id")?.Value;
+                string toValue = s.Attribute("id").Value;
+                string toFinalValue = s.Element("toFinal").Value;
+                string toStartValue = s.Element("fromStart").Value;
+
+                //jednotlive useky, pres ktere by vlak musel jet
+                string[] parts = s.Descendants("parts").Elements()
+                    .Where(p => p.Name.LocalName.StartsWith("part"))
+                    .Select(p => p.Value)
+                    .ToArray();
+
+
+
+                string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
+                if (!(trainsList.Any(tl => tl.currentPosition == toFinalValue)) && validPositions.Contains(toFinalValue))
+                {
+                    //bool hasMatch = trainsList.Any(tl => tl != train && parts.Any(p => tl.currentPosition == p));
+
+                    bool hasMatch = trainsList.Any(tl => tl != train && tl.currentPosition != null && parts.Any(p => tl.currentPosition == p));
+
+                    IEnumerable<Trains> matchingTrains = trainsList.Where(tl => tl != train && parts.Any(p => tl.currentPosition == p));
+
+                    string theMatch = string.Join(", ", matchingTrains.Select(mt => mt.name));
+
+                    if (!hasMatch)
+                    {
+                        for (int i = 0; i < parts.Count(); i++)
+                            AddReservedSections(train.id, parts[i]);
+
+                        var switches = s.Element("switches");
+                        if (switches != null)
+                        {
+                            var reserveSwitches = switches.Elements()
+                                .Select(unit =>
+                                {
+                                    string unitNum = unit.Element("unit").Value;
+                                    string turnouts = unit.Element("turnouts").Value;
+                                    string value = unit.Element("value").Value;
+
+                                    uint unitN = uint.Parse(unitNum);
+                                    byte turn = byte.Parse(turnouts);
+                                    byte val = byte.Parse(value);
+                                    return new { UnitNum = unitN, Turnouts = turn, Value = val };
+                                })
+                                .ToList();
+
+
+                            for (int i = 0; i < reserveSwitches.Count; i++)
+                            {
+                                AddSwitchesReservation(train.id, reserveSwitches[i].UnitNum, reserveSwitches[i].Turnouts, reserveSwitches[i].Value);
+                            }
+
+                            if (toFinalValue == "Beroun" || train.circuit == 0)
+                                train.finalPosition = toValue;
+                        }
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public static void InCritical(Trains train, bool fintrack)
@@ -615,7 +732,7 @@ namespace ControlLogic
         #endregion
 
         #region Funkce a metody pro testovani moznosti jizdy vlaku, ktere cekaji na rozjezd
-        
+
         /// <summary>
         /// Prvni kontrola pro rozjezd vlaku
         /// Ma vlak rezervovane useky nebo je v kritickem useku? (Test, jestli stoji, protoze musel stat)
@@ -625,14 +742,14 @@ namespace ControlLogic
         /// <returns></returns>
         public static bool TrainWantsToMove(Trains train, bool testFirstCheck)
         {
-            //najdi kriticke useky
-            /*
-            var trainInfo = xdoc.Descendants("crit")
-            .Where(e => e.Attribute("last")?.Value == train.lastPosition && e.Attribute("current")?.Value == train.currentPosition).ToList();
-            */
+
             var trainInfo = xdoc.Descendants("crit")
                 .Where(e => (string)e.Element("last") == train.lastPosition && (string)e.Element("current") == train.currentPosition)
                 .ToList();
+
+            //test jestli uz vlak stoji v kritickem useku
+            IEnumerable<XElement> critical = GetCriticalReservedSection(train);
+
 
             //ma vlak rezervovane useky?
             if (reservedSections.Any(rs => rs.TrainIdReserved == train.id))
@@ -658,6 +775,10 @@ namespace ControlLogic
                     return true;
                 }
             }
+            else if (critical.Any())
+            {
+                return FindRouteInCritical(critical,train);
+            }
 
             //nema rezervovane useky
             else if (trainInfo.Any())
@@ -667,7 +788,7 @@ namespace ControlLogic
                 {
                     //najdi cestu, pokud jsi v kritickem useku
                     if (CheckCritical(train))
-                        FindRoute(train);
+                        FindRouteOutsideCritical(train);
 
                     //rekurze, cesta byla nalezena nebo konec a cesta momentalne zadna neni
                     return TrainWantsToMove(train, false);
@@ -736,7 +857,7 @@ namespace ControlLogic
         /// <param name="data">Nastaveni vlevo/vpravo</param>
         public static void AddSwitchesReservation(uint id, uint numberOfUnit, byte turnouts, byte data)
         {
-            switchesChange.Add(new SwitchesChange { TrainId = id, NumberOfUnit = numberOfUnit, Turnouts = turnouts, Value = data});
+            switchesChange.Add(new SwitchesChange { TrainId = id, NumberOfUnit = numberOfUnit, Turnouts = turnouts, Value = data });
         }
         #endregion
 
@@ -747,7 +868,7 @@ namespace ControlLogic
         /// <param name="currentPosition">soucasna pozice</param>
         /// <param name="speed">rychlost</param>
         /// <param name="reverse">jede obracenym smerem? (pozpatku)</param>
-        /// <param name="final">Nazev cilove stanice</param>
+        /// <param name="final">Nazev cilove stanice/koleje</param>
         public static void addNewTrainDataFromClient(string name, string currentPosition, byte speed, bool reverse, string final)
         {
             TrainDataJSON td = new TrainDataJSON();
@@ -768,69 +889,6 @@ namespace ControlLogic
                             orientation = "nextConnection";
                     }
 
-                    //pokus najist cilovou´kolej dle zadefinovanych useku
-                    var toCircuit = xdoc.Descendants("fromCircuit")
-                        .Where(fc => fc.Attribute("id")?.Value == train.circuit.ToString())
-                        .Descendants("toCircuit")
-                        .FirstOrDefault(tc => tc.Elements()
-                        .Any(e => e.Value == final));
-
-                    string toCircuitName;
-                    if (toCircuit != null)
-                        toCircuitName = toCircuit.Attribute("name")?.Value;
-                    else
-                        toCircuitName = final;
-
-                    IEnumerable<XElement> fromElements = xdoc.Descendants("from").Where(e => (string)e.Attribute("id") == train.currentPosition);
-
-                    if (fromElements != null)
-                    {
-                        foreach (XElement element in fromElements)
-                        {
-                            foreach (XElement toElement in element.Elements("to"))
-                            {
-
-                                var getRoad = toElement.Element("toFinal");
-                                if (getRoad.Value == toCircuitName)
-                                {
-
-                                    //znam cestu dle chtene cilove polohy a hodnotu circuit z jsonu
-                                    var getVarCircuit = toElement.Element("circuit");
-
-                                    int getCircuit = int.Parse(getVarCircuit.Value);
-
-
-
-                                    var reserveSections = toElement.Element("parts")
-                                       .Elements()
-                                       .Select(e => e.Value)
-                                       .ToList();
-
-                                    //otestovani zvoleni spravne cesty - pokud jede vlak stejnym smerem, tak nesmi obsahovat list minulou pozici
-                                    if (((reserveSections.Contains(train.lastPosition)) && train.reverse != reverse) ||
-                                        (!reserveSections.Contains(train.lastPosition) && train.reverse == reverse))
-                                    {
-                                        /*
-                                         * prepared for switches to add
-                                        var reserveSwitches = toElement.Element("switches")
-                                           .Elements()
-                                           .Select(e => e.Value)
-                                           .ToList();
-                                        */
-
-                                        //vytvor rezervovane useky
-                                        for (int i = 0; i < reserveSections.Count; i++)
-                                        {
-                                            AddReservedSections(train.id, reserveSections[i]);
-                                        }
-
-                                        train.circuit = getCircuit;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     td.UpdateTrainData(train.name, t =>
                     {
                         t.currentPosition = currentPosition;
@@ -840,6 +898,7 @@ namespace ControlLogic
                         t.mapOrientation = orientation;
                         t.move = 2;
                     });
+
                 }
             }
         }
@@ -883,15 +942,6 @@ namespace ControlLogic
         /// <returns></returns>
         public static IEnumerable<XElement> GetFinalTrack(Trains train, string wantedName)
         {
-            /*
-            return xdoc.Descendants("fromCircuit")
-                .Where(fc => (string)fc.Attribute("id") == train.circuit)
-                .Elements("toCircuit")
-                .Where(tc => (string)tc.Attribute("name") == wantedName)
-                .Elements()
-                .Select(e => (string)e)
-                .Cast<XElement>();
-            */
             return xdoc.Descendants("fromCircuit")
             .Where(fc => (string)fc.Attribute("id") == train.circuit.ToString())
             .Elements("toCircuit")
@@ -928,7 +978,7 @@ namespace ControlLogic
                 .ToList();
         }
 
-        public static IEnumerable<string> GetFinalStationInCritical (string currentPosition, string previousPosition)
+        public static IEnumerable<string> GetFinalStationInCritical(string currentPosition, string previousPosition)
         {
             var matchingToElements = xdoc.Descendants("to")
             .Where(t => t.Element("parts")?.Descendants().Select(p => p.Value).Contains(previousPosition) == true // check if previousPosition is present
@@ -960,7 +1010,7 @@ namespace ControlLogic
         /// <param name="currentPosition"></param>
         /// <param name="previousPosition"></param>
         /// <returns></returns>
-        public static string GetStartStationInCritical (string currentPosition, string previousPosition)
+        public static string GetStartStationInCritical(string currentPosition, string previousPosition)
         {
             var matchingToElements = xdoc.Descendants("to")
             .Where(t => t.Element("parts")?.Descendants().Select(p => p.Value).Contains(previousPosition) == true // check if previousPosition is present
