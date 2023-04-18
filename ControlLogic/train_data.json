@@ -3,16 +3,16 @@
     {
       "id": 3,
       "name": "Brejlovec",
-      "currentPosition": "u010",
-      "lastPosition": "u011",
-      "nextPosition": null,
-      "move": 2,
-      "speed": 20,
+      "currentPosition": "u006",
+      "lastPosition": "u007",
+      "nextPosition": "u005",
+      "move": 0,
+      "speed": 19,
       "reverse": false,
       "mapOrientation": "prevConnection",
-      "circuit": 0,
+      "circuit": 3,
       "critical": false,
-      "startPosition": "Karlstejn",
+      "startPosition": "Beroun",
       "finalPosition": "Beroun"
     },
     {
@@ -21,14 +21,14 @@
       "currentPosition": "u013",
       "lastPosition": "u_okruh2",
       "nextPosition": "u012",
-      "move": 1,
+      "move": 0,
       "speed": 30,
       "reverse": false,
       "mapOrientation": "prevConnection",
       "circuit": 2,
       "critical": false,
       "startPosition": "Karlstejn",
-      "finalPosition": "Beroun"
+      "finalPosition": "Beroun_kolej_1"
     },
     {
       "id": 10,
@@ -36,14 +36,14 @@
       "currentPosition": "u004",
       "lastPosition": "u_okruh1",
       "nextPosition": "u003",
-      "move": 1,
+      "move": 0,
       "speed": 30,
       "reverse": true,
       "mapOrientation": "prevConnection",
       "circuit": 1,
       "critical": false,
       "startPosition": "Lhota",
-      "finalPosition": "Beroun"
+      "finalPosition": "Beroun_kolej_2"
     },
     {
       "id": 12,
@@ -51,11 +51,11 @@
       "currentPosition": "",
       "lastPosition": "id13",
       "nextPosition": null,
-      "move": 1,
+      "move": 0,
       "speed": 13,
       "reverse": true,
       "mapOrientation": "prevConnection",
-      "circuit": 3,
+      "circuit": 10,
       "critical": false,
       "startPosition": null,
       "finalPosition": "id18"
@@ -63,17 +63,17 @@
     {
       "id": 16,
       "name": "Taurus_EVB",
-      "currentPosition": "u009",
-      "lastPosition": "u010",
-      "nextPosition": null,
+      "currentPosition": "u004",
+      "lastPosition": "u_okruh1",
+      "nextPosition": "u003",
       "move": 0,
-      "speed": 5,
+      "speed": 13,
       "reverse": true,
       "mapOrientation": "nextConnection",
       "circuit": 0,
       "critical": false,
       "startPosition": null,
-      "finalPosition": "Karlstejn"
+      "finalPosition": "Lhota"
     }
   ]
 }

@@ -193,7 +193,9 @@ namespace TestDesignTT
 
         private void getFinalStation(Trains train)
         {
-            string fromStart = null;
+            //string fromStart = null;
+            IEnumerable<string> fromStart = null;
+            IEnumerable<string> final = null;
             bool crit = false;
 
             cbFinalStation.Items.Clear();
@@ -218,9 +220,11 @@ namespace TestDesignTT
             else
                 reverse = true;
 
-            IEnumerable<string> final = null;
+            
 
             //vlak pojede stejnym smerem jako mel jet
+
+            /*
             if (reverse == train.reverse)
             {
                 if (crit)
@@ -249,92 +253,35 @@ namespace TestDesignTT
                 }
             }
 
+            */
+
+            if (crit)
+            {
+                final = MainLogic.GetFinalStationInCritical(train.currentPosition, train.lastPosition);
+                //cbFinalStation.Items.Add(final);
+            }
+            else
+            {
+                final = MainLogic.GetFinalStationOutside(train.currentPosition, train.lastPosition);
+            }
+
+
+            if (reverse != train.reverse)
+            {
+                IEnumerable<string> HelpVar = fromStart;
+                fromStart = final;
+                final = HelpVar;
+            }
+
+
             foreach (string s in final)
             {
                 if (!cbFinalStation.Items.Contains(s))
                     cbFinalStation.Items.Add(s);
             }
-
-
-
-
-            /*
-            fromCircuit = MainLogic.getFromCircuit(train);
-            IEnumerable<XElement> toCircuits = fromCircuit.Descendants("toCircuit")
-                            .Where(e => e.Elements().Any(c => (string)c == train.currentPosition));
-
-            IEnumerable<string> toNames = fromCircuit.Select(e => (string)e.Attribute("name"));
-
-            IEnumerable<string> toNames = fromCircuit.Elements("toCircuit")
-                                         .Select(e => (string)e.Attribute("name"));
-
-            cbFinalStation.Items.Clear();
-            if (!toNames.Any())
-            {
-                bool reverse;
-                if (cbDirect.SelectedItem.ToString() == "Direct")
-                    reverse = false;
-                else
-                    reverse = true;
-
-                string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
-
-                if (reverse == train.reverse)
-                {
-                    if (validPositions.Contains(train.finalPosition))
-                    {
-                        cbFinalStation.Items.Add(train.finalPosition);
-                    }
-                    else
-                    {
-                        IEnumerable<XElement> idToFind = ControlLogic.MainLogic.GetFinalStation(train.finalPosition);
-                        foreach (XElement toNameElement in toCircuits.Descendants("item").Where(e => (string)e == idToFind.ToString()))
-                        {
-                            string toName = (string)toNameElement.Parent.Attribute("name");
-                            cbFinalStation.Items.Add(toName);
-                        }
-                    }
-                }
-                else
-                {
-                    if (validPositions.Contains(train.startPosition))
-                    {
-                        string final = train.finalPosition;
-                        cbFinalStation.Items.Add(train.startPosition);
-                    }
-                    else
-                    {
-                        IEnumerable<XElement> idToFind = ControlLogic.MainLogic.GetFinalStation(train.finalPosition);
-                        foreach (XElement toNameElement in toCircuits.Descendants("item").Where(e => (string)e == idToFind.ToString()))
-                        {
-                            string toName = (string)toNameElement.Parent.Attribute("name");
-                            cbFinalStation.Items.Add(toName);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                int i = 0;
-                bool reverze;
-                if (cbDirect.SelectedItem.ToString() == "Direct")
-                    reverze = false;
-                else
-                    reverze = true;
-
-                foreach (string toName in toNames)
-                {
-                    if ((toName == "Lhota" && (((train.mapOrientation == "prevConnection") && (reverze == train.reverse))
-                        || ((train.mapOrientation == "nextConnection") && reverze != train.reverse))))
-                        i++;
-                    else
-                        cbFinalStation.Items.Add(toName);
-                }
-            }
-            */
-
-
         }
+
+
         private void getFinalTrack(Trains train)
         {
             cbFinalTrack.Items.Clear();
@@ -445,6 +392,8 @@ namespace TestDesignTT
             addTrainInfoData(name, currentPosition, speed, reverse, final);
             //addTrainInfoData(cbPickTrain.SelectedItem.ToString(),tbStartPosition.Text,cbSpeed.SelectedItem.ToString(),cbDirect.SelectedItem.ToString(), final);
             ButtonAddLocoClick?.Invoke(this, e);
+
+            ClearData();
         }
 
         public void addTrainInfoData(string id, string currentPosition, byte speed, bool direction, string final)

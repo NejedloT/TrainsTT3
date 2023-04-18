@@ -121,6 +121,7 @@ namespace TestDesignTT
                     cbPreviousPosition.Items.Add(position);
                 }
             }
+            //ClearAllExceptTrain();
             checkSaveButton();
         }
 
@@ -128,18 +129,33 @@ namespace TestDesignTT
         {
             checkSaveButton();
 
+            if (cbCurrentPosition.SelectedItem == null)
+                return;
+
+            cbStart.Text = null;
+
             int circuit = MainLogic.GetCurrentCircuit(cbCurrentPosition.SelectedItem.ToString());
             if (circuit == 0)
             {
-                string fromStart = MainLogic.GetStartStationInCritical(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
+                IEnumerable<string> fromStart = MainLogic.GetStartStationInCritical(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
                 //string fromStart = toElement.FirstOrDefault();
-                cbStart.Text = fromStart;
+                //cbStart.Text = fromStart;
+                string startStation = fromStart.FirstOrDefault();
+                if (startStation != null)
+                {
+                    cbStart.Text = startStation;
+                }
             }
             else
             {
-                string fromStart = MainLogic.GetStartStationOutside(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
+                IEnumerable<string> fromStart = MainLogic.GetStartStationOutside(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
                 //string fromStart = toElement.FirstOrDefault();
-                cbStart.Text = fromStart;
+                //cbStart.Text = fromStart;
+                string startStation = fromStart.FirstOrDefault();
+                if (startStation != null)
+                {
+                    cbStart.Text = startStation;
+                }
             }
         }
 
@@ -182,6 +198,7 @@ namespace TestDesignTT
             {
                 cbCurrentPosition.Items.Add(sec.Name);
             }
+            ClearAllExceptTrain();
         }
 
         /// <summary>

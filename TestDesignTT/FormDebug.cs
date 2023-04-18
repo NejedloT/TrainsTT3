@@ -51,7 +51,7 @@ namespace TestDesignTT
         {
             InitializeComponent();
             DisplayInstance(uCHome);
-            MainLogic.Initialization();
+            //MainLogic.Initialization();
             //ControlLogic.ProcessDataFromTCP.Initialization();
         }
 

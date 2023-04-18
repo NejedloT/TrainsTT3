@@ -35,7 +35,7 @@
 			<moduleposition>3</moduleposition>
 		</section>
 		<section id = "u005" type="track">
-			<prevsec></prevsec>
+			<prevsec>u100</prevsec>
 			<nextsec>u006</nextsec>
 			<circuit>3</circuit>
 			<moduleid>3</moduleid>
@@ -366,6 +366,42 @@
 	
 	<!-- Predefined circuits between stations -->
 	<circuits>
+		<cir id = "1">
+			<fromStartOutside id = "Beroun">
+				<items>
+					<item1>u003</item1>
+					<item2>u004</item2>
+					<item3>u_okruh1</item3>
+				</items>
+				<toFinalPosition>Karlstejn</toFinalPosition>
+			</fromStartOutside>
+			<fromStartOutside id = "Karlstejn">
+				<items>
+					<item3>u_okruh1</item3>
+					<item2>u004</item2>
+					<item1>u003</item1>
+				</items>
+				<toFinalPosition>Beroun</toFinalPosition>
+			</fromStartOutside>
+		</cir>
+		<cir id = "2">
+			<fromStartOutside id = "Beroun">
+				<items>
+					<item1>u012</item1>
+					<item2>u013</item2>
+					<item3>u_okruh2</item3>
+				</items>
+				<toFinalPosition>Karlstejn</toFinalPosition>
+			</fromStartOutside>
+			<fromStartOutside id = "Karlstejn">
+				<items>
+					<item3>u_okruh2</item3>
+					<item2>u013</item2>
+					<item1>u012</item1>
+				</items>
+				<toFinalPosition>Beroun</toFinalPosition>
+			</fromStartOutside>
+		</cir>
 		<cir id = "3">
 			<fromStartOutside id = "Beroun">
 				<items>
@@ -420,6 +456,10 @@
 				<item4>Beroun_kolej_4</item4>
 				<item5>Beroun_kolej_6</item5>
 			</toCircuit>
+			<toCircuit name = "Karlstejn">
+				<item1>KarlstejnOsazena1</item1>
+				<item2>KarlstejnOsazena2</item2>
+			</toCircuit>
 		</fromCircuit>
 		<fromCircuit id = "1">
 			<toCircuit name = "Beroun">
@@ -465,7 +505,7 @@
 	<!-- Definition of tracks for every station -->
 	<stationTracks>
 		<Beroun>
-			<item1>beroun</item1>
+			<item1>Beroun</item1>
 			<item1>Beroun_kolej_1</item1>
 			<item2>Beroun_kolej_2</item2>
 			<item3>Beroun_kolej_3</item3>
