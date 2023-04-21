@@ -74,7 +74,7 @@ namespace ControlLogic
 	{
 		private readonly string jsonPath = "C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\train_data.json";
 		
-		private static object lockObject = new object();
+		public static object lockObject = new object();
 
 		public List<Trains> LoadJson()
 		{

@@ -241,11 +241,11 @@
             this.cbCurrentConsumption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCurrentConsumption.FormattingEnabled = true;
             this.cbCurrentConsumption.Items.AddRange(new object[] {
+            "250 ms",
             "500 ms",
             "1000 ms",
             "1500 ms",
-            "2000 ms",
-            "2500 ms"});
+            "2000 ms"});
             this.cbCurrentConsumption.Location = new System.Drawing.Point(457, 48);
             this.cbCurrentConsumption.Name = "cbCurrentConsumption";
             this.cbCurrentConsumption.Size = new System.Drawing.Size(344, 23);

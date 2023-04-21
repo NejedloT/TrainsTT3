@@ -111,7 +111,7 @@ namespace TestDesignTT
             if (cbCurrentPosition.SelectedItem == null)
                 return;
 
-            IEnumerable<string> nextPositions = ControlLogic.MainLogic.GetNextPositions(cbCurrentPosition.SelectedItem.ToString());
+            IEnumerable<string> nextPositions = MainLogic.GetNextPositions(cbCurrentPosition.SelectedItem.ToString());
             cbPreviousPosition.Items.Clear();
             cbStart.SelectedIndex = -1;
             foreach (string position in nextPositions)

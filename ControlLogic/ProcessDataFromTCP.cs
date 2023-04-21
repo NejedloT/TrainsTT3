@@ -36,9 +36,12 @@ namespace ControlLogic
                     //packet obsahujici data o usecich
                     OccupancySectionPacket occupancySectionPacket = new OccupancySectionPacket(s);
 
-                    SaveOccupancySection(occupancySectionPacket.Sections);
+                    lock (MainLogic.lockingOccupancy)
+                    {
+                        SaveOccupancySection(occupancySectionPacket.Sections);
 
-                    tcpData.Add(time + " " + occupancySectionPacket.TCPPacket);
+                        tcpData.Add(time + " " + occupancySectionPacket.TCPPacket);
+                    }
                 }
                 if (Packet.RecognizeTCPType(s) == Packet.dataType.unit_info)
                 {

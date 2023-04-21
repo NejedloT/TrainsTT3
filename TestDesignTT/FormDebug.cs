@@ -52,6 +52,7 @@ namespace TestDesignTT
             InitializeComponent();
             DisplayInstance(uCHome);
             //MainLogic.Initialization();
+            MainLogic.InitTrainListAndXdoc();
             //ControlLogic.ProcessDataFromTCP.Initialization();
         }
 
@@ -75,6 +76,8 @@ namespace TestDesignTT
 
             //spusteni tcp serveru
             StartTCPClient();
+
+            //vyhybky zbyle 6, 7 a 8 maji problemy s mechanikou
         }
 
         /// <summary>
@@ -356,6 +359,23 @@ namespace TestDesignTT
             DisplayInstance(uCLocomotives);
 
             labelTitle.Text = (sender as Button).Text;
+
+            turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
+
+            TurnoutInstructionPacket turnoutInst1 = new TurnoutInstructionPacket(ti, (byte)1, (byte)0, (byte)90, (byte)110);
+            SendTCPData(turnoutInst1.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst2 = new TurnoutInstructionPacket(ti, (byte)1, (byte)1, (byte)90, (byte)110);
+            SendTCPData(turnoutInst2.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst3 = new TurnoutInstructionPacket(ti, (byte)1, (byte)2, (byte)100, (byte)130);
+            SendTCPData(turnoutInst3.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst4 = new TurnoutInstructionPacket(ti, (byte)1, (byte)3, (byte)100, (byte)130);
+            SendTCPData(turnoutInst4.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst5 = new TurnoutInstructionPacket(ti, (byte)1, (byte)4, (byte)100, (byte)130);
+            SendTCPData(turnoutInst5.TCPPacket);
             //uCLocomotives.setLabels();
         }
 
@@ -693,6 +713,8 @@ namespace TestDesignTT
                 TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti,numberOfUnit, numberOfTurnout, left, right);
 
                 SendTCPData(turnoutInst.TCPPacket);
+
+                bool b = false;
 
             }
 

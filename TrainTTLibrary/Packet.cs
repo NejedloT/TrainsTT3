@@ -1238,7 +1238,7 @@ namespace TrainTTLibrary
 
             SetBytePacket();
 
-            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "\n");
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[1] + "\n");
 
         }
 
@@ -1292,7 +1292,7 @@ namespace TrainTTLibrary
 
             SetBytePacket();
 
-            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "," + Data[2] + "," + Data[3] + "\n");
+            TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[1] + "," + Data[2] + "," + Data[3] + "\n");
         }
 
         /// <summary>
@@ -1476,7 +1476,7 @@ namespace TrainTTLibrary
                 TurnoutInfo = turnoutInfo.err; //chyba
             }
 
-            TCPPacket = (TurnoutInfo.ToString() + "," + NumberOfUnit + TurnoutInfo + "\n");
+            TCPPacket = (TurnoutInfo.ToString() + ", Jednotka:" + NumberOfUnit + ", " + TurnoutInfo + "\n");
         }
 
         //metoda pro zjisteni konkretniho typu instrukce z prijateho stringu
@@ -2041,11 +2041,13 @@ namespace TrainTTLibrary
                 }
             }
 
+            int i = 0;
             foreach (string sect in sec)
             {
                 string[] secti = sect.Split('=');
 
-                Sections.Add(new Section(secti[0], NumberOfUnit, uint.Parse(secti[1])));
+                Sections.Add(new Section(secti[0], NumberOfUnit, (uint)i, uint.Parse(secti[1])));
+                i++;
             }
         }
 
@@ -2126,6 +2128,13 @@ namespace TrainTTLibrary
             //ModulePosition = modulePosition;
         }
 
+        /// <summary>
+        /// Pro pridani odberu proudu a dat z TCP komunikace
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="numberOfUnit"></param>
+        /// <param name="modulePosition"></param>
+        /// <param name="current"></param>
         public Section(string name, uint numberOfUnit, uint modulePosition, uint current)
         {
             Name = name;

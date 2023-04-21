@@ -94,6 +94,11 @@ namespace TestDesignTT
                 */
             }
 
+            if (cbDirect.SelectedIndex > -1)
+                cbFinalStation.Enabled = true;
+            else
+                cbFinalTrack.Enabled = false;
+
 
             if (radioButtonYes.Checked)
             {
@@ -219,41 +224,6 @@ namespace TestDesignTT
                 reverse = false;
             else
                 reverse = true;
-
-            
-
-            //vlak pojede stejnym smerem jako mel jet
-
-            /*
-            if (reverse == train.reverse)
-            {
-                if (crit)
-                {
-                    final = MainLogic.GetFinalStationInCritical(train.currentPosition, train.lastPosition);
-                    //cbFinalStation.Items.Add(final);
-                }
-                else
-                {
-                    final = MainLogic.GetFinalStationOutside(train.currentPosition, train.lastPosition);
-                    //final = MainLogic.GetFinalStationOutside("u006", "u005");
-                }
-            }
-            else
-            {
-                //IEnumerable<string> final = null;
-                if (crit)
-                {
-                    final = MainLogic.GetFinalStationInCritical(train.lastPosition, train.currentPosition);
-                    //cbFinalStation.Items.Add(final);
-                }
-                else
-                {
-                    final = MainLogic.GetFinalStationOutside(train.lastPosition, train.currentPosition);
-                    //cbFinalStation.Items.Add(final);
-                }
-            }
-
-            */
 
             if (crit)
             {

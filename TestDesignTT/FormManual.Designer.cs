@@ -30,6 +30,9 @@
         {
             this.panelSideMenu = new System.Windows.Forms.Panel();
             this.btnCentralStop = new FontAwesome.Sharp.IconButton();
+            this.panelSettings = new System.Windows.Forms.Panel();
+            this.btnTurnoutSettings = new FontAwesome.Sharp.IconButton();
+            this.btnUnitSettings = new FontAwesome.Sharp.IconButton();
             this.btnSettings = new FontAwesome.Sharp.IconButton();
             this.btnJSON = new FontAwesome.Sharp.IconButton();
             this.btnExit = new FontAwesome.Sharp.IconButton();
@@ -41,6 +44,7 @@
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelDesktopPanel = new System.Windows.Forms.Panel();
             this.panelSideMenu.SuspendLayout();
+            this.panelSettings.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,6 +53,7 @@
             this.panelSideMenu.AutoScroll = true;
             this.panelSideMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(87)))), ((int)(((byte)(207)))));
             this.panelSideMenu.Controls.Add(this.btnCentralStop);
+            this.panelSideMenu.Controls.Add(this.panelSettings);
             this.panelSideMenu.Controls.Add(this.btnSettings);
             this.panelSideMenu.Controls.Add(this.btnJSON);
             this.panelSideMenu.Controls.Add(this.btnExit);
@@ -74,16 +79,73 @@
             this.btnCentralStop.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnCentralStop.IconSize = 32;
             this.btnCentralStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCentralStop.Location = new System.Drawing.Point(0, 320);
+            this.btnCentralStop.Location = new System.Drawing.Point(0, 404);
             this.btnCentralStop.Name = "btnCentralStop";
             this.btnCentralStop.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnCentralStop.Size = new System.Drawing.Size(250, 50);
-            this.btnCentralStop.TabIndex = 22;
+            this.btnCentralStop.TabIndex = 25;
             this.btnCentralStop.Text = "Central stop";
             this.btnCentralStop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCentralStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCentralStop.UseVisualStyleBackColor = true;
             this.btnCentralStop.Click += new System.EventHandler(this.btnCentralStop_Click);
+            // 
+            // panelSettings
+            // 
+            this.panelSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(27)))), ((int)(((byte)(207)))));
+            this.panelSettings.Controls.Add(this.btnTurnoutSettings);
+            this.panelSettings.Controls.Add(this.btnUnitSettings);
+            this.panelSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelSettings.Location = new System.Drawing.Point(0, 320);
+            this.panelSettings.Name = "panelSettings";
+            this.panelSettings.Size = new System.Drawing.Size(250, 84);
+            this.panelSettings.TabIndex = 24;
+            // 
+            // btnTurnoutSettings
+            // 
+            this.btnTurnoutSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnTurnoutSettings.FlatAppearance.BorderSize = 0;
+            this.btnTurnoutSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnoutSettings.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnTurnoutSettings.ForeColor = System.Drawing.Color.White;
+            this.btnTurnoutSettings.IconChar = FontAwesome.Sharp.IconChar.ArrowsSplitUpAndLeft;
+            this.btnTurnoutSettings.IconColor = System.Drawing.Color.Red;
+            this.btnTurnoutSettings.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnTurnoutSettings.IconSize = 25;
+            this.btnTurnoutSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTurnoutSettings.Location = new System.Drawing.Point(0, 40);
+            this.btnTurnoutSettings.Name = "btnTurnoutSettings";
+            this.btnTurnoutSettings.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
+            this.btnTurnoutSettings.Size = new System.Drawing.Size(250, 40);
+            this.btnTurnoutSettings.TabIndex = 6;
+            this.btnTurnoutSettings.Text = "Turnout Unit";
+            this.btnTurnoutSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTurnoutSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTurnoutSettings.UseVisualStyleBackColor = true;
+            this.btnTurnoutSettings.Click += new System.EventHandler(this.btnTurnoutSettings_Click);
+            // 
+            // btnUnitSettings
+            // 
+            this.btnUnitSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUnitSettings.FlatAppearance.BorderSize = 0;
+            this.btnUnitSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnitSettings.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnUnitSettings.ForeColor = System.Drawing.Color.White;
+            this.btnUnitSettings.IconChar = FontAwesome.Sharp.IconChar.Info;
+            this.btnUnitSettings.IconColor = System.Drawing.Color.Red;
+            this.btnUnitSettings.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnUnitSettings.IconSize = 25;
+            this.btnUnitSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUnitSettings.Location = new System.Drawing.Point(0, 0);
+            this.btnUnitSettings.Name = "btnUnitSettings";
+            this.btnUnitSettings.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
+            this.btnUnitSettings.Size = new System.Drawing.Size(250, 40);
+            this.btnUnitSettings.TabIndex = 5;
+            this.btnUnitSettings.Text = "Instruction Unit";
+            this.btnUnitSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUnitSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUnitSettings.UseVisualStyleBackColor = true;
+            this.btnUnitSettings.Click += new System.EventHandler(this.btnUnitSettings_Click);
             // 
             // btnSettings
             // 
@@ -101,7 +163,7 @@
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnSettings.Size = new System.Drawing.Size(250, 50);
-            this.btnSettings.TabIndex = 21;
+            this.btnSettings.TabIndex = 23;
             this.btnSettings.Text = "Settings";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -281,6 +343,7 @@
             this.SizeChanged += new System.EventHandler(this.FormManual_SizeChanged);
             this.Resize += new System.EventHandler(this.FormManual_Resize);
             this.panelSideMenu.ResumeLayout(false);
+            this.panelSettings.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -300,7 +363,10 @@
         private Label labelTitle;
         private Panel panelDesktopPanel;
         private FontAwesome.Sharp.IconButton btnJSON;
-        private FontAwesome.Sharp.IconButton btnCentralStop;
         private FontAwesome.Sharp.IconButton btnSettings;
+        private Panel panelSettings;
+        private FontAwesome.Sharp.IconButton btnTurnoutSettings;
+        private FontAwesome.Sharp.IconButton btnUnitSettings;
+        private FontAwesome.Sharp.IconButton btnCentralStop;
     }
 }

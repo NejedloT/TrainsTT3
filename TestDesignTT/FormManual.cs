@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Markup;
 using System.Xml;
 using TrainTTLibrary;
 using static TrainTTLibrary.Packet;
@@ -39,12 +40,15 @@ namespace TestDesignTT
             InitializeComponent();
             DisplayInstance(uCHome);
 
+            panelSettings.Visible = false;
+
             //ml = new MainLogic(); // initialize the MainLogic object
             //MainLogic.Initialization(); // pass the MainLogic object as a parameter
 
             //MainLogic.Initialization();
 
             ml.LocomotiveDataEvent += new EventHandler<LocomotiveDataSend>(EventHandlerNewLocoData);
+            ml.TurnoutsDataEvent += new EventHandler<TurnoutsDataSend>(EventHandlerNewTurnoutData);
 
             MainLogic.Initialization(ml);
             //MainLogic.TestEventHandler(ml);
@@ -60,6 +64,9 @@ namespace TestDesignTT
             //ml.LocomotiveDataEvent += new EventHandler<LocomotiveDataSend>(EventHandlerNewLocoData);
 
             StartTCPClient();
+
+
+            //vyhybky zbyle 6, 7 a 8 maji problemy s mechanikou
         }
 
 
@@ -80,19 +87,16 @@ namespace TestDesignTT
                 StopAll();
             }
 
-            //zastav timery, jak dlouho neposlali ridici jednotky zadna data
-            /*
-            foreach (var timer in timersByNumberOfUnit.Values)
-            {
-                timer.Stop();
-            }
-            */
-
             Thread.Sleep(350);
 
             MainLogic.StopTimers();
 
             Thread.Sleep(350);
+
+            if (IsConnect)
+            {
+                StopAll();
+            }
 
             //vycisti klienta
             KlientCleanUp();
@@ -214,6 +218,8 @@ namespace TestDesignTT
                 StopAll();
                 ProcessDataFromTCP.setErrors(false);
             }
+
+
         }
 
 
@@ -252,6 +258,17 @@ namespace TestDesignTT
             }
         }
 
+        private void showSubMenu(Panel subMenu)
+        {
+            if (subMenu.Visible == false)
+            {
+                subMenu.Visible = true;
+            }
+            else
+                subMenu.Visible = false;
+        }
+
+
         private void btnAddLoco_Click(object sender, EventArgs e)
         {
             DisplayInstance(uCAddManual);
@@ -259,6 +276,25 @@ namespace TestDesignTT
             //ControlLogic.MainLogic.controlLogic();
 
             labelTitle.Text = (sender as Button).Text;
+
+            panelSettings.Visible = false;
+
+            turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
+
+            TurnoutInstructionPacket turnoutInst1 = new TurnoutInstructionPacket(ti, (byte)1, (byte)0, (byte)90, (byte)110);
+            SendTCPData(turnoutInst1.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst2 = new TurnoutInstructionPacket(ti, (byte)1, (byte)1, (byte)90, (byte)110);
+            SendTCPData(turnoutInst2.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst3 = new TurnoutInstructionPacket(ti, (byte)1, (byte)2, (byte)100, (byte)130);
+            SendTCPData(turnoutInst3.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst4 = new TurnoutInstructionPacket(ti, (byte)1, (byte)3, (byte)100, (byte)130);
+            SendTCPData(turnoutInst4.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst5 = new TurnoutInstructionPacket(ti, (byte)1, (byte)4, (byte)100, (byte)130);
+            SendTCPData(turnoutInst5.TCPPacket);
         }
 
         private void btnHome_Click(object sender, EventArgs e)
@@ -266,6 +302,8 @@ namespace TestDesignTT
             DisplayInstance(uCHome);
 
             labelTitle.Text = (sender as Button).Text;
+
+            panelSettings.Visible = false;
         }
 
         private void btnSections_Click(object sender, EventArgs e)
@@ -273,6 +311,8 @@ namespace TestDesignTT
             DisplayInstance(uCMap);
 
             labelTitle.Text = (sender as Button).Text;
+
+            panelSettings.Visible = false;
         }
 
         private void btnJSON_Click(object sender, EventArgs e)
@@ -282,13 +322,26 @@ namespace TestDesignTT
             labelTitle.Text = (sender as Button).Text;
 
             uCdisplayJson.displayJson();
+
+            panelSettings.Visible = false;
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            UCSettings uCSettings = new UCSettings();
+            showSubMenu(panelSettings);
+        }
 
-            DisplayInstance(uCSettings);
+        private void btnUnitSettings_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCUnitSet);
+
+            labelTitle.Text = (sender as Button).Text;
+
+        }
+
+        private void btnTurnoutSettings_Click(object sender, EventArgs e)
+        {
+            DisplayInstance(uCTurnoutSet);
 
             labelTitle.Text = (sender as Button).Text;
         }
@@ -301,12 +354,22 @@ namespace TestDesignTT
         private void btnExit_Click(object sender, EventArgs e)
         {
             //TODO - wait, until all locomotives are finished
-            FormMainMenu formmm = new FormMainMenu();
-            formmm.StartPosition = FormStartPosition.Manual;
-            formmm.Location = this.Location;
-            formmm.Size = this.Size;
-            this.Close();
-            formmm.Show();
+            DialogResult result = MessageBox.Show("Opravdu chcete ukoncit klienta pro rizeni vlaku?", "DŮLEŽITÉ!!!",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2);
+
+            if (result == DialogResult.Yes)
+            {
+                FormMainMenu formmm = new FormMainMenu();
+                formmm.StartPosition = FormStartPosition.Manual;
+                formmm.Location = this.Location;
+                formmm.Size = this.Size;
+                
+                this.Close();
+                formmm.Show();
+
+            }
             //FormMainMenu.;
         }
 
@@ -393,7 +456,6 @@ namespace TestDesignTT
                 TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, numberOfUnit, numberOfTurnout, left, right);
 
                 SendTCPData(turnoutInst.TCPPacket);
-
             }
 
             newTurnoutStops.Clear();
@@ -425,11 +487,41 @@ namespace TestDesignTT
             newTurnoutData.Clear();
         }
 
+        /// <summary>
+        /// Event handler pro vyzvednuti dat z logiky rizeni (Main logic)
+        /// Vyvolana zmena vyhybek a vyhybky zmeneny podle dat z logiky
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">Pozadavek na vyhybky</param>
+        protected void EventHandlerNewTurnoutData(object sender, TurnoutsDataSend e)
+        {
+            uint numberOfUnit = e.NumberOfUnit;
+
+            byte turnout = e.Turnouts;
+
+            byte value = e.Value;
+
+            TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket(Packet.turnoutInstruction.nastaveni_vyhybky, numberOfUnit, turnout, value);
+            
+            SendTCPData(turnoutInstructionPacket.TCPPacket);
+        }
+
+        /// <summary>
+        /// Event handler pro vyzvednuti dat z logiky rizeni (Main logic)
+        /// Vyvolano logikou rizeni
+        /// Dle pozadavku logiky dojde k zastaveni/rozjeti vlaku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void EventHandlerNewLocoData(object sender, LocomotiveDataSend e)
         {
             Locomotive loco = e.Loco;
+
             bool reverse = e.Reverze;
+
             byte speed = e.Speed;
+
+            /*
 
             for (int i = 0; i < MainLogic.switchesChange.Count(); i++)
             {
@@ -449,6 +541,7 @@ namespace TestDesignTT
                     i--;
                 }
             }
+            */
 
             if (speed > 3)
             {
@@ -460,10 +553,20 @@ namespace TestDesignTT
 
                 SendTCPData(trainFunctionPacket.TCPPacket);
             }
+            else if (speed == 3)
+            {
+                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(loco, false, 3);
+
+                SendTCPData(trainMotionPacket.TCPPacket);
+
+                TrainFunctionPacket trainFunctionPacket = new TrainFunctionPacket(loco, false);
+
+                SendTCPData(trainFunctionPacket.TCPPacket);
+            }
 
             else
             {
-                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(loco, false, 3);
+                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(loco, false, 0);
 
                 SendTCPData(trainMotionPacket.TCPPacket);
 

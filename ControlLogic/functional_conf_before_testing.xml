@@ -133,6 +133,42 @@
 	<routes>
 		<!-- Predefined routes for Beroun -->
 		<from id = "u013">
+			<to id = "Beroun_kolej_1">
+				<parts>
+					<part1>u012</part1>
+					<part2>u011</part2>
+					<part3>u010</part3>
+					<part4>u009</part4>
+				</parts>
+				<switches>
+					<unit1>
+						<unit>1</unit>
+						<turnouts>26</turnouts>
+						<value>18</value>
+					</unit1>
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
+				<circuit>0</circuit>
+			</to>
+			<to id = "Beroun_kolej_3">
+				<parts>
+					<part1>u012</part1>
+					<part2>u011</part2>
+					<part3>u010</part3>
+					<part4>u009</part4>
+				</parts>
+				<switches>
+					<unit1>
+						<unit>1</unit>
+						<turnouts>26</turnouts>
+						<value>16</value>
+					</unit1>
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
+				<circuit>0</circuit>
+			</to>
 			<to id = "Beroun_kolej_2">
 				<parts>
 					<part1>u012</part1>
@@ -145,7 +181,7 @@
 					<unit1>
 						<unit>1</unit>
 						<turnouts>29</turnouts>
-						<value>25</value>
+						<value>15</value>
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
@@ -195,82 +231,8 @@
 				<fromStart>Karlstejn</fromStart>
 				<circuit>0</circuit>
 			</to>
-			<to id = "Beroun_kolej_1">
-				<parts>
-					<part1>u012</part1>
-					<part2>u011</part2>
-					<part3>u010</part3>
-					<part4>u009</part4>
-				</parts>
-				<switches>
-					<unit1>
-						<unit>1</unit>
-						<turnouts>26</turnouts>
-						<value>18</value>
-					</unit1>
-				</switches>
-				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
-				<circuit>0</circuit>
-			</to>
-			<to id = "Beroun_kolej_3">
-				<parts>
-					<part1>u012</part1>
-					<part2>u011</part2>
-					<part3>u010</part3>
-					<part4>u009</part4>
-				</parts>
-				<switches>
-					<unit1>
-						<unit>1</unit>
-						<turnouts>26</turnouts>
-						<value>16</value>
-					</unit1>
-				</switches>
-				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
-				<circuit>0</circuit>
-			</to>
 		</from>
 		<from id = "u004">
-			<to id = "Beroun_kolej_1">
-				<parts>
-					<part1>u003</part1>
-					<part2>u012</part2>
-					<part3>u011</part3>
-					<part4>u010</part4>
-					<part5>u009</part5>
-				</parts>
-				<switches>
-					<unit1>
-						<unit>1</unit>
-						<turnouts>26</turnouts>
-						<value>1</value>
-					</unit1>
-				</switches>
-				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
-				<circuit>0</circuit>
-			</to>
-			<to id = "Beroun_kolej_3">
-				<parts>
-					<part1>u003</part1>
-					<part2>u012</part2>
-					<part3>u011</part3>
-					<part4>u010</part4>
-					<part5>u009</part5>
-				</parts>
-				<switches>
-					<unit1>
-						<unit>1</unit>
-						<turnouts>26</turnouts>
-						<value>0</value>
-					</unit1>
-				</switches>
-				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
-				<circuit>0</circuit>
-			</to>
 			<to id = "Beroun_kolej_2">
 				<parts>
 					<part1>u003</part1>
@@ -316,6 +278,44 @@
 						<unit>1</unit>
 						<turnouts>221</turnouts>
 						<value>217</value>
+					</unit1>
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
+				<circuit>0</circuit>
+			</to>
+			<to id = "Beroun_kolej_1">
+				<parts>
+					<part1>u003</part1>
+					<part2>u012</part2>
+					<part3>u011</part3>
+					<part4>u010</part4>
+					<part5>u009</part5>
+				</parts>
+				<switches>
+					<unit1>
+						<unit>1</unit>
+						<turnouts>58</turnouts>
+						<value>1</value>
+					</unit1>
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn</fromStart>
+				<circuit>0</circuit>
+			</to>
+			<to id = "Beroun_kolej_3">
+				<parts>
+					<part1>u003</part1>
+					<part2>u012</part2>
+					<part3>u011</part3>
+					<part4>u010</part4>
+					<part5>u009</part5>
+				</parts>
+				<switches>
+					<unit1>
+						<unit>1</unit>
+						<turnouts>58</turnouts>
+						<value>0</value>
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
