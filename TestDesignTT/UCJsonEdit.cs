@@ -111,7 +111,7 @@ namespace TestDesignTT
             if (cbCurrentPosition.SelectedItem == null)
                 return;
 
-            IEnumerable<string> nextPositions = MainLogic.GetNextPositions(cbCurrentPosition.SelectedItem.ToString());
+            IEnumerable<string> nextPositions = SearchLogic.GetNextPositions(cbCurrentPosition.SelectedItem.ToString());
             cbPreviousPosition.Items.Clear();
             cbStart.SelectedIndex = -1;
             foreach (string position in nextPositions)
@@ -134,10 +134,10 @@ namespace TestDesignTT
 
             cbStart.Text = null;
 
-            int circuit = MainLogic.GetCurrentCircuit(cbCurrentPosition.SelectedItem.ToString());
+            int circuit = SearchLogic.GetCurrentCircuit(cbCurrentPosition.SelectedItem.ToString());
             if (circuit == 0)
             {
-                IEnumerable<string> fromStart = MainLogic.GetStartStationInCritical(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
+                IEnumerable<string> fromStart = SearchLogic.GetStartStationInCritical(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
                 //string fromStart = toElement.FirstOrDefault();
                 //cbStart.Text = fromStart;
                 string startStation = fromStart.FirstOrDefault();
@@ -148,7 +148,7 @@ namespace TestDesignTT
             }
             else
             {
-                IEnumerable<string> fromStart = MainLogic.GetStartStationOutside(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
+                IEnumerable<string> fromStart = SearchLogic.GetStartStationOutside(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
                 //string fromStart = toElement.FirstOrDefault();
                 //cbStart.Text = fromStart;
                 string startStation = fromStart.FirstOrDefault();

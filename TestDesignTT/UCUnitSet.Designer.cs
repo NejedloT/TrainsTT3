@@ -257,9 +257,6 @@
             this.cbUnitNumber.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbUnitNumber.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUnitNumber.FormattingEnabled = true;
-            this.cbUnitNumber.Items.AddRange(new object[] {
-            "2",
-            "3"});
             this.cbUnitNumber.Location = new System.Drawing.Point(457, 3);
             this.cbUnitNumber.Name = "cbUnitNumber";
             this.cbUnitNumber.Size = new System.Drawing.Size(344, 23);

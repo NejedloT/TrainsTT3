@@ -33,6 +33,12 @@ namespace TestDesignTT
         {
             InitializeComponent();
             CheckStates();
+
+            IEnumerable<int> UnitIDs = ControlLogic.SearchLogic.GetTurnoutIDs();
+            foreach (int id in UnitIDs)
+            {
+                cbUnitNumber.Items.Add(id);
+            }
         }
 
         #region Buttons and comboboxed events definition

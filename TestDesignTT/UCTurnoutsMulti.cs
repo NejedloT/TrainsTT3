@@ -24,6 +24,13 @@ namespace TestDesignTT
         public UCTurnoutsMulti()
         {
             InitializeComponent();
+            ClearData();
+
+            IEnumerable<int> UnitIDs = ControlLogic.SearchLogic.GetTurnoutIDs();
+            foreach (int id in UnitIDs)
+            {
+                cbUnit.Items.Add(id);
+            }
         }
 
         /// <summary>

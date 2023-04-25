@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using System.Xml;
@@ -24,15 +25,17 @@ namespace TestDesignTT
 
         private static TCPClient klient = null;
 
+        private static System.Timers.Timer timeToInitSoftwareStops;
+
         //private static Dictionary<uint, DateTime> lastPacketTimeByNumberOfUnit = new Dictionary<uint, DateTime>();
         //private static Dictionary<uint, System.Timers.Timer> timersByNumberOfUnit = new Dictionary<uint, System.Timers.Timer>();
 
 
 
-        UCEditTimetable ucEditTimetable = new UCEditTimetable();
-        UCTrainTimetable ucTrainTimetable = new UCTrainTimetable();
-        UCEditMoving ucEditMoving = new UCEditMoving();
-        UCTrainMoving ucTrainMoving = new UCTrainMoving();
+        //UCEditTimetable ucEditTimetable = new UCEditTimetable();
+        //UCTrainTimetable ucTrainTimetable = new UCTrainTimetable();
+        //UCEditMoving ucEditMoving = new UCEditMoving();
+        //UCTrainMoving ucTrainMoving = new UCTrainMoving();
         UCHome uCHome = new UCHome();
         UCTurnouts uCTurnouts = new UCTurnouts();
         UCMap uCMap = new UCMap();
@@ -46,18 +49,20 @@ namespace TestDesignTT
 
         private static List<Trains> trainsList = new List<Trains>();
 
-
         public FormDebug()
         {
             InitializeComponent();
             DisplayInstance(uCHome);
+
+            SearchLogic.InitSearch();
+
             //MainLogic.Initialization();
-            MainLogic.InitTrainListAndXdoc();
+            //MainLogic.InitTrainListAndXdoc();
             //ControlLogic.ProcessDataFromTCP.Initialization();
         }
 
         #region Form actions (Load, Init, Closed, Resized)
-
+        
         /// <summary>
         /// Definice event handleru vyvolanych v user controlech, spusteni TCP serveru a casovacu ridicich jednotek
         /// </summary>
@@ -65,6 +70,7 @@ namespace TestDesignTT
         /// <param name="e">Event vyvolany v user controlu</param>
         private void FormDebug_Load(object sender, EventArgs e)
         {
+
             //definice event handleru vyuzivanych v user controlech
             uCmulti.MultiTurnoutButtonAddClick += new EventHandler(UserControl_MultiTurnoutClick); //user control pro screen Multiturnout
             uCTurnouts.TurnoutButtonSendClick += new EventHandler(UserControl_TurnoutClick); //user control pro screen Turnout
@@ -74,10 +80,18 @@ namespace TestDesignTT
             uCTurnoutSet.TurnoutDefinitionStopsClick += new EventHandler(UserControl_TurnoutInstructionStops);
             uCTurnoutSet.TurnoutInstructionSetClick += new EventHandler(UserControl_TurnoutInstructionSet);
 
+            //Thread.Sleep(1000);
+
             //spusteni tcp serveru
             StartTCPClient();
 
-            //vyhybky zbyle 6, 7 a 8 maji problemy s mechanikou
+            timeToInitSoftwareStops = new System.Timers.Timer(1000);
+
+            // Set the event handler for the Elapsed event
+            timeToInitSoftwareStops.Elapsed += (sender, e) => Timer_Elapsed_SW_Stops(sender, e);
+
+            // Start the timer
+            timeToInitSoftwareStops.Start();
         }
 
         /// <summary>
@@ -133,6 +147,7 @@ namespace TestDesignTT
         /// <param name="e">Event vyvolany zmenou velikosti okna</param>
         private void FormDebug_SizeChanged(object sender, EventArgs e)
         {
+            /*
             if (panelDesktopPanel.Controls.Contains(ucEditMoving)) //
                 ucEditMoving.changeSize();
             if (panelDesktopPanel.Controls.Contains(ucTrainTimetable))
@@ -141,6 +156,7 @@ namespace TestDesignTT
                 ucEditTimetable.changeSize();
             if (panelDesktopPanel.Controls.Contains(ucTrainMoving))
                 ucTrainMoving.changeSize();
+            */
         }
 
         #endregion
@@ -254,9 +270,11 @@ namespace TestDesignTT
             {
                 StopAll();
                 ProcessDataFromTCP.setErrors(false);
+                DialogResult result = MessageBox.Show("Section unit or switch unit error has occurred! All trains have been stopped!", "IMPORTANT!!!",
+                MessageBoxButtons.OK);
             }
         }
-        
+
 
         /// <summary>
         /// Metoda pro posilani dat
@@ -274,7 +292,7 @@ namespace TestDesignTT
                 Thread.Sleep(200);
             }
         }
-        
+
         #endregion
 
         #region Definition of buttons in the left menu and user control
@@ -359,24 +377,6 @@ namespace TestDesignTT
             DisplayInstance(uCLocomotives);
 
             labelTitle.Text = (sender as Button).Text;
-
-            turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
-
-            TurnoutInstructionPacket turnoutInst1 = new TurnoutInstructionPacket(ti, (byte)1, (byte)0, (byte)90, (byte)110);
-            SendTCPData(turnoutInst1.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst2 = new TurnoutInstructionPacket(ti, (byte)1, (byte)1, (byte)90, (byte)110);
-            SendTCPData(turnoutInst2.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst3 = new TurnoutInstructionPacket(ti, (byte)1, (byte)2, (byte)100, (byte)130);
-            SendTCPData(turnoutInst3.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst4 = new TurnoutInstructionPacket(ti, (byte)1, (byte)3, (byte)100, (byte)130);
-            SendTCPData(turnoutInst4.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst5 = new TurnoutInstructionPacket(ti, (byte)1, (byte)4, (byte)100, (byte)130);
-            SendTCPData(turnoutInst5.TCPPacket);
-            //uCLocomotives.setLabels();
         }
 
 
@@ -447,8 +447,6 @@ namespace TestDesignTT
             //TODO
             //Snimat odbery proudu ve sve "funkci"
 
-            int u = 0;
-
         }
 
         /// <summary>
@@ -488,6 +486,46 @@ namespace TestDesignTT
         #endregion
 
         #region Zpracovani eventu a odeslani dat, eventy vyvolany v user controlech
+        /// <summary>
+        /// Nastaveni softwarovych dorazu
+        /// </summary>
+        private void softwareStops()
+        {
+            turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
+
+            TurnoutInstructionPacket turnoutInst1 = new TurnoutInstructionPacket(ti, (byte)1, (byte)0, (byte)90, (byte)110);
+            SendTCPData(turnoutInst1.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst2 = new TurnoutInstructionPacket(ti, (byte)1, (byte)1, (byte)90, (byte)110);
+            SendTCPData(turnoutInst2.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst3 = new TurnoutInstructionPacket(ti, (byte)1, (byte)2, (byte)100, (byte)130);
+            SendTCPData(turnoutInst3.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst4 = new TurnoutInstructionPacket(ti, (byte)1, (byte)3, (byte)100, (byte)130);
+            SendTCPData(turnoutInst4.TCPPacket);
+
+            TurnoutInstructionPacket turnoutInst5 = new TurnoutInstructionPacket(ti, (byte)1, (byte)4, (byte)100, (byte)130);
+            SendTCPData(turnoutInst5.TCPPacket);
+        }
+
+        /// <summary>
+        /// Nastaveni softwarovych dorazu po spusteni TCP serveru
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timer_Elapsed_SW_Stops(object sender, ElapsedEventArgs e)
+        {
+            //Zastav timer
+            timeToInitSoftwareStops.Stop();
+
+            //Inicializace softwarovych dorazu
+            softwareStops();
+
+            ((System.Timers.Timer)sender).Dispose();
+        }
+
+
         /// <summary>
         /// Metoda vyvolana Event Handlerem
         /// Rozjede nebo zastavi lokomotivu podle stisknuti tlacitka start/stop dane lokomotivy o dane rychlosti a smeru
@@ -587,7 +625,7 @@ namespace TestDesignTT
                         train.nextPosition = null;
                         train.finalPosition = null;
                         train.reverse = data.Reverse;
-                        train.circuit = MainLogic.GetCurrentCircuit(train.currentPosition);
+                        train.circuit = SearchLogic.GetCurrentCircuit(train.currentPosition);
                         train.startPosition = data.StartPosition;
                         train.critical = false;
                         foundMatch = true;
@@ -710,7 +748,7 @@ namespace TestDesignTT
 
                 byte right = newTurnoutStops[i].RightStop;
 
-                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti,numberOfUnit, numberOfTurnout, left, right);
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, numberOfUnit, numberOfTurnout, left, right);
 
                 SendTCPData(turnoutInst.TCPPacket);
 

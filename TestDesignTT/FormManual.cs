@@ -40,6 +40,8 @@ namespace TestDesignTT
             InitializeComponent();
             DisplayInstance(uCHome);
 
+            SearchLogic.InitSearch();
+
             panelSettings.Visible = false;
 
             //ml = new MainLogic(); // initialize the MainLogic object

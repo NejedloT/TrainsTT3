@@ -333,8 +333,6 @@
             this.cbUnitNumber.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbUnitNumber.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUnitNumber.FormattingEnabled = true;
-            this.cbUnitNumber.Items.AddRange(new object[] {
-            "1"});
             this.cbUnitNumber.Location = new System.Drawing.Point(429, 3);
             this.cbUnitNumber.Name = "cbUnitNumber";
             this.cbUnitNumber.Size = new System.Drawing.Size(344, 23);
@@ -399,7 +397,7 @@
             this.label3.Text = "Pick unit number:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // UCTurnoutSet
+            // UCTurnoutsSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -407,7 +405,7 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.label1);
-            this.Name = "UCTurnoutSet";
+            this.Name = "UCTurnoutsSettings";
             this.Size = new System.Drawing.Size(892, 626);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

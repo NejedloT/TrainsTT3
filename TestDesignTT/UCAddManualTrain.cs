@@ -56,7 +56,7 @@ namespace TestDesignTT
             cbFinalTrack.SelectedIndex = -1;
             cbFinalTrack.Visible = false;
             labelFinalTrack.Visible = false;
-            tbStartPosition.Text= string.Empty;
+            tbStartPosition.Text = string.Empty;
 
         }
 
@@ -82,22 +82,12 @@ namespace TestDesignTT
             {
                 cbDirect.Enabled = true;
                 EnableDependingOnTrain(true, true);
-                /*
-                if (cbDirect.SelectedIndex == -1)
-                {
-                    EnableDependingOnTrain(false, true);
-                }
-                else
-                {
-                    EnableDependingOnTrain(true, true);
-                }
-                */
             }
 
             if (cbDirect.SelectedIndex > -1)
                 cbFinalStation.Enabled = true;
             else
-                cbFinalTrack.Enabled = false;
+                cbFinalStation.Enabled = false;
 
 
             if (radioButtonYes.Checked)
@@ -113,18 +103,6 @@ namespace TestDesignTT
                 radioButtonYes.Checked = false;
             }
 
-            if (testing)
-            {
-                radioButtonNo.Visible = false;
-                radioButtonYes.Visible = false;
-                labelSpecificTrack.Visible = false;
-                labelFinalStation.Visible = false;
-                cbFinalTrack.Visible = false;
-                cbFinalStation.Visible = false;
-                cbExitPoint.Visible = false;
-                labelExitPoint.Visible = false;
-            }
-
             checkAddButton();
         }
 
@@ -132,26 +110,17 @@ namespace TestDesignTT
         {
             if ((cbPickTrain.SelectedIndex > -1) && (cbDirect.SelectedIndex > -1) && (cbSpeed.SelectedIndex > -1))
             {
-                if (!testing)
+                if ((cbFinalStation.SelectedIndex > -1))
                 {
-                    //if ((cbFinalStation.SelectedIndex > -1) && (cbExitPoint.SelectedIndex > -1))
-                    if ((cbFinalStation.SelectedIndex > -1))
+                    if ((radioButtonNo.Checked) || ((radioButtonYes.Checked) && cbFinalTrack.SelectedIndex > -1))
                     {
-                        if ((radioButtonNo.Checked) || ((radioButtonYes.Checked) && cbFinalTrack.SelectedIndex > -1))
-                        {
-                            btnAddTrain.Enabled = true;
-                            return;
-                        }
-
+                        btnAddTrain.Enabled = true;
+                        return;
                     }
-                    btnAddTrain.Enabled = false;
-                }
-                else
-                {
-                    btnAddTrain.Enabled = true;
-                    return;
 
                 }
+                btnAddTrain.Enabled = false;
+
 
             }
             btnAddTrain.Enabled = false;
@@ -208,14 +177,14 @@ namespace TestDesignTT
             if (train.circuit == 0)
             {
                 crit = true;
-                fromStart = MainLogic.GetStartStationInCritical(train.currentPosition, train.lastPosition);
+                fromStart = SearchLogic.GetStartStationInCritical(train.currentPosition, train.lastPosition);
                 //string fromStart = toElement.FirstOrDefault();
 
             }
             else
             {
                 crit = false;
-                fromStart = MainLogic.GetStartStationOutside(train.currentPosition, train.lastPosition);
+                fromStart = SearchLogic.GetStartStationOutside(train.currentPosition, train.lastPosition);
                 //string fromStart = toElement.FirstOrDefault();
             }
 
@@ -227,12 +196,12 @@ namespace TestDesignTT
 
             if (crit)
             {
-                final = MainLogic.GetFinalStationInCritical(train.currentPosition, train.lastPosition);
+                final = SearchLogic.GetFinalStationInCritical(train.currentPosition, train.lastPosition);
                 //cbFinalStation.Items.Add(final);
             }
             else
             {
-                final = MainLogic.GetFinalStationOutside(train.currentPosition, train.lastPosition);
+                final = SearchLogic.GetFinalStationOutside(train.currentPosition, train.lastPosition);
             }
 
 
@@ -255,7 +224,7 @@ namespace TestDesignTT
         private void getFinalTrack(Trains train)
         {
             cbFinalTrack.Items.Clear();
-            IEnumerable<XElement> finTrack = MainLogic.GetFinalTrack(train, cbFinalStation.SelectedItem.ToString());
+            IEnumerable<XElement> finTrack = SearchLogic.GetFinalTrack(train, cbFinalStation.SelectedItem.ToString());
             foreach (XElement x in finTrack)
                 cbFinalTrack.Items.Add(x.Value);
         }

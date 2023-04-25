@@ -27,6 +27,12 @@ namespace TestDesignTT
         {
             InitializeComponent();
             CheckStates();
+
+            IEnumerable<int> UnitIDs = ControlLogic.SearchLogic.GetModulesId();
+            foreach (int id in UnitIDs)
+            {
+                cbUnitNumber.Items.Add(id);
+            }
         }
 
         #region Click events on buttons and comboboxes

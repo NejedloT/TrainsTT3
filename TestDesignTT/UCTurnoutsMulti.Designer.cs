@@ -123,12 +123,6 @@
             this.cbUnit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUnit.FormattingEnabled = true;
-            this.cbUnit.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
             this.cbUnit.Location = new System.Drawing.Point(360, 3);
             this.cbUnit.Name = "cbUnit";
             this.cbUnit.Size = new System.Drawing.Size(530, 23);
@@ -342,7 +336,7 @@
     "bky, tak ta se nenastaví, nastavuje se 1 doprava, 0 doleva";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // UCMultiTurnout
+            // UCTurnoutsMulti
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -356,7 +350,7 @@
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titleDisplayData);
-            this.Name = "UCMultiTurnout";
+            this.Name = "UCTurnoutsMulti";
             this.Size = new System.Drawing.Size(893, 536);
             this.panel5.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

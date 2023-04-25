@@ -715,7 +715,7 @@ namespace TCPServerTrainTT
 
                 byte[] array = p.ToArray();
 
-                serialPort.Write(array, 0, array.Length);
+                //serialPort.Write(array, 0, array.Length);
             }
         }
     }

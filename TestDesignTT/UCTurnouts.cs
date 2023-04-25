@@ -26,6 +26,19 @@ namespace TestDesignTT
         public UCTurnouts()
         {
             InitializeComponent();
+            clearData();
+
+
+            //nacteni IDs vyhybek, ktere se nachazi v konfiguracnim souboru
+            IEnumerable<int> UnitIDs = SearchLogic.GetTurnoutIDs();
+            foreach (int id in UnitIDs)
+            {
+                cbIdUnit1.Items.Add(id);
+                cbIdUnit2.Items.Add(id);
+                cbIdUnit3.Items.Add(id);
+                cbIdUnit4.Items.Add(id);
+                cbIdUnit5.Items.Add(id);
+            }
         }
 
         /// <summary>

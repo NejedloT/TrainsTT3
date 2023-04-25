@@ -322,18 +322,7 @@
             "17",
             "18",
             "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30",
-            "31"});
+            "20"});
             this.cbSpeed.Location = new System.Drawing.Point(462, 102);
             this.cbSpeed.Name = "cbSpeed";
             this.cbSpeed.Size = new System.Drawing.Size(344, 23);

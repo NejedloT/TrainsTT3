@@ -197,14 +197,14 @@
             this.cbTurnout1.FormattingEnabled = true;
             this.cbTurnout1.ItemHeight = 23;
             this.cbTurnout1.Items.AddRange(new object[] {
-            "0",
             "1",
             "2",
             "3",
             "4",
             "5",
             "6",
-            "7"});
+            "7",
+            "8"});
             this.cbTurnout1.Location = new System.Drawing.Point(142, 3);
             this.cbTurnout1.MaxDropDownItems = 15;
             this.cbTurnout1.Name = "cbTurnout1";
@@ -259,13 +259,6 @@
             this.cbIdUnit1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit1.FormattingEnabled = true;
             this.cbIdUnit1.ItemHeight = 23;
-            this.cbIdUnit1.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"});
             this.cbIdUnit1.Location = new System.Drawing.Point(141, 3);
             this.cbIdUnit1.MaxDropDownItems = 30;
             this.cbIdUnit1.Name = "cbIdUnit1";
@@ -324,7 +317,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 140);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(852, 30);
+            this.panel5.Size = new System.Drawing.Size(852, 15);
             this.panel5.TabIndex = 7;
             // 
             // panel1
@@ -332,7 +325,7 @@
             this.panel1.BackColor = System.Drawing.SystemColors.HotTrack;
             this.panel1.Controls.Add(this.tableLayoutPanel7);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 170);
+            this.panel1.Location = new System.Drawing.Point(0, 155);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(852, 40);
             this.panel1.TabIndex = 8;
@@ -389,13 +382,6 @@
             this.cbIdUnit2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit2.FormattingEnabled = true;
             this.cbIdUnit2.ItemHeight = 23;
-            this.cbIdUnit2.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"});
             this.cbIdUnit2.Location = new System.Drawing.Point(142, 3);
             this.cbIdUnit2.MaxDropDownItems = 30;
             this.cbIdUnit2.Name = "cbIdUnit2";
@@ -439,14 +425,14 @@
             this.cbTurnout2.FormattingEnabled = true;
             this.cbTurnout2.ItemHeight = 23;
             this.cbTurnout2.Items.AddRange(new object[] {
-            "0",
             "1",
             "2",
             "3",
             "4",
             "5",
             "6",
-            "7"});
+            "7",
+            "8"});
             this.cbTurnout2.Location = new System.Drawing.Point(142, 3);
             this.cbTurnout2.MaxDropDownItems = 15;
             this.cbTurnout2.Name = "cbTurnout2";
@@ -503,9 +489,9 @@
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.HotTrack;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 210);
+            this.panel2.Location = new System.Drawing.Point(0, 195);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(852, 30);
+            this.panel2.Size = new System.Drawing.Size(852, 15);
             this.panel2.TabIndex = 9;
             // 
             // panel3
@@ -513,7 +499,7 @@
             this.panel3.BackColor = System.Drawing.SystemColors.HotTrack;
             this.panel3.Controls.Add(this.tableLayoutPanel5);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 240);
+            this.panel3.Location = new System.Drawing.Point(0, 210);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(852, 40);
             this.panel3.TabIndex = 10;
@@ -570,13 +556,6 @@
             this.cbIdUnit3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit3.FormattingEnabled = true;
             this.cbIdUnit3.ItemHeight = 23;
-            this.cbIdUnit3.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"});
             this.cbIdUnit3.Location = new System.Drawing.Point(142, 3);
             this.cbIdUnit3.MaxDropDownItems = 30;
             this.cbIdUnit3.Name = "cbIdUnit3";
@@ -620,14 +599,14 @@
             this.cbTurnout3.FormattingEnabled = true;
             this.cbTurnout3.ItemHeight = 23;
             this.cbTurnout3.Items.AddRange(new object[] {
-            "0",
             "1",
             "2",
             "3",
             "4",
             "5",
             "6",
-            "7"});
+            "7",
+            "8"});
             this.cbTurnout3.Location = new System.Drawing.Point(142, 3);
             this.cbTurnout3.MaxDropDownItems = 15;
             this.cbTurnout3.Name = "cbTurnout3";
@@ -684,9 +663,9 @@
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.HotTrack;
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 280);
+            this.panel4.Location = new System.Drawing.Point(0, 250);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(852, 30);
+            this.panel4.Size = new System.Drawing.Size(852, 15);
             this.panel4.TabIndex = 11;
             // 
             // panel9
@@ -768,7 +747,7 @@
             this.panel7.BackColor = System.Drawing.SystemColors.HotTrack;
             this.panel7.Controls.Add(this.tableLayoutPanel14);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel7.Location = new System.Drawing.Point(0, 310);
+            this.panel7.Location = new System.Drawing.Point(0, 265);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(852, 40);
             this.panel7.TabIndex = 14;
@@ -825,13 +804,6 @@
             this.cbIdUnit4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit4.FormattingEnabled = true;
             this.cbIdUnit4.ItemHeight = 23;
-            this.cbIdUnit4.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"});
             this.cbIdUnit4.Location = new System.Drawing.Point(142, 3);
             this.cbIdUnit4.MaxDropDownItems = 15;
             this.cbIdUnit4.Name = "cbIdUnit4";
@@ -875,14 +847,14 @@
             this.cbTurnout4.FormattingEnabled = true;
             this.cbTurnout4.ItemHeight = 23;
             this.cbTurnout4.Items.AddRange(new object[] {
-            "0",
             "1",
             "2",
             "3",
             "4",
             "5",
             "6",
-            "7"});
+            "7",
+            "8"});
             this.cbTurnout4.Location = new System.Drawing.Point(142, 3);
             this.cbTurnout4.MaxDropDownItems = 15;
             this.cbTurnout4.Name = "cbTurnout4";
@@ -939,9 +911,9 @@
             // 
             this.panel8.BackColor = System.Drawing.SystemColors.HotTrack;
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel8.Location = new System.Drawing.Point(0, 350);
+            this.panel8.Location = new System.Drawing.Point(0, 305);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(852, 30);
+            this.panel8.Size = new System.Drawing.Size(852, 15);
             this.panel8.TabIndex = 15;
             // 
             // panel14
@@ -949,7 +921,7 @@
             this.panel14.BackColor = System.Drawing.SystemColors.HotTrack;
             this.panel14.Controls.Add(this.tableLayoutPanel18);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel14.Location = new System.Drawing.Point(0, 380);
+            this.panel14.Location = new System.Drawing.Point(0, 320);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(852, 40);
             this.panel14.TabIndex = 16;
@@ -1006,13 +978,6 @@
             this.cbIdUnit5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit5.FormattingEnabled = true;
             this.cbIdUnit5.ItemHeight = 23;
-            this.cbIdUnit5.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"});
             this.cbIdUnit5.Location = new System.Drawing.Point(142, 3);
             this.cbIdUnit5.MaxDropDownItems = 15;
             this.cbIdUnit5.Name = "cbIdUnit5";
@@ -1056,14 +1021,14 @@
             this.cbTurnout5.FormattingEnabled = true;
             this.cbTurnout5.ItemHeight = 23;
             this.cbTurnout5.Items.AddRange(new object[] {
-            "0",
             "1",
             "2",
             "3",
             "4",
             "5",
             "6",
-            "7"});
+            "7",
+            "8"});
             this.cbTurnout5.Location = new System.Drawing.Point(142, 3);
             this.cbTurnout5.MaxDropDownItems = 15;
             this.cbTurnout5.Name = "cbTurnout5";
@@ -1119,7 +1084,7 @@
             // label9
             // 
             this.label9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label9.Location = new System.Drawing.Point(0, 420);
+            this.label9.Location = new System.Drawing.Point(0, 360);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(852, 30);
             this.label9.TabIndex = 17;

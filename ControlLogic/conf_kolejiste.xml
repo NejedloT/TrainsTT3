@@ -29,7 +29,7 @@
 		</section>
 		<section id = "u004" type="switch">
 			<prevsec>u003</prevsec>
-			<nextsec>u_okruh1</nextsec>
+			<nextsec>u018</nextsec>
 			<circuit>1</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>3</moduleposition>
@@ -57,7 +57,7 @@
 		</section>
 		<section id = "u008" type="track">
 			<prevsec>u007</prevsec>
-			<nextsec>u_lhota</nextsec>
+			<nextsec>u021</nextsec>
 			<circuit>3</circuit>
 			<moduleid>3</moduleid>
 			<moduleposition>7</moduleposition>
@@ -102,7 +102,7 @@
 		</section>
 		<section id = "u013" type="track">
 			<prevsec>u012</prevsec>
-			<nextsec>u_okruh2</nextsec>
+			<nextsec>u017</nextsec>
 			<circuit>2</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>4</moduleposition>
@@ -127,7 +127,120 @@
 			<circuit>0</circuit>
 			<moduleid>2</moduleid>
 			<moduleposition>7</moduleposition>
-		</section>	
+		</section>
+		<section id = "u017" type="track">
+			<prevsec>u013</prevsec>
+			<nextsec>u019</nextsec>
+			<circuit>2</circuit>
+			<moduleid>1</moduleid>
+			<moduleposition>0</moduleposition>
+		</section>
+		<section id = "u018" type="track">
+			<prevsec>u004</prevsec>
+			<nextsec>u020</nextsec>
+			<circuit>1</circuit>
+			<moduleid>1</moduleid>
+			<moduleposition>1</moduleposition>
+		</section>
+		<section id = "u019" type="track">
+			<prevsec>u017</prevsec>
+			<nextsec>u023</nextsec>
+			<circuit>2</circuit>
+			<moduleid>1</moduleid>
+			<moduleposition>2</moduleposition>
+		</section>
+		<section id = "u020" type="track">
+			<prevsec>u018</prevsec>
+			<nextsec>u024</nextsec>
+			<circuit>1</circuit>
+			<moduleid>1</moduleid>
+			<moduleposition>3</moduleposition>
+		</section>
+		<section id = "u021" type="track">
+			<prevsec>u008</prevsec>
+			<nextsec>u022</nextsec>
+			<circuit>3</circuit>
+			<moduleid>1</moduleid>
+			<moduleposition>4</moduleposition>
+		</section>
+		<section id = "u022" type="track">
+			<prevsec>u021</prevsec>
+			<nextsec>u029</nextsec>
+			<circuit>3</circuit>
+			<moduleid>1</moduleid>
+			<moduleposition>5</moduleposition>
+		</section>
+		<section id = "u023" type="track">
+			<prevsec>u019</prevsec>
+			<nextsec>u025</nextsec>
+			<circuit>2</circuit>
+			<moduleid>1</moduleid>
+			<moduleposition>6</moduleposition>
+		</section>
+		<section id = "u024" type="track">
+			<prevsec>u020</prevsec>
+			<nextsec>u026</nextsec>
+			<circuit>1</circuit>
+			<moduleid>1</moduleid>
+			<moduleposition>7</moduleposition>
+		</section>
+		<section id = "u025" type="track">
+			<prevsec>u023</prevsec>
+			<nextsec>u027</nextsec>
+			<circuit>2</circuit>
+			<moduleid>4</moduleid>
+			<moduleposition>0</moduleposition>
+		</section>
+		<section id = "u026" type="track">
+			<prevsec>u024</prevsec>
+			<nextsec>u028</nextsec>
+			<circuit>1</circuit>
+			<moduleid>4</moduleid>
+			<moduleposition>1</moduleposition>
+		</section>
+		<section id = "u027" type="track">
+			<prevsec>u025</prevsec>
+			<nextsec>u031</nextsec>
+			<circuit>2</circuit>
+			<moduleid>4</moduleid>
+			<moduleposition>2</moduleposition>
+		</section>
+		<section id = "u028" type="track">
+			<prevsec>u026</prevsec>
+			<nextsec>u032</nextsec>
+			<circuit>1</circuit>
+			<moduleid>4</moduleid>
+			<moduleposition>3</moduleposition>
+		</section>
+		<section id = "u029" type="track">
+			<prevsec>u022</prevsec>
+			<nextsec>u030</nextsec>
+			<circuit>3</circuit>
+			<moduleid>4</moduleid>
+			<moduleposition>4</moduleposition>
+		</section>
+		<section id = "u030" type="track">
+			<prevsec>u029</prevsec>
+			<nextsec>u_okruh3</nextsec>
+			<circuit>3</circuit>
+			<moduleid>4</moduleid>
+			<moduleposition>5</moduleposition>
+		</section>
+		<section id = "u031" type="track">
+			<prevsec>u027</prevsec>
+			<nextsec>u_okruh2</nextsec>
+			<circuit>2</circuit>
+			<moduleid>4</moduleid>
+			<moduleposition>6</moduleposition>
+		</section>
+		<section id = "u032" type="track">
+			<prevsec>u028</prevsec>
+			<nextsec>u_okruh1</nextsec>
+			<circuit>1</circuit>
+			<moduleid>4</moduleid>
+			<moduleposition>7</moduleposition>
+		</section>
+		
 	</layout>
 
 	<routes>
@@ -164,7 +277,7 @@
 					<unit1>
 						<unit>1</unit>
 						<turnouts>221</turnouts>
-						<value>89</value>
+						<value>93</value>
 					</unit1>
 					<unit2>
 						<unit>2</unit>
@@ -188,7 +301,7 @@
 					<unit1>
 						<unit>1</unit>
 						<turnouts>221</turnouts>
-						<value>217</value>
+						<value>221</value>
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
@@ -372,13 +485,23 @@
 				<items>
 					<item1>u003</item1>
 					<item2>u004</item2>
-					<item3>u_okruh1</item3>
+					<item3>u018</item3>
+					<item4>u020</item4>
+					<item5>u024</item5>
+					<item6>u026</item6>
+					<item7>u028</item7>
+					<item8>u032</item8>
 				</items>
 				<toFinalPosition>Karlstejn</toFinalPosition>
 			</fromStartOutside>
 			<fromStartOutside id = "Karlstejn">
 				<items>
-					<item3>u_okruh1</item3>
+					<item8>u032</item8>
+					<item7>u028</item7>
+					<item6>u026</item6>
+					<item5>u024</item5>
+					<item4>u020</item4>
+					<item3>u018</item3>
 					<item2>u004</item2>
 					<item1>u003</item1>
 				</items>
@@ -390,13 +513,23 @@
 				<items>
 					<item1>u012</item1>
 					<item2>u013</item2>
-					<item3>u_okruh2</item3>
+					<item3>u017</item3>
+					<item4>u019</item4>
+					<item5>u023</item5>
+					<item6>u025</item6>
+					<item7>u027</item7>
+					<item8>u031</item8>
 				</items>
 				<toFinalPosition>Karlstejn</toFinalPosition>
 			</fromStartOutside>
 			<fromStartOutside id = "Karlstejn">
 				<items>
-					<item3>u_okruh2</item3>
+					<item8>u031</item8>
+					<item7>u027</item7>
+					<item6>u025</item6>
+					<item5>u023</item5>
+					<item4>u019</item4>
+					<item3>u017</item3>
 					<item2>u013</item2>
 					<item1>u012</item1>
 				</items>
@@ -410,11 +543,19 @@
 					<item2>u006</item2>
 					<item3>u007</item3>
 					<item4>u008</item4>
+					<item5>u021</item5>
+					<item6>u022</item6>
+					<item7>u029</item7>
+					<item8>u030</item8>
 				</items>
 				<toFinalPosition>Lhota</toFinalPosition>
 			</fromStartOutside>
 			<fromStartOutside id = "Lhota">
 				<items>
+					<item8>u030</item8>
+					<item7>u029</item7>
+					<item6>u022</item6>
+					<item5>u021</item5>
 					<item4>u008</item4>
 					<item3>u007</item3>
 					<item2>u006</item2>
@@ -507,11 +648,16 @@
 	<stationTracks>
 		<Beroun>
 			<item1>Beroun</item1>
-			<item1>Beroun_kolej_1</item1>
-			<item2>Beroun_kolej_2</item2>
-			<item3>Beroun_kolej_3</item3>
-			<item4>Beroun_kolej_4</item4>
-			<item5>Beroun_kolej_5</item5>
+			<item2>Beroun_kolej_1</item2>
+			<item3>Beroun_kolej_2</item3>
+			<item4>Beroun_kolej_3</item4>
+			<item5>Beroun_kolej_4</item5>
+			<item6>Beroun_kolej_5</item6>
 		</Beroun>
+		<Karlstejn>
+			<item1>Karlstejn</item1>
+			<item2>KarlstejnOsazena1</item2>
+			<item3>KarlstejnOsazena2</item3>
+		</Karlstejn>
 	</stationTracks>
 </model>
