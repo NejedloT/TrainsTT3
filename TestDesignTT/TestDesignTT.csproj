@@ -9,6 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UCDataAdd.cs" />
+    <Compile Remove="UCDataAdd.Designer.cs" />
+    <Compile Remove="UCEditMoving.cs" />
+    <Compile Remove="UCEditMoving.Designer.cs" />
+    <Compile Remove="UCEditTimetable.cs" />
+    <Compile Remove="UCEditTimetable.Designer.cs" />
+    <Compile Remove="UCTrainMoving.cs" />
+    <Compile Remove="UCTrainMoving.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="UCDataAdd.resx" />
+    <EmbeddedResource Remove="UCEditMoving.resx" />
+    <EmbeddedResource Remove="UCEditTimetable.resx" />
+    <EmbeddedResource Remove="UCTrainMoving.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FontAwesome.Sharp" Version="6.1.1" />
   </ItemGroup>
 

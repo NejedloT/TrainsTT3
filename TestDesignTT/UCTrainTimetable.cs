@@ -5,19 +5,13 @@ namespace TestDesignTT
 {
     public partial class UCTrainTimetable : UserControl
     {
-        public Form form;
-
 
         public BindingList<DataTimetable> timetable = new BindingList<DataTimetable>();
 
 
-        private string myfileName;
-
         public UCTrainTimetable()
         {
             InitializeComponent();
-            //fmm.TimeInTimetableUpdated += new EventHandler(Form_TimeInTimetableUpdated);
-            //loadTimetamble();
 
         }
 
@@ -39,7 +33,6 @@ namespace TestDesignTT
 
             dataGridView1.DataSource = onScreen;
             dataGridView1.Columns[3].DefaultCellStyle.Format = "dd.MM.yyyy HH:mm:ss";
-            dataGridView1.Columns[5].Visible = false;
             
             changeSize();
         }

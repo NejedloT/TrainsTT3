@@ -40,7 +40,6 @@ namespace TestDesignTT
         private DateTime myDeparture; // čas odjezdu
         private double mySpeed;
         private bool myReverse;
-        private uint WaitTime;
 
         public string Type { set { myType = value; } get { return myType; }}
         public string StartStation { set { myStartSTation = value; } get { return myStartSTation; } }

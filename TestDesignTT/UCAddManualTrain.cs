@@ -15,10 +15,7 @@ namespace TestDesignTT
 {
     public partial class UCAddManualTrain : UserControl
     {
-        //private LoadJson loadJson;
-        private TrainDataJSON loadJson;
-
-        bool testing = false;
+        //private TrainDataJSON loadJson;
 
         private static List<Trains> trainsList = new List<Trains>();
 

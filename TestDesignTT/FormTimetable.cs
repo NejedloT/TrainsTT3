@@ -1,5 +1,7 @@
+using Microsoft.Win32;
 using System.ComponentModel;
 using System.DirectoryServices.ActiveDirectory;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using static System.Windows.Forms.DataFormats;
 
@@ -8,148 +10,64 @@ namespace TestDesignTT
 {
     public partial class FormTimetable : Form
     {
-        public Form f1;
-        private int test = 0, countTest = 0;
-
         public BindingList<DataTimetable> timetable = new BindingList<DataTimetable>();
 
         public BindingList<MovingInTimetamble> movingTimetable = new BindingList<MovingInTimetamble>();
 
         //private List<DataForTimetable> dataForTimetable = new List<DataForTimetable>();
-        
-
-        private string myFileName = String.Empty;
-        private int myRowIndex = 0;
 
 
-        UCDataAdd ucDataAdd = new UCDataAdd();
-        UCEditTimetable ucEditTimetable = new UCEditTimetable();
-        UCTrainTimetable ucTrainTimetable = new UCTrainTimetable();
-        UCEditMoving ucEditMoving = new UCEditMoving();
-        UCDataLoad ucDataLoad = new UCDataLoad();
-        UCTrainMoving ucTrainMoving = new UCTrainMoving();
         UCHome uCHome = new UCHome();
-
-
-        public string fileName
-        {
-            set { myFileName = value; }
-            get { return myFileName; }
-        }
-
-        /*
-        public int myCountTest
-        {
-            set { countTest = value; }
-            get { return countTest; }
-        }
-        */
-
-        public int indexOfRow
-        {
-            set { myRowIndex = value; }
-            get { return myRowIndex; }
-        }
-
-
-        
-
+        UCTrainTimetable ucTrainTimetable = new UCTrainTimetable();
+        UCDataLoad ucDataLoad = new UCDataLoad();
+        UCJsonDisplay uCJsonDisplay = new UCJsonDisplay();
+        UCMap uCMap = new UCMap();
+        UCUnitSet uCUnitSet = new UCUnitSet();
+        UCTurnoutsSettings ucTurnoutsSettings = new UCTurnoutsSettings();
 
         public FormTimetable()
         {
             InitializeComponent();
-            customizeDesing();
             DisplayInstance(uCHome);
+            panelSettings.Visible = false;
+            btnEnabledLogic();
         }
 
         private void FormMainMenu_Load(object sender, EventArgs e)
         {
             ucDataLoad.ButtonLoadClick += new EventHandler(UserControl_ButtonLoadClick);
-            ucEditTimetable.ButtonDeleteTTClick += new EventHandler(UserControl_ButtonDeleteTTClick);
-            ucEditTimetable.ButtonEditTTClick += new EventHandler(UserControl_ButtonEditTTClick);
-            ucDataAdd.ButtonYesAddTrainClick += new EventHandler(UserControl_ButtonYesAddTrainClick);
-            ucDataAdd.ButtonNoAddTrainClick += new EventHandler(UserControl_ButtonNoAddTrainClick);
-            ucEditMoving.ButtonEditMoving += new EventHandler(UserControl_ButtonEditMovingClick);
+
         }
 
         protected void UserControl_ButtonLoadClick(object sender, EventArgs e)
         {
             //handle the event 
-            myFileName = ucDataLoad.fileName;
-            this.fileName = ucDataLoad.fileName;
-            loadMyTimetamble();
 
-        }
 
-        protected void UserControl_ButtonDeleteTTClick(object sender, EventArgs e)
-        {
-            this.indexOfRow = ucEditTimetable.rowIndex;
-            timetable.RemoveAt(indexOfRow);
-            ucEditTimetable.loadTimetamble(timetable);
-        }
+            //List<DataToLoad> dataLoad = new List<DataToLoad>();
+            List<DataToLoad> dataLoad = ucDataLoad.dataToLoads;
 
-        protected void UserControl_ButtonEditTTClick(object sender, EventArgs e)
-        {
-            this.indexOfRow = ucEditTimetable.rowIndex;
-            timetable.RemoveAt(indexOfRow);
-            ucEditTimetable.loadTimetamble(timetable);
-        }
-
-        protected void UserControl_ButtonYesAddTrainClick(object sender, EventArgs e)
-        {
-            bool addNow = false;
-            DateTime nDeparture;
-            if (ucDataAdd.Departure == default(DateTime))
+            for (int i = 0; i < dataLoad.Count; i++)
             {
-                nDeparture = DateTime.Now;
-                addNow = true;
-            }
-            else
-            {
-                nDeparture = ucDataAdd.Departure;
-                addNow = false;
+                loadMyTimetamble(dataLoad[i].Filename, dataLoad[i].InfinityData);
             }
 
+            dataLoad.Clear();
+            btnEnabledLogic();
 
-            if (addNow)
-            {
-                DateTime now = new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                //DateTime inTimetable = new DateTime(1, 1, 1, timetable[i].Departure.Hour, timetable[i].Departure.Minute, timetable[i].Departure.Second);
-                double sec = now.Subtract(now).TotalSeconds;
-                MovingInTimetamble mit = new MovingInTimetamble(ucDataAdd.Type, ucDataAdd.StartStation, ucDataAdd.FinalStation, nDeparture, ucDataAdd.Speed, ucDataAdd.Reverse, 1500, sec);
-                movingTimetable.Add(mit);
-            }
-
-            hideSubMenu();
-            DisplayInstance(ucTrainMoving);
-            ucDataAdd.clearData();
-            ucTrainMoving.loadMovingTimetamble(movingTimetable);
-        }
-
-        protected void UserControl_ButtonNoAddTrainClick(object sender, EventArgs e)
-        {
-            ucDataAdd.clearData();
-        }
-
-        protected void UserControl_ButtonEditMovingClick(object sender, EventArgs e)
-        {
-            //TODO
         }
 
         private void TimeInTimetableUpdated(object sender, EventArgs e)
         {
             if (panelDesktopPanel.Controls.Contains(ucTrainTimetable))
                 ucTrainTimetable.loadTimetamble(timetable);
-            if (panelDesktopPanel.Controls.Contains(ucEditTimetable))
-                ucEditTimetable.loadTimetamble(timetable);
-            if (panelDesktopPanel.Controls.Contains(ucTrainMoving))
-                ucTrainMoving.loadMovingTimetamble(movingTimetable);
-            if (panelDesktopPanel.Controls.Contains(ucEditMoving))
-                ucEditMoving.loadData(movingTimetable,timetable);
         }
 
         private void FormMainMenu_SizeChanged(object sender, EventArgs e)
         {
+            //TODO
+
+            /*
             if (panelDesktopPanel.Controls.Contains(ucEditMoving))
                 ucEditMoving.changeSize();
             if (panelDesktopPanel.Controls.Contains(ucTrainTimetable))
@@ -158,32 +76,7 @@ namespace TestDesignTT
                 ucEditTimetable.changeSize();
             if (panelDesktopPanel.Controls.Contains(ucTrainMoving))
                 ucTrainMoving.changeSize();
-        }
-
-        private void customizeDesing()
-        {
-            panelTimetable.Visible = false;
-            panelModifyData.Visible = false;
-            //OpenChildForm(new Forms.FormHome(), sender);
-        }
-
-        private void hideSubMenu()
-        {
-            if (panelTimetable.Visible == true)
-                panelTimetable.Visible = false;
-            if (panelModifyData.Visible == true)
-                panelModifyData.Visible = false;
-        }
-
-        private void showSubMenu(Panel subMenu)
-        {
-            if (subMenu.Visible == false)
-            {
-                hideSubMenu();
-                subMenu.Visible = true;
-            }
-            else
-                subMenu.Visible = false;
+            */
         }
 
         private void DisplayInstance(UserControl uc)
@@ -202,153 +95,93 @@ namespace TestDesignTT
         }
 
 
-        private void btnMovingTrain_Click(object sender, EventArgs e)
-        {
-            hideSubMenu();
-            DisplayInstance(ucTrainMoving);
-            labelTitle.Text = (sender as Button).Text;
-
-            ucTrainMoving.loadMovingTimetamble(movingTimetable);
-
-
-        }
-
-        private void btnDisplayTimetable_Click(object sender, EventArgs e)
-        {
-            hideSubMenu();
-            //myFileName = MyControls.UCTrainTimetable.fileName;
-
-
-            //DisplayInstance(UCTrainTimetable.Instance);
-            //UCTrainTimetable ucTrainTimetable = new UCTrainTimetable();
-            DisplayInstance(ucTrainTimetable);
-
-            labelTitle.Text = (sender as Button).Text;
-            ucTrainTimetable.loadTimetamble(timetable);
-        }
-
-
-        private void btnTimetable_Click(object sender, EventArgs e)
-        {
-            showSubMenu(panelTimetable);
-        }
-
-        private void btnHome_Click(object sender, EventArgs e)
-        {
-            hideSubMenu();
-            //DisplayInstance(UCHome.Instance);
-
-            //UCHome uCHome = new UCHome();
-            DisplayInstance(uCHome);
-            labelTitle.Text = (sender as Button).Text;
-        }
-
-        private void btnLoadData_Click(object sender, EventArgs e)
-        {
-            hideSubMenu();
-            //UCDataLoad ucDataLoad = new UCDataLoad();
-            DisplayInstance(ucDataLoad);
-            labelTitle.Text = (sender as Button).Text;
-        }
-
-        private void btnModifyData_Click(object sender, EventArgs e)
-        {
-            showSubMenu(panelModifyData);
-        }
-
-        private void btnAddTrain_Click(object sender, EventArgs e)
-        {
-            //ucDataAdd.clearData();
-            hideSubMenu();
-            DisplayInstance(ucDataAdd);
-            labelTitle.Text = (sender as Button).Text;
-        }
-
-
-        private void btnEditTrain_Click(object sender, EventArgs e)
-        {
-            hideSubMenu();
-            DisplayInstance(ucEditMoving);
-            labelTitle.Text = (sender as Button).Text;
-            ucEditMoving.loadData(movingTimetable, timetable);
-        }
-
-        private void btnEditTimetable_Click(object sender, EventArgs e)
-        {
-
-
-            hideSubMenu();
-            DisplayInstance(ucEditTimetable);
-
-            labelTitle.Text = (sender as Button).Text;
-            ucEditTimetable.loadTimetamble(timetable);
-        }
-
-        private void btnPlay_Click(object sender, EventArgs e)
-        {
-            hideSubMenu();
-        }
-
-        private void btnCentralStop_Click(object sender, EventArgs e)
-        {
-            hideSubMenu();
-        }
-
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            hideSubMenu();
-            FormMainMenu formmm = new FormMainMenu();
-            formmm.StartPosition = FormStartPosition.Manual;
-            formmm.Location = this.Location;
-            formmm.Size = this.Size;
-            this.Hide();
-            formmm.Show();
-            //FormMainMenu.;
-        }
-
-        public void loadMyTimetamble()
+        public void loadMyTimetamble(string fileName, bool infinity)
         {
             if (!String.IsNullOrEmpty(fileName))
             {
                 try
                 {
-                    String[] lines = File.ReadAllLines(fileName); //, Encoding.GetEncoding("Windows-1250"));
-
                     timetable.Clear();
 
-                    //dataGridView1.DataSource = timetable;
+                    DateTime departure = DateTime.Today.Add(new TimeSpan(4, 0, 0));
 
-                    //dataForTimetable.Clear();
-
-                    foreach (String line in lines)
+                    List<DateTime> departureStart = new List<DateTime>()
                     {
-                        /*
-                        if (line.Contains("***"))
-                        {
-                            DataForTimetable data = new DataForTimetable(line);
-                            dataForTimetable.Add(data);
+                        DateTime.Today.Add(new TimeSpan(7, 15, 0))
+                    };
 
+                    DateTime currentDeparture = DateTime.Today.Add(new TimeSpan(7, 15, 0));
+                    while (currentDeparture < DateTime.Today.Add(new TimeSpan(18, 30, 0)))
+                    {
+                        currentDeparture = currentDeparture.Add(new TimeSpan(0, 55, 0));
+                        departureStart.Add(currentDeparture);
+                    }
+
+                    List<DateTime> departureStop = new List<DateTime>()
+                    {
+                        DateTime.Today.Add(new TimeSpan(7, 35, 0))
+                    };
+                    DateTime currentEndDeparture = DateTime.Today.Add(new TimeSpan(7, 30, 0));
+                    while (currentEndDeparture < DateTime.Today.Add(new TimeSpan(18, 45, 0)))
+                    {
+                        currentEndDeparture = currentEndDeparture.Add(new TimeSpan(0, 55, 0));
+                        departureStop.Add(currentEndDeparture);
+                    }
+
+
+                    int index = 0;
+                    if (infinity)
+                    {
+                        departure = DateTime.Today.Add(new TimeSpan(4, 0, 0));
+                    }
+                    else
+                    {
+                        departure = departureStart[index];
+                    }
+
+                    while (true)
+                    {
+                        if (infinity)
+                        {
+                            if (departure.TimeOfDay < new TimeSpan(23, 0, 0))
+                            {
+                                String[] lines = File.ReadAllLines(fileName);
+                                foreach (String line in lines)
+                                {
+
+                                    DataTimetable note = new DataTimetable(line, departure);
+                                    timetable.Add(note);
+                                    departure = departure.AddSeconds(45);
+                                }
+                            }
+                            else
+                                break;
                         }
                         else
                         {
-                        */
-                            DataTimetable note = new DataTimetable(line);
-                            timetable.Add(note);
-                        //}
+                            if (departure < departureStop[index])
+                            {
+                                String[] lines = File.ReadAllLines(fileName);
+                                foreach (String line in lines)
+                                {
+
+                                    DataTimetable note = new DataTimetable(line, departure);
+                                    timetable.Add(note);
+                                    departure = departure.AddSeconds(45);
+                                }
+                            }
+                            else
+                            {
+                                index++;
+                                
+                                if (index == departureStart.Count())
+                                    break;
+
+                                departure = departureStart[index];
+                            }
+                        }
                     }
 
-
-
-                    /*
-                    BindingList<DataTimetable> onScreen = new BindingList<DataTimetable>();
-
-                    for (int i = 0; i < timetable.Count; i++)
-                    {
-                        onScreen.Add(timetable[i]);
-                        //onScreen[i].FinalStation.Name = Packet.UnderLineToGap(onScreen[i].FinalStation.Name);
-                        //onScreen[i].StartStation.Name = Packet.UnderLineToGap(onScreen[i].StartStation.Name);
-                    }
-                    */
 
                     for (int i = 0; i < timetable.Count; i++)
                     {
@@ -363,16 +196,9 @@ namespace TestDesignTT
                         }
                         else
                             break;
-
-                        //timetable.RemoveItem(timetable[i]);
-                        //foreach (DataTimetable timetable in this.timetable)
-                        //  timetable.Remove(timetable);
-                        //onScreen[i].FinalStation.Name = Packet.UnderLineToGap(onScreen[i].FinalStation.Name);
-                        //onScreen[i].StartStation.Name = Packet.UnderLineToGap(onScreen[i].StartStation.Name);
                     }
 
-                    //dataGridView1.DataSource = onScreen;
-                    //titleDisplayData.Text = "Toto jsou data jízdního øádu.";
+
 
                 }
                 catch (IOException)
@@ -382,19 +208,10 @@ namespace TestDesignTT
             }
             else
             {
-                //ucEditMoving.testLabelText.Text = "Naètìte data pro jízdní øád!";
-                //titleDisplayData.Text = "Naètìte data pro jízdní øád!";
-                //MessageBox.Show("Empty file...", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid file name!!\n");
             }
         }
-
-        /*
-        private void FormTimetable_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            FormLocation = this.Location;
-            FormSize = this.Size;
-        }
-        */
+     
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -408,10 +225,12 @@ namespace TestDesignTT
                 //zkontrolovat,jestli uz neni cas odjezdu
                 if (now > inTimetable)
                 {
-
+                    /*
                     double sec = now.Subtract(inTimetable).TotalSeconds;
                     MovingInTimetamble mit = new MovingInTimetamble(timetable[i].Type, timetable[i].StartStation, timetable[i].FinalStation, timetable[i].Departure, 0.7, true, 1500, sec);
                     movingTimetable.Add(mit);
+                    */
+
                     //mit.TimeOnTrack = sec;
                     timetable.RemoveAt(i);
                     i--;
@@ -438,5 +257,145 @@ namespace TestDesignTT
                 //TimeInTimetableUpdated(sender, e);
             }
         }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            //DisplayInstance(UCHome.Instance);
+
+            //UCHome uCHome = new UCHome();
+            panelSettings.Visible = false;
+            btnEnabledLogic();
+
+            DisplayInstance(uCHome);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnSections_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            btnEnabledLogic();
+
+            DisplayInstance(uCMap);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnJSON_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            btnEnabledLogic();
+
+            DisplayInstance(uCJsonDisplay);
+            uCJsonDisplay.displayJson();
+
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnLoadTimetable_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            btnEnabledLogic();
+
+            DisplayInstance(ucDataLoad);
+
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnDisplayTimetable_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            btnEnabledLogic();
+
+            DisplayInstance(ucTrainTimetable);
+            labelTitle.Text = (sender as Button).Text;
+
+            ucTrainTimetable.loadTimetamble(timetable);
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = true;
+            btnEnabledLogic();
+        }
+
+        private void btnUnitSettings_Click(object sender, EventArgs e)
+        {
+            btnEnabledLogic();
+
+            DisplayInstance(uCUnitSet);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnTurnoutSettings_Click(object sender, EventArgs e)
+        {
+            btnEnabledLogic();
+
+            DisplayInstance(ucTurnoutsSettings);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+
+            if (btnPlay.IconChar == FontAwesome.Sharp.IconChar.Play)
+            {
+                if (panelDesktopPanel.Controls.Contains(ucDataLoad))
+                {
+                    panelDesktopPanel.Controls.Add(uCHome);
+                    uCHome.Dock = DockStyle.Fill;
+                    uCHome.BringToFront();
+                }
+                btnPlay.IconChar = FontAwesome.Sharp.IconChar.Pause;
+                btnPlay.Text = "Pause";
+            }
+            else
+            {
+                btnPlay.IconChar = FontAwesome.Sharp.IconChar.Play;
+                btnPlay.Text = "Play";
+            }
+            btnEnabledLogic();
+        }
+
+        private void btnCentralStop_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            btnEnabledLogic();
+        }
+
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            FormMainMenu formmm = new FormMainMenu();
+            formmm.StartPosition = FormStartPosition.Manual;
+            formmm.Location = this.Location;
+            formmm.Size = this.Size;
+            this.Hide();
+            formmm.Show();
+            //FormMainMenu.;
+        }
+
+        private void btnEnabledLogic()
+        {
+            if (timetable.Count != 0)
+            {
+                btnPlay.Enabled = true;
+                btnDisplayTimetable.Enabled = true;
+            }
+            else
+            {
+                btnPlay.Enabled = false;
+                btnDisplayTimetable.Enabled = false;
+            }
+
+            if (btnPlay.Text == "Pause")
+            {
+                btnLoadTimetable.Enabled = false;
+            }
+            else
+            {
+                btnLoadTimetable.Enabled = true;
+            }
+        }
+
     }
 }

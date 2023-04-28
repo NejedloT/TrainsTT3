@@ -647,7 +647,6 @@
 	<!-- Definition of tracks for every station -->
 	<stationTracks>
 		<Beroun>
-			<item1>Beroun</item1>
 			<item2>Beroun_kolej_1</item2>
 			<item3>Beroun_kolej_2</item3>
 			<item4>Beroun_kolej_3</item4>
@@ -655,9 +654,41 @@
 			<item6>Beroun_kolej_5</item6>
 		</Beroun>
 		<Karlstejn>
-			<item1>Karlstejn</item1>
 			<item2>KarlstejnOsazena1</item2>
 			<item3>KarlstejnOsazena2</item3>
 		</Karlstejn>
 	</stationTracks>
+	
+	<turnoutStopDefinitions>
+		<item1>
+			<unit>1</unit>
+			<pos>0</pos>
+			<leftStop>90</leftStop>
+			<rightStop>110</rightStop>
+		</item1>
+		<item2>
+			<unit>1</unit>
+			<pos>1</pos>
+			<leftStop>90</leftStop>
+			<rightStop>110</rightStop>
+		</item2>
+		<item3>
+			<unit>1</unit>
+			<pos>2</pos>
+			<leftStop>100</leftStop>
+			<rightStop>130</rightStop>
+		</item3>
+		<item4>
+			<unit>1</unit>
+			<pos>3</pos>
+			<leftStop>100</leftStop>
+			<rightStop>130</rightStop>
+		</item4>
+		<item5>
+			<unit>1</unit>
+			<pos>4</pos>
+			<leftStop>100</leftStop>
+			<rightStop>130</rightStop>
+		</item5>
+	</turnoutStopDefinitions>
 </model>

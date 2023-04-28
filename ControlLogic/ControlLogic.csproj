@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="functional_conf_before_testing.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TrainTTLibrary\TrainTTLibrary.csproj" />
   </ItemGroup>
 

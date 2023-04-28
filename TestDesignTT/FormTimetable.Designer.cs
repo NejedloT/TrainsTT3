@@ -30,19 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelSideMenu = new System.Windows.Forms.Panel();
-            this.btnExit = new FontAwesome.Sharp.IconButton();
             this.btnCentralStop = new FontAwesome.Sharp.IconButton();
             this.btnPlay = new FontAwesome.Sharp.IconButton();
-            this.panelModifyData = new System.Windows.Forms.Panel();
-            this.btnEditTrain = new FontAwesome.Sharp.IconButton();
-            this.btnDeleteTrain = new FontAwesome.Sharp.IconButton();
-            this.btnAddTrain = new FontAwesome.Sharp.IconButton();
-            this.btnModifyData = new FontAwesome.Sharp.IconButton();
-            this.panelTimetable = new System.Windows.Forms.Panel();
-            this.btnLoadData = new FontAwesome.Sharp.IconButton();
-            this.btnDisplayData = new FontAwesome.Sharp.IconButton();
-            this.btnTimetable = new FontAwesome.Sharp.IconButton();
-            this.btnMovingTrains = new FontAwesome.Sharp.IconButton();
+            this.panelSettings = new System.Windows.Forms.Panel();
+            this.btnTurnoutSettings = new FontAwesome.Sharp.IconButton();
+            this.btnUnitSettings = new FontAwesome.Sharp.IconButton();
+            this.btnSettings = new FontAwesome.Sharp.IconButton();
+            this.btnDisplayTimetable = new FontAwesome.Sharp.IconButton();
+            this.btnLoadTimetable = new FontAwesome.Sharp.IconButton();
+            this.btnJSON = new FontAwesome.Sharp.IconButton();
+            this.btnSections = new FontAwesome.Sharp.IconButton();
+            this.btnExit = new FontAwesome.Sharp.IconButton();
             this.btnHome = new FontAwesome.Sharp.IconButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,8 +49,7 @@
             this.panelDesktopPanel = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panelSideMenu.SuspendLayout();
-            this.panelModifyData.SuspendLayout();
-            this.panelTimetable.SuspendLayout();
+            this.panelSettings.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelTitle.SuspendLayout();
             this.SuspendLayout();
@@ -61,14 +58,15 @@
             // 
             this.panelSideMenu.AutoScroll = true;
             this.panelSideMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(87)))), ((int)(((byte)(207)))));
-            this.panelSideMenu.Controls.Add(this.btnExit);
             this.panelSideMenu.Controls.Add(this.btnCentralStop);
             this.panelSideMenu.Controls.Add(this.btnPlay);
-            this.panelSideMenu.Controls.Add(this.panelModifyData);
-            this.panelSideMenu.Controls.Add(this.btnModifyData);
-            this.panelSideMenu.Controls.Add(this.panelTimetable);
-            this.panelSideMenu.Controls.Add(this.btnTimetable);
-            this.panelSideMenu.Controls.Add(this.btnMovingTrains);
+            this.panelSideMenu.Controls.Add(this.panelSettings);
+            this.panelSideMenu.Controls.Add(this.btnSettings);
+            this.panelSideMenu.Controls.Add(this.btnDisplayTimetable);
+            this.panelSideMenu.Controls.Add(this.btnLoadTimetable);
+            this.panelSideMenu.Controls.Add(this.btnJSON);
+            this.panelSideMenu.Controls.Add(this.btnSections);
+            this.panelSideMenu.Controls.Add(this.btnExit);
             this.panelSideMenu.Controls.Add(this.btnHome);
             this.panelSideMenu.Controls.Add(this.panel1);
             this.panelSideMenu.Dock = System.Windows.Forms.DockStyle.Left;
@@ -76,6 +74,224 @@
             this.panelSideMenu.Name = "panelSideMenu";
             this.panelSideMenu.Size = new System.Drawing.Size(250, 861);
             this.panelSideMenu.TabIndex = 0;
+            // 
+            // btnCentralStop
+            // 
+            this.btnCentralStop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCentralStop.FlatAppearance.BorderSize = 0;
+            this.btnCentralStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCentralStop.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnCentralStop.ForeColor = System.Drawing.Color.White;
+            this.btnCentralStop.IconChar = FontAwesome.Sharp.IconChar.Stop;
+            this.btnCentralStop.IconColor = System.Drawing.Color.Red;
+            this.btnCentralStop.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnCentralStop.IconSize = 32;
+            this.btnCentralStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCentralStop.Location = new System.Drawing.Point(0, 504);
+            this.btnCentralStop.Name = "btnCentralStop";
+            this.btnCentralStop.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnCentralStop.Size = new System.Drawing.Size(250, 50);
+            this.btnCentralStop.TabIndex = 27;
+            this.btnCentralStop.Text = "Central stop";
+            this.btnCentralStop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCentralStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCentralStop.UseVisualStyleBackColor = true;
+            this.btnCentralStop.Click += new System.EventHandler(this.btnCentralStop_Click);
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnPlay.FlatAppearance.BorderSize = 0;
+            this.btnPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPlay.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPlay.ForeColor = System.Drawing.Color.White;
+            this.btnPlay.IconChar = FontAwesome.Sharp.IconChar.Play;
+            this.btnPlay.IconColor = System.Drawing.Color.Red;
+            this.btnPlay.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnPlay.IconSize = 32;
+            this.btnPlay.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPlay.Location = new System.Drawing.Point(0, 454);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnPlay.Size = new System.Drawing.Size(250, 50);
+            this.btnPlay.TabIndex = 26;
+            this.btnPlay.Text = "Play";
+            this.btnPlay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPlay.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            // 
+            // panelSettings
+            // 
+            this.panelSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(27)))), ((int)(((byte)(207)))));
+            this.panelSettings.Controls.Add(this.btnTurnoutSettings);
+            this.panelSettings.Controls.Add(this.btnUnitSettings);
+            this.panelSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelSettings.Location = new System.Drawing.Point(0, 370);
+            this.panelSettings.Name = "panelSettings";
+            this.panelSettings.Size = new System.Drawing.Size(250, 84);
+            this.panelSettings.TabIndex = 25;
+            // 
+            // btnTurnoutSettings
+            // 
+            this.btnTurnoutSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnTurnoutSettings.FlatAppearance.BorderSize = 0;
+            this.btnTurnoutSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnoutSettings.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnTurnoutSettings.ForeColor = System.Drawing.Color.White;
+            this.btnTurnoutSettings.IconChar = FontAwesome.Sharp.IconChar.ArrowsSplitUpAndLeft;
+            this.btnTurnoutSettings.IconColor = System.Drawing.Color.Red;
+            this.btnTurnoutSettings.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnTurnoutSettings.IconSize = 25;
+            this.btnTurnoutSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTurnoutSettings.Location = new System.Drawing.Point(0, 40);
+            this.btnTurnoutSettings.Name = "btnTurnoutSettings";
+            this.btnTurnoutSettings.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
+            this.btnTurnoutSettings.Size = new System.Drawing.Size(250, 40);
+            this.btnTurnoutSettings.TabIndex = 6;
+            this.btnTurnoutSettings.Text = "Turnout Unit";
+            this.btnTurnoutSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTurnoutSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTurnoutSettings.UseVisualStyleBackColor = true;
+            this.btnTurnoutSettings.Click += new System.EventHandler(this.btnTurnoutSettings_Click);
+            // 
+            // btnUnitSettings
+            // 
+            this.btnUnitSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUnitSettings.FlatAppearance.BorderSize = 0;
+            this.btnUnitSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnitSettings.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnUnitSettings.ForeColor = System.Drawing.Color.White;
+            this.btnUnitSettings.IconChar = FontAwesome.Sharp.IconChar.Info;
+            this.btnUnitSettings.IconColor = System.Drawing.Color.Red;
+            this.btnUnitSettings.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnUnitSettings.IconSize = 25;
+            this.btnUnitSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUnitSettings.Location = new System.Drawing.Point(0, 0);
+            this.btnUnitSettings.Name = "btnUnitSettings";
+            this.btnUnitSettings.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
+            this.btnUnitSettings.Size = new System.Drawing.Size(250, 40);
+            this.btnUnitSettings.TabIndex = 5;
+            this.btnUnitSettings.Text = "Instruction Unit";
+            this.btnUnitSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUnitSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUnitSettings.UseVisualStyleBackColor = true;
+            this.btnUnitSettings.Click += new System.EventHandler(this.btnUnitSettings_Click);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettings.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnSettings.ForeColor = System.Drawing.Color.White;
+            this.btnSettings.IconChar = FontAwesome.Sharp.IconChar.Sliders;
+            this.btnSettings.IconColor = System.Drawing.Color.Red;
+            this.btnSettings.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnSettings.IconSize = 32;
+            this.btnSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSettings.Location = new System.Drawing.Point(0, 320);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnSettings.Size = new System.Drawing.Size(250, 50);
+            this.btnSettings.TabIndex = 24;
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
+            // btnDisplayTimetable
+            // 
+            this.btnDisplayTimetable.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnDisplayTimetable.FlatAppearance.BorderSize = 0;
+            this.btnDisplayTimetable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDisplayTimetable.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnDisplayTimetable.ForeColor = System.Drawing.Color.White;
+            this.btnDisplayTimetable.IconChar = FontAwesome.Sharp.IconChar.Eye;
+            this.btnDisplayTimetable.IconColor = System.Drawing.Color.Red;
+            this.btnDisplayTimetable.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnDisplayTimetable.IconSize = 32;
+            this.btnDisplayTimetable.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDisplayTimetable.Location = new System.Drawing.Point(0, 270);
+            this.btnDisplayTimetable.Name = "btnDisplayTimetable";
+            this.btnDisplayTimetable.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnDisplayTimetable.Size = new System.Drawing.Size(250, 50);
+            this.btnDisplayTimetable.TabIndex = 23;
+            this.btnDisplayTimetable.Text = "Display timetable";
+            this.btnDisplayTimetable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDisplayTimetable.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnDisplayTimetable.UseVisualStyleBackColor = true;
+            this.btnDisplayTimetable.Click += new System.EventHandler(this.btnDisplayTimetable_Click);
+            // 
+            // btnLoadTimetable
+            // 
+            this.btnLoadTimetable.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnLoadTimetable.FlatAppearance.BorderSize = 0;
+            this.btnLoadTimetable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLoadTimetable.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnLoadTimetable.ForeColor = System.Drawing.Color.White;
+            this.btnLoadTimetable.IconChar = FontAwesome.Sharp.IconChar.Readme;
+            this.btnLoadTimetable.IconColor = System.Drawing.Color.Red;
+            this.btnLoadTimetable.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnLoadTimetable.IconSize = 32;
+            this.btnLoadTimetable.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadTimetable.Location = new System.Drawing.Point(0, 220);
+            this.btnLoadTimetable.Name = "btnLoadTimetable";
+            this.btnLoadTimetable.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnLoadTimetable.Size = new System.Drawing.Size(250, 50);
+            this.btnLoadTimetable.TabIndex = 22;
+            this.btnLoadTimetable.Text = "Load timetable";
+            this.btnLoadTimetable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadTimetable.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLoadTimetable.UseVisualStyleBackColor = true;
+            this.btnLoadTimetable.Click += new System.EventHandler(this.btnLoadTimetable_Click);
+            // 
+            // btnJSON
+            // 
+            this.btnJSON.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnJSON.FlatAppearance.BorderSize = 0;
+            this.btnJSON.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnJSON.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnJSON.ForeColor = System.Drawing.Color.White;
+            this.btnJSON.IconChar = FontAwesome.Sharp.IconChar.Code;
+            this.btnJSON.IconColor = System.Drawing.Color.Red;
+            this.btnJSON.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnJSON.IconSize = 32;
+            this.btnJSON.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnJSON.Location = new System.Drawing.Point(0, 170);
+            this.btnJSON.Name = "btnJSON";
+            this.btnJSON.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnJSON.Size = new System.Drawing.Size(250, 50);
+            this.btnJSON.TabIndex = 20;
+            this.btnJSON.Text = "JSON values";
+            this.btnJSON.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnJSON.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnJSON.UseVisualStyleBackColor = true;
+            this.btnJSON.Click += new System.EventHandler(this.btnJSON_Click);
+            // 
+            // btnSections
+            // 
+            this.btnSections.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSections.FlatAppearance.BorderSize = 0;
+            this.btnSections.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSections.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnSections.ForeColor = System.Drawing.Color.White;
+            this.btnSections.IconChar = FontAwesome.Sharp.IconChar.Map;
+            this.btnSections.IconColor = System.Drawing.Color.Red;
+            this.btnSections.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnSections.IconSize = 32;
+            this.btnSections.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSections.Location = new System.Drawing.Point(0, 120);
+            this.btnSections.Name = "btnSections";
+            this.btnSections.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.btnSections.Size = new System.Drawing.Size(250, 50);
+            this.btnSections.TabIndex = 19;
+            this.btnSections.Text = "Sections";
+            this.btnSections.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSections.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSections.UseVisualStyleBackColor = true;
+            this.btnSections.Click += new System.EventHandler(this.btnSections_Click);
             // 
             // btnExit
             // 
@@ -99,259 +315,6 @@
             this.btnExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
-            // btnCentralStop
-            // 
-            this.btnCentralStop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnCentralStop.FlatAppearance.BorderSize = 0;
-            this.btnCentralStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCentralStop.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnCentralStop.ForeColor = System.Drawing.Color.White;
-            this.btnCentralStop.IconChar = FontAwesome.Sharp.IconChar.Stop;
-            this.btnCentralStop.IconColor = System.Drawing.Color.Red;
-            this.btnCentralStop.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnCentralStop.IconSize = 32;
-            this.btnCentralStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCentralStop.Location = new System.Drawing.Point(0, 529);
-            this.btnCentralStop.Name = "btnCentralStop";
-            this.btnCentralStop.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.btnCentralStop.Size = new System.Drawing.Size(250, 50);
-            this.btnCentralStop.TabIndex = 17;
-            this.btnCentralStop.Text = "Central stop";
-            this.btnCentralStop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCentralStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCentralStop.UseVisualStyleBackColor = true;
-            this.btnCentralStop.Click += new System.EventHandler(this.btnCentralStop_Click);
-            // 
-            // btnPlay
-            // 
-            this.btnPlay.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnPlay.FlatAppearance.BorderSize = 0;
-            this.btnPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPlay.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnPlay.ForeColor = System.Drawing.Color.White;
-            this.btnPlay.IconChar = FontAwesome.Sharp.IconChar.Play;
-            this.btnPlay.IconColor = System.Drawing.Color.Red;
-            this.btnPlay.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnPlay.IconSize = 32;
-            this.btnPlay.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPlay.Location = new System.Drawing.Point(0, 479);
-            this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.btnPlay.Size = new System.Drawing.Size(250, 50);
-            this.btnPlay.TabIndex = 16;
-            this.btnPlay.Text = "Play";
-            this.btnPlay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPlay.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnPlay.UseVisualStyleBackColor = true;
-            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
-            // 
-            // panelModifyData
-            // 
-            this.panelModifyData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(27)))), ((int)(((byte)(207)))));
-            this.panelModifyData.Controls.Add(this.btnEditTrain);
-            this.panelModifyData.Controls.Add(this.btnDeleteTrain);
-            this.panelModifyData.Controls.Add(this.btnAddTrain);
-            this.panelModifyData.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelModifyData.Location = new System.Drawing.Point(0, 354);
-            this.panelModifyData.Name = "panelModifyData";
-            this.panelModifyData.Size = new System.Drawing.Size(250, 125);
-            this.panelModifyData.TabIndex = 15;
-            // 
-            // btnEditTrain
-            // 
-            this.btnEditTrain.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnEditTrain.FlatAppearance.BorderSize = 0;
-            this.btnEditTrain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditTrain.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnEditTrain.ForeColor = System.Drawing.Color.White;
-            this.btnEditTrain.IconChar = FontAwesome.Sharp.IconChar.Database;
-            this.btnEditTrain.IconColor = System.Drawing.Color.Red;
-            this.btnEditTrain.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnEditTrain.IconSize = 25;
-            this.btnEditTrain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEditTrain.Location = new System.Drawing.Point(0, 80);
-            this.btnEditTrain.Name = "btnEditTrain";
-            this.btnEditTrain.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
-            this.btnEditTrain.Size = new System.Drawing.Size(250, 40);
-            this.btnEditTrain.TabIndex = 13;
-            this.btnEditTrain.Text = "Timetable edit";
-            this.btnEditTrain.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEditTrain.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnEditTrain.UseVisualStyleBackColor = true;
-            this.btnEditTrain.Click += new System.EventHandler(this.btnEditTimetable_Click);
-            // 
-            // btnDeleteTrain
-            // 
-            this.btnDeleteTrain.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnDeleteTrain.FlatAppearance.BorderSize = 0;
-            this.btnDeleteTrain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteTrain.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnDeleteTrain.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteTrain.IconChar = FontAwesome.Sharp.IconChar.Tram;
-            this.btnDeleteTrain.IconColor = System.Drawing.Color.Red;
-            this.btnDeleteTrain.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnDeleteTrain.IconSize = 25;
-            this.btnDeleteTrain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDeleteTrain.Location = new System.Drawing.Point(0, 40);
-            this.btnDeleteTrain.Name = "btnDeleteTrain";
-            this.btnDeleteTrain.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
-            this.btnDeleteTrain.Size = new System.Drawing.Size(250, 40);
-            this.btnDeleteTrain.TabIndex = 12;
-            this.btnDeleteTrain.Text = "Train edit";
-            this.btnDeleteTrain.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDeleteTrain.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnDeleteTrain.UseVisualStyleBackColor = true;
-            this.btnDeleteTrain.Click += new System.EventHandler(this.btnEditTrain_Click);
-            // 
-            // btnAddTrain
-            // 
-            this.btnAddTrain.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnAddTrain.FlatAppearance.BorderSize = 0;
-            this.btnAddTrain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddTrain.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnAddTrain.ForeColor = System.Drawing.Color.White;
-            this.btnAddTrain.IconChar = FontAwesome.Sharp.IconChar.Plus;
-            this.btnAddTrain.IconColor = System.Drawing.Color.Red;
-            this.btnAddTrain.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnAddTrain.IconSize = 25;
-            this.btnAddTrain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAddTrain.Location = new System.Drawing.Point(0, 0);
-            this.btnAddTrain.Name = "btnAddTrain";
-            this.btnAddTrain.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
-            this.btnAddTrain.Size = new System.Drawing.Size(250, 40);
-            this.btnAddTrain.TabIndex = 11;
-            this.btnAddTrain.Text = "Add train";
-            this.btnAddTrain.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAddTrain.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAddTrain.UseVisualStyleBackColor = true;
-            this.btnAddTrain.Click += new System.EventHandler(this.btnAddTrain_Click);
-            // 
-            // btnModifyData
-            // 
-            this.btnModifyData.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnModifyData.FlatAppearance.BorderSize = 0;
-            this.btnModifyData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnModifyData.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnModifyData.ForeColor = System.Drawing.Color.White;
-            this.btnModifyData.IconChar = FontAwesome.Sharp.IconChar.T;
-            this.btnModifyData.IconColor = System.Drawing.Color.Red;
-            this.btnModifyData.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnModifyData.IconSize = 32;
-            this.btnModifyData.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnModifyData.Location = new System.Drawing.Point(0, 304);
-            this.btnModifyData.Name = "btnModifyData";
-            this.btnModifyData.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.btnModifyData.Size = new System.Drawing.Size(250, 50);
-            this.btnModifyData.TabIndex = 14;
-            this.btnModifyData.Text = "Modify Data";
-            this.btnModifyData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnModifyData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnModifyData.UseVisualStyleBackColor = true;
-            this.btnModifyData.Click += new System.EventHandler(this.btnModifyData_Click);
-            // 
-            // panelTimetable
-            // 
-            this.panelTimetable.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(11)))), ((int)(((byte)(27)))), ((int)(((byte)(207)))));
-            this.panelTimetable.Controls.Add(this.btnLoadData);
-            this.panelTimetable.Controls.Add(this.btnDisplayData);
-            this.panelTimetable.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTimetable.Location = new System.Drawing.Point(0, 220);
-            this.panelTimetable.Name = "panelTimetable";
-            this.panelTimetable.Size = new System.Drawing.Size(250, 84);
-            this.panelTimetable.TabIndex = 8;
-            // 
-            // btnLoadData
-            // 
-            this.btnLoadData.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnLoadData.FlatAppearance.BorderSize = 0;
-            this.btnLoadData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoadData.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnLoadData.ForeColor = System.Drawing.Color.White;
-            this.btnLoadData.IconChar = FontAwesome.Sharp.IconChar.Readme;
-            this.btnLoadData.IconColor = System.Drawing.Color.Red;
-            this.btnLoadData.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnLoadData.IconSize = 25;
-            this.btnLoadData.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoadData.Location = new System.Drawing.Point(0, 40);
-            this.btnLoadData.Name = "btnLoadData";
-            this.btnLoadData.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
-            this.btnLoadData.Size = new System.Drawing.Size(250, 40);
-            this.btnLoadData.TabIndex = 6;
-            this.btnLoadData.Text = "Load data";
-            this.btnLoadData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoadData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnLoadData.UseVisualStyleBackColor = true;
-            this.btnLoadData.Click += new System.EventHandler(this.btnLoadData_Click);
-            // 
-            // btnDisplayData
-            // 
-            this.btnDisplayData.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnDisplayData.FlatAppearance.BorderSize = 0;
-            this.btnDisplayData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDisplayData.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnDisplayData.ForeColor = System.Drawing.Color.White;
-            this.btnDisplayData.IconChar = FontAwesome.Sharp.IconChar.Eye;
-            this.btnDisplayData.IconColor = System.Drawing.Color.Red;
-            this.btnDisplayData.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnDisplayData.IconSize = 25;
-            this.btnDisplayData.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDisplayData.Location = new System.Drawing.Point(0, 0);
-            this.btnDisplayData.Name = "btnDisplayData";
-            this.btnDisplayData.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
-            this.btnDisplayData.Size = new System.Drawing.Size(250, 40);
-            this.btnDisplayData.TabIndex = 5;
-            this.btnDisplayData.Text = "Display data";
-            this.btnDisplayData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDisplayData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnDisplayData.UseVisualStyleBackColor = true;
-            this.btnDisplayData.Click += new System.EventHandler(this.btnDisplayTimetable_Click);
-            // 
-            // btnTimetable
-            // 
-            this.btnTimetable.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnTimetable.FlatAppearance.BorderSize = 0;
-            this.btnTimetable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTimetable.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnTimetable.ForeColor = System.Drawing.Color.White;
-            this.btnTimetable.IconChar = FontAwesome.Sharp.IconChar.CalendarTimes;
-            this.btnTimetable.IconColor = System.Drawing.Color.Red;
-            this.btnTimetable.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnTimetable.IconSize = 32;
-            this.btnTimetable.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTimetable.Location = new System.Drawing.Point(0, 170);
-            this.btnTimetable.Name = "btnTimetable";
-            this.btnTimetable.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.btnTimetable.Size = new System.Drawing.Size(250, 50);
-            this.btnTimetable.TabIndex = 3;
-            this.btnTimetable.Text = "Timetable";
-            this.btnTimetable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTimetable.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnTimetable.UseVisualStyleBackColor = true;
-            this.btnTimetable.Click += new System.EventHandler(this.btnTimetable_Click);
-            // 
-            // btnMovingTrains
-            // 
-            this.btnMovingTrains.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnMovingTrains.FlatAppearance.BorderSize = 0;
-            this.btnMovingTrains.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMovingTrains.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnMovingTrains.ForeColor = System.Drawing.Color.White;
-            this.btnMovingTrains.IconChar = FontAwesome.Sharp.IconChar.Train;
-            this.btnMovingTrains.IconColor = System.Drawing.Color.Red;
-            this.btnMovingTrains.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnMovingTrains.IconSize = 32;
-            this.btnMovingTrains.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMovingTrains.Location = new System.Drawing.Point(0, 120);
-            this.btnMovingTrains.Name = "btnMovingTrains";
-            this.btnMovingTrains.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.btnMovingTrains.Size = new System.Drawing.Size(250, 50);
-            this.btnMovingTrains.TabIndex = 2;
-            this.btnMovingTrains.Text = "Moving trains";
-            this.btnMovingTrains.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMovingTrains.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnMovingTrains.UseVisualStyleBackColor = true;
-            this.btnMovingTrains.Click += new System.EventHandler(this.btnMovingTrain_Click);
             // 
             // btnHome
             // 
@@ -387,15 +350,15 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("Arial Black", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.SystemColors.Info;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(255, 42);
+            this.label1.Size = new System.Drawing.Size(250, 70);
             this.label1.TabIndex = 0;
-            this.label1.Text = "TT Trains KAE";
+            this.label1.Text = "TT Trains";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelTitle
             // 
@@ -449,10 +412,8 @@
             this.Load += new System.EventHandler(this.FormMainMenu_Load);
             this.SizeChanged += new System.EventHandler(this.FormMainMenu_SizeChanged);
             this.panelSideMenu.ResumeLayout(false);
-            this.panelModifyData.ResumeLayout(false);
-            this.panelTimetable.ResumeLayout(false);
+            this.panelSettings.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panelTitle.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -463,24 +424,22 @@
 
         private Panel panelSideMenu;
         private Panel panel1;
-        private FontAwesome.Sharp.IconButton btnMovingTrains;
         private FontAwesome.Sharp.IconButton btnHome;
-        private FontAwesome.Sharp.IconButton btnTimetable;
-        private FontAwesome.Sharp.IconButton btnDisplayData;
-        private FontAwesome.Sharp.IconButton btnLoadData;
-        private Panel panelTimetable;
-        private FontAwesome.Sharp.IconButton btnCentralStop;
-        private FontAwesome.Sharp.IconButton btnPlay;
-        private Panel panelModifyData;
-        private FontAwesome.Sharp.IconButton btnEditTrain;
-        private FontAwesome.Sharp.IconButton btnDeleteTrain;
-        private FontAwesome.Sharp.IconButton btnAddTrain;
-        private FontAwesome.Sharp.IconButton btnModifyData;
         private Label label1;
         private Panel panelTitle;
         private Label labelTitle;
         private Panel panelDesktopPanel;
         private System.Windows.Forms.Timer timer1;
         private FontAwesome.Sharp.IconButton btnExit;
+        private FontAwesome.Sharp.IconButton btnSections;
+        private FontAwesome.Sharp.IconButton btnJSON;
+        private FontAwesome.Sharp.IconButton btnDisplayTimetable;
+        private FontAwesome.Sharp.IconButton btnLoadTimetable;
+        private FontAwesome.Sharp.IconButton btnSettings;
+        private FontAwesome.Sharp.IconButton btnCentralStop;
+        private FontAwesome.Sharp.IconButton btnPlay;
+        private Panel panelSettings;
+        private FontAwesome.Sharp.IconButton btnTurnoutSettings;
+        private FontAwesome.Sharp.IconButton btnUnitSettings;
     }
 }

@@ -181,6 +181,12 @@ namespace ControlLogic
            });
         }
 
+        /// <summary>
+        /// Metoda, ktera vraci finalni stanici v zavislosti na poloze
+        /// </summary>
+        /// <param name="currentPosition">soucasna poloha</param>
+        /// <param name="previousPosition">minula poloha</param>
+        /// <returns></returns>
         public static IEnumerable<string> GetFinalStationInCritical(string currentPosition, string previousPosition)
         {
             var matchingToElements = xdoc.Descendants("to")
@@ -284,6 +290,10 @@ namespace ControlLogic
                 return -1; // error
         }
 
+        /// <summary>
+        /// Metoda, ktera slouzi k ziskani vsech finalnich koleji na nadrazich
+        /// </summary>
+        /// <returns>List s nazvy jendotlivymi konecnymi stanicemi</returns>
         public static List<string> GetAllStationTracks()
         {
             List<string> items = xdoc.Descendants("stationTracks")
@@ -293,6 +303,18 @@ namespace ControlLogic
                 .ToList();
 
             return items;
+        }
+
+        public static List<XElement> GetTurnoutStopDefinitions()
+        {
+            if (xdoc.Root == null)
+                xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+
+            List<XElement> turnoutsStops = xdoc.Descendants("turnoutStopDefinitions")
+                .Elements()
+                .ToList();
+
+            return turnoutsStops;
         }
     }
 }

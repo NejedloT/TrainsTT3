@@ -8,9 +8,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using System.Xml;
+using System.Xml.Linq;
 using TrainTTLibrary;
 using static TrainTTLibrary.Packet;
 
@@ -21,6 +23,8 @@ namespace TestDesignTT
         private bool IsConnect = false;
 
         private static TCPClient klient = null;
+
+        private static System.Timers.Timer timeToInitSoftwareStops;
 
         UCHome uCHome = new UCHome();
         UCMap uCMap = new UCMap();
@@ -44,11 +48,7 @@ namespace TestDesignTT
 
             panelSettings.Visible = false;
 
-            //ml = new MainLogic(); // initialize the MainLogic object
-            //MainLogic.Initialization(); // pass the MainLogic object as a parameter
-
-            //MainLogic.Initialization();
-
+            ml.InfoMessageEvent += new EventHandler<InfoMessageSend>(EventHandlerNewMsgData);
             ml.LocomotiveDataEvent += new EventHandler<LocomotiveDataSend>(EventHandlerNewLocoData);
             ml.TurnoutsDataEvent += new EventHandler<TurnoutsDataSend>(EventHandlerNewTurnoutData);
 
@@ -67,6 +67,13 @@ namespace TestDesignTT
 
             StartTCPClient();
 
+            timeToInitSoftwareStops = new System.Timers.Timer(1000);
+
+            // Set the event handler for the Elapsed event
+            timeToInitSoftwareStops.Elapsed += (sender, e) => Timer_Elapsed_SW_Stops(sender, e);
+
+            // Start the timer
+            timeToInitSoftwareStops.Start();
 
             //vyhybky zbyle 6, 7 a 8 maji problemy s mechanikou
         }
@@ -219,6 +226,8 @@ namespace TestDesignTT
             {
                 StopAll();
                 ProcessDataFromTCP.setErrors(false);
+                DialogResult result = MessageBox.Show("Section unit or switch unit error has occurred! All trains have been stopped!", "IMPORTANT!!!",
+                MessageBoxButtons.OK);
             }
 
 
@@ -281,22 +290,6 @@ namespace TestDesignTT
 
             panelSettings.Visible = false;
 
-            turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
-
-            TurnoutInstructionPacket turnoutInst1 = new TurnoutInstructionPacket(ti, (byte)1, (byte)0, (byte)90, (byte)110);
-            SendTCPData(turnoutInst1.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst2 = new TurnoutInstructionPacket(ti, (byte)1, (byte)1, (byte)90, (byte)110);
-            SendTCPData(turnoutInst2.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst3 = new TurnoutInstructionPacket(ti, (byte)1, (byte)2, (byte)100, (byte)130);
-            SendTCPData(turnoutInst3.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst4 = new TurnoutInstructionPacket(ti, (byte)1, (byte)3, (byte)100, (byte)130);
-            SendTCPData(turnoutInst4.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst5 = new TurnoutInstructionPacket(ti, (byte)1, (byte)4, (byte)100, (byte)130);
-            SendTCPData(turnoutInst5.TCPPacket);
         }
 
         private void btnHome_Click(object sender, EventArgs e)
@@ -523,27 +516,6 @@ namespace TestDesignTT
 
             byte speed = e.Speed;
 
-            /*
-
-            for (int i = 0; i < MainLogic.switchesChange.Count(); i++)
-            {
-                if (MainLogic.switchesChange[i].TrainId == loco.ID)
-                {
-                    uint numberOfUnit = MainLogic.switchesChange[i].NumberOfUnit;
-
-                    byte data1 = MainLogic.switchesChange[i].Turnouts;
-
-                    byte data2 = MainLogic.switchesChange[i].Value;
-
-                    TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket(Packet.turnoutInstruction.nastaveni_vyhybky, numberOfUnit, data1, data2);
-
-                    SendTCPData(turnoutInstructionPacket.TCPPacket);
-
-                    MainLogic.switchesChange.RemoveAt(i);
-                    i--;
-                }
-            }
-            */
 
             if (speed > 3)
             {
@@ -576,6 +548,60 @@ namespace TestDesignTT
 
                 SendTCPData(trainFunctionPacket.TCPPacket);
             }
+        }
+
+        protected void EventHandlerNewMsgData(object sender, InfoMessageSend e)
+        {
+            string msg = e.InfoMessage.ToString();
+
+            StopAll();
+
+            DialogResult result = MessageBox.Show(msg, "IMPORTANT!!!",
+            MessageBoxButtons.OK);
+
+            TrainDataJSON td = new TrainDataJSON();
+            trainsList = td.LoadJson();
+            foreach (Trains train in trainsList)
+            {
+                train.move = 0;
+            }
+        }
+
+        /// <summary>
+        /// Nastaveni softwarovych dorazu
+        /// </summary>
+        private void softwareStops()
+        {
+            turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
+
+            List<XElement> turnoutStopDefinition = SearchLogic.GetTurnoutStopDefinitions();
+
+            foreach (XElement turnout in turnoutStopDefinition)
+            {
+                uint unit = uint.Parse(turnout.Element("unit").Value);
+                byte pos = byte.Parse(turnout.Element("pos").Value);
+                byte leftStop = byte.Parse(turnout.Element("leftStop").Value);
+                byte rightStop = byte.Parse(turnout.Element("rightStop").Value);
+
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, unit, pos, leftStop, rightStop);
+                SendTCPData(turnoutInst.TCPPacket);
+            }
+        }
+
+        /// <summary>
+        /// Nastaveni softwarovych dorazu po spusteni TCP serveru
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timer_Elapsed_SW_Stops(object sender, ElapsedEventArgs e)
+        {
+            //Zastav timer
+            timeToInitSoftwareStops.Stop();
+
+            //Inicializace softwarovych dorazu
+            softwareStops();
+
+            ((System.Timers.Timer)sender).Dispose();
         }
     }
 }

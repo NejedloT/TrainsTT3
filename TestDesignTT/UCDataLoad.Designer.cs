@@ -30,17 +30,20 @@
         {
             this.panelLDTitle = new System.Windows.Forms.Panel();
             this.labelLDTitle = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.textBoxPath = new System.Windows.Forms.TextBox();
             this.btnLoadData = new FontAwesome.Sharp.IconButton();
             this.label1 = new System.Windows.Forms.Label();
             this.panelLoadedData1 = new System.Windows.Forms.Panel();
-            this.btnLoad = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelFileName = new System.Windows.Forms.Label();
+            this.btn_LoadData = new FontAwesome.Sharp.IconButton();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.rbInfinity = new System.Windows.Forms.RadioButton();
+            this.rbPauses = new System.Windows.Forms.RadioButton();
             this.panelLDTitle.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panelLoadedData1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelLDTitle
@@ -65,27 +68,15 @@
             this.labelLDTitle.Text = "Load your CSV Data!";
             this.labelLDTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.textBoxPath);
-            this.panel1.Controls.Add(this.btnLoadData);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 100);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(779, 40);
-            this.panel1.TabIndex = 2;
-            // 
             // textBoxPath
             // 
             this.textBoxPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxPath.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
             this.textBoxPath.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.textBoxPath.Location = new System.Drawing.Point(103, 0);
+            this.textBoxPath.Location = new System.Drawing.Point(143, 3);
             this.textBoxPath.Multiline = true;
             this.textBoxPath.Name = "textBoxPath";
-            this.textBoxPath.Size = new System.Drawing.Size(562, 40);
+            this.textBoxPath.Size = new System.Drawing.Size(493, 44);
             this.textBoxPath.TabIndex = 2;
             this.textBoxPath.Text = "Please enter fath to you CSV file...";
             this.textBoxPath.Enter += new System.EventHandler(this.textBoxPath_Enter);
@@ -94,90 +85,171 @@
             // btnLoadData
             // 
             this.btnLoadData.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.btnLoadData.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnLoadData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLoadData.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnLoadData.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnLoadData.IconChar = FontAwesome.Sharp.IconChar.Share;
             this.btnLoadData.IconColor = System.Drawing.Color.Black;
             this.btnLoadData.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnLoadData.IconSize = 35;
-            this.btnLoadData.Location = new System.Drawing.Point(665, 0);
+            this.btnLoadData.Location = new System.Drawing.Point(642, 3);
             this.btnLoadData.Name = "btnLoadData";
-            this.btnLoadData.Size = new System.Drawing.Size(114, 40);
+            this.btnLoadData.Size = new System.Drawing.Size(134, 44);
             this.btnLoadData.TabIndex = 1;
             this.btnLoadData.Text = "Find";
             this.btnLoadData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLoadData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoadData.UseVisualStyleBackColor = false;
+            this.btnLoadData.Click += new System.EventHandler(this.btnLoadData_Click);
             // 
             // label1
             // 
             this.label1.BackColor = System.Drawing.SystemColors.HotTrack;
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Location = new System.Drawing.Point(1, 1);
             this.label1.Margin = new System.Windows.Forms.Padding(1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 40);
+            this.label1.Size = new System.Drawing.Size(138, 48);
             this.label1.TabIndex = 0;
             this.label1.Text = "File Path:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelLoadedData1
             // 
-            this.panelLoadedData1.Controls.Add(this.btnLoad);
             this.panelLoadedData1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelLoadedData1.Location = new System.Drawing.Point(0, 140);
+            this.panelLoadedData1.Location = new System.Drawing.Point(0, 100);
             this.panelLoadedData1.Name = "panelLoadedData1";
             this.panelLoadedData1.Size = new System.Drawing.Size(779, 60);
             this.panelLoadedData1.TabIndex = 3;
-            // 
-            // btnLoad
-            // 
-            this.btnLoad.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.btnLoad.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLoad.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnLoad.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnLoad.Location = new System.Drawing.Point(0, 0);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(779, 60);
-            this.btnLoad.TabIndex = 0;
-            this.btnLoad.Text = "Load data";
-            this.btnLoad.UseVisualStyleBackColor = false;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tableLayoutPanel1.Controls.Add(this.labelFileName, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.btn_LoadData, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.btnLoadData, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxPath, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 4);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 160);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(779, 308);
+            this.tableLayoutPanel1.TabIndex = 5;
+            // 
             // labelFileName
             // 
             this.labelFileName.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.labelFileName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelFileName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelFileName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelFileName.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.labelFileName.Location = new System.Drawing.Point(0, 200);
+            this.labelFileName.Location = new System.Drawing.Point(143, 210);
             this.labelFileName.Name = "labelFileName";
-            this.labelFileName.Size = new System.Drawing.Size(779, 155);
-            this.labelFileName.TabIndex = 4;
+            this.labelFileName.Size = new System.Drawing.Size(493, 50);
+            this.labelFileName.TabIndex = 5;
+            // 
+            // btn_LoadData
+            // 
+            this.btn_LoadData.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.tableLayoutPanel1.SetColumnSpan(this.btn_LoadData, 3);
+            this.btn_LoadData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_LoadData.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_LoadData.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btn_LoadData.IconChar = FontAwesome.Sharp.IconChar.Database;
+            this.btn_LoadData.IconColor = System.Drawing.Color.Black;
+            this.btn_LoadData.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btn_LoadData.IconSize = 35;
+            this.btn_LoadData.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_LoadData.Location = new System.Drawing.Point(3, 73);
+            this.btn_LoadData.Name = "btn_LoadData";
+            this.btn_LoadData.Size = new System.Drawing.Size(773, 44);
+            this.btn_LoadData.TabIndex = 3;
+            this.btn_LoadData.Text = "Load Data";
+            this.btn_LoadData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btn_LoadData.UseVisualStyleBackColor = false;
+            this.btn_LoadData.Click += new System.EventHandler(this.btn_LoadData_Click);
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.rbInfinity, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.rbPauses, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(143, 143);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(493, 44);
+            this.tableLayoutPanel2.TabIndex = 4;
+            // 
+            // rbInfinity
+            // 
+            this.rbInfinity.AutoSize = true;
+            this.rbInfinity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rbInfinity.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbInfinity.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.rbInfinity.Location = new System.Drawing.Point(249, 3);
+            this.rbInfinity.Name = "rbInfinity";
+            this.rbInfinity.Size = new System.Drawing.Size(241, 38);
+            this.rbInfinity.TabIndex = 1;
+            this.rbInfinity.TabStop = true;
+            this.rbInfinity.Text = "Timetable for 24h ride";
+            this.rbInfinity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbInfinity.UseVisualStyleBackColor = true;
+            this.rbInfinity.CheckedChanged += new System.EventHandler(this.rbInfinity_CheckedChanged);
+            // 
+            // rbPauses
+            // 
+            this.rbPauses.AutoSize = true;
+            this.rbPauses.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rbPauses.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.rbPauses.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.rbPauses.Location = new System.Drawing.Point(3, 3);
+            this.rbPauses.Name = "rbPauses";
+            this.rbPauses.Size = new System.Drawing.Size(240, 38);
+            this.rbPauses.TabIndex = 0;
+            this.rbPauses.TabStop = true;
+            this.rbPauses.Text = "Timetable for pauses";
+            this.rbPauses.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbPauses.UseVisualStyleBackColor = true;
+            this.rbPauses.CheckedChanged += new System.EventHandler(this.rbPauses_CheckedChanged);
             // 
             // UCDataLoad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.Controls.Add(this.labelFileName);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panelLoadedData1);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelLDTitle);
             this.Name = "UCDataLoad";
             this.Size = new System.Drawing.Size(779, 468);
             this.panelLDTitle.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panelLoadedData1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -186,13 +258,16 @@
 
         private Panel panelLDTitle;
         private Label labelLDTitle;
-        private Panel panel1;
         private FontAwesome.Sharp.IconButton btnLoadData;
         private Label label1;
         private TextBox textBoxPath;
         private Panel panelLoadedData1;
-        private Button btnLoad;
         private OpenFileDialog openFileDialog1;
+        private TableLayoutPanel tableLayoutPanel1;
+        private FontAwesome.Sharp.IconButton btn_LoadData;
+        private TableLayoutPanel tableLayoutPanel2;
         private Label labelFileName;
+        private RadioButton rbInfinity;
+        private RadioButton rbPauses;
     }
 }

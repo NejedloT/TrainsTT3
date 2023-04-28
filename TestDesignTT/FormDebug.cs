@@ -14,6 +14,7 @@ using System.Timers;
 using System.Windows.Forms;
 using System.Windows.Markup;
 using System.Xml;
+using System.Xml.Linq;
 using TrainTTLibrary;
 using static TrainTTLibrary.Packet;
 
@@ -106,14 +107,6 @@ namespace TestDesignTT
             {
                 StopAll();
             }
-
-            //zastav timery, jak dlouho neposlali ridici jednotky zadna data
-            /*
-            foreach (var timer in timersByNumberOfUnit.Values)
-            {
-                timer.Stop();
-            }
-            */
 
             Thread.Sleep(500);
 
@@ -493,20 +486,18 @@ namespace TestDesignTT
         {
             turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
 
-            TurnoutInstructionPacket turnoutInst1 = new TurnoutInstructionPacket(ti, (byte)1, (byte)0, (byte)90, (byte)110);
-            SendTCPData(turnoutInst1.TCPPacket);
+            List<XElement> turnoutStopDefinition = SearchLogic.GetTurnoutStopDefinitions();
 
-            TurnoutInstructionPacket turnoutInst2 = new TurnoutInstructionPacket(ti, (byte)1, (byte)1, (byte)90, (byte)110);
-            SendTCPData(turnoutInst2.TCPPacket);
+            foreach (XElement turnout in turnoutStopDefinition)
+            {
+                uint unit = uint.Parse(turnout.Element("unit").Value);
+                byte pos = byte.Parse(turnout.Element("pos").Value);
+                byte leftStop = byte.Parse(turnout.Element("leftStop").Value);
+                byte rightStop = byte.Parse(turnout.Element("rightStop").Value);
 
-            TurnoutInstructionPacket turnoutInst3 = new TurnoutInstructionPacket(ti, (byte)1, (byte)2, (byte)100, (byte)130);
-            SendTCPData(turnoutInst3.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst4 = new TurnoutInstructionPacket(ti, (byte)1, (byte)3, (byte)100, (byte)130);
-            SendTCPData(turnoutInst4.TCPPacket);
-
-            TurnoutInstructionPacket turnoutInst5 = new TurnoutInstructionPacket(ti, (byte)1, (byte)4, (byte)100, (byte)130);
-            SendTCPData(turnoutInst5.TCPPacket);
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, unit, pos, leftStop, rightStop);
+                SendTCPData(turnoutInst.TCPPacket);
+            }
         }
 
         /// <summary>
@@ -751,9 +742,6 @@ namespace TestDesignTT
                 TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, numberOfUnit, numberOfTurnout, left, right);
 
                 SendTCPData(turnoutInst.TCPPacket);
-
-                bool b = false;
-
             }
 
             newTurnoutStops.Clear();

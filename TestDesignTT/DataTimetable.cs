@@ -19,17 +19,15 @@ namespace TestDesignTT
         public double Speed { get; set; }
 
         public bool Reverse { get; set; }
-        [DisplayName("Reverse")]
-        public string ReverseString { get; set; }
-
-        public uint WaitTime { get; set; }
+               
+        //public uint WaitTime { get; set; }
 
 
         public string Line;
 
         public DataTimetable() { }
 
-        public DataTimetable(string line) // konstruktor třídy
+        public DataTimetable(string line, DateTime departure) // konstruktor třídy
         {
 
             if (String.IsNullOrEmpty(line)) // nejprve se zjistí zda řádek z jízdního řádu není prázdný
@@ -44,20 +42,18 @@ namespace TestDesignTT
             Type = data[0]; // přiřazení informací z řádku do jednotlivých proměných ( string trimuji a časová data parsuji) 
             StartStation = new string(data[1].Trim());
             FinalStation = new string(data[2].Trim());
-            Departure = DateTime.Parse(data[3]);
-            Speed = double.Parse(data[4]);
+            Departure = departure;
+            Speed = double.Parse(data[3]);
             //Reverse = (data[5].Trim() == "ahead") ? false : true;
-            if (data[5].Trim() == "ahead")
+            if (data[4].Trim() == "ahead")
             {
                 Reverse = false;
-                ReverseString = "No";
             }
             else
             {
                 Reverse = true;
-                ReverseString = "Yes";
             }
-            WaitTime = uint.Parse(data[6]);
+            //WaitTime = uint.Parse(data[6]);
 
         }
 
@@ -69,7 +65,6 @@ namespace TestDesignTT
             Departure = departure;
 
             Line = String.Format("{0};{1};{2};{3}", type, startSection, finalSection, departure.ToString("HH:mm:ss"));
-
         }
     }
 
