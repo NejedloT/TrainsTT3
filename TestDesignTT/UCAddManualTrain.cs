@@ -217,13 +217,33 @@ namespace TestDesignTT
             }
         }
 
-
+        /// <summary>
+        /// Metoda, která najde možnou finální stanici vlaku
+        /// </summary>
+        /// <param name="train"></param>
         private void getFinalTrack(Trains train)
         {
             cbFinalTrack.Items.Clear();
-            IEnumerable<XElement> finTrack = SearchLogic.GetFinalTrack(train, cbFinalStation.SelectedItem.ToString());
+            IEnumerable<XElement> finTrack = SearchLogic.GetFinalTrackOutside(train, cbFinalStation.SelectedItem.ToString());
+
+            int finalCircuit = SearchLogic.GetFinalStationCircuit(cbFinalStation.SelectedItem.ToString());
+
             foreach (XElement x in finTrack)
-                cbFinalTrack.Items.Add(x.Value);
+            {
+                if ((train.circuit == 0 && finalCircuit == 0)
+                    || (train.circuit == 4 && finalCircuit == 4)
+                    || (train.circuit == 7 && finalCircuit == 7))
+                {
+                    bool bb = SearchLogic.GetFinalTrackInside(train.currentPosition, train.lastPosition, x.Value);
+                    if (bb)
+                        cbFinalTrack.Items.Add(x.Value);
+                }
+                else
+                {
+                    cbFinalTrack.Items.Add(x.Value);
+                }
+            }
+
         }
 
         #region Actions when index of combobox or value of radiobuttons are changed

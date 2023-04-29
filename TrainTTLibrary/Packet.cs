@@ -2058,9 +2058,17 @@ namespace TrainTTLibrary
         {
             switch (NumberOfUnit)
             {
-                case 2:
+                case 1:
                     {
                         for (int i = 0; i < 8; i++)
+                        {
+                            Sections.Add(SectionInfo.listOfSection[i]);
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        for (int i = 8; i < 16; i++)
                         {
                             Sections.Add(SectionInfo.listOfSection[i]);
                         }
@@ -2069,11 +2077,21 @@ namespace TrainTTLibrary
                     
                 case 3:
                     {
-                        for (int i = 8; i < 16; i++)
+                        for (int i = 16; i < 24; i++)
                         {
                             Sections.Add(SectionInfo.listOfSection[i]);
                         }
                         break;
+                    }
+                case 4:
+                    {
+                        {
+                            for (int i = 24; i < 32; i++)
+                            {
+                                Sections.Add(SectionInfo.listOfSection[i]);
+                            }
+                            break;
+                        }
                     }
             }
         }

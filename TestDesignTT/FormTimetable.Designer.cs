@@ -409,6 +409,7 @@
             this.MinimumSize = new System.Drawing.Size(1200, 900);
             this.Name = "FormTimetable";
             this.Text = "Timetable Control Train";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormTimetable_FormClosing);
             this.Load += new System.EventHandler(this.FormMainMenu_Load);
             this.SizeChanged += new System.EventHandler(this.FormMainMenu_SizeChanged);
             this.panelSideMenu.ResumeLayout(false);

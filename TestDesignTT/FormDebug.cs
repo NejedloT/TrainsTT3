@@ -619,6 +619,7 @@ namespace TestDesignTT
                         train.circuit = SearchLogic.GetCurrentCircuit(train.currentPosition);
                         train.startPosition = data.StartPosition;
                         train.critical = false;
+                        train.mapOrientation = data.Orientation;
                         foundMatch = true;
                         break;
                     }

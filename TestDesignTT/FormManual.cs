@@ -100,12 +100,7 @@ namespace TestDesignTT
 
             MainLogic.StopTimers();
 
-            Thread.Sleep(350);
-
-            if (IsConnect)
-            {
-                StopAll();
-            }
+            Thread.Sleep(250);
 
             //vycisti klienta
             KlientCleanUp();
@@ -226,11 +221,9 @@ namespace TestDesignTT
             {
                 StopAll();
                 ProcessDataFromTCP.setErrors(false);
-                DialogResult result = MessageBox.Show("Section unit or switch unit error has occurred! All trains have been stopped!", "IMPORTANT!!!",
+                MessageBox.Show("Section unit or switch unit error has occurred! All trains have been stopped!", "IMPORTANT!!!",
                 MessageBoxButtons.OK);
             }
-
-
         }
 
 
@@ -394,6 +387,20 @@ namespace TestDesignTT
 
                 SendTCPData(trainMotionPacket.TCPPacket);
             }
+
+            Thread.Sleep(250);
+            lock (MainLogic.lockingLogic)
+            {
+                TrainDataJSON td = new TrainDataJSON();
+                trainsList = td.LoadJson();
+                foreach (Trains train in trainsList)
+                {
+                    train.move = 0;
+                }
+
+                td.SaveJson(trainsList);
+
+            }
         }
 
         /// <summary>
@@ -519,6 +526,8 @@ namespace TestDesignTT
 
             if (speed > 3)
             {
+                Thread.Sleep(250);
+
                 TrainMotionPacket trainMotionPacket = new TrainMotionPacket(loco, reverse, speed);
 
                 SendTCPData(trainMotionPacket.TCPPacket);
@@ -556,15 +565,8 @@ namespace TestDesignTT
 
             StopAll();
 
-            DialogResult result = MessageBox.Show(msg, "IMPORTANT!!!",
+            MessageBox.Show(msg, "IMPORTANT!!!",
             MessageBoxButtons.OK);
-
-            TrainDataJSON td = new TrainDataJSON();
-            trainsList = td.LoadJson();
-            foreach (Trains train in trainsList)
-            {
-                train.move = 0;
-            }
         }
 
         /// <summary>
@@ -584,6 +586,24 @@ namespace TestDesignTT
                 byte rightStop = byte.Parse(turnout.Element("rightStop").Value);
 
                 TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, unit, pos, leftStop, rightStop);
+                SendTCPData(turnoutInst.TCPPacket);
+            }
+
+
+            unitInstruction ui = unitInstruction.prodleva_odesilani_zmerenych_proudu;
+            IEnumerable<int> unitNumbers = SearchLogic.GetModulesId();
+            foreach(int number in unitNumbers)
+            {
+                UnitInstructionPacket unitInst = new UnitInstructionPacket(ui, (byte)number, (byte)30);
+
+                SendTCPData(unitInst.TCPPacket);
+            }
+
+            ti = turnoutInstruction.nastaveni_prodlevy_pred_natocenim;
+            IEnumerable<int> turnoutNumbers = SearchLogic.GetTurnoutIDs();
+            foreach(int number in turnoutNumbers)
+            {
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, (byte)number, (byte)10);
                 SendTCPData(turnoutInst.TCPPacket);
             }
         }

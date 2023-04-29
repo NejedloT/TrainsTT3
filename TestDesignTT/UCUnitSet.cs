@@ -120,13 +120,23 @@ namespace TestDesignTT
         {
             var control = sender as Control;
 
+            /*
             string selectedItem = cbUnitNumber.SelectedItem as string;
 
             if (selectedItem == null)
                 return;
+            */
+
+
+            if (cbUnitNumber.SelectedItem == null)
+                return;
+
+            if (!int.TryParse(cbUnitNumber.SelectedItem.ToString(), out int selectedItem))
+                return;
+
 
             //vybrane  cislo jednotky z comboboxu
-            byte numberOfUnit = byte.Parse(selectedItem);
+            byte numberOfUnit = (byte)(selectedItem);
 
             //pozadavek na zmenu prodlevy odesilani proudu
             if (control == cbCurrentConsumption)

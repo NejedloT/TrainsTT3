@@ -333,7 +333,8 @@
             this.label3.Size = new System.Drawing.Size(893, 30);
             this.label3.TabIndex = 0;
             this.label3.Text = "Příklad: Výhybka = 00110110, Hodnoty = 00010100;   Poznámka: kde byly nuly u výhy" +
-    "bky, tak ta se nenastaví, nastavuje se 1 doprava, 0 doleva";
+    "bky, tak ta se nenastaví, nastavuje se 1 vlevo (vlak pojede vlevo), 0 doprava (v" +
+    "lak pojede vpravo)";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UCTurnoutsMulti

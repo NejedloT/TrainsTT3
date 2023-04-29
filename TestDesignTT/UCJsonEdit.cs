@@ -223,7 +223,9 @@ namespace TestDesignTT
         /// <param name="e">Kliknuti na ulozit</param>
         private void btnSaveData_Click(object sender, EventArgs e)
         {
-            addJsonChange(cbPickTrain.SelectedItem.ToString(), cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString(), cbDirection.SelectedItem.ToString() == "Direct" ? false : true, cbStart.SelectedItem.ToString());
+            string orientation = SearchLogic.GetOrientation(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
+
+            addJsonChange(cbPickTrain.SelectedItem.ToString(), cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString(), cbDirection.SelectedItem.ToString() == "Direct" ? false : true, cbStart.SelectedItem.ToString(), orientation);
             ButtonChangeJsonClick?.Invoke(this, e);
             ClearData();
         }
@@ -236,9 +238,9 @@ namespace TestDesignTT
         /// <param name="currentPosition">Soucasna pozice</param>
         /// <param name="previousPosition">Minula pozice</param>
         /// <param name="direction">Dostal se vlak do teto pozice popredu/pozadu</param>
-        public void addJsonChange(string id, string currentPosition, string previousPosition, bool direction, string startPosition)
+        public void addJsonChange(string id, string currentPosition, string previousPosition, bool direction, string startPosition, string orientation)
         {
-            changeJsonData.Add(new ChangeJsonData { Id = id, CurrentPosition = currentPosition, PreviousPosition = previousPosition, Reverse = direction, StartPosition = startPosition });
+            changeJsonData.Add(new ChangeJsonData { Id = id, CurrentPosition = currentPosition, PreviousPosition = previousPosition, Reverse = direction, StartPosition = startPosition, Orientation = orientation });
         }
     }
 
@@ -249,5 +251,7 @@ namespace TestDesignTT
         public string PreviousPosition { get; set; }
         public bool Reverse { get; set; }
         public string StartPosition { get; set; }
+
+        public string Orientation { get; set; }
     }
 }

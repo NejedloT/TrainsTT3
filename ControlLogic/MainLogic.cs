@@ -40,7 +40,7 @@ namespace ControlLogic
         public static readonly object lockingOccupancy = new object();
 
         //zamek na logiku aby nedochazelo ke kolizi
-        private static readonly object lockingLogic = new object();
+        public static readonly object lockingLogic = new object();
 
         //list s daty urcenymi lokomotivam
         public static List<LocomotiveDataSend> dataToSendLoco = new List<LocomotiveDataSend>();
@@ -277,9 +277,23 @@ namespace ControlLogic
                                     byte turnouts = switchesChange[i].Turnouts;
                                     byte value = switchesChange[i].Value;
                                     ml.OnMyEventTurnout(new TurnoutsDataSend { NumberOfUnit = numbOfUnit, Turnouts = turnouts, Value = value });
+                                    switchesChange.RemoveAt(i);
                                 }
                             }
                         }
+
+                        
+                        bool iAmInCurrent = false;
+                        for (int i = reservedSections.Count() - 1; i >= 0; i--)
+                        {
+                            if (reservedSections[i].TrainIdReserved == train.id && iAmInCurrent)
+                            {
+                                reservedSections.RemoveAt(i);
+                            }
+                            if (reservedSections[i].Section == train.currentPosition && reservedSections[i].TrainIdReserved == train.id)
+                                iAmInCurrent = true;
+                        }
+                        
 
                         //rozjed vlak
                         Locomotive locomotive = new Locomotive(train.name);
@@ -346,7 +360,7 @@ namespace ControlLogic
                         if (occupancySec[j].Name == currentDrain[i].Section)
                         {
                             //je odber proudu, pokracuj
-                            if (occupancySections[j].current > 0)
+                            if (occupancySec[j].current > 0)
                                 continue;
 
                             //neni odber proudu, smaz data
@@ -436,8 +450,8 @@ namespace ControlLogic
                         if (rp.Count() > 0)
                         {
                             //vymazani rezervovanych useku, ve kterych vlak uz byl
-                            ReservedSections ress = reservedSections.FirstOrDefault(x => x.TrainIdReserved == train.id && train.lastPosition == x.Section);
-                            if (ress != null)
+                            ReservedSections ress = reservedSections.FirstOrDefault(x => x.TrainIdReserved == train.id);
+                            if (ress != null && train.lastPosition != ress.Section && train.currentPosition != ress.Section)
                                 reservedSections.Remove(ress);
 
                             //aktualizace nadchazejiciho useku vlaku
@@ -470,34 +484,33 @@ namespace ControlLogic
                         }
                     }
 
-                    //test, jestli jedouci vlak ma alespon v jednom useku odber proudu, jinak zastavit!
-                    bool testCurrent = currentDrain.Any(cd => cd.TrainIdDrain == train.id);
-                    if (!testCurrent)
+                }
+                //test, jestli jedouci vlak ma alespon v jednom useku odber proudu, jinak zastavit!
+                bool testCurrent = currentDrain.Any(cd => cd.TrainIdDrain == train.id);
+                if (!testCurrent)
+                {
+                    //pokud vlak nikde neodebira polohu, jede mimo ocekavany usek, zastav vlak(y)!
+                    MainLogic ml = GetInstance();
+
+                    Locomotive locomotive = new Locomotive(train.name);
+
+                    ml.OnMyEventMessage(new InfoMessageSend { InfoMessage = "Vlak " + train.name + " se nenachazi v ocekavane poloze, zastavuji vsechny vlaky!" });
+
+                    dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 0 });
+                    ml.OnMyEventLoco(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 0 });
+
+                    //uloz data vlaku
+                    train.move = 0;
+                    td.UpdateTrainData(train.name, (t) =>
                     {
-                        //pokud vlak nikde neodebira polohu, jede mimo ocekavany usek, zastav vlak(y)!
-                        MainLogic ml = GetInstance();
-
-                        Locomotive locomotive = new Locomotive(train.name);
-
-                        ml.OnMyEventMessage(new InfoMessageSend { InfoMessage = "Vlak " + train.name + " se nenachazi v ocekavane poloze, zastavuji vsechny vlaky!" });
-
-                        dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 0 });
-                        ml.OnMyEventLoco(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 0 });
-
-                        //uloz data vlaku
-                        train.move = 0;
-                        td.UpdateTrainData(train.name, (t) =>
-                        {
-                            t.currentPosition = train.currentPosition;
-                            t.lastPosition = train.lastPosition;
-                            t.nextPosition = null;
-                            t.move = 0;
-                            t.circuit = train.circuit;
-                            t.critical = train.critical;
-                            t.finalPosition = null;
-                        });
-                    }
-
+                        t.currentPosition = train.currentPosition;
+                        t.lastPosition = train.lastPosition;
+                        t.nextPosition = null;
+                        t.move = 0;
+                        t.circuit = train.circuit;
+                        t.critical = train.critical;
+                        t.finalPosition = null;
+                    });
                 }
             }
         }
@@ -560,7 +573,6 @@ namespace ControlLogic
             int alreadyReserved = reservedSections.Count(cd => cd.TrainIdReserved == train.id);
 
             List<string> finalStations = SearchLogic.GetAllStationTracks();
-
 
             //vjizdim do kritickeho useku? (ANO = v listu jsou nejake hodnoty) - testuju pouze vjezd
             if ((trainInfo.Any() && alreadyReserved < 1) || finalStations.Contains(train.currentPosition))
@@ -823,9 +835,10 @@ namespace ControlLogic
             bool bb = false;
             foreach (var section in colisionCheck)
             {
+                //test jestli nedojde ke kolizi (neni odber proudu od vlaku v usecich pozadovanych
                 bb = currentDrain.Any(cd => cd.Section == section.Section && cd.TrainIdDrain != train.id);
                 if (bb)
-                    break; // exit the loop if collision is found
+                    break; //konec, je kolize a vlak nemuze jet a pokrscovat
             }
 
 
@@ -986,10 +999,10 @@ namespace ControlLogic
                             .Where(rs => rs.TrainIdReserved != train.id)
                             .ToList();
 
-                        //kontrola priority - pokud nemaji tyto useky rezervovane vlaky, ktere jedou, tak v poradku a pravo priority pr ovlak, ktery stoji ve vyhybkach
+                        //kontrola priority - pokud nemaji tyto useky rezervovane vlaky, ktere nejedou, tak v poradku a pravo priority pr ovlak, ktery stoji ve vyhybkach
                         for (int i = 0; i < checkPriority.Count(); i++)
                         {
-                            //checkPriority
+                            //checkSameReserved
                             int move = trainsList.Where(tl => tl.id == checkPriority[i].TrainIdReserved)
                                 .Select(tl => tl.move)
                                 .FirstOrDefault();
@@ -1066,8 +1079,28 @@ namespace ControlLogic
 
             //neni odber proudu v nadchazejicim useku od jineho vlaku a jestli v nadchazejicim useku neni jiny vlak?
             if ((!(currentDrain.Any(cd => cd.Section == train.nextPosition && cd.TrainIdDrain != train.id))) && !(trainsList.Any(tl => tl.currentPosition == train.nextPosition && tl.id != train.id))
-                && !(trainsList.Any(tl => tl.lastPosition == train.nextPosition && tl.id != train.id)))
+                && !(trainsList.Any(tl => tl.lastPosition == train.nextPosition && tl.id != train.id))) 
             {
+                var checkSameReserved = reservedSections
+                            .Where(rs => rs.TrainIdReserved != train.id &&
+                                reservedSections
+                                    .Where(p => p.TrainIdReserved == train.id)
+                                    .Any(p => p.Section == rs.Section))
+                            .Where(rs => rs.TrainIdReserved != train.id)
+                            .ToList();
+
+                //kontrola priority - pokud nemaji tyto useky rezervovane vlaky, ktere nejedou, tak v poradku a pravo priority pr ovlak, ktery stoji ve vyhybkach
+                for (int i = 0; i < checkSameReserved.Count(); i++)
+                {
+                    //checkSameReserved
+                    int move = trainsList.Where(tl => tl.id == checkSameReserved[i].TrainIdReserved)
+                        .Select(tl => tl.move)
+                        .FirstOrDefault();
+
+                    if (move == 1)
+                        return false;
+
+                }
                 return true;
             }
             return false;

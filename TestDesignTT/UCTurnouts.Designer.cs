@@ -1089,7 +1089,7 @@
             this.label9.Size = new System.Drawing.Size(852, 30);
             this.label9.TabIndex = 17;
             this.label9.Text = "Note: Position is 0 (the lowest bit - 0000 0001) to 7 (1000 0000); Values are 0 t" +
-    "o turn it right, 1 to turn it left";
+    "o turn it right (train will go right), 1 to turn it left";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UCTurnouts

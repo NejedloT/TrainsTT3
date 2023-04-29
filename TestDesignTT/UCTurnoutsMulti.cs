@@ -156,7 +156,12 @@ namespace TestDesignTT
         private void btnSave_Click(object sender, EventArgs e)
         {
             //UInt32 id = 0x381 + Convert.ToUInt32(tbChange.Text, 16);
-            UInt32 id = UInt32.Parse((string)cbUnit.SelectedItem);
+            
+            if (!int.TryParse(cbUnit.SelectedItem.ToString(), out int selectedItem))
+                return;
+
+            UInt32 id = (UInt32)selectedItem;
+            //UInt32 id = UInt32.Parse((string)cbUnit.SelectedItem);
             byte choose = Convert.ToByte(tbChoose.Text, 2);
             byte position = Convert.ToByte(tbChange.Text, 2);
 

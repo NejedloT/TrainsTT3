@@ -9,7 +9,7 @@ namespace TestDesignTT
 {
     public class DataTimetable
     {
-        public string Type { get; set; } // vlastnost typu vlaku (v podstatě pouze pracovní název spoje)
+        public string Name { get; set; } // vlastnost typu vlaku (v podstatě pouze pracovní název spoje)
         [DisplayName("Start station")] // Aby se v dataGridView napsala mezi slovy mezera
         public string StartStation { get; set; } // vlastost říkající od kud vlak vyjíždí
         [DisplayName("Final station")]
@@ -39,7 +39,7 @@ namespace TestDesignTT
 
             String[] data = line.Split(';'); // rozdělím data s oddělovačem ";"
 
-            Type = data[0]; // přiřazení informací z řádku do jednotlivých proměných ( string trimuji a časová data parsuji) 
+            Name = data[0]; // přiřazení informací z řádku do jednotlivých proměných ( string trimuji a časová data parsuji) 
             StartStation = new string(data[1].Trim());
             FinalStation = new string(data[2].Trim());
             Departure = departure;
@@ -59,7 +59,7 @@ namespace TestDesignTT
 
         public DataTimetable(string type, string startSection, string finalSection, DateTime departure)
         {
-            Type = type;
+            Name = type;
             StartStation = startSection;
             FinalStation = finalSection;
             Departure = departure;
@@ -72,7 +72,7 @@ namespace TestDesignTT
     public class DataForTimetable // data z hlavičky jízdního řádu, které říkají který vlak kde jezdí, jakou rychlostí atd..
     {
         public String Locomotive { get; set; } // název vlaku, musí korespondovat s aspoň jedním názvem vlaků které máme k dispozici (seznam ve třídě "Engine")
-        public string Type { get; set; } // pracovní název vlaku, pod tímto názvem bude vlak uveden v jízdím řádu, nesmí se shodovat s názvem jiného vlaku
+        public string Name { get; set; } // pracovní název vlaku, pod tímto názvem bude vlak uveden v jízdím řádu, nesmí se shodovat s názvem jiného vlaku
         public String Station1 { get; set; } // pracovní název zastávky na prvním úseku, takto bude označená zasávka v jízdním řádu
         public String Station2 { get; set; } // pracovní název dzastávky v druhém úseku
         public double Speed { get; set; } // Rychlost kterou se má vlak pohybovat pokud vykonává jízdní řád
@@ -97,7 +97,7 @@ namespace TestDesignTT
             Locomotive = new String(data[1].Trim()); //na indexu 0 je pouze indikátor hlavičky "***", s tím pracovat nepotřebujeme, ale na indexu jedna už je název vlaku (raději trimujeme)
 
 
-            Type = data[2].Trim();
+            Name = data[2].Trim();
             Station1 = new String(data[3].Trim());
             Station2 = new String(data[4].Trim());
             Speed = double.Parse(data[5]);
@@ -109,7 +109,7 @@ namespace TestDesignTT
         public DataForTimetable(String locomotive, string type, String section1, String section2, double speed, bool reverse1, bool reverse2, uint waitTime1, uint waitTime2) // konstruktor třídy
         {
             Locomotive = locomotive;
-            Type = type;
+            Name = type;
             Station1 = section1;
             Station2 = section2;
             Speed = speed;

@@ -569,11 +569,11 @@
 	<!-- Predefined critical routes -->
 	<criticalroutes>
 		<crit id = "cr1">
-			<last>u_okruh2</last>
+			<last>u017</last>
 			<current>u013</current>
 		</crit>
 		<crit id = "cr2">
-			<last>u_okruh1</last>
+			<last>u018</last>
 			<current>u004</current>
 		</crit>
 		<crit id = "cr2">
@@ -647,15 +647,21 @@
 	<!-- Definition of tracks for every station -->
 	<stationTracks>
 		<Beroun>
-			<item2>Beroun_kolej_1</item2>
-			<item3>Beroun_kolej_2</item3>
-			<item4>Beroun_kolej_3</item4>
-			<item5>Beroun_kolej_4</item5>
-			<item6>Beroun_kolej_5</item6>
+			<items>
+				<item2>Beroun_kolej_1</item2>
+				<item3>Beroun_kolej_2</item3>
+				<item4>Beroun_kolej_3</item4>
+				<item5>Beroun_kolej_4</item5>
+				<item6>Beroun_kolej_5</item6>
+			</items>
+			<circuit>0</circuit>
 		</Beroun>
 		<Karlstejn>
-			<item2>KarlstejnOsazena1</item2>
-			<item3>KarlstejnOsazena2</item3>
+			<items>
+				<item2>KarlstejnOsazena1</item2>
+				<item3>KarlstejnOsazena2</item3>
+			</items>
+			<circuit>4</circuit>
 		</Karlstejn>
 	</stationTracks>
 	
@@ -670,7 +676,7 @@
 			<unit>1</unit>
 			<pos>1</pos>
 			<leftStop>90</leftStop>
-			<rightStop>110</rightStop>
+			<rightStop>120</rightStop>
 		</item2>
 		<item3>
 			<unit>1</unit>
@@ -690,5 +696,17 @@
 			<leftStop>100</leftStop>
 			<rightStop>130</rightStop>
 		</item5>
+		<item6>
+			<unit>1</unit>
+			<pos>5</pos>
+			<leftStop>60</leftStop>
+			<rightStop>140</rightStop>
+		</item6>
+		<item7>
+			<unit>1</unit>
+			<pos>6</pos>
+			<leftStop>90</leftStop>
+			<rightStop>120</rightStop>
+		</item7>
 	</turnoutStopDefinitions>
 </model>

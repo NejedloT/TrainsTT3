@@ -123,11 +123,12 @@ namespace ControlLogic
 
         /// <summary>
         /// Metoda, ktera najde moznou finalni stanici dle aktualni stanice
+        /// Pouze v zavislosti naaktualnim okruhu
         /// </summary>
         /// <param name="train">konkretni vlak, ktery si vybere uzivatel</param>
         /// <param name="wantedName">Pozadovana kolej ve vybrane stanici</param>
         /// <returns></returns>
-        public static IEnumerable<XElement> GetFinalTrack(Trains train, string wantedName)
+        public static IEnumerable<XElement> GetFinalTrackOutside(Trains train, string wantedName)
         {
             return xdoc.Descendants("fromCircuit")
             .Where(fc => (string)fc.Attribute("id") == train.circuit.ToString())
@@ -135,6 +136,21 @@ namespace ControlLogic
             .Where(tc => (string)tc.Attribute("name") == wantedName)
             .Elements();
         }
+
+
+        public static bool GetFinalTrackInside(string currentPosition, string previousPosition, string finalStation)
+        {
+            var matchingToElements = xdoc.Descendants("to")
+                .Where(t => t.Attribute("id")?.Value == finalStation) // check for specific "to" value
+                .Where(t => t.Element("parts")?.Descendants().Select(p => p.Value).Contains(previousPosition) == true // check if previousPosition is present
+                    && t.Element("parts")?.Descendants().Select(p => p.Value).Contains(currentPosition) == true // check if currentPosition is present
+                    && t.Element("parts")?.Descendants().Select(p => p.Value).ToList().IndexOf(previousPosition) + 1 == t.Element("parts")?.Descendants().Select(p => p.Value).ToList().IndexOf(currentPosition) // check if previousPosition is earlier than currentPosition and they are next to each other
+                )
+                .Any();
+
+            return matchingToElements;
+        }
+
 
         /// <summary>
         /// Metoda, ktera najde v konfiguracnim souboru nasledujici usek
@@ -144,29 +160,6 @@ namespace ControlLogic
         /// <returns>Vedlejsi pozici z obou stran</returns>
         public static IEnumerable<string> GetNextPositions(string position)
         {
-            /*
-            return xdoc.Descendants()
-                .Where(e => e.Name.LocalName == "prevsec" || e.Name.LocalName == "nextsec" || e.Name.LocalName == "prevsections" || e.Name.LocalName == "nextsections")
-                .Where(e => e.Ancestors("section").Any(a => (string)a.Attribute("id") == position))
-                .Select(e => (string)e)
-                .ToList();
-            */
-
-            /*
-            return xdoc.Descendants()
-                .Where(e => e.Name.LocalName == "prevsec" || e.Name.LocalName == "nextsec" || e.Name.LocalName == "prevsections" || e.Name.LocalName == "nextsections")
-                .Where(e => e.Ancestors("section").Any(a => (string)a.Attribute("id") == position))
-                .SelectMany(e =>
-                {
-                    if (e.Name.LocalName == "prevsections" || e.Name.LocalName == "nextsections")
-                        return e.Elements().Select(x => (string)x);
-
-                    else
-                        return new[] { (string)e };
-                })
-                .ToList();
-            */
-
             return xdoc.Descendants("section")
            .Where(e => (string)e.Attribute("id") == position)
            .Elements()
@@ -200,6 +193,12 @@ namespace ControlLogic
             return matchingToElements;
         }
 
+        /// <summary>
+        /// Metoda, ktera nalezne mozne cesty na nadrazi v zavislosti na minule poloze
+        /// </summary>
+        /// <param name="currentPosition"></param>
+        /// <param name="previousPosition"></param>
+        /// <returns></returns>
         public static IEnumerable<string> GetFinalStationOutside(string currentPosition, string previousPosition)
         {
             var matchingFromStartElements = xdoc.Descendants("fromStartOutside")
@@ -221,15 +220,6 @@ namespace ControlLogic
         //public static string GetStartStationInCritical(string currentPosition, string previousPosition)
         public static IEnumerable<string> GetStartStationInCritical(string currentPosition, string previousPosition)
         {
-            /*
-            var matchingToElements = xdoc.Descendants("to")
-            .Where(t => t.Element("parts")?.Descendants().Select(p => p.Value).Contains(previousPosition) == true // check if previousPosition is present
-        && t.Element("parts")?.Descendants().Select(p => p.Value).Contains(currentPosition) == true // check if currentPosition is present
-        && t.Element("parts")?.Descendants().Select(p => p.Value).ToList().IndexOf(previousPosition) + 1 == t.Element("parts")?.Descendants().Select(p => p.Value).ToList().IndexOf(currentPosition) // check if previousPosition is earlier than currentPosition and they are next to each other
-    )
-    .Select(t => t.Element("fromStart").Value)
-    .FirstOrDefault();
-            */
             var matchingToElements = xdoc.Descendants("to")
             .Where(t => t.Element("parts")?.Descendants().Select(p => p.Value).Contains(previousPosition) == true // check if previousPosition is present
         && t.Element("parts")?.Descendants().Select(p => p.Value).Contains(currentPosition) == true // check if currentPosition is present
@@ -252,23 +242,12 @@ namespace ControlLogic
         //public static string GetStartStationOutside(string currentPosition, string previousPosition)
         public static IEnumerable<string> GetStartStationOutside(string currentPosition, string previousPosition)
         {
-            /*
-            var matchingFromStartElements = xdoc.Descendants("fromStartOutside")
-        .Where(fs => fs.Descendants("items").Descendants().Select(p => p.Value).Contains(previousPosition)
-                    && fs.Descendants("items").Descendants().Select(p => p.Value).Contains(currentPosition)
-                    && fs.Descendants("items").Descendants().Select(p => p.Value).ToList().IndexOf(previousPosition) + 1 == fs.Descendants("items").Descendants().Select(p => p.Value).ToList().IndexOf(currentPosition))
-        .Select(fs => fs.Attribute("id").Value)
-        .FirstOrDefault();
-            */
-
             var matchingFromStartElements = xdoc.Descendants("fromStartOutside")
         .Where(fs => fs.Descendants("items").Descendants().Select(p => p.Value).Contains(previousPosition)
                     && fs.Descendants("items").Descendants().Select(p => p.Value).Contains(currentPosition)
                     && fs.Descendants("items").Descendants().Select(p => p.Value).ToList().IndexOf(previousPosition) + 1 == fs.Descendants("items").Descendants().Select(p => p.Value).ToList().IndexOf(currentPosition))
         .Select(fs => fs.Attribute("id").Value)
         .ToList();
-
-            //var fromStartValue = matchingFromStartElements.FirstOrDefault()?.Attribute("id")?.Value;
 
             return matchingFromStartElements;
         }
@@ -291,6 +270,55 @@ namespace ControlLogic
         }
 
         /// <summary>
+        /// Metoda, ktera zjisti orientaci po okruhu pri aktualizaci JSONu
+        /// Dle posledni polohy a smeru jizdy urci orientaci, cimz je umoznena spravna orintace pri naslednem rizeni
+        /// </summary>
+        /// <param name="currentPosition"></param>
+        /// <param name="previousPosition"></param>
+        /// <returns></returns>
+        public static string GetOrientation(string currentPosition, string previousPosition)
+        {
+            string orientation = null;
+
+            IEnumerable<string> getOrientationNext = xdoc.Descendants("section")
+           .Where(e => (string)e.Attribute("id") == currentPosition)
+           .Elements()
+           .Where(e => e.Name.LocalName == "nextsec" || e.Name.LocalName == "nextsections")
+           .SelectMany(e =>
+           {
+               if (e.Name.LocalName == "nextsec")
+                   return new[] { (string)e };
+
+               else
+                   return e.Elements().Select(x => (string)x);
+           });
+
+            IEnumerable<string> getOrientationPrev = xdoc.Descendants("section")
+           .Where(e => (string)e.Attribute("id") == currentPosition)
+           .Elements()
+           .Where(e => e.Name.LocalName == "prevsec" || e.Name.LocalName == "prevsections")
+           .SelectMany(e =>
+           {
+               if (e.Name.LocalName == "prevsec")
+                   return new[] { (string)e };
+
+               else
+                   return e.Elements().Select(x => (string)x);
+           });
+
+            if (getOrientationNext.Contains(previousPosition))
+            {
+                orientation = "prevConnection";
+            }
+            else
+            {
+                orientation = "nextConnection";
+            }
+
+            return orientation;
+        }
+
+        /// <summary>
         /// Metoda, ktera slouzi k ziskani vsech finalnich koleji na nadrazich
         /// </summary>
         /// <returns>List s nazvy jendotlivymi konecnymi stanicemi</returns>
@@ -298,11 +326,22 @@ namespace ControlLogic
         {
             List<string> items = xdoc.Descendants("stationTracks")
                 .Elements()
+                .Elements()
                 .SelectMany(e => e.Elements())
                 .Select(e => e.Value)
                 .ToList();
 
             return items;
+        }
+
+        public static int GetFinalStationCircuit(string finalStation)
+        {
+            var circuitValue = xdoc.Descendants("stationTracks")
+                .Elements(finalStation)
+                .Select(x => (int)x.Element("circuit"))
+                .FirstOrDefault();
+
+            return circuitValue;
         }
 
         public static List<XElement> GetTurnoutStopDefinitions()

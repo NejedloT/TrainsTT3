@@ -1,21 +1,27 @@
+using ControlLogic;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.DirectoryServices.ActiveDirectory;
+using System.Net;
 using System.Windows.Documents;
 using System.Windows.Forms;
+using TrainTTLibrary;
 using static System.Windows.Forms.DataFormats;
+using static TrainTTLibrary.Packet;
 
 
 namespace TestDesignTT
 {
     public partial class FormTimetable : Form
     {
+        private bool IsConnect = false;
+
+        private static TCPClient klient = null;
+
+
         public BindingList<DataTimetable> timetable = new BindingList<DataTimetable>();
 
-        public BindingList<MovingInTimetamble> movingTimetable = new BindingList<MovingInTimetamble>();
-
-        //private List<DataForTimetable> dataForTimetable = new List<DataForTimetable>();
-
+        //public BindingList<MovingInTimetamble> movingTimetable = new BindingList<MovingInTimetamble>();
 
         UCHome uCHome = new UCHome();
         UCTrainTimetable ucTrainTimetable = new UCTrainTimetable();
@@ -25,60 +31,315 @@ namespace TestDesignTT
         UCUnitSet uCUnitSet = new UCUnitSet();
         UCTurnoutsSettings ucTurnoutsSettings = new UCTurnoutsSettings();
 
+
+        MainLogic ml = new MainLogic();
+
+        private static List<Trains> trainsList = new List<Trains>();
+
         public FormTimetable()
         {
             InitializeComponent();
             DisplayInstance(uCHome);
             panelSettings.Visible = false;
-            btnEnabledLogic();
+            checkBtnLogic();
+
+            ml.InfoMessageEvent += new EventHandler<InfoMessageSend>(EventHandlerNewMsgData);
+            ml.LocomotiveDataEvent += new EventHandler<LocomotiveDataSend>(EventHandlerNewLocoData);
+            ml.TurnoutsDataEvent += new EventHandler<TurnoutsDataSend>(EventHandlerNewTurnoutData);
+
+            MainLogic.Initialization(ml);
         }
 
         private void FormMainMenu_Load(object sender, EventArgs e)
         {
             ucDataLoad.ButtonLoadClick += new EventHandler(UserControl_ButtonLoadClick);
+            uCUnitSet.UnitInstructionEventClick += new EventHandler(UserControl_UnitInstructionClick); //user control pro zmenu nastaveni ridici jednotky
+            ucTurnoutsSettings.TurnoutDefinitionStopsClick += new EventHandler(UserControl_TurnoutInstructionStops);
+            ucTurnoutsSettings.TurnoutInstructionSetClick += new EventHandler(UserControl_TurnoutInstructionSet);
 
         }
 
-        protected void UserControl_ButtonLoadClick(object sender, EventArgs e)
+        private void FormTimetable_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //handle the event 
-
-
-            //List<DataToLoad> dataLoad = new List<DataToLoad>();
-            List<DataToLoad> dataLoad = ucDataLoad.dataToLoads;
-
-            for (int i = 0; i < dataLoad.Count; i++)
+            //vypni timery - logika nebude bezet dale
+            if (IsConnect)
             {
-                loadMyTimetamble(dataLoad[i].Filename, dataLoad[i].InfinityData);
+                StopAll();
             }
 
-            dataLoad.Clear();
-            btnEnabledLogic();
+            Thread.Sleep(350);
 
-        }
+            MainLogic.StopTimers();
 
-        private void TimeInTimetableUpdated(object sender, EventArgs e)
-        {
-            if (panelDesktopPanel.Controls.Contains(ucTrainTimetable))
-                ucTrainTimetable.loadTimetamble(timetable);
+            Thread.Sleep(250);
+
+            //vycisti klienta
+            KlientCleanUp();
+            if (klient != null)
+            {
+                klient.Dispose();
+                klient = null;
+            }
         }
 
         private void FormMainMenu_SizeChanged(object sender, EventArgs e)
         {
             //TODO
-
-            /*
-            if (panelDesktopPanel.Controls.Contains(ucEditMoving))
-                ucEditMoving.changeSize();
-            if (panelDesktopPanel.Controls.Contains(ucTrainTimetable))
-                ucTrainTimetable.changeSize();
-            if (panelDesktopPanel.Controls.Contains(ucEditTimetable))
-                ucEditTimetable.changeSize();
-            if (panelDesktopPanel.Controls.Contains(ucTrainMoving))
-                ucTrainMoving.changeSize();
-            */
         }
 
+        #region TCP server (Start, Connect, Disconnect, Send Data)
+        private void StartTCPClient()
+        {
+            //vytvoreni TCP klienta
+            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            IPAddress ipAddress = ipHostInfo.AddressList[1];
+            klient = new TCPClient(ipAddress, 8080);
+
+            //nastaveni eventu pri spusteni ci odpojeni klienta a pro prijem dat
+            klient.DataType = eRecvDataType.dataStringNL;
+            klient.OnClientConnected += KlientConnected;
+            klient.OnClientDisconnected += TCPDisconnectClient;
+            klient.DataReceived += TCP_DataRecv;
+
+            //pokud se nepripojim, vycisti klienta
+            if (!klient.Connect())
+            {
+                KlientCleanUp();
+            }
+        }
+
+        /// <summary>
+        /// akce v pripade odpojeni klienta
+        /// </summary>
+        /// <param name="sender">Event handler pri odpojeni</param>
+        /// <param name="e">Event handler pri odpojeni</param>
+        private void TCPDisconnectClient(object sender, TCPClientConnectedEventArgs e)
+        {
+            IsConnect = false;
+        }
+
+        /// <summary>
+        /// akce v pripade pripojeni klienta
+        /// </summary>
+        /// <param name="sender">Event handler pri pripojeni klienta</param>
+        /// <param name="e">Event handler pri pripojeni klienta</param>
+        private void KlientConnected(object sender, TCPClientConnectedEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<object, TCPClientConnectedEventArgs>(KlientConnected),
+                  new object[] { sender, e });
+                return;
+            }
+
+
+            if (e == null)
+            {
+                IsConnect = false;
+
+                KlientCleanUp();
+            }
+            else
+            {
+                IsConnect = true;
+            }
+        }
+
+        /// <summary>
+        /// vycisti klienta, pokud byl napr. odpojen
+        /// </summary>
+        private void KlientCleanUp()
+        {
+            if (klient != null)
+            {
+                klient.Disconnect();
+
+                klient.OnClientConnected -= KlientConnected;
+                klient.OnClientDisconnected -= TCPDisconnectClient;
+                klient.DataReceived -= TCP_DataRecv;
+
+                klient.Dispose();
+                klient = null;
+            }
+        }
+
+        /// <summary>
+        /// Event na to, ze prislo neco ze serioveho portu
+        /// </summary>
+        /// <param name="sender">Event handler na prichodi data ze serioveho portu</param>
+        /// <param name="e">Event handler na prichodi data ze serioveho portu</param>
+        private void TCP_DataRecv(object sender, TCPReceivedEventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action<TCPReceivedEventArgs>(DataProcessing), new object[] { e });
+                return;
+            }
+
+        }
+
+        /// <summary>
+        /// zpracovani dat prijatych
+        /// </summary>
+        /// <param name="e">Event na prichozi data z portu</param>
+        private void DataProcessing(TCPReceivedEventArgs e)
+        {
+            ProcessDataFromTCP.ProcessData(e);
+
+            bool testError = ProcessDataFromTCP.getErrors();
+
+            if (testError)
+            {
+                StopAll();
+                ProcessDataFromTCP.setErrors(false);
+                MessageBox.Show("Section unit or switch unit error has occurred! All trains have been stopped!", "IMPORTANT!!!",
+                MessageBoxButtons.OK);
+            }
+        }
+
+
+        /// <summary>
+        /// Metoda pro posilani dat
+        /// </summary>
+        /// <param name="str">TCP packet ve forme stringu</param>
+        private void SendTCPData(string str)
+        {
+            while ((!IsConnect) || !klient.Send(str))
+            {
+                if (DialogResult.Cancel == MessageBox.Show("Server not found\nDo you want to try to reconnect?", "Error: Server not found", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning))
+                {
+                    Close();
+                }
+                StartTCPClient();
+                Thread.Sleep(200);
+            }
+        }
+
+        #endregion
+
+
+        #region Actions for buttons in the left menu
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            //DisplayInstance(UCHome.Instance);
+
+            //UCHome uCHome = new UCHome();
+            panelSettings.Visible = false;
+            checkBtnLogic();
+
+            DisplayInstance(uCHome);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnSections_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            checkBtnLogic();
+
+            DisplayInstance(uCMap);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnJSON_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            checkBtnLogic();
+
+            DisplayInstance(uCJsonDisplay);
+            uCJsonDisplay.displayJson();
+
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnLoadTimetable_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            checkBtnLogic();
+
+            DisplayInstance(ucDataLoad);
+
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnDisplayTimetable_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            checkBtnLogic();
+
+            DisplayInstance(ucTrainTimetable);
+            labelTitle.Text = (sender as Button).Text;
+
+            ucTrainTimetable.loadTimetamble(timetable);
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = true;
+            checkBtnLogic();
+        }
+
+        private void btnUnitSettings_Click(object sender, EventArgs e)
+        {
+            checkBtnLogic();
+
+            DisplayInstance(uCUnitSet);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnTurnoutSettings_Click(object sender, EventArgs e)
+        {
+            checkBtnLogic();
+
+            DisplayInstance(ucTurnoutsSettings);
+            labelTitle.Text = (sender as Button).Text;
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+
+            if (btnPlay.IconChar == FontAwesome.Sharp.IconChar.Play)
+            {
+                if (panelDesktopPanel.Controls.Contains(ucDataLoad))
+                {
+                    panelDesktopPanel.Controls.Add(uCHome);
+                    uCHome.Dock = DockStyle.Fill;
+                    uCHome.BringToFront();
+                }
+                btnPlay.IconChar = FontAwesome.Sharp.IconChar.Pause;
+                btnPlay.Text = "Pause";
+            }
+            else
+            {
+                btnPlay.IconChar = FontAwesome.Sharp.IconChar.Play;
+                btnPlay.Text = "Play";
+            }
+            checkBtnLogic();
+        }
+
+        private void btnCentralStop_Click(object sender, EventArgs e)
+        {
+            panelSettings.Visible = false;
+            checkBtnLogic();
+        }
+
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            FormMainMenu formmm = new FormMainMenu();
+            formmm.StartPosition = FormStartPosition.Manual;
+            formmm.Location = this.Location;
+            formmm.Size = this.Size;
+            this.Hide();
+            formmm.Show();
+            //FormMainMenu.;
+        }
+#endregion
+
+        /// <summary>
+        /// Zobrazeni spravneho user controlu dle kliknuti uzivatele
+        /// </summary>
+        /// <param name="uc"></param>
         private void DisplayInstance(UserControl uc)
         {
             if (!(panelDesktopPanel.Controls.Contains(uc)))
@@ -94,6 +355,37 @@ namespace TestDesignTT
             }
         }
 
+        /// <summary>
+        /// Metoda preo testovani logiky, kdy ma byt ktery button aktivni
+        /// </summary>
+        private void checkBtnLogic()
+        {
+            if (timetable.Count != 0)
+            {
+                btnPlay.Enabled = true;
+                btnDisplayTimetable.Enabled = true;
+            }
+            else
+            {
+                btnPlay.Enabled = false;
+                btnDisplayTimetable.Enabled = false;
+            }
+
+            if (btnPlay.Text == "Pause")
+            {
+                btnLoadTimetable.Enabled = false;
+            }
+            else
+            {
+                btnLoadTimetable.Enabled = true;
+            }
+        }
+
+        private void TimeInTimetableUpdated(object sender, EventArgs e)
+        {
+            if (panelDesktopPanel.Controls.Contains(ucTrainTimetable))
+                ucTrainTimetable.loadTimetamble(timetable);
+        }
 
         public void loadMyTimetamble(string fileName, bool infinity)
         {
@@ -173,7 +465,7 @@ namespace TestDesignTT
                             else
                             {
                                 index++;
-                                
+
                                 if (index == departureStart.Count())
                                     break;
 
@@ -199,7 +491,6 @@ namespace TestDesignTT
                     }
 
 
-
                 }
                 catch (IOException)
                 {
@@ -211,12 +502,12 @@ namespace TestDesignTT
                 MessageBox.Show("Invalid file name!!\n");
             }
         }
-     
+
 
         private void timer1_Tick(object sender, EventArgs e)
         {
 
-            for (int i = 0; i < timetable.Count; i++)
+            for (int i = 0; i < timetable.Count(); i++)
             {
                 DateTime now = new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 
@@ -225,13 +516,20 @@ namespace TestDesignTT
                 //zkontrolovat,jestli uz neni cas odjezdu
                 if (now > inTimetable)
                 {
-                    /*
-                    double sec = now.Subtract(inTimetable).TotalSeconds;
-                    MovingInTimetamble mit = new MovingInTimetamble(timetable[i].Type, timetable[i].StartStation, timetable[i].FinalStation, timetable[i].Departure, 0.7, true, 1500, sec);
-                    movingTimetable.Add(mit);
-                    */
+                    TrainDataJSON td = new TrainDataJSON();
+                    trainsList = td.LoadJson();
+                    foreach (Trains train in trainsList)
+                    {
+                        if (train.name == timetable[i].Name)
+                        {
+                            //TODO
+                            //Logika pridavani - testovani, ze jsem na spravne pozici ci tak
+                            //dodelat i pause a play
+                            break;
+                        }
 
-                    //mit.TimeOnTrack = sec;
+                    }
+
                     timetable.RemoveAt(i);
                     i--;
                     TimeInTimetableUpdated(sender, e);
@@ -241,161 +539,212 @@ namespace TestDesignTT
                 else
                     break;
             }
+        }
 
 
+        protected void UserControl_ButtonLoadClick(object sender, EventArgs e)
+        {
+            List<DataToLoad> dataLoad = ucDataLoad.dataToLoads;
 
-            for (int i = 0; i < movingTimetable.Count; i++)
+            for (int i = 0; i < dataLoad.Count; i++)
             {
-                DateTime now = new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                loadMyTimetamble(dataLoad[i].Filename, dataLoad[i].InfinityData);
+            }
 
-                DateTime inTimetable = new DateTime(1, 1, 1, movingTimetable[i].Departure.Hour, movingTimetable[i].Departure.Minute, movingTimetable[i].Departure.Second);
+            dataLoad.Clear();
+            checkBtnLogic();
 
-                double sec = now.Subtract(inTimetable).TotalSeconds;
+        }
 
-                movingTimetable[i].TimeOnTrack = sec;
 
-                //TimeInTimetableUpdated(sender, e);
+        /// <summary>
+        /// Metoda vyvolana Event Handlerem na zmenu nastaveni ridici jednotky
+        /// Prisel pozadavek z user controlu. Data budou vlozeno do packetu a zaslana
+        /// </summary>
+        /// <param name="sender">Event Handler z user controlu</param>
+        /// <param name="e">Event Handler z user controlu</param>
+        protected void UserControl_UnitInstructionClick(object sender, EventArgs e)
+        {
+            List<SetNewUnitData> newUnit = uCUnitSet.newUnit;
+
+            //vlozeni prijatych dat do promennych, vytvoreni packetu a zaslani
+            for (int i = 0; i < newUnit.Count; i++)
+            {
+                unitInstruction ui = newUnit[i].Type;
+
+                byte data0 = newUnit[i].NumberOfUnit;
+
+                byte data1 = newUnit[i].Data;
+
+                UnitInstructionPacket unitInst = new UnitInstructionPacket(ui, data0, data1);
+
+                SendTCPData(unitInst.TCPPacket);
+
+            }
+
+            //smazani prijatych dat pro nastaveni ridici jednotky
+            newUnit.Clear();
+        }
+
+        /// <summary>
+        /// Metoda vyvolana Event Handlerem na zmenu nastaveni softwarovych dorazu
+        /// Prisel pozadavek na nove nastaveni dorazu nejake vyhybky
+        /// Data budou vlozena do packetu a zaslana prislusne jednotce
+        /// </summary>
+        /// <param name="sender">Event Handler z user controlu</param>
+        /// <param name="e">Event Handler z user controlu</param>
+        protected void UserControl_TurnoutInstructionStops(object sender, EventArgs e)
+        {
+            List<SetNewTurnoutStops> newTurnoutStops = ucTurnoutsSettings.newTurnoutStops;
+
+            for (int i = 0; i < newTurnoutStops.Count; i++)
+            {
+                turnoutInstruction ti = newTurnoutStops[i].Type;
+
+                byte numberOfUnit = newTurnoutStops[i].NumberOfUnit;
+
+                byte numberOfTurnout = newTurnoutStops[i].NumberOfTurnout;
+
+                byte left = newTurnoutStops[i].LeftStop;
+
+                byte right = newTurnoutStops[i].RightStop;
+
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, numberOfUnit, numberOfTurnout, left, right);
+
+                SendTCPData(turnoutInst.TCPPacket);
+            }
+
+            newTurnoutStops.Clear();
+        }
+
+        /// <summary>
+        /// Metoda vyvolana Event Handlerem na zmenu nastaveni jednotky vyhybek (mimo dorazy a zmeny polohy vyhybek)
+        /// Prisel pozadavek na nastaveni nejake turnout instruction
+        /// Data budou vlozena do packetu a zaslana prislusne jednotce
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void UserControl_TurnoutInstructionSet(object sender, EventArgs e)
+        {
+            List<SetNewTurnoutUnitData> newTurnoutData = ucTurnoutsSettings.newTurnoutData;
+
+            for (int i = 0; i < newTurnoutData.Count; i++)
+            {
+                turnoutInstruction ti = newTurnoutData[i].Type;
+
+                byte numberOfUnit = newTurnoutData[i].NumberOfUnit;
+
+                byte data = newTurnoutData[i].Data;
+
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, numberOfUnit, data);
+
+                SendTCPData(turnoutInst.TCPPacket);
+            }
+            newTurnoutData.Clear();
+        }
+
+        /// <summary>
+        /// Event handler pro vyzvednuti dat z logiky rizeni (Main logic)
+        /// Vyvolana zmena vyhybek a vyhybky zmeneny podle dat z logiky
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">Pozadavek na vyhybky</param>
+        protected void EventHandlerNewTurnoutData(object sender, TurnoutsDataSend e)
+        {
+            uint numberOfUnit = e.NumberOfUnit;
+
+            byte turnout = e.Turnouts;
+
+            byte value = e.Value;
+
+            TurnoutInstructionPacket turnoutInstructionPacket = new TurnoutInstructionPacket(Packet.turnoutInstruction.nastaveni_vyhybky, numberOfUnit, turnout, value);
+
+            SendTCPData(turnoutInstructionPacket.TCPPacket);
+        }
+
+        /// <summary>
+        /// Event handler pro vyzvednuti dat z logiky rizeni (Main logic)
+        /// Vyvolano logikou rizeni
+        /// Dle pozadavku logiky dojde k zastaveni/rozjeti vlaku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void EventHandlerNewLocoData(object sender, LocomotiveDataSend e)
+        {
+            Locomotive loco = e.Loco;
+
+            bool reverse = e.Reverze;
+
+            byte speed = e.Speed;
+
+
+            if (speed > 3)
+            {
+                Thread.Sleep(250);
+
+                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(loco, reverse, speed);
+
+                SendTCPData(trainMotionPacket.TCPPacket);
+
+                TrainFunctionPacket trainFunctionPacket = new TrainFunctionPacket(loco, true);
+
+                SendTCPData(trainFunctionPacket.TCPPacket);
+            }
+            else if (speed == 3)
+            {
+                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(loco, false, 3);
+
+                SendTCPData(trainMotionPacket.TCPPacket);
+
+                TrainFunctionPacket trainFunctionPacket = new TrainFunctionPacket(loco, false);
+
+                SendTCPData(trainFunctionPacket.TCPPacket);
+            }
+
+            else
+            {
+                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(loco, false, 0);
+
+                SendTCPData(trainMotionPacket.TCPPacket);
+
+                TrainFunctionPacket trainFunctionPacket = new TrainFunctionPacket(loco, false);
+
+                SendTCPData(trainFunctionPacket.TCPPacket);
             }
         }
 
-        private void btnHome_Click(object sender, EventArgs e)
+        protected void EventHandlerNewMsgData(object sender, InfoMessageSend e)
         {
-            //DisplayInstance(UCHome.Instance);
+            string msg = e.InfoMessage.ToString();
 
-            //UCHome uCHome = new UCHome();
-            panelSettings.Visible = false;
-            btnEnabledLogic();
+            StopAll();
 
-            DisplayInstance(uCHome);
-            labelTitle.Text = (sender as Button).Text;
+            MessageBox.Show(msg, "IMPORTANT!!!",
+            MessageBoxButtons.OK);
         }
 
-        private void btnSections_Click(object sender, EventArgs e)
+        private void StopAll()
         {
-            panelSettings.Visible = false;
-            btnEnabledLogic();
-
-            DisplayInstance(uCMap);
-            labelTitle.Text = (sender as Button).Text;
-        }
-
-        private void btnJSON_Click(object sender, EventArgs e)
-        {
-            panelSettings.Visible = false;
-            btnEnabledLogic();
-
-            DisplayInstance(uCJsonDisplay);
-            uCJsonDisplay.displayJson();
-
-            labelTitle.Text = (sender as Button).Text;
-        }
-
-        private void btnLoadTimetable_Click(object sender, EventArgs e)
-        {
-            panelSettings.Visible = false;
-            btnEnabledLogic();
-
-            DisplayInstance(ucDataLoad);
-
-            labelTitle.Text = (sender as Button).Text;
-        }
-
-        private void btnDisplayTimetable_Click(object sender, EventArgs e)
-        {
-            panelSettings.Visible = false;
-            btnEnabledLogic();
-
-            DisplayInstance(ucTrainTimetable);
-            labelTitle.Text = (sender as Button).Text;
-
-            ucTrainTimetable.loadTimetamble(timetable);
-        }
-
-        private void btnSettings_Click(object sender, EventArgs e)
-        {
-            panelSettings.Visible = true;
-            btnEnabledLogic();
-        }
-
-        private void btnUnitSettings_Click(object sender, EventArgs e)
-        {
-            btnEnabledLogic();
-
-            DisplayInstance(uCUnitSet);
-            labelTitle.Text = (sender as Button).Text;
-        }
-
-        private void btnTurnoutSettings_Click(object sender, EventArgs e)
-        {
-            btnEnabledLogic();
-
-            DisplayInstance(ucTurnoutsSettings);
-            labelTitle.Text = (sender as Button).Text;
-        }
-
-        private void btnPlay_Click(object sender, EventArgs e)
-        {
-            panelSettings.Visible = false;
-
-            if (btnPlay.IconChar == FontAwesome.Sharp.IconChar.Play)
+            foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
             {
-                if (panelDesktopPanel.Controls.Contains(ucDataLoad))
+                TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 0);
+
+                SendTCPData(trainMotionPacket.TCPPacket);
+            }
+
+            Thread.Sleep(250);
+            lock (MainLogic.lockingLogic)
+            {
+                TrainDataJSON td = new TrainDataJSON();
+                trainsList = td.LoadJson();
+                foreach (Trains train in trainsList)
                 {
-                    panelDesktopPanel.Controls.Add(uCHome);
-                    uCHome.Dock = DockStyle.Fill;
-                    uCHome.BringToFront();
+                    train.move = 0;
                 }
-                btnPlay.IconChar = FontAwesome.Sharp.IconChar.Pause;
-                btnPlay.Text = "Pause";
-            }
-            else
-            {
-                btnPlay.IconChar = FontAwesome.Sharp.IconChar.Play;
-                btnPlay.Text = "Play";
-            }
-            btnEnabledLogic();
-        }
 
-        private void btnCentralStop_Click(object sender, EventArgs e)
-        {
-            panelSettings.Visible = false;
-            btnEnabledLogic();
-        }
+                td.SaveJson(trainsList);
 
-
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            FormMainMenu formmm = new FormMainMenu();
-            formmm.StartPosition = FormStartPosition.Manual;
-            formmm.Location = this.Location;
-            formmm.Size = this.Size;
-            this.Hide();
-            formmm.Show();
-            //FormMainMenu.;
-        }
-
-        private void btnEnabledLogic()
-        {
-            if (timetable.Count != 0)
-            {
-                btnPlay.Enabled = true;
-                btnDisplayTimetable.Enabled = true;
-            }
-            else
-            {
-                btnPlay.Enabled = false;
-                btnDisplayTimetable.Enabled = false;
-            }
-
-            if (btnPlay.Text == "Pause")
-            {
-                btnLoadTimetable.Enabled = false;
-            }
-            else
-            {
-                btnLoadTimetable.Enabled = true;
             }
         }
-
     }
 }

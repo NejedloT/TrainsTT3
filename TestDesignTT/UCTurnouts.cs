@@ -234,7 +234,7 @@ namespace TestDesignTT
             ComboBox[] cbUnits = { cbIdUnit1, cbIdUnit2, cbIdUnit3, cbIdUnit4, cbIdUnit5 };
             ComboBox[] cbTurnouts = { cbTurnout1, cbTurnout2, cbTurnout3, cbTurnout4, cbTurnout5 };
 
-            UInt32 id;
+            //UInt32 id;
             //byte value = 0x00;
 
             for (int i = 0; i < 5; i++)
@@ -248,7 +248,11 @@ namespace TestDesignTT
                 //id = 0x381 + Convert.ToUInt32(cbUnits[i].Text, 16);
 
                 //id ridici jednotky
-                id = Convert.ToUInt32(cbUnits[i].Text, 16);
+                if (!int.TryParse(cbUnits[i].SelectedItem.ToString(), out int selectedItem))
+                    return;
+
+                UInt32 id = (UInt32)selectedItem;
+                //id = Convert.ToUInt32(cbUnits[i].Text, 16);
 
                 //zjisteni, zdali jiz data pro jednotku existuji
                 Turnouts matchingTurnouts = turnouts.FirstOrDefault(t => t.UnitID == id);

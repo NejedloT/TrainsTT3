@@ -136,6 +136,7 @@ namespace TestDesignTT
             //zjisteni stisknuteho elementu
             var control = sender as Control;
 
+            /*
             string selectedItem = cbUnitNumber.SelectedItem as string;
 
             //kontrola pred crashnutim aplikace
@@ -144,6 +145,16 @@ namespace TestDesignTT
 
             //vybrane  cislo jednotky z comboboxu
             byte numberOfUnit = byte.Parse(selectedItem);
+            */
+
+
+            if (cbUnitNumber.SelectedItem == null)
+                return;
+
+            if (!int.TryParse(cbUnitNumber.SelectedItem.ToString(), out int selectedItem))
+                return;
+
+            byte numberOfUnit = (byte)selectedItem;
 
             if (cbRightStop.SelectedIndex < 0)
             {
