@@ -3,8 +3,8 @@
     {
       "id": 3,
       "name": "Brejlovec",
-      "currentPosition": "i1",
-      "lastPosition": "i1",
+      "currentPosition": "Beroun_kolej_1",
+      "lastPosition": "u039",
       "nextPosition": null,
       "move": 0,
       "speed": 12,
@@ -13,7 +13,7 @@
       "circuit": 0,
       "critical": false,
       "startPosition": "Karlstejn",
-      "finalPosition": null
+      "finalPosition": "Beroun"
     },
     {
       "id": 9,
@@ -33,28 +33,28 @@
     {
       "id": 10,
       "name": "ICE",
-      "currentPosition": "id3",
-      "lastPosition": "id1",
-      "nextPosition": null,
+      "currentPosition": "u036",
+      "lastPosition": "Beroun_kolej_2",
+      "nextPosition": "u001",
       "move": 0,
       "speed": 7,
       "reverse": true,
       "mapOrientation": "prevConnection",
       "circuit": 0,
       "critical": false,
-      "startPosition": "Karlstejn",
-      "finalPosition": null
+      "startPosition": "Beroun",
+      "finalPosition": "Karlstejn"
     },
     {
       "id": 12,
       "name": "Herkules_Priessnitz",
-      "currentPosition": "u002",
-      "lastPosition": "u003",
-      "nextPosition": "u001",
+      "currentPosition": "u009",
+      "lastPosition": "u039",
+      "nextPosition": "u010",
       "move": 0,
       "speed": 13,
       "reverse": true,
-      "mapOrientation": "prevConnection",
+      "mapOrientation": "nextConnection",
       "circuit": 0,
       "critical": false,
       "startPosition": "Karlstejn",

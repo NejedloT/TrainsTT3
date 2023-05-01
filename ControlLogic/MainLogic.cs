@@ -404,6 +404,18 @@ namespace ControlLogic
                         t.finalPosition = null;
                     });
 
+                    //pokud je vlak v cili, ale ma stale nejake rezervovane useky nebo vyhybky, tak dojde k jejich smazani
+                    foreach(ReservedSections rs in reservedSections)
+                    {
+                        if(rs.TrainIdReserved == train.id)
+                            reservedSections.Remove(rs);
+                    }
+                    foreach(SwitchesChange sc in switchesChange)
+                    {
+                        if(sc.TrainId == train.id)
+                            switchesChange.Remove(sc);
+                    }
+
                     //zastav vlak po vterine
                     var timer = new System.Timers.Timer(1000);
                     timer.Elapsed += (sender, e) => Timer_Elapsed(sender, e, train, 0);
@@ -589,19 +601,25 @@ namespace ControlLogic
         /// <param name="train"></param>
         public static void FindRouteOutsideCritical(Trains train)
         {
+            /*
             //kontrola, ze jsou nactena data vlaku
             if (!(trainsList.Count() > 0))
             {
                 TrainDataJSON td = new TrainDataJSON();
                 trainsList = td.LoadJson();
             }
+            */
 
 
             //bool testujici volnou cilovou kolej ci ze vlak bude odjizdet
             bool fintrack = false;
 
-            //pokud se ma hledat nejvhodnejsi cesta na nadrazi = neni definovana cilova kolej
-            if (new[] { "Beroun", "Karlstejn", "Lhota" }.Contains(train.finalPosition))
+            bool endLoop = false;
+
+            List<string> endStations = SearchLogic.GetAllStationTracks();
+
+            //pokud se ma hledat nejvhodnejsi cesta na nadrazi = neni definovana cilova kolej nebo vyjizdim z nadrazi
+            if (new[] { "Beroun", "Karlstejn", "Lhota" }.Contains(train.finalPosition) || endStations.Contains(train.currentPosition))
             {
 
                 //nacti cesty ze soucasne polohy na cilove koleje
@@ -618,8 +636,8 @@ namespace ControlLogic
                         //takze by se cekalo, nez vlak odjede
                         var occupiedTrack = trainsList.Where(t => t.finalPosition == getToId).ToList();
 
-                        //Nema vlak toto jako finalni kolej (pojede) a zaroven v ni zadny vlak nestoji?
-                        if (!(occupiedTrack.Any()) && !(currentDrain.Any(cd => cd.Section == train.finalPosition)))
+                        //Nema vlak toto jako finalni kolej (pojede) a zaroven v ni zadny vlak nestoji nebo ma vlak vyjet z nadrazi?
+                        if (!(occupiedTrack.Any()) && !(currentDrain.Any(cd => cd.Section == train.finalPosition)) || endStations.Contains(train.currentPosition))
                         {
                             //vytvor rezervovane useky
                             var reserveSections = toElement.Element("parts")
@@ -661,14 +679,38 @@ namespace ControlLogic
                             }
 
 
+                            if (endStations.Contains(train.currentPosition))
+                            {
+                                bool bb = SameCircuitToMove(train);
+                                if (!bb)
+                                {
+                                    for (int i = reservedSections.Count() - 1; i >= 0; i--)
+                                    {
+                                        if (reservedSections[i].TrainIdReserved == train.id)
+                                            reserveSections.RemoveAt(i);
+                                    }
 
-                            train.finalPosition = getToId;
-                            fintrack = true;
-
+                                    for (int i = switchesChange.Count() - 1; i >=0; i--)
+                                    {
+                                        if (switchesChange[i].TrainId == train.id)
+                                            switchesChange.RemoveAt(i);
+                                    }
+                                    fintrack = false;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                train.finalPosition = getToId;
+                            }
                             //splneno, konec cyklu
-                            goto EndLoop;
+                            fintrack = true;
+                            endLoop = true;
+                            break;
                         }
                     }
+                    if (endLoop)
+                        break;
                 }
             }
             //je zadefinovana chtena cilova kolej
@@ -715,10 +757,8 @@ namespace ControlLogic
                 fintrack = true;
             }
 
-        EndLoop:
-            //zkontroluj jestli vlak muze jet dal, kdyz uz je URCITE v kritickem useku
-            InCritical(train, fintrack);
-
+            //zkontroluj jestli vlak muze jet dal, kdyz uz je URCITE v kritickem useku (useky u vyhybek, pres ktere chce jet)
+        InCritical(train, fintrack);
         }
 
         /// <summary>
@@ -792,7 +832,10 @@ namespace ControlLogic
                             }
 
                             //pokud vlak ma jet do cilove stanice, ktera je v danem okruhu, tak se aktualizuje cilova pozice
-                            if (toFinalValue == "Beroun" && train.circuit == 0)
+                            if (toFinalValue == "Beroun" && train.circuit == 0 
+                                || toFinalValue == "Karlstejn" && train.circuit == 4
+                                || toFinalValue == "Lhota" && train.circuit == 7)
+                                
                                 train.finalPosition = toValue;
 
                             /*
@@ -881,10 +924,13 @@ namespace ControlLogic
                     timeToStop.Start();
                     */
 
-                    var timer = new System.Timers.Timer(1000);
-                    timer.Elapsed += (sender, e) => Timer_Elapsed(sender, e, train, 2);
-                    timer.Start();
-                    timeToStop[train] = timer;
+                    if (train.move == 1)
+                    {
+                        var timer = new System.Timers.Timer(1000);
+                        timer.Elapsed += (sender, e) => Timer_Elapsed(sender, e, train, 2);
+                        timer.Start();
+                        timeToStop[train] = timer;
+                    }
                 }
             }
 
@@ -930,6 +976,8 @@ namespace ControlLogic
 
             //test jestli uz vlak stoji v kritickem useku
             IEnumerable<XElement> critical = SearchLogic.GetCriticalReservedSection(train);
+
+            List<string> endStations = SearchLogic.GetAllStationTracks();
 
 
             //ma vlak rezervovane useky?
@@ -988,7 +1036,8 @@ namespace ControlLogic
 
                     //vlak je v useku mezi vyhybkami ve stanici a zaroven neni na nadrazi ci nektere z finalnich koleji
                     List<string> finalStations = SearchLogic.GetAllStationTracks();
-                    if (train.circuit == 0 && !finalStations.Contains(train.currentPosition))
+                    if ((train.circuit == 0 || train.circuit == 4 || train.circuit == 7) 
+                        && (!finalStations.Contains(train.currentPosition)))
                     {
                         //useky, ktere maji shodne rezervovane useky s useky soucasneho vlaku
                         var checkPriority = reservedSections
@@ -1042,7 +1091,7 @@ namespace ControlLogic
             }
 
             //nema rezervovane useky
-            else if (trainInfo.Any())
+            else if (trainInfo.Any() || endStations.Contains(train.currentPosition))
             {
                 //kontrola jestli vjizdim do kritickeho useku
                 if (testFirstCheck)
@@ -1139,7 +1188,7 @@ namespace ControlLogic
                 circuit = train.circuit; //vlak nema rezervovany useky, bere se soucasna poloha
             }
 
-            if (circuit != 0) //pozdeji pridany dalsi hodnoty useku, kde se nachazi nadrazi. Tam neni potreba kontrolovat
+            if (circuit != 0 && circuit != 4 && circuit != 7) //Nekontrolovat, pokud vlak pojede na nadrazi, tam neni potreba kontrolovat
             {
                 var trainInfo = trainsList.Where(t => t.circuit == circuit && t.mapOrientation != train.mapOrientation && t.id != train.id).ToList();
                 if (trainInfo.Any())

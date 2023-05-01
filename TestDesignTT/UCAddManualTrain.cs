@@ -86,6 +86,17 @@ namespace TestDesignTT
             else
                 cbFinalStation.Enabled = false;
 
+            if (cbFinalStation.SelectedIndex > -1)
+            {
+                radioButtonYes.Enabled = true; 
+                radioButtonYes.Enabled = true;
+            }
+            else
+            {
+                radioButtonYes.Enabled = false;
+                radioButtonYes.Enabled = false;
+            }
+
 
             if (radioButtonYes.Checked)
             {
@@ -164,6 +175,7 @@ namespace TestDesignTT
 
         private void getFinalStation(Trains train)
         {
+            
             //string fromStart = null;
             IEnumerable<string> fromStart = null;
             IEnumerable<string> final = null;
@@ -171,7 +183,11 @@ namespace TestDesignTT
 
             cbFinalStation.Items.Clear();
 
-            if (train.circuit == 0)
+            /*
+            if ((train.circuit == 0 || train.circuit == 4 || train.circuit == 7) 
+                && (!endTracks.Contains(train.currentPosition)) && (!endTracks.Contains(train.lastPosition)))
+            */
+            if (train.circuit == 0 || train.circuit == 4 || train.circuit == 7)
             {
                 crit = true;
                 fromStart = SearchLogic.GetStartStationInCritical(train.currentPosition, train.lastPosition);
@@ -212,8 +228,9 @@ namespace TestDesignTT
 
             foreach (string s in final)
             {
-                if (!cbFinalStation.Items.Contains(s))
-                    cbFinalStation.Items.Add(s);
+                List<string> endTracks = SearchLogic.GetTracksForStation(s);
+                if (!cbFinalStation.Items.Contains(s) && !endTracks.Contains(train.currentPosition))
+                    cbFinalStation.Items.Add(s);   
             }
         }
 
@@ -228,13 +245,26 @@ namespace TestDesignTT
 
             int finalCircuit = SearchLogic.GetFinalStationCircuit(cbFinalStation.SelectedItem.ToString());
 
+            bool reverse;
+            if (cbDirect.SelectedItem.ToString() == "Direct")
+                reverse = false;
+            else
+                reverse = true;
+
             foreach (XElement x in finTrack)
             {
                 if ((train.circuit == 0 && finalCircuit == 0)
                     || (train.circuit == 4 && finalCircuit == 4)
                     || (train.circuit == 7 && finalCircuit == 7))
                 {
-                    bool bb = SearchLogic.GetFinalTrackInside(train.currentPosition, train.lastPosition, x.Value);
+                    bool bb;
+
+                    if (reverse == train.reverse)
+                        bb = SearchLogic.GetFinalTrackInside(train.currentPosition, train.lastPosition, x.Value);
+                    else
+                    {
+                        bb = SearchLogic.GetFinalTrackInside(train.lastPosition, train.currentPosition, x.Value);
+                    }
                     if (bb)
                         cbFinalTrack.Items.Add(x.Value);
                 }

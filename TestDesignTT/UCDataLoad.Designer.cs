@@ -31,13 +31,13 @@
             this.panelLDTitle = new System.Windows.Forms.Panel();
             this.labelLDTitle = new System.Windows.Forms.Label();
             this.textBoxPath = new System.Windows.Forms.TextBox();
-            this.btnLoadData = new FontAwesome.Sharp.IconButton();
+            this.btnLoadDataPath = new FontAwesome.Sharp.IconButton();
             this.label1 = new System.Windows.Forms.Label();
             this.panelLoadedData1 = new System.Windows.Forms.Panel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelFileName = new System.Windows.Forms.Label();
-            this.btn_LoadData = new FontAwesome.Sharp.IconButton();
+            this.btnLoadDataPickFile = new FontAwesome.Sharp.IconButton();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.rbInfinity = new System.Windows.Forms.RadioButton();
             this.rbPauses = new System.Windows.Forms.RadioButton();
@@ -79,28 +79,29 @@
             this.textBoxPath.Size = new System.Drawing.Size(493, 44);
             this.textBoxPath.TabIndex = 2;
             this.textBoxPath.Text = "Please enter fath to you CSV file...";
+            this.textBoxPath.TextChanged += new System.EventHandler(this.textBoxPath_TextChanged);
             this.textBoxPath.Enter += new System.EventHandler(this.textBoxPath_Enter);
             this.textBoxPath.Leave += new System.EventHandler(this.textBoxPath_Leave);
             // 
-            // btnLoadData
+            // btnLoadDataPath
             // 
-            this.btnLoadData.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.btnLoadData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLoadData.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnLoadData.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnLoadData.IconChar = FontAwesome.Sharp.IconChar.Share;
-            this.btnLoadData.IconColor = System.Drawing.Color.Black;
-            this.btnLoadData.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnLoadData.IconSize = 35;
-            this.btnLoadData.Location = new System.Drawing.Point(642, 3);
-            this.btnLoadData.Name = "btnLoadData";
-            this.btnLoadData.Size = new System.Drawing.Size(134, 44);
-            this.btnLoadData.TabIndex = 1;
-            this.btnLoadData.Text = "Find";
-            this.btnLoadData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoadData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnLoadData.UseVisualStyleBackColor = false;
-            this.btnLoadData.Click += new System.EventHandler(this.btnLoadData_Click);
+            this.btnLoadDataPath.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.btnLoadDataPath.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLoadDataPath.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnLoadDataPath.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnLoadDataPath.IconChar = FontAwesome.Sharp.IconChar.Share;
+            this.btnLoadDataPath.IconColor = System.Drawing.Color.Black;
+            this.btnLoadDataPath.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnLoadDataPath.IconSize = 35;
+            this.btnLoadDataPath.Location = new System.Drawing.Point(642, 3);
+            this.btnLoadDataPath.Name = "btnLoadDataPath";
+            this.btnLoadDataPath.Size = new System.Drawing.Size(134, 44);
+            this.btnLoadDataPath.TabIndex = 1;
+            this.btnLoadDataPath.Text = "Find";
+            this.btnLoadDataPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadDataPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLoadDataPath.UseVisualStyleBackColor = false;
+            this.btnLoadDataPath.Click += new System.EventHandler(this.btnLoadDataPath_Click);
             // 
             // label1
             // 
@@ -136,8 +137,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             this.tableLayoutPanel1.Controls.Add(this.labelFileName, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.btn_LoadData, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnLoadData, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnLoadDataPickFile, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.btnLoadDataPath, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBoxPath, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 4);
@@ -167,26 +168,26 @@
             this.labelFileName.Size = new System.Drawing.Size(493, 50);
             this.labelFileName.TabIndex = 5;
             // 
-            // btn_LoadData
+            // btnLoadDataPickFile
             // 
-            this.btn_LoadData.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.tableLayoutPanel1.SetColumnSpan(this.btn_LoadData, 3);
-            this.btn_LoadData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_LoadData.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_LoadData.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btn_LoadData.IconChar = FontAwesome.Sharp.IconChar.Database;
-            this.btn_LoadData.IconColor = System.Drawing.Color.Black;
-            this.btn_LoadData.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btn_LoadData.IconSize = 35;
-            this.btn_LoadData.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btn_LoadData.Location = new System.Drawing.Point(3, 73);
-            this.btn_LoadData.Name = "btn_LoadData";
-            this.btn_LoadData.Size = new System.Drawing.Size(773, 44);
-            this.btn_LoadData.TabIndex = 3;
-            this.btn_LoadData.Text = "Load Data";
-            this.btn_LoadData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btn_LoadData.UseVisualStyleBackColor = false;
-            this.btn_LoadData.Click += new System.EventHandler(this.btn_LoadData_Click);
+            this.btnLoadDataPickFile.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.tableLayoutPanel1.SetColumnSpan(this.btnLoadDataPickFile, 3);
+            this.btnLoadDataPickFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLoadDataPickFile.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnLoadDataPickFile.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnLoadDataPickFile.IconChar = FontAwesome.Sharp.IconChar.Database;
+            this.btnLoadDataPickFile.IconColor = System.Drawing.Color.Black;
+            this.btnLoadDataPickFile.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnLoadDataPickFile.IconSize = 35;
+            this.btnLoadDataPickFile.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLoadDataPickFile.Location = new System.Drawing.Point(3, 73);
+            this.btnLoadDataPickFile.Name = "btnLoadDataPickFile";
+            this.btnLoadDataPickFile.Size = new System.Drawing.Size(773, 44);
+            this.btnLoadDataPickFile.TabIndex = 3;
+            this.btnLoadDataPickFile.Text = "Load Data";
+            this.btnLoadDataPickFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLoadDataPickFile.UseVisualStyleBackColor = false;
+            this.btnLoadDataPickFile.Click += new System.EventHandler(this.btn_LoadDataPickFile_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -258,13 +259,13 @@
 
         private Panel panelLDTitle;
         private Label labelLDTitle;
-        private FontAwesome.Sharp.IconButton btnLoadData;
+        private FontAwesome.Sharp.IconButton btnLoadDataPath;
         private Label label1;
         private TextBox textBoxPath;
         private Panel panelLoadedData1;
         private OpenFileDialog openFileDialog1;
         private TableLayoutPanel tableLayoutPanel1;
-        private FontAwesome.Sharp.IconButton btn_LoadData;
+        private FontAwesome.Sharp.IconButton btnLoadDataPickFile;
         private TableLayoutPanel tableLayoutPanel2;
         private Label labelFileName;
         private RadioButton rbInfinity;

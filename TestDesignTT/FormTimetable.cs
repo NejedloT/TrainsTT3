@@ -3,8 +3,11 @@ using Microsoft.Win32;
 using System.ComponentModel;
 using System.DirectoryServices.ActiveDirectory;
 using System.Net;
+using System.Threading;
+using System.Timers;
 using System.Windows.Documents;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using TrainTTLibrary;
 using static System.Windows.Forms.DataFormats;
 using static TrainTTLibrary.Packet;
@@ -20,6 +23,8 @@ namespace TestDesignTT
 
 
         public BindingList<DataTimetable> timetable = new BindingList<DataTimetable>();
+
+        private static System.Timers.Timer timeToInitSoftwareStops;
 
         //public BindingList<MovingInTimetamble> movingTimetable = new BindingList<MovingInTimetamble>();
 
@@ -57,6 +62,15 @@ namespace TestDesignTT
             ucTurnoutsSettings.TurnoutDefinitionStopsClick += new EventHandler(UserControl_TurnoutInstructionStops);
             ucTurnoutsSettings.TurnoutInstructionSetClick += new EventHandler(UserControl_TurnoutInstructionSet);
 
+            StartTCPClient();
+
+            timeToInitSoftwareStops = new System.Timers.Timer(1000);
+
+            // Set the event handler for the Elapsed event
+            timeToInitSoftwareStops.Elapsed += (sender, e) => Timer_Elapsed_SW_Stops(sender, e);
+
+            // Start the timer
+            timeToInitSoftwareStops.Start();
         }
 
         private void FormTimetable_FormClosing(object sender, FormClosingEventArgs e)
@@ -259,6 +273,8 @@ namespace TestDesignTT
             DisplayInstance(ucDataLoad);
 
             labelTitle.Text = (sender as Button).Text;
+
+            ucDataLoad.CheckEnabled();
         }
 
         private void btnDisplayTimetable_Click(object sender, EventArgs e)
@@ -313,6 +329,21 @@ namespace TestDesignTT
             {
                 btnPlay.IconChar = FontAwesome.Sharp.IconChar.Play;
                 btnPlay.Text = "Play";
+
+                for (int i = 0; i < timetable.Count; i++)
+                {
+                    DateTime now = new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+
+                    DateTime inTimetable = new DateTime(1, 1, 1, timetable[i].Departure.Hour, timetable[i].Departure.Minute, timetable[i].Departure.Second);
+
+                    if (now > inTimetable)
+                    {
+                        timetable.RemoveAt(i);
+                        i--;
+                    }
+                    else
+                        break;
+                }
             }
             checkBtnLogic();
         }
@@ -320,6 +351,11 @@ namespace TestDesignTT
         private void btnCentralStop_Click(object sender, EventArgs e)
         {
             panelSettings.Visible = false;
+            StopAll();
+
+            btnPlay.Text = "Play";
+            btnPlay.IconChar = FontAwesome.Sharp.IconChar.Play;
+
             checkBtnLogic();
         }
 
@@ -374,10 +410,12 @@ namespace TestDesignTT
             if (btnPlay.Text == "Pause")
             {
                 btnLoadTimetable.Enabled = false;
+                timer1.Enabled= true;
             }
             else
             {
                 btnLoadTimetable.Enabled = true;
+                timer1.Enabled = false;
             }
         }
 
@@ -503,9 +541,17 @@ namespace TestDesignTT
             }
         }
 
-
         private void timer1_Tick(object sender, EventArgs e)
         {
+            string[] validStations = { "Beroun", "Karlstejn", "Lhota" };
+            List<string> endTracks = SearchLogic.GetAllStationTracks();
+            bool startTrackSpecific = false;
+            bool finalTrackSpecific = false;
+            string startPosition = null;
+
+            
+
+            string textForMsgBox = null;
 
             for (int i = 0; i < timetable.Count(); i++)
             {
@@ -520,20 +566,84 @@ namespace TestDesignTT
                     trainsList = td.LoadJson();
                     foreach (Trains train in trainsList)
                     {
-                        if (train.name == timetable[i].Name)
+                        //nalezen vlak a nepohybuje se jeste
+                        if (train.name == timetable[i].Name && train.move != 0)
                         {
-                            //TODO
-                            //Logika pridavani - testovani, ze jsem na spravne pozici ci tak
-                            //dodelat i pause a play
-                            break;
+                            //vsechny stanice na nadrazi testuje
+                            List<string> getTracksForStartPositon = SearchLogic.GetTracksForStation(timetable[i].StartStation);
+                            List<string> getTracksForFinalPositon = SearchLogic.GetTracksForStation(timetable[i].FinalStation);
+
+                            //v jizdnim radu je odjezd z nadrazi (vlak tam je) nebo v jizdnim radu je odjezd na specifickou kolej (vlak se na ni nachazi)
+                            //vlak se jiz nachazi v cilove stanici - neni potreba zadna dalsi akce
+                            if (train.currentPosition == timetable[i].FinalStation || getTracksForFinalPositon.Contains(train.currentPosition))
+                            {
+                                textForMsgBox = "Train" + train.name + "is already in the final station!";
+                                break;
+                            }
+
+                            IEnumerable<string> fromStart = null;
+                            IEnumerable<string> final = null;
+                            bool crit = false;
+
+                            //zjisteni moznych pocatecnich a cilovych koleji
+
+                            bool reverse;
+                            if (timetable[i].Reverse == false)
+                                reverse = false;
+                            else
+                                reverse = true;
+
+                            if (train.circuit == 0 || train.circuit == 4 || train.circuit == 7)
+                            {
+                                crit = true;
+                                fromStart = SearchLogic.GetStartStationInCritical(train.currentPosition, train.lastPosition);
+
+                            }
+                            else
+                            {
+                                crit = false;
+                                fromStart = SearchLogic.GetStartStationOutside(train.currentPosition, train.lastPosition);
+                            }
+
+                            
+                            if (crit)
+                            {
+                                final = SearchLogic.GetFinalStationInCritical(train.currentPosition, train.lastPosition);
+                                //cbFinalStation.Items.Add(final);
+                            }
+                            else
+                            {
+                                final = SearchLogic.GetFinalStationOutside(train.currentPosition, train.lastPosition);
+                            }
+
+                            if (reverse != train.reverse)
+                            {
+                                IEnumerable<string> HelpVar = fromStart;
+                                fromStart = final;
+                                final = HelpVar;
+                            }
                         }
+                        
+                        //prisel prikaz na vlak, ale vlak jiz ma prikaz k pohybu
+                        else if (train.name == timetable[i].Name && train.move == 0)
+                        {
+                            textForMsgBox = "Train" + train.name + "is already moving or has request to move!";
+                        }
+
+                        //vlak nenalezen
+                        else
+                        {
+                            textForMsgBox = "Train was not found!"; 
+                        }
+                        break;
 
                     }
 
                     timetable.RemoveAt(i);
                     i--;
                     TimeInTimetableUpdated(sender, e);
-                    //tady bude dodelano poslani packetu
+                    if (textForMsgBox != null)
+                        MessageBox.Show(textForMsgBox, "Info from timetable control!", MessageBoxButtons.OK);
 
                 }
                 else
@@ -542,6 +652,7 @@ namespace TestDesignTT
         }
 
 
+        #region Actions with event handlers (load timetable, unit instruction, turnout instruction, loco move, info msg)
         protected void UserControl_ButtonLoadClick(object sender, EventArgs e)
         {
             List<DataToLoad> dataLoad = ucDataLoad.dataToLoads;
@@ -553,7 +664,6 @@ namespace TestDesignTT
 
             dataLoad.Clear();
             checkBtnLogic();
-
         }
 
 
@@ -719,9 +829,12 @@ namespace TestDesignTT
 
             StopAll();
 
+            timer1.Enabled = false;
+
             MessageBox.Show(msg, "IMPORTANT!!!",
             MessageBoxButtons.OK);
         }
+        #endregion
 
         private void StopAll()
         {
@@ -733,6 +846,7 @@ namespace TestDesignTT
             }
 
             Thread.Sleep(250);
+
             lock (MainLogic.lockingLogic)
             {
                 TrainDataJSON td = new TrainDataJSON();
@@ -744,6 +858,62 @@ namespace TestDesignTT
 
                 td.SaveJson(trainsList);
 
+            }
+        }
+
+        /// <summary>
+        /// Timer, ktery po vterine vyvola metodu pro spravne nastaveni jednotek pro rizeni kolejiste
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timer_Elapsed_SW_Stops(object sender, ElapsedEventArgs e)
+        {
+            //Zastav timer
+            timeToInitSoftwareStops.Stop();
+
+            //Inicializace softwarovych dorazu a odesilani odberu proudu
+            UnitSettingForLogic();
+
+            ((System.Timers.Timer)sender).Dispose();
+        }
+
+
+        /// <summary>
+        /// Nastaveni softwarovych dorazu a rychlosti odesilani odberu proudu
+        /// </summary>
+        private void UnitSettingForLogic()
+        {
+            turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
+
+            List<XElement> turnoutStopDefinition = SearchLogic.GetTurnoutStopDefinitions();
+
+            foreach (XElement turnout in turnoutStopDefinition)
+            {
+                uint unit = uint.Parse(turnout.Element("unit").Value);
+                byte pos = byte.Parse(turnout.Element("pos").Value);
+                byte leftStop = byte.Parse(turnout.Element("leftStop").Value);
+                byte rightStop = byte.Parse(turnout.Element("rightStop").Value);
+
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, unit, pos, leftStop, rightStop);
+                SendTCPData(turnoutInst.TCPPacket);
+            }
+
+
+            unitInstruction ui = unitInstruction.prodleva_odesilani_zmerenych_proudu;
+            IEnumerable<int> unitNumbers = SearchLogic.GetModulesId();
+            foreach (int number in unitNumbers)
+            {
+                UnitInstructionPacket unitInst = new UnitInstructionPacket(ui, (byte)number, (byte)30);
+
+                SendTCPData(unitInst.TCPPacket);
+            }
+
+            ti = turnoutInstruction.nastaveni_prodlevy_pred_natocenim;
+            IEnumerable<int> turnoutNumbers = SearchLogic.GetTurnoutIDs();
+            foreach (int number in turnoutNumbers)
+            {
+                TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, (byte)number, (byte)10);
+                SendTCPData(turnoutInst.TCPPacket);
             }
         }
     }

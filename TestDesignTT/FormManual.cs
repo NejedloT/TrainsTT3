@@ -570,9 +570,9 @@ namespace TestDesignTT
         }
 
         /// <summary>
-        /// Nastaveni softwarovych dorazu
+        /// Nastaveni softwarovych dorazu a rychlosti odesilani odberu proudu
         /// </summary>
-        private void softwareStops()
+        private void UnitSettingForLogic()
         {
             turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
 
@@ -609,7 +609,7 @@ namespace TestDesignTT
         }
 
         /// <summary>
-        /// Nastaveni softwarovych dorazu po spusteni TCP serveru
+        /// Nastaveni softwarovych dorazu a odesilani odberu proudu po spusteni TCP serveru
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -619,7 +619,7 @@ namespace TestDesignTT
             timeToInitSoftwareStops.Stop();
 
             //Inicializace softwarovych dorazu
-            softwareStops();
+            UnitSettingForLogic();
 
             ((System.Timers.Timer)sender).Dispose();
         }

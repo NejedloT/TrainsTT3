@@ -11,11 +11,18 @@ namespace ControlLogic
     {
         private static XDocument xdoc = new XDocument();
 
+        /// <summary>
+        /// Inicializace - nacteni konfiguracniho souboru
+        /// </summary>
         public static void InitSearch()
         {
             xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
         }
 
+        /// <summary>
+        /// Vrati jednotlive definovane ID desek vyhybek z konfiguracniho souboru
+        /// </summary>
+        /// <returns>ID desek vyhybek</returns>
         public static IEnumerable<int> GetTurnoutIDs()
         {
             if (xdoc.Root == null)
@@ -31,6 +38,10 @@ namespace ControlLogic
 
         }
 
+        /// <summary>
+        /// Metoda pro zjisteni ID usekovvych jednotek z konfiguracniho souboru
+        /// </summary>
+        /// <returns>ID usekovych jednotek</returns>
         public static IEnumerable<int> GetModulesId()
         {
             if (xdoc.Root == null)
@@ -43,6 +54,7 @@ namespace ControlLogic
             IEnumerable<int> sortedUnitIDs = moduleIds.OrderBy(x => x);
             return sortedUnitIDs;
         }
+
 
         public static IEnumerable<XElement> GetFromElements(Trains train)
         {
@@ -62,7 +74,7 @@ namespace ControlLogic
         public static IEnumerable<XElement> GetCriticalReservedSection(Trains train)
         {
             string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
-            if (!(validPositions.Contains(train.finalPosition)) && train.finalPosition != null && train.circuit == 0)
+            if (!(validPositions.Contains(train.finalPosition)) && train.finalPosition != null && (train.circuit == 0 || train.circuit == 4 || train.circuit == 7))
             {
 
                 var matchingToElements = xdoc.Descendants("to")
@@ -122,8 +134,8 @@ namespace ControlLogic
         }
 
         /// <summary>
-        /// Metoda, ktera najde moznou finalni stanici dle aktualni stanice
-        /// Pouze v zavislosti naaktualnim okruhu
+        /// Metoda, ktera najde moznou finalni kolej dle aktualniho okruhu
+        /// Pouze v zavislosti na aktualnim okruhu
         /// </summary>
         /// <param name="train">konkretni vlak, ktery si vybere uzivatel</param>
         /// <param name="wantedName">Pozadovana kolej ve vybrane stanici</param>
@@ -137,7 +149,13 @@ namespace ControlLogic
             .Elements();
         }
 
-
+        /// <summary>
+        /// Metoda ktera najde moznou finalni kolej dle aktualni polohy
+        /// </summary>
+        /// <param name="currentPosition"></param>
+        /// <param name="previousPosition"></param>
+        /// <param name="finalStation"></param>
+        /// <returns></returns>
         public static bool GetFinalTrackInside(string currentPosition, string previousPosition, string finalStation)
         {
             var matchingToElements = xdoc.Descendants("to")
@@ -334,6 +352,29 @@ namespace ControlLogic
             return items;
         }
 
+        /// <summary>
+        /// Metoda, ktera vraci mozne stanice pro nadrazi (bez kontroly, zdali tam vede cesta)
+        /// </summary>
+        /// <param name="stationName">Nazev nadrazi</param>
+        /// <returns>list vsech moznych stanic pro dane nadrazi</returns>
+        public static List<string> GetTracksForStation(string stationName)
+        {
+            List<string> items = xdoc.Descendants("stationTracks")
+                .Where(t => t.Descendants().Any(d => d.Name == stationName))
+                .Elements(stationName)
+                .Elements("items")
+                .Elements()
+                .Select(e => e.Value)
+                .ToList();
+
+            return items;
+        }
+
+        /// <summary>
+        /// Metoda, ktera slouzi k ziskani cilovych stanic z okruhu lokomotivy (mimo nadrazi)
+        /// </summary>
+        /// <param name="finalStation"></param>
+        /// <returns></returns>
         public static int GetFinalStationCircuit(string finalStation)
         {
             var circuitValue = xdoc.Descendants("stationTracks")
@@ -344,6 +385,10 @@ namespace ControlLogic
             return circuitValue;
         }
 
+        /// <summary>
+        /// Metoda pro definovani softwarovych dorazu vyhybek z konfiguracniho souboru
+        /// </summary>
+        /// <returns></returns>
         public static List<XElement> GetTurnoutStopDefinitions()
         {
             if (xdoc.Root == null)

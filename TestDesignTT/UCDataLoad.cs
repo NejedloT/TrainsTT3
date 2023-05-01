@@ -38,23 +38,26 @@ namespace TestDesignTT
             //textBoxPath.ForeColor = SystemColors.GrayText;
         }
 
-        private void CheckEnabled()
+        public void CheckEnabled()
         {
             if (!rbInfinity.Checked && !rbPauses.Checked)
             {
-                btnLoadData.Enabled = false;
-                btn_LoadData.Enabled = false;
+                btnLoadDataPath.Enabled = false;
+                btnLoadDataPickFile.Enabled = false;
             }
             else
             {
-                btnLoadData.Enabled = true;
-                if (textBoxPath.TextLength > 0)
+                //btnLoadData.Enabled = true;
+                btnLoadDataPickFile.Enabled = true;
+                if (textBoxPath.Text == "Please enter fath to you CSV file..." || textBoxPath.TextLength == 0)
                 {
-                    btn_LoadData.Enabled = true;
+                    //btn_LoadData.Enabled = false;
+                    btnLoadDataPath.Enabled = false;
                 }
                 else
                 {
-                    btn_LoadData.Enabled = false;
+                    //btn_LoadData.Enabled = true;
+                    btnLoadDataPath.Enabled = true;
                 }
                 
             }
@@ -83,41 +86,35 @@ namespace TestDesignTT
             {
                 textBoxPath.Text = "Please enter fath to you CSV file...";
                 textBoxPath.ForeColor = SystemColors.ScrollBar;
-                btnLoadData.Enabled = false;
+                btnLoadDataPath.Enabled = false;
             }
         }
 
+        /*
         private void btn_LoadData_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Soubory dat (*.csv)|*.csv|Vsechny|*.*";
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    MessageBox.Show(openFileDialog.FileName);
-                    //myfileName = openFileDialog.FileName;
-                    //this.fileName = myfileName;
+            
+        }
+        */
 
-                    /*
-                    this.fileName = openFileDialog.FileName;
-                    labelFileName.Text = fileName;
-                    */
+        /*
+        private void btnLoadData_Click(object sender, EventArgs e)
+        {
+            
+        }
+        */
 
-
-                    bool bb = rbInfinity.Checked;
-
-                    string fileName = openFileDialog.FileName;
-                    labelFileName.Text = fileName;
-
-                    dataToLoads.Add(new DataToLoad { Filename = fileName, InfinityData = bb });
-                    ButtonLoadClick?.Invoke(this, e);
-                }
-                else
-                    return;
-            }
+        private void rbPauses_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckEnabled();
         }
 
-        private void btnLoadData_Click(object sender, EventArgs e)
+        private void rbInfinity_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckEnabled();
+        }
+
+        private void btnLoadDataPath_Click(object sender, EventArgs e)
         {
             string filePath = textBoxPath.Text;
             if (File.Exists(filePath))
@@ -147,15 +144,40 @@ namespace TestDesignTT
             }
         }
 
-        private void rbPauses_CheckedChanged(object sender, EventArgs e)
+        private void btn_LoadDataPickFile_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Soubory dat (*.csv)|*.csv|Vsechny|*.*";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    MessageBox.Show(openFileDialog.FileName);
+                    //myfileName = openFileDialog.FileName;
+                    //this.fileName = myfileName;
+
+                    /*
+                    this.fileName = openFileDialog.FileName;
+                    labelFileName.Text = fileName;
+                    */
+
+
+                    bool bb = rbInfinity.Checked;
+
+                    string fileName = openFileDialog.FileName;
+                    labelFileName.Text = fileName;
+
+                    dataToLoads.Add(new DataToLoad { Filename = fileName, InfinityData = bb });
+                    ButtonLoadClick?.Invoke(this, e);
+                }
+                else
+                    return;
+            }
+        }
+
+        private void textBoxPath_TextChanged(object sender, EventArgs e)
         {
             CheckEnabled();
         }
-
-        private void rbInfinity_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckEnabled();
-        } 
     }
 
     public class DataToLoad
