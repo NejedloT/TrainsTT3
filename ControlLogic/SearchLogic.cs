@@ -73,8 +73,8 @@ namespace ControlLogic
         /// <returns></returns>
         public static IEnumerable<XElement> GetCriticalReservedSection(Trains train)
         {
-            string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
-            if (!(validPositions.Contains(train.finalPosition)) && train.finalPosition != null && (train.circuit == 0 || train.circuit == 4 || train.circuit == 7))
+            List<string> stationNames = SearchLogic.GetStationNames();
+            if (!(stationNames.Contains(train.finalPosition)) && train.finalPosition != null && (train.circuit == 0 || train.circuit == 4 || train.circuit == 7))
             {
 
                 var matchingToElements = xdoc.Descendants("to")
@@ -352,6 +352,15 @@ namespace ControlLogic
             return items;
         }
 
+        public static List<string> GetStationNames()
+        {
+            List<string> stationNames = xdoc.Descendants("nameOfStation")
+            .Select(e => e.Attribute("id").Value)
+            .ToList();
+
+            return stationNames;
+        }
+
         /// <summary>
         /// Metoda, ktera vraci mozne stanice pro nadrazi (bez kontroly, zdali tam vede cesta)
         /// </summary>
@@ -359,13 +368,12 @@ namespace ControlLogic
         /// <returns>list vsech moznych stanic pro dane nadrazi</returns>
         public static List<string> GetTracksForStation(string stationName)
         {
-            List<string> items = xdoc.Descendants("stationTracks")
-                .Where(t => t.Descendants().Any(d => d.Name == stationName))
-                .Elements(stationName)
-                .Elements("items")
-                .Elements()
-                .Select(e => e.Value)
-                .ToList();
+            List<string> items = xdoc.Descendants("nameOfStation")
+            .Where(t => t.Attribute("id").Value == stationName)
+            .Elements("items")
+            .Elements()
+            .Select(e => e.Value)
+            .ToList();
 
             return items;
         }
@@ -378,11 +386,21 @@ namespace ControlLogic
         public static int GetFinalStationCircuit(string finalStation)
         {
             var circuitValue = xdoc.Descendants("stationTracks")
-                .Elements(finalStation)
+                .Elements("nameOfStation")
+                .Where(e => e.Attribute("id")?.Value == finalStation)
                 .Select(x => (int)x.Element("circuit"))
                 .FirstOrDefault();
 
             return circuitValue;
+        }
+
+        public static string getStationNameFromTrack(string trackName)
+        {
+            string stationName = xdoc.Descendants("items")
+        .Where(e => e.Elements().Any(c => c.Value == trackName))
+        .Select(e => e.Parent.Attribute("id").Value)
+        .FirstOrDefault();
+            return stationName;
         }
 
         /// <summary>

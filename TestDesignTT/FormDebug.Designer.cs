@@ -32,12 +32,10 @@
             this.btnCentralStop = new FontAwesome.Sharp.IconButton();
             this.btnTurnoutInstruction = new FontAwesome.Sharp.IconButton();
             this.btnUnitInstruction = new FontAwesome.Sharp.IconButton();
-            this.btnOccupancy = new FontAwesome.Sharp.IconButton();
             this.btnUpdateJson = new FontAwesome.Sharp.IconButton();
             this.btnMultiTurnouts = new FontAwesome.Sharp.IconButton();
             this.btnTurnouts = new FontAwesome.Sharp.IconButton();
             this.btnExit = new FontAwesome.Sharp.IconButton();
-            this.btnSections = new FontAwesome.Sharp.IconButton();
             this.btnAddLoco = new FontAwesome.Sharp.IconButton();
             this.btnHome = new FontAwesome.Sharp.IconButton();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -57,12 +55,10 @@
             this.panelSideMenu.Controls.Add(this.btnCentralStop);
             this.panelSideMenu.Controls.Add(this.btnTurnoutInstruction);
             this.panelSideMenu.Controls.Add(this.btnUnitInstruction);
-            this.panelSideMenu.Controls.Add(this.btnOccupancy);
             this.panelSideMenu.Controls.Add(this.btnUpdateJson);
             this.panelSideMenu.Controls.Add(this.btnMultiTurnouts);
             this.panelSideMenu.Controls.Add(this.btnTurnouts);
             this.panelSideMenu.Controls.Add(this.btnExit);
-            this.panelSideMenu.Controls.Add(this.btnSections);
             this.panelSideMenu.Controls.Add(this.btnAddLoco);
             this.panelSideMenu.Controls.Add(this.btnHome);
             this.panelSideMenu.Controls.Add(this.panel1);
@@ -84,7 +80,7 @@
             this.btnCentralStop.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnCentralStop.IconSize = 32;
             this.btnCentralStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCentralStop.Location = new System.Drawing.Point(0, 520);
+            this.btnCentralStop.Location = new System.Drawing.Point(0, 420);
             this.btnCentralStop.Name = "btnCentralStop";
             this.btnCentralStop.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnCentralStop.Size = new System.Drawing.Size(250, 50);
@@ -107,7 +103,7 @@
             this.btnTurnoutInstruction.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnTurnoutInstruction.IconSize = 32;
             this.btnTurnoutInstruction.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTurnoutInstruction.Location = new System.Drawing.Point(0, 470);
+            this.btnTurnoutInstruction.Location = new System.Drawing.Point(0, 370);
             this.btnTurnoutInstruction.Name = "btnTurnoutInstruction";
             this.btnTurnoutInstruction.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnTurnoutInstruction.Size = new System.Drawing.Size(250, 50);
@@ -130,7 +126,7 @@
             this.btnUnitInstruction.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnUnitInstruction.IconSize = 32;
             this.btnUnitInstruction.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUnitInstruction.Location = new System.Drawing.Point(0, 420);
+            this.btnUnitInstruction.Location = new System.Drawing.Point(0, 320);
             this.btnUnitInstruction.Name = "btnUnitInstruction";
             this.btnUnitInstruction.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnUnitInstruction.Size = new System.Drawing.Size(250, 50);
@@ -140,29 +136,6 @@
             this.btnUnitInstruction.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnUnitInstruction.UseVisualStyleBackColor = true;
             this.btnUnitInstruction.Click += new System.EventHandler(this.btnUnitInstruction_Click);
-            // 
-            // btnOccupancy
-            // 
-            this.btnOccupancy.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnOccupancy.FlatAppearance.BorderSize = 0;
-            this.btnOccupancy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOccupancy.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnOccupancy.ForeColor = System.Drawing.Color.White;
-            this.btnOccupancy.IconChar = FontAwesome.Sharp.IconChar.Bolt;
-            this.btnOccupancy.IconColor = System.Drawing.Color.Red;
-            this.btnOccupancy.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnOccupancy.IconSize = 32;
-            this.btnOccupancy.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOccupancy.Location = new System.Drawing.Point(0, 370);
-            this.btnOccupancy.Name = "btnOccupancy";
-            this.btnOccupancy.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.btnOccupancy.Size = new System.Drawing.Size(250, 50);
-            this.btnOccupancy.TabIndex = 23;
-            this.btnOccupancy.Text = "Occupancy";
-            this.btnOccupancy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOccupancy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnOccupancy.UseVisualStyleBackColor = true;
-            this.btnOccupancy.Click += new System.EventHandler(this.btnOccupancy_Click);
             // 
             // btnUpdateJson
             // 
@@ -176,7 +149,7 @@
             this.btnUpdateJson.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnUpdateJson.IconSize = 32;
             this.btnUpdateJson.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateJson.Location = new System.Drawing.Point(0, 320);
+            this.btnUpdateJson.Location = new System.Drawing.Point(0, 270);
             this.btnUpdateJson.Name = "btnUpdateJson";
             this.btnUpdateJson.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnUpdateJson.Size = new System.Drawing.Size(250, 50);
@@ -199,7 +172,7 @@
             this.btnMultiTurnouts.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnMultiTurnouts.IconSize = 32;
             this.btnMultiTurnouts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMultiTurnouts.Location = new System.Drawing.Point(0, 270);
+            this.btnMultiTurnouts.Location = new System.Drawing.Point(0, 220);
             this.btnMultiTurnouts.Name = "btnMultiTurnouts";
             this.btnMultiTurnouts.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnMultiTurnouts.Size = new System.Drawing.Size(250, 50);
@@ -222,7 +195,7 @@
             this.btnTurnouts.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnTurnouts.IconSize = 32;
             this.btnTurnouts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTurnouts.Location = new System.Drawing.Point(0, 220);
+            this.btnTurnouts.Location = new System.Drawing.Point(0, 170);
             this.btnTurnouts.Name = "btnTurnouts";
             this.btnTurnouts.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnTurnouts.Size = new System.Drawing.Size(250, 50);
@@ -255,30 +228,6 @@
             this.btnExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
-            // btnSections
-            // 
-            this.btnSections.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSections.FlatAppearance.BorderSize = 0;
-            this.btnSections.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSections.Font = new System.Drawing.Font("Arial Rounded MT Bold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnSections.ForeColor = System.Drawing.Color.White;
-            this.btnSections.IconChar = FontAwesome.Sharp.IconChar.Map;
-            this.btnSections.IconColor = System.Drawing.Color.Red;
-            this.btnSections.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnSections.IconSize = 32;
-            this.btnSections.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSections.Location = new System.Drawing.Point(0, 170);
-            this.btnSections.Name = "btnSections";
-            this.btnSections.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.btnSections.Size = new System.Drawing.Size(250, 50);
-            this.btnSections.TabIndex = 17;
-            this.btnSections.Text = "Sections";
-            this.btnSections.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSections.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSections.UseVisualStyleBackColor = true;
-            this.btnSections.Visible = false;
-            this.btnSections.Click += new System.EventHandler(this.btnSections_Click);
             // 
             // btnAddLoco
             // 
@@ -406,7 +355,6 @@
 
         private Panel panelSideMenu;
         private FontAwesome.Sharp.IconButton btnExit;
-        private FontAwesome.Sharp.IconButton btnSections;
         private FontAwesome.Sharp.IconButton btnAddLoco;
         private FontAwesome.Sharp.IconButton btnHome;
         private Panel panel1;
@@ -417,7 +365,6 @@
         private FontAwesome.Sharp.IconButton btnTurnouts;
         private FontAwesome.Sharp.IconButton btnMultiTurnouts;
         private FontAwesome.Sharp.IconButton btnUpdateJson;
-        private FontAwesome.Sharp.IconButton btnOccupancy;
         private FontAwesome.Sharp.IconButton btnUnitInstruction;
         private FontAwesome.Sharp.IconButton btnCentralStop;
         private FontAwesome.Sharp.IconButton btnTurnoutInstruction;

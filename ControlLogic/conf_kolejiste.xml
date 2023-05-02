@@ -1104,7 +1104,7 @@
 
 	<!-- Definition of tracks for every station -->
 	<stationTracks>
-		<Beroun>
+		<nameOfStation id = "Beroun">
 			<items>
 				<item2>Beroun_kolej_1</item2>
 				<item3>Beroun_kolej_2</item3>
@@ -1113,14 +1113,20 @@
 				<item6>Beroun_kolej_5</item6>
 			</items>
 			<circuit>0</circuit>
-		</Beroun>
-		<Karlstejn>
+		</nameOfStation>
+		<nameOfStation id = "Karlstejn">
 			<items>
 				<item2>KarlstejnTest_u032</item2>
 				<item3>KarlstejnTest_u031</item3>
 			</items>
 			<circuit>4</circuit>
-		</Karlstejn>
+		</nameOfStation>
+		<nameOfStation id = "Lhota">
+			<items>
+				<item2>LhotaTest_u030</item2>
+			</items>
+			<circuit>7</circuit>
+		</nameOfStation>
 	</stationTracks>
 	
 	<turnoutStopDefinitions>

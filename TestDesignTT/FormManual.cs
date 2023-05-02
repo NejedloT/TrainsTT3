@@ -100,7 +100,7 @@ namespace TestDesignTT
 
             MainLogic.StopTimers();
 
-            Thread.Sleep(250);
+            Thread.Sleep(350);
 
             //vycisti klienta
             KlientCleanUp();

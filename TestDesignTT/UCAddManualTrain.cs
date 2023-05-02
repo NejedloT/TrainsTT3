@@ -225,6 +225,8 @@ namespace TestDesignTT
                 final = HelpVar;
             }
 
+            List<string> uniqueFinal = final.Distinct().ToList();
+            List<string> uniqueStart = fromStart.Distinct().ToList();
 
             foreach (string s in final)
             {

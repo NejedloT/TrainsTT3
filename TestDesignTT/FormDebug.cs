@@ -40,10 +40,9 @@ namespace TestDesignTT
         UCHome uCHome = new UCHome();
         UCTurnouts uCTurnouts = new UCTurnouts();
         UCMap uCMap = new UCMap();
-        UCLokomotives uCLocomotives = new UCLokomotives();
+        UCAddDebugTrain uCAddDebugTrain = new UCAddDebugTrain();
         UCTurnoutsMulti uCmulti = new UCTurnoutsMulti();
         UCJsonEdit uCEditJson = new UCJsonEdit();
-        UCOccupancy uCOccupancy = new UCOccupancy();
         UCUnitSet uCUnitSet = new UCUnitSet();
         UCTurnoutsSettings uCTurnoutSet = new UCTurnoutsSettings();
 
@@ -75,7 +74,7 @@ namespace TestDesignTT
             //definice event handleru vyuzivanych v user controlech
             uCmulti.MultiTurnoutButtonAddClick += new EventHandler(UserControl_MultiTurnoutClick); //user control pro screen Multiturnout
             uCTurnouts.TurnoutButtonSendClick += new EventHandler(UserControl_TurnoutClick); //user control pro screen Turnout
-            uCLocomotives.ChangeOfTrainData += new EventHandler(UserControl_TrainDataChange); //user control pro zmenu rizeni vlaku
+            uCAddDebugTrain.ChangeOfTrainData += new EventHandler(UserControl_TrainDataChange); //user control pro zmenu rizeni vlaku
             uCEditJson.ButtonChangeJsonClick += new EventHandler(UserControl_EditJsonClick); //user control pro zmenu dat v JSONu
             uCUnitSet.UnitInstructionEventClick += new EventHandler(UserControl_UnitInstructionClick); //user control pro zmenu nastaveni ridici jednotky
             uCTurnoutSet.TurnoutDefinitionStopsClick += new EventHandler(UserControl_TurnoutInstructionStops);
@@ -348,26 +347,13 @@ namespace TestDesignTT
 
 
         /// <summary>
-        /// Akce na button Sections pro zobrazeni mapy
-        /// </summary>
-        /// <param name="sender">Event na stisknuti tlacitka</param>
-        /// <param name="e">Event na stisknuti tlacitka</param>
-        private void btnSections_Click(object sender, EventArgs e)
-        {
-            DisplayInstance(uCMap);
-
-            labelTitle.Text = (sender as Button).Text;
-            uCMap.setLabels();
-        }
-
-        /// <summary>
         /// Akce na button pro rizeni lokomotiv
         /// </summary>
         /// <param name="sender">Event na stisknuti tlacitka</param>
         /// <param name="e">Event na stisknuti tlacitka</param>
         private void btnAddLoco_Click(object sender, EventArgs e)
         {
-            DisplayInstance(uCLocomotives);
+            DisplayInstance(uCAddDebugTrain);
 
             labelTitle.Text = (sender as Button).Text;
         }
@@ -424,23 +410,6 @@ namespace TestDesignTT
             uCEditJson.ClearData();
         }
 
-        /// <summary>
-        /// Akce na button, ktery slouzi pro zobrazeni izolovanych useku
-        /// </summary>
-        /// <param name="sender">Event na stisknuti tlacitka</param>
-        /// <param name="e">Event na stisknuti tlacitka</param>
-        private void btnOccupancy_Click(object sender, EventArgs e)
-        {
-            //DisplayInstance(uCOccupancy);
-            //labelTitle.Text = (sender as Button).Text;
-
-            //List<Section> occupancySections = TCPServerTrainTT.Program.GetOccupancySections();
-            //List<Section> occupancySections = TCPServerTrainTT.Program.GetOccupancySections();
-
-            //TODO
-            //Snimat odbery proudu ve sve "funkci"
-
-        }
 
         /// <summary>
         /// Akce na button, ktery slouzi pro nastaveni ridicich jednotek
@@ -527,7 +496,7 @@ namespace TestDesignTT
         protected void UserControl_TrainDataChange(object sender, EventArgs e)
         {
             //Data lokomotivy, u ktere bylo stisknuto Start/Stop
-            List<ChangeTrainData> trainDataChange = uCLocomotives.trainDataChange;
+            List<ChangeTrainData> trainDataChange = uCAddDebugTrain.trainDataChange;
 
             bool foundMatch = false;
 
@@ -618,7 +587,6 @@ namespace TestDesignTT
                         train.reverse = data.Reverse;
                         train.circuit = SearchLogic.GetCurrentCircuit(train.currentPosition);
                         train.startPosition = data.StartPosition;
-                        train.critical = false;
                         train.mapOrientation = data.Orientation;
                         foundMatch = true;
                         break;

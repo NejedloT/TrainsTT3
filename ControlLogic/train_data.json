@@ -11,7 +11,6 @@
       "reverse": false,
       "mapOrientation": "prevConnection",
       "circuit": 0,
-      "critical": false,
       "startPosition": "Karlstejn",
       "finalPosition": "Beroun"
     },
@@ -26,7 +25,6 @@
       "reverse": false,
       "mapOrientation": "prevConnection",
       "circuit": 2,
-      "critical": false,
       "startPosition": "Karlstejn",
       "finalPosition": "Beroun"
     },
@@ -41,7 +39,6 @@
       "reverse": true,
       "mapOrientation": "prevConnection",
       "circuit": 0,
-      "critical": false,
       "startPosition": "Beroun",
       "finalPosition": "Karlstejn"
     },
@@ -56,22 +53,20 @@
       "reverse": true,
       "mapOrientation": "nextConnection",
       "circuit": 0,
-      "critical": false,
       "startPosition": "Karlstejn",
       "finalPosition": "Beroun"
     },
     {
       "id": 16,
       "name": "Taurus_EVB",
-      "currentPosition": "u012",
-      "lastPosition": "u003",
+      "currentPosition": "u003",
+      "lastPosition": "u012",
       "nextPosition": null,
       "move": 0,
       "speed": 11,
       "reverse": false,
-      "mapOrientation": "prevConnection",
+      "mapOrientation": "nextConnection",
       "circuit": 0,
-      "critical": false,
       "startPosition": "Karlstejn",
       "finalPosition": null
     }

@@ -18,7 +18,6 @@ namespace ControlLogic
         public bool reverse { get; set; }
         public string mapOrientation { get; set; }
         public int circuit { get; set; }
-        public bool critical { get; set; }
         public string startPosition { get; set; }
         public string finalPosition { get; set; }
 

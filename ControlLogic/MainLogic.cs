@@ -320,7 +320,6 @@ namespace ControlLogic
                             t.lastPosition = train.lastPosition;
                             t.nextPosition = train.nextPosition;
                             t.circuit = train.circuit;
-                            t.critical = train.critical;
                             t.mapOrientation = train.mapOrientation;
                         });
                     }
@@ -400,7 +399,6 @@ namespace ControlLogic
                         t.nextPosition = null;
                         t.move = 0;
                         t.circuit = train.circuit;
-                        t.critical = train.critical;
                         t.finalPosition = null;
                     });
 
@@ -520,7 +518,6 @@ namespace ControlLogic
                         t.nextPosition = null;
                         t.move = 0;
                         t.circuit = train.circuit;
-                        t.critical = train.critical;
                         t.finalPosition = null;
                     });
                 }
@@ -619,7 +616,8 @@ namespace ControlLogic
             List<string> endStations = SearchLogic.GetAllStationTracks();
 
             //pokud se ma hledat nejvhodnejsi cesta na nadrazi = neni definovana cilova kolej nebo vyjizdim z nadrazi
-            if (new[] { "Beroun", "Karlstejn", "Lhota" }.Contains(train.finalPosition) || endStations.Contains(train.currentPosition))
+            List<string> stationNames = SearchLogic.GetStationNames();
+            if (stationNames.Contains(train.finalPosition) || endStations.Contains(train.currentPosition))
             {
 
                 //nacti cesty ze soucasne polohy na cilove koleje
@@ -647,7 +645,6 @@ namespace ControlLogic
 
                             //vytvor rezervaci na vyhybky
                             var switches = toElement.Element("switches");
-                            int k = 0;
                             if (switches != null)
                             {
                                 var reserveSwitches = switches.Elements()
@@ -786,10 +783,10 @@ namespace ControlLogic
 
 
 
-                string[] validPositions = { "Beroun", "Karlstejn", "Lhota" };
+                List<string> stationNames = SearchLogic.GetStationNames();
 
                 //pokud vlak jeste neni v cili
-                if (!(trainsList.Any(tl => tl.currentPosition == toValue)) && validPositions.Contains(toFinalValue))
+                if (!(trainsList.Any(tl => tl.currentPosition == toValue)) && stationNames.Contains(toFinalValue))
                 {
                     //testovani, zdali vlak muze jet a jestli v usecich neni zadny jiny vlak
                     bool hasMatch = trainsList.Any(tl => tl != train && tl.currentPosition != null && parts.Any(p => tl.currentPosition == p));
@@ -950,8 +947,6 @@ namespace ControlLogic
                         ml.OnMyEventTurnout(new TurnoutsDataSend { NumberOfUnit = numbOfUnit, Turnouts = turnouts, Value = value });
                     }
                 }
-
-                train.critical = false;
             }
         }
 

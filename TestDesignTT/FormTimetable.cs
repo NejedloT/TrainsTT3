@@ -5,10 +5,13 @@ using System.DirectoryServices.ActiveDirectory;
 using System.Net;
 using System.Threading;
 using System.Timers;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Forms;
+using System.Windows.Interop;
 using System.Xml.Linq;
 using TrainTTLibrary;
+using Tulpep.NotificationWindow;
 using static System.Windows.Forms.DataFormats;
 using static TrainTTLibrary.Packet;
 
@@ -20,6 +23,13 @@ namespace TestDesignTT
         private bool IsConnect = false;
 
         private static TCPClient klient = null;
+
+        private enum notificationType
+        {
+            warning,
+            success,
+            error,
+        }
 
 
         public BindingList<DataTimetable> timetable = new BindingList<DataTimetable>();
@@ -208,6 +218,8 @@ namespace TestDesignTT
                 ProcessDataFromTCP.setErrors(false);
                 MessageBox.Show("Section unit or switch unit error has occurred! All trains have been stopped!", "IMPORTANT!!!",
                 MessageBoxButtons.OK);
+
+                timer1.Enabled = false;
             }
         }
 
@@ -370,7 +382,7 @@ namespace TestDesignTT
             formmm.Show();
             //FormMainMenu.;
         }
-#endregion
+        #endregion
 
         /// <summary>
         /// Zobrazeni spravneho user controlu dle kliknuti uzivatele
@@ -410,7 +422,7 @@ namespace TestDesignTT
             if (btnPlay.Text == "Pause")
             {
                 btnLoadTimetable.Enabled = false;
-                timer1.Enabled= true;
+                timer1.Enabled = true;
             }
             else
             {
@@ -462,7 +474,8 @@ namespace TestDesignTT
                     int index = 0;
                     if (infinity)
                     {
-                        departure = DateTime.Today.Add(new TimeSpan(4, 0, 0));
+                        //departure = DateTime.Today.Add(new TimeSpan(0, 0, 0));
+                        departure = DateTime.Now.AddMinutes(0.5);
                     }
                     else
                     {
@@ -481,7 +494,7 @@ namespace TestDesignTT
 
                                     DataTimetable note = new DataTimetable(line, departure);
                                     timetable.Add(note);
-                                    departure = departure.AddSeconds(45);
+                                    departure = departure.AddSeconds(30);
                                 }
                             }
                             else
@@ -543,13 +556,11 @@ namespace TestDesignTT
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            string[] validStations = { "Beroun", "Karlstejn", "Lhota" };
+            List<string> stationNames = SearchLogic.GetStationNames();
             List<string> endTracks = SearchLogic.GetAllStationTracks();
             bool startTrackSpecific = false;
             bool finalTrackSpecific = false;
             string startPosition = null;
-
-            
 
             string textForMsgBox = null;
 
@@ -564,20 +575,32 @@ namespace TestDesignTT
                 {
                     TrainDataJSON td = new TrainDataJSON();
                     trainsList = td.LoadJson();
+
+                    bool foundTrain = false;
                     foreach (Trains train in trainsList)
                     {
                         //nalezen vlak a nepohybuje se jeste
-                        if (train.name == timetable[i].Name && train.move != 0)
+                        if (train.name == timetable[i].Name && train.move == 0)
                         {
+                            foundTrain = true;
                             //vsechny stanice na nadrazi testuje
-                            List<string> getTracksForStartPositon = SearchLogic.GetTracksForStation(timetable[i].StartStation);
-                            List<string> getTracksForFinalPositon = SearchLogic.GetTracksForStation(timetable[i].FinalStation);
+                            //List<string> getTracksForStartPositon = SearchLogic.GetTracksForStation(timetable[i].StartStation);
+                            string finStation = null;
+
+                            if (endTracks.Contains(timetable[i].FinalStation))
+                                finStation = SearchLogic.getStationNameFromTrack(timetable[i].FinalStation);
+                            else
+                                finStation = timetable[i].FinalStation;
+
+                            List<string> getTracksForFinalPositon = SearchLogic.GetTracksForStation(finStation);
 
                             //v jizdnim radu je odjezd z nadrazi (vlak tam je) nebo v jizdnim radu je odjezd na specifickou kolej (vlak se na ni nachazi)
                             //vlak se jiz nachazi v cilove stanici - neni potreba zadna dalsi akce
                             if (train.currentPosition == timetable[i].FinalStation || getTracksForFinalPositon.Contains(train.currentPosition))
                             {
                                 textForMsgBox = "Train" + train.name + "is already in the final station!";
+
+                                popUpNotification(notificationType.warning, textForMsgBox);
                                 break;
                             }
 
@@ -585,19 +608,11 @@ namespace TestDesignTT
                             IEnumerable<string> final = null;
                             bool crit = false;
 
-                            //zjisteni moznych pocatecnich a cilovych koleji
-
-                            bool reverse;
-                            if (timetable[i].Reverse == false)
-                                reverse = false;
-                            else
-                                reverse = true;
-
+                            //zjisteni jestli vlak pojede opacnym smerem nez jel posledne
                             if (train.circuit == 0 || train.circuit == 4 || train.circuit == 7)
                             {
                                 crit = true;
                                 fromStart = SearchLogic.GetStartStationInCritical(train.currentPosition, train.lastPosition);
-
                             }
                             else
                             {
@@ -605,45 +620,132 @@ namespace TestDesignTT
                                 fromStart = SearchLogic.GetStartStationOutside(train.currentPosition, train.lastPosition);
                             }
 
-                            
                             if (crit)
                             {
                                 final = SearchLogic.GetFinalStationInCritical(train.currentPosition, train.lastPosition);
-                                //cbFinalStation.Items.Add(final);
                             }
                             else
                             {
                                 final = SearchLogic.GetFinalStationOutside(train.currentPosition, train.lastPosition);
                             }
 
-                            if (reverse != train.reverse)
+                            if (timetable[i].Reverse != train.reverse)
                             {
                                 IEnumerable<string> HelpVar = fromStart;
                                 fromStart = final;
                                 final = HelpVar;
                             }
+
+                            List<string> uniqueFinal = final.Distinct().ToList();
+                            List<string> uniqueStart = fromStart.Distinct().ToList();
+
+                            if (stationNames.Contains(timetable[i].StartStation))
+                            {
+                                startTrackSpecific = false;
+                                if (!uniqueStart.Contains(timetable[i].StartStation))
+                                {
+                                    textForMsgBox = "Train " + train.name + " doesn't have valid Start destination!";
+                                    popUpNotification(notificationType.error, textForMsgBox);
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                startTrackSpecific = true;
+                                string startStation = SearchLogic.getStationNameFromTrack(timetable[i].StartStation);
+                                if (!uniqueStart.Contains(timetable[i].StartStation))
+                                {
+                                    textForMsgBox = "Train " + train.name + " doesn't have valid Start destination!";
+                                    popUpNotification(notificationType.error, textForMsgBox);
+                                    break;
+                                }
+                            }
+
+                            if (stationNames.Contains(timetable[i].FinalStation))
+                            {
+                                finalTrackSpecific = false;
+                                if (!uniqueFinal.Contains(timetable[i].FinalStation))
+                                {
+                                    textForMsgBox = "Train " + train.name + " doesn't have valid final destination!";
+                                    popUpNotification(notificationType.error, textForMsgBox);
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                bool checkFinalTrack = false;
+
+                                IEnumerable<XElement> finTrack = SearchLogic.GetFinalTrackOutside(train, finStation);
+
+                                int finalCircuit = SearchLogic.GetFinalStationCircuit(finStation);
+
+                                foreach (XElement x in finTrack)
+                                {
+                                    if ((train.circuit == 0 && finalCircuit == 0)
+                                        || (train.circuit == 4 && finalCircuit == 4)
+                                        || (train.circuit == 7 && finalCircuit == 7))
+                                    {
+                                        bool bb;
+
+                                        if (timetable[i].Reverse == train.reverse)
+                                            bb = SearchLogic.GetFinalTrackInside(train.currentPosition, train.lastPosition, x.Value);
+                                        else
+                                            bb = SearchLogic.GetFinalTrackInside(train.lastPosition, train.currentPosition, x.Value);
+
+                                        if (bb && (timetable[i].FinalStation == x.Value))
+                                        {
+                                            checkFinalTrack = true;
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (timetable[i].FinalStation == x.Value)
+                                        {
+                                            checkFinalTrack = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!checkFinalTrack)
+                                {
+                                    textForMsgBox = "Train " + train.name + " doesn't have valid Final destination!";
+                                    popUpNotification(notificationType.error, textForMsgBox);
+                                    break;
+                                }
+                            }
+                            //MainLogic.addNewTrainDataFromClient(train.name, train.currentPosition, (byte)timetable[i].Speed, timetable[i].Reverse, timetable[i].FinalStation);
+
+                            textForMsgBox = "Train " + train.name + " has been sent!";
+                            popUpNotification(notificationType.success, textForMsgBox);
+                            break;
+
+
                         }
-                        
+
                         //prisel prikaz na vlak, ale vlak jiz ma prikaz k pohybu
-                        else if (train.name == timetable[i].Name && train.move == 0)
+                        else if (train.name == timetable[i].Name && train.move != 0)
                         {
-                            textForMsgBox = "Train" + train.name + "is already moving or has request to move!";
+                            foundTrain = true;
+                            textForMsgBox = "Train " + train.name + " is already moving!";
+                            popUpNotification(notificationType.warning, textForMsgBox);
+                            break;
                         }
-
-                        //vlak nenalezen
-                        else
-                        {
-                            textForMsgBox = "Train was not found!"; 
-                        }
-                        break;
-
+                        else { }
+                    }
+                    if (!foundTrain)
+                    {
+                        textForMsgBox = "Train " + timetable[i].Name + " was not found!";
+                        popUpNotification(notificationType.error, textForMsgBox);
                     }
 
                     timetable.RemoveAt(i);
                     i--;
                     TimeInTimetableUpdated(sender, e);
+                    /*
                     if (textForMsgBox != null)
                         MessageBox.Show(textForMsgBox, "Info from timetable control!", MessageBoxButtons.OK);
+                    */
 
                 }
                 else
@@ -914,6 +1016,59 @@ namespace TestDesignTT
             {
                 TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, (byte)number, (byte)10);
                 SendTCPData(turnoutInst.TCPPacket);
+            }
+        }
+
+        private void popUpNotification(notificationType type, string msg)
+        {
+            PopupNotifier popup = new PopupNotifier();
+            switch (type)
+            {
+                case notificationType.warning:
+                    popup.Image = Properties.Resources.warning;
+                    popup.ImageSize = new(80, 80);
+
+                    popup.BodyColor = Color.FromArgb(255, 193, 7);
+                    popup.TitleText = "Warning!";
+                    popup.TitleColor = Color.White;
+                    popup.TitleFont = new Font("Century Gothic", 18, FontStyle.Bold);
+
+                    popup.ContentText = msg;
+                    popup.ContentColor = Color.White;
+                    popup.ContentFont = new Font("Century Gothic", 12);
+                    popup.Popup();
+                    break;
+
+                case notificationType.success:
+                    popup.Image = Properties.Resources.success;
+                    popup.ImageSize = new(80,80);
+
+                    popup.BodyColor = Color.FromArgb(40, 120, 69);
+                    popup.TitleText = "Success";
+                    popup.TitleColor = Color.White;
+                    popup.TitleFont = new Font("Century Gothic", 18, FontStyle.Bold);
+
+                    popup.ContentText = msg;
+                    popup.ContentColor = Color.White;
+                    popup.ContentFont = new Font("Century Gothic", 12);
+                    popup.Popup();
+
+                    break;
+                case notificationType.error:
+                    popup.Image = Properties.Resources.error;
+                    popup.ImageSize = new(80, 80);
+
+                    popup.BodyColor = Color.FromArgb(220, 23, 29);
+                    popup.TitleText = "Error!";
+                    popup.TitleColor = Color.White;
+                    popup.TitleFont = new Font("Century Gothic", 18, FontStyle.Bold);
+
+                    popup.ContentText = msg;
+                    popup.ContentColor = Color.White;
+                    popup.ContentFont = new Font("Century Gothic", 12);
+                    popup.Popup();
+                    break;
+
             }
         }
     }

@@ -13,7 +13,7 @@ using TrainTTLibrary;
 
 namespace TestDesignTT
 {
-    public partial class UCLokomotives : UserControl
+    public partial class UCAddDebugTrain : UserControl
     {
 
         // Event Handler, ktery znaci, ze doslo k pozadavku na rozjeti ci zastaveni lokomotivy
@@ -27,7 +27,7 @@ namespace TestDesignTT
 
         //list s daty na zmenu lokomotivy
         public List<ChangeTrainData> trainDataChange = new List<ChangeTrainData>();
-        public UCLokomotives()
+        public UCAddDebugTrain()
         {
             InitializeComponent();
             hideAll();

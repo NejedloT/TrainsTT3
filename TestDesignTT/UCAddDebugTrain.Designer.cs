@@ -1,6 +1,6 @@
 ﻿namespace TestDesignTT
 {
-    partial class UCLokomotives
+    partial class UCAddDebugTrain
     {
         /// <summary> 
         /// Required designer variable.
