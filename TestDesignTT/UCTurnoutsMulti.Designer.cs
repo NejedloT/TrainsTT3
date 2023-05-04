@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCTurnoutsMulti));
             this.titleDisplayData = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -70,7 +71,7 @@
             this.titleDisplayData.Name = "titleDisplayData";
             this.titleDisplayData.Size = new System.Drawing.Size(893, 100);
             this.titleDisplayData.TabIndex = 4;
-            this.titleDisplayData.Text = "Zvolte si kombinaci vyhybek, kterou chcete";
+            this.titleDisplayData.Text = "Set switches position";
             this.titleDisplayData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
@@ -115,7 +116,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(351, 30);
             this.label6.TabIndex = 2;
-            this.label6.Text = "Vyber jednotku:";
+            this.label6.Text = "Unit number:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbUnit
@@ -172,7 +173,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(351, 30);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Vyber výhybky (binary - 8 až 1):";
+            this.label1.Text = "Pick switches:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbChoose
@@ -238,7 +239,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(351, 30);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Nastav hodnoty (binary - 8 až 1):";
+            this.label2.Text = "Set values for switches:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel13
@@ -322,7 +323,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 350);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(893, 30);
+            this.panel7.Size = new System.Drawing.Size(893, 70);
             this.panel7.TabIndex = 14;
             // 
             // label3
@@ -330,11 +331,9 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(893, 30);
+            this.label3.Size = new System.Drawing.Size(893, 70);
             this.label3.TabIndex = 0;
-            this.label3.Text = "Příklad: Výhybka = 00110110, Hodnoty = 00010100;   Poznámka: kde byly nuly u výhy" +
-    "bky, tak ta se nenastaví, nastavuje se 1 vlevo (vlak pojede vlevo), 0 doprava (v" +
-    "lak pojede vpravo)";
+            this.label3.Text = resources.GetString("label3.Text");
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UCTurnoutsMulti

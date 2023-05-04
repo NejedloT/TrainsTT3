@@ -4,6 +4,10 @@
 			<prevsections> </prevsections>
 			<nextsec>u002</nextsec>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>380</xpos>
+				<ypos>1015</ypos>
+			</mapcoordinates>
 			<moduleid>3</moduleid>
 			<moduleposition>0</moduleposition>
 		</section>
@@ -14,6 +18,10 @@
 				<nextsec2>u003</nextsec2>
 			</nextsections>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>210</xpos>
+				<ypos>1045</ypos>
+			</mapcoordinates>
 			<moduleid>3</moduleid>
 			<moduleposition>1</moduleposition>
 		</section>
@@ -24,6 +32,10 @@
 			</prevsections>
 			<nextsec>u004</nextsec>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>115</xpos>
+				<ypos>1225</ypos>
+			</mapcoordinates>
 			<moduleid>3</moduleid>
 			<moduleposition>2</moduleposition>
 		</section>
@@ -31,6 +43,10 @@
 			<prevsec>u003</prevsec>
 			<nextsec>u018</nextsec>
 			<circuit>1</circuit>
+			<mapcoordinates>
+				<xpos>115</xpos>
+				<ypos>1295</ypos>
+			</mapcoordinates>
 			<moduleid>3</moduleid>
 			<moduleposition>3</moduleposition>
 		</section>
@@ -38,6 +54,10 @@
 			<prevsec>u_beroun</prevsec>
 			<nextsec>u006</nextsec>
 			<circuit>3</circuit>
+			<mapcoordinates>
+				<xpos>300</xpos>
+				<ypos>995</ypos>
+			</mapcoordinates>
 			<moduleid>3</moduleid>
 			<moduleposition>4</moduleposition>
 		</section>
@@ -45,6 +65,10 @@
 			<prevsec>u005</prevsec>
 			<nextsec>u007</nextsec>
 			<circuit>3</circuit>
+			<mapcoordinates>
+				<xpos>110</xpos>
+				<ypos>1040</ypos>
+			</mapcoordinates>
 			<moduleid>3</moduleid>
 			<moduleposition>5</moduleposition>
 		</section>
@@ -52,6 +76,10 @@
 			<prevsec>u006</prevsec>
 			<nextsec>u008</nextsec>
 			<circuit>3</circuit>
+			<mapcoordinates>
+				<xpos>60</xpos>
+				<ypos>1220</ypos>
+			</mapcoordinates>
 			<moduleid>3</moduleid>
 			<moduleposition>6</moduleposition>
 		</section>
@@ -59,6 +87,10 @@
 			<prevsec>u007</prevsec>
 			<nextsec>u021</nextsec>
 			<circuit>3</circuit>
+			<mapcoordinates>
+				<xpos>85</xpos>
+				<ypos>1470</ypos>
+			</mapcoordinates>
 			<moduleid>3</moduleid>
 			<moduleposition>7</moduleposition>
 		</section>
@@ -67,6 +99,10 @@
 			</prevsections>
 			<nextsec>u010</nextsec>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>372</xpos>
+				<ypos>1050</ypos>
+			</mapcoordinates>
 			<moduleid>2</moduleid>
 			<moduleposition>0</moduleposition>
 		</section>
@@ -77,6 +113,10 @@
 			</prevsections>
 			<nextsec>u011</nextsec>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>250</xpos>
+				<ypos>1048</ypos>
+			</mapcoordinates>
 			<moduleid>2</moduleid>
 			<moduleposition>1</moduleposition>
 		</section>
@@ -87,6 +127,10 @@
 				<nextsec2>u014</nextsec2>
 			</nextsections>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>175</xpos>
+				<ypos>1125</ypos>
+			</mapcoordinates>
 			<moduleid>2</moduleid>
 			<moduleposition>2</moduleposition>
 		</section>
@@ -97,6 +141,10 @@
 				<nextsec2>u013</nextsec2>
 			</nextsections>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>140</xpos>
+				<ypos>1185</ypos>
+			</mapcoordinates>
 			<moduleid>2</moduleid>
 			<moduleposition>3</moduleposition>
 		</section>
@@ -104,6 +152,10 @@
 			<prevsec>u012</prevsec>
 			<nextsec>u017</nextsec>
 			<circuit>2</circuit>
+			<mapcoordinates>
+				<xpos>135</xpos>
+				<ypos>1265</ypos>
+			</mapcoordinates>
 			<moduleid>2</moduleid>
 			<moduleposition>4</moduleposition>
 		</section>
@@ -111,6 +163,10 @@
 			<prevsec>u011</prevsec>
 			<nextsec>u015</nextsec>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>155</xpos>
+				<ypos>1230</ypos>
+			</mapcoordinates>
 			<moduleid>2</moduleid>
 			<moduleposition>5</moduleposition>
 		</section>
@@ -118,6 +174,10 @@
 			<prevsec>u014</prevsec>
 			<nextsec>u016</nextsec>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>160</xpos>
+				<ypos>1330</ypos>
+			</mapcoordinates>
 			<moduleid>2</moduleid>
 			<moduleposition>6</moduleposition>
 		</section>
@@ -125,6 +185,10 @@
 			<prevsec>u015</prevsec>
 			<nextsec></nextsec>
 			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>555</xpos>
+				<ypos>1465</ypos>
+			</mapcoordinates>
 			<moduleid>2</moduleid>
 			<moduleposition>7</moduleposition>
 		</section>
@@ -132,6 +196,10 @@
 			<prevsec>u013</prevsec>
 			<nextsec>u019</nextsec>
 			<circuit>2</circuit>
+			<mapcoordinates>
+				<xpos>320</xpos>
+				<ypos>1485</ypos>
+			</mapcoordinates>
 			<moduleid>1</moduleid>
 			<moduleposition>0</moduleposition>
 		</section>
@@ -139,6 +207,10 @@
 			<prevsec>u004</prevsec>
 			<nextsec>u020</nextsec>
 			<circuit>1</circuit>
+			<mapcoordinates>
+				<xpos>185</xpos>
+				<ypos>1470</ypos>
+			</mapcoordinates>
 			<moduleid>1</moduleid>
 			<moduleposition>1</moduleposition>
 		</section>
@@ -146,6 +218,10 @@
 			<prevsec>u017</prevsec>
 			<nextsec>u023</nextsec>
 			<circuit>2</circuit>
+			<mapcoordinates>
+				<xpos>685</xpos>
+				<ypos>1485</ypos>
+			</mapcoordinates>
 			<moduleid>1</moduleid>
 			<moduleposition>2</moduleposition>
 		</section>
@@ -153,6 +229,10 @@
 			<prevsec>u018</prevsec>
 			<nextsec>u024</nextsec>
 			<circuit>1</circuit>
+			<mapcoordinates>
+				<xpos>650</xpos>
+				<ypos>1510</ypos>
+			</mapcoordinates>
 			<moduleid>1</moduleid>
 			<moduleposition>3</moduleposition>
 		</section>
@@ -160,6 +240,10 @@
 			<prevsec>u008</prevsec>
 			<nextsec>u022</nextsec>
 			<circuit>3</circuit>
+			<mapcoordinates>
+				<xpos>360</xpos>
+				<ypos>1540</ypos>
+			</mapcoordinates>
 			<moduleid>1</moduleid>
 			<moduleposition>4</moduleposition>
 		</section>
@@ -167,6 +251,10 @@
 			<prevsec>u021</prevsec>
 			<nextsec>u029</nextsec>
 			<circuit>3</circuit>
+			<mapcoordinates>
+				<xpos>880</xpos>
+				<ypos>1540</ypos>
+			</mapcoordinates>
 			<moduleid>1</moduleid>
 			<moduleposition>5</moduleposition>
 		</section>
@@ -174,6 +262,10 @@
 			<prevsec>u019</prevsec>
 			<nextsec>u025</nextsec>
 			<circuit>2</circuit>
+			<mapcoordinates>
+				<xpos>870</xpos>
+				<ypos>1485</ypos>
+			</mapcoordinates>
 			<moduleid>1</moduleid>
 			<moduleposition>6</moduleposition>
 		</section>
@@ -181,6 +273,10 @@
 			<prevsec>u020</prevsec>
 			<nextsec>u026</nextsec>
 			<circuit>1</circuit>
+			<mapcoordinates>
+				<xpos>920</xpos>
+				<ypos>1510</ypos>
+			</mapcoordinates>
 			<moduleid>1</moduleid>
 			<moduleposition>7</moduleposition>
 		</section>
@@ -188,6 +284,10 @@
 			<prevsec>u023</prevsec>
 			<nextsec>u027</nextsec>
 			<circuit>2</circuit>
+			<mapcoordinates>
+				<xpos>1122</xpos>
+				<ypos>1485</ypos>
+			</mapcoordinates>
 			<moduleid>4</moduleid>
 			<moduleposition>0</moduleposition>
 		</section>
@@ -195,48 +295,76 @@
 			<prevsec>u024</prevsec>
 			<nextsec>u028</nextsec>
 			<circuit>1</circuit>
+			<mapcoordinates>
+				<xpos>1170</xpos>
+				<ypos>1510</ypos>
+			</mapcoordinates>
 			<moduleid>4</moduleid>
 			<moduleposition>1</moduleposition>
 		</section>
 		<section id = "u027" type="track">
 			<prevsec>u025</prevsec>
-			<nextsec>u031</nextsec>
+			<nextsec>KarlstejnTest_u031</nextsec>
 			<circuit>2</circuit>
+			<mapcoordinates>
+				<xpos>1440</xpos>
+				<ypos>1485</ypos>
+			</mapcoordinates>
 			<moduleid>4</moduleid>
 			<moduleposition>2</moduleposition>
 		</section>
 		<section id = "u028" type="track">
 			<prevsec>u026</prevsec>
-			<nextsec>u032</nextsec>
+			<nextsec>KarlstejnTest_u032</nextsec>
 			<circuit>1</circuit>
+			<mapcoordinates>
+				<xpos>1500</xpos>
+				<ypos>1510</ypos>
+			</mapcoordinates>
 			<moduleid>4</moduleid>
 			<moduleposition>3</moduleposition>
 		</section>
 		<section id = "u029" type="track">
 			<prevsec>u022</prevsec>
-			<nextsec>u030</nextsec>
+			<nextsec>LhotaTest_u030</nextsec>
 			<circuit>3</circuit>
+			<mapcoordinates>
+				<xpos>1375</xpos>
+				<ypos>1540</ypos>
+			</mapcoordinates>
 			<moduleid>4</moduleid>
 			<moduleposition>4</moduleposition>
 		</section>
-		<section id = "u030" type="track">
+		<section id = "LhotaTest_u030" type="track">
 			<prevsec>u029</prevsec>
 			<nextsec>u_okruh3</nextsec>
 			<circuit>3</circuit>
+			<mapcoordinates>
+				<xpos>1800</xpos>
+				<ypos>1540</ypos>
+			</mapcoordinates>
 			<moduleid>4</moduleid>
 			<moduleposition>5</moduleposition>
 		</section>
-		<section id = "u031" type="track">
+		<section id = "KarlstejnTest_u031" type="track">
 			<prevsec>u027</prevsec>
 			<nextsec>u_okruh2</nextsec>
 			<circuit>2</circuit>
+			<mapcoordinates>
+				<xpos>1670</xpos>
+				<ypos>1410</ypos>
+			</mapcoordinates>
 			<moduleid>4</moduleid>
 			<moduleposition>6</moduleposition>
 		</section>
-		<section id = "u032" type="track">
+		<section id = "KarlstejnTest_u032" type="track">
 			<prevsec>u028</prevsec>
 			<nextsec>u_okruh1</nextsec>
 			<circuit>1</circuit>
+			<mapcoordinates>
+				<xpos>1680</xpos>
+				<ypos>1445</ypos>
+			</mapcoordinates>
 			<moduleid>4</moduleid>
 			<moduleposition>7</moduleposition>
 		</section>
@@ -247,7 +375,11 @@
 			</prevsections>
 			<nextsec>u005</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
+			<mapcoordinates>
+				<xpos>430</xpos>
+				<ypos>995</ypos>
+			</mapcoordinates>
+			<moduleid>5</moduleid>
 			<moduleposition>0</moduleposition>
 		</section>
 		<section id = "u034" type="switch">
@@ -260,8 +392,12 @@
 				<nextsec2>u033</nextsec2>
 			</nextsections>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>490</xpos>
+				<ypos>1015</ypos>
+			</mapcoordinates>
+			<moduleid>5</moduleid>
+			<moduleposition>1</moduleposition>
 		</section>
 		<section id = "u035" type="switch">
 			<prevsections>
@@ -270,49 +406,77 @@
 			</prevsections>
 			<nextsec>u009</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>455</xpos>
+				<ypos>1090</ypos>
+			</mapcoordinates>
+			<moduleid>5</moduleid>
+			<moduleposition>2</moduleposition>
 		</section>
 		<section id = "u036" type="track">
 			<prevsec>Beroun_kolej_2</prevsec>
 			<nextsec>u001</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>495</xpos>
+				<ypos>1040</ypos>
+			</mapcoordinates>
+			<moduleid>5</moduleid>
+			<moduleposition>3</moduleposition>
 		</section>
 		<section id = "u037" type="track">
 			<prevsec>Beroun_kolej_4</prevsec>
 			<nextsec>u034</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>555</xpos>
+				<ypos>1040</ypos>
+			</mapcoordinates>
+			<moduleid>5</moduleid>
+			<moduleposition>4</moduleposition>
 		</section>
 		<section id = "Beroun_kolej_2" type="track">
 			<prevsec>Beroun_pred_koleji_2</prevsec>
 			<nextsec>u036</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>765</xpos>
+				<ypos>1115</ypos>
+			</mapcoordinates>
+			<moduleid>5</moduleid>
+			<moduleposition>5</moduleposition>
 		</section>
 		<section id = "u039" type="track">
 			<prevsec>Beroun_kolej_1</prevsec>
 			<nextsec>u009</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>505</xpos>
+				<ypos>1085</ypos>
+			</mapcoordinates>
+			<moduleid>5</moduleid>
+			<moduleposition>6</moduleposition>
 		</section>
 		<section id = "Beroun_kolej_1" type="track">
 			<prevsec>Beroun_pred_koleji_1</prevsec>
 			<nextsec>u039</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>740</xpos>
+				<ypos>1150</ypos>
+			</mapcoordinates>
+			<moduleid>5</moduleid>
+			<moduleposition>7</moduleposition>
 		</section>
 		<section id = "u041" type="track">
 			<prevsec>Beroun_kolej_3</prevsec>
 			<nextsec>u035</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
+			<mapcoordinates>
+				<xpos>510</xpos>
+				<ypos>1105</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
 			<moduleposition>0</moduleposition>
 		</section>
 		<section id = "u042" type="switch">
@@ -322,15 +486,23 @@
 			</prevsections>
 			<nextsec>u035</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>525</xpos>
+				<ypos>1135</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>1</moduleposition>
 		</section>
 		<section id = "u043" type="track">
 			<prevsec>Beroun_kolej_5</prevsec>
 			<nextsec>u042</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>575</xpos>
+				<ypos>1145</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>2</moduleposition>
 		</section>
 		<section id = "u044" type="switch">
 			<prevsections>
@@ -342,8 +514,12 @@
 				<nextsec2></nextsec2>
 			</nextsections>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>585</xpos>
+				<ypos>1165</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>3</moduleposition>
 		</section>
 		<section id = "u045" type="switch">
 			<prevsections>
@@ -352,15 +528,23 @@
 			</prevsections>
 			<nextsec>u034</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>595</xpos>
+				<ypos>1015</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>4</moduleposition>
 		</section>
 		<section id = "u046" type="track">
 			<prevsec>Beroun_kolej_7</prevsec>
 			<nextsec>u044</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>640</xpos>
+				<ypos>1180</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>5</moduleposition>
 		</section>
 		<section id = "u047" type="switch">
 			<prevsections>
@@ -372,41 +556,24 @@
 				<nextsec2></nextsec2>
 			</nextsections>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>645</xpos>
+				<ypos>1205</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>6</moduleposition>
 		</section>
 		<section id = "Beroun_kolej_7" type="track">
 			<prevsec>Pred_Berounem_kolej_7</prevsec>
 			<nextsec>u046</nextsec>
 			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
+			<mapcoordinates>
+				<xpos>775</xpos>
+				<ypos>1220</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>7</moduleposition>
 		</section>
-		
-		
-		
-		<section id = "u010" type="switch">
-			<prevsections>
-				<prevsec1>u002</prevsec1>
-				<prevsec2>u009</prevsec2>
-			</prevsections>
-			<nextsec>u011</nextsec>
-			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
-		</section>
-		
-		<section id = "u011" type="switch">
-			<prevsec>u010</prevsec>
-			<nextsections>
-				<nextsec1>u012</nextsec1>
-				<nextsec2>u014</nextsec2>
-			</nextsections>
-			<circuit>0</circuit>
-			<moduleid>0</moduleid>
-			<moduleposition>0</moduleposition>
-		</section>
-		
 	</layout>
 
 	<routes>
@@ -431,7 +598,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit2</fromStart>
 				<circuit>0</circuit>
 			</to>
 			<to id = "Beroun_kolej_3">
@@ -452,7 +619,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit2</fromStart>
 				<circuit>0</circuit>
 			</to>
 			<to id = "Beroun_kolej_2">
@@ -475,7 +642,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit2</fromStart>
 				<circuit>0</circuit>
 			</to>
 			<to id = "Beroun_kolej_4">
@@ -497,7 +664,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit2</fromStart>
 				<circuit>0</circuit>
 			</to>
 			<to id = "Beroun_kolej_6">
@@ -519,7 +686,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit2</fromStart>
 				<circuit>0</circuit>
 			</to>
 		</from>
@@ -542,7 +709,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit1</fromStart>
 				<circuit>0</circuit>
 			</to>
 			<to id = "Beroun_kolej_4">
@@ -562,7 +729,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit1</fromStart>
 				<circuit>0</circuit>
 			</to>
 			<to id = "Beroun_kolej_6">
@@ -582,7 +749,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit1</fromStart>
 				<circuit>0</circuit>
 			</to>
 			<to id = "Beroun_kolej_1">
@@ -605,7 +772,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit1</fromStart>
 				<circuit>0</circuit>
 			</to>
 			<to id = "Beroun_kolej_3">
@@ -627,7 +794,7 @@
 					</unit1>
 				</switches>
 				<toFinal>Beroun</toFinal>
-				<fromStart>Karlstejn</fromStart>
+				<fromStart>Karlstejn_circuit1</fromStart>
 				<circuit>0</circuit>
 			</to>
 		</from>
@@ -645,11 +812,6 @@
 						<turnouts>192</turnouts>
 						<value>0</value>
 					</unit1>
-					<unit2>
-						<unit>2</unit>
-						<turnouts>100</turnouts>
-						<value>150</value>
-					</unit2>
 				</switches>
 				<toFinal>Beroun</toFinal>
 				<fromStart>Lhota</fromStart>
@@ -694,7 +856,7 @@
 						<value>1</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit1</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>1</circuit>
 			</to>
@@ -716,7 +878,7 @@
 						<value>18</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit2</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>2</circuit>
 			</to>
@@ -739,7 +901,7 @@
 						<value>32</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit1</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>1</circuit>
 			</to>
@@ -762,7 +924,7 @@
 						<value>25</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit2</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>2</circuit>
 			</to>
@@ -786,7 +948,7 @@
 						<value>0</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit1</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>1</circuit>
 			</to>
@@ -807,7 +969,7 @@
 						<value>16</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit2</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>2</circuit>
 			</to>
@@ -829,7 +991,7 @@
 						<value>100</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit1</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>1</circuit>
 			</to>
@@ -846,11 +1008,6 @@
 						<turnouts>192</turnouts>
 						<value>0</value>
 					</unit1>
-					<unit2>
-						<unit>2</unit>
-						<turnouts>100</turnouts>
-						<value>150</value>
-					</unit2>
 				</switches>
 				<toFinal>Lhota</toFinal>
 				<fromStart>Beroun</fromStart>
@@ -874,7 +1031,7 @@
 						<value>93</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit2</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>2</circuit>
 			</to>
@@ -896,7 +1053,7 @@
 						<value>217</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit1</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>1</circuit>
 			</to>
@@ -936,7 +1093,7 @@
 						<value>221</value>
 					</unit1>
 				</switches>
-				<toFinal>Karlstejn</toFinal>
+				<toFinal>Karlstejn_circuit2</toFinal>
 				<fromStart>Beroun</fromStart>
 				<circuit>2</circuit>
 			</to>
@@ -955,13 +1112,13 @@
 					<item5>u024</item5>
 					<item6>u026</item6>
 					<item7>u028</item7>
-					<item8>u032</item8>
+					<item8>KarlstejnTest_u032</item8>
 				</items>
-				<toFinalPosition>Karlstejn</toFinalPosition>
+				<toFinalPosition>Karlstejn_circuit1</toFinalPosition>
 			</fromStartOutside>
-			<fromStartOutside id = "Karlstejn">
+			<fromStartOutside id = "Karlstejn_circuit1">
 				<items>
-					<item8>u032</item8>
+					<item8>KarlstejnTest_u032</item8>
 					<item7>u028</item7>
 					<item6>u026</item6>
 					<item5>u024</item5>
@@ -982,13 +1139,13 @@
 					<item5>u023</item5>
 					<item6>u025</item6>
 					<item7>u027</item7>
-					<item8>u031</item8>
+					<item8>KarlstejnTest_u031</item8>
 				</items>
-				<toFinalPosition>Karlstejn</toFinalPosition>
+				<toFinalPosition>Karlstejn_circuit2</toFinalPosition>
 			</fromStartOutside>
-			<fromStartOutside id = "Karlstejn">
+			<fromStartOutside id = "Karlstejn_circuit2">
 				<items>
-					<item8>u031</item8>
+					<item8>KarlstejnTest_u031</item8>
 					<item7>u027</item7>
 					<item6>u025</item6>
 					<item5>u023</item5>
@@ -1010,13 +1167,13 @@
 					<item6>u021</item6>
 					<item7>u022</item7>
 					<item8>u029</item8>
-					<item9>u030</item9>
+					<item9>LhotaTest_u030</item9>
 				</items>
 				<toFinalPosition>Lhota</toFinalPosition>
 			</fromStartOutside>
 			<fromStartOutside id = "Lhota">
 				<items>
-					<item8>u030</item8>
+					<item8>LhotaTest_u030</item8>
 					<item7>u029</item7>
 					<item6>u022</item6>
 					<item5>u021</item5>
@@ -1060,9 +1217,11 @@
 				<item4>Beroun_kolej_4</item4>
 				<item5>Beroun_kolej_6</item5>
 			</toCircuit>
-			<toCircuit name = "Karlstejn">
-				<item1>KarlstejnTest_u031</item1>
+			<toCircuit name = "Karlstejn_circuit1">
 				<item2>KarlstejnTest_u032</item2>
+			</toCircuit>
+			<toCircuit name = "Karlstejn_circuit2">
+				<item1>KarlstejnTest_u031</item1>
 			</toCircuit>
 		</fromCircuit>
 		<fromCircuit id = "1">
@@ -1073,7 +1232,7 @@
 				<item4>Beroun_kolej_4</item4>
 				<item5>Beroun_kolej_6</item5>
 			</toCircuit>
-			<toCircuit name = "Karlstejn">
+			<toCircuit name = "Karlstejn_circuit1">
 				<item1>KarlstejnTest_u032</item1>
 			</toCircuit>
 		</fromCircuit>
@@ -1085,7 +1244,7 @@
 				<item4>Beroun_kolej_4</item4>
 				<item5>Beroun_kolej_6</item5>
 			</toCircuit>
-			<toCircuit name ="Karlstejn">
+			<toCircuit name ="Karlstejn_circuit2">
 				<item1>KarlstejnTest_u031</item1>
 
 			</toCircuit>
@@ -1114,18 +1273,23 @@
 			</items>
 			<circuit>0</circuit>
 		</nameOfStation>
-		<nameOfStation id = "Karlstejn">
+		<nameOfStation id = "Karlstejn_circuit1">
 			<items>
 				<item2>KarlstejnTest_u032</item2>
+			</items>
+			<circuit>1</circuit>
+		</nameOfStation>
+		<nameOfStation id = "Karlstejn_circuit2">
+			<items>
 				<item3>KarlstejnTest_u031</item3>
 			</items>
-			<circuit>4</circuit>
+			<circuit>2</circuit>
 		</nameOfStation>
 		<nameOfStation id = "Lhota">
 			<items>
 				<item2>LhotaTest_u030</item2>
 			</items>
-			<circuit>7</circuit>
+			<circuit>3</circuit>
 		</nameOfStation>
 	</stationTracks>
 	

@@ -57,7 +57,7 @@
             this.titleDisplayData.Name = "titleDisplayData";
             this.titleDisplayData.Size = new System.Drawing.Size(717, 100);
             this.titleDisplayData.TabIndex = 2;
-            this.titleDisplayData.Text = "Toto jsou momentálně načtená data";
+            this.titleDisplayData.Text = "Loaded timetable for model railway";
             this.titleDisplayData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel2

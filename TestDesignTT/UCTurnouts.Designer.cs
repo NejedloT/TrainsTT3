@@ -176,8 +176,8 @@
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel4.Controls.Add(this.cbTurnout1, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -205,10 +205,10 @@
             "6",
             "7",
             "8"});
-            this.cbTurnout1.Location = new System.Drawing.Point(142, 3);
+            this.cbTurnout1.Location = new System.Drawing.Point(169, 3);
             this.cbTurnout1.MaxDropDownItems = 15;
             this.cbTurnout1.Name = "cbTurnout1";
-            this.cbTurnout1.Size = new System.Drawing.Size(133, 31);
+            this.cbTurnout1.Size = new System.Drawing.Size(106, 31);
             this.cbTurnout1.TabIndex = 5;
             this.cbTurnout1.SelectedIndexChanged += new System.EventHandler(this.cbTurnout1_SelectedIndexChanged);
             // 
@@ -219,16 +219,16 @@
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 34);
+            this.label1.Size = new System.Drawing.Size(160, 34);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Position:";
+            this.label1.Text = "Bit position:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel3.Controls.Add(this.label6, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cbIdUnit1, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -246,9 +246,9 @@
             this.label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label6.Location = new System.Drawing.Point(3, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(132, 34);
+            this.label6.Size = new System.Drawing.Size(160, 34);
             this.label6.TabIndex = 1;
-            this.label6.Text = "Type:";
+            this.label6.Text = "Unit number:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit1
@@ -259,25 +259,25 @@
             this.cbIdUnit1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit1.FormattingEnabled = true;
             this.cbIdUnit1.ItemHeight = 23;
-            this.cbIdUnit1.Location = new System.Drawing.Point(141, 3);
+            this.cbIdUnit1.Location = new System.Drawing.Point(169, 3);
             this.cbIdUnit1.MaxDropDownItems = 30;
             this.cbIdUnit1.Name = "cbIdUnit1";
-            this.cbIdUnit1.Size = new System.Drawing.Size(133, 31);
+            this.cbIdUnit1.Size = new System.Drawing.Size(105, 31);
             this.cbIdUnit1.TabIndex = 3;
             this.cbIdUnit1.SelectedIndexChanged += new System.EventHandler(this.cbIdUnit1_SelectedIndexChanged);
             // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel6.Controls.Add(this.cbValue1, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.label11, 0, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(570, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(279, 34);
             this.tableLayoutPanel6.TabIndex = 5;
             // 
@@ -292,10 +292,10 @@
             this.cbValue1.Items.AddRange(new object[] {
             "0",
             "1"});
-            this.cbValue1.Location = new System.Drawing.Point(142, 3);
+            this.cbValue1.Location = new System.Drawing.Point(170, 3);
             this.cbValue1.MaxDropDownItems = 15;
             this.cbValue1.Name = "cbValue1";
-            this.cbValue1.Size = new System.Drawing.Size(134, 31);
+            this.cbValue1.Size = new System.Drawing.Size(106, 31);
             this.cbValue1.TabIndex = 7;
             this.cbValue1.SelectedIndexChanged += new System.EventHandler(this.cbValue1_SelectedIndexChanged);
             // 
@@ -306,9 +306,9 @@
             this.label11.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label11.Location = new System.Drawing.Point(3, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(133, 34);
+            this.label11.Size = new System.Drawing.Size(161, 34);
             this.label11.TabIndex = 6;
-            this.label11.Text = "Value:";
+            this.label11.Text = "Value of bit:";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel5
@@ -350,15 +350,15 @@
             // tableLayoutPanel9
             // 
             this.tableLayoutPanel9.ColumnCount = 2;
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel9.Controls.Add(this.label16, 0, 0);
             this.tableLayoutPanel9.Controls.Add(this.cbIdUnit2, 1, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 1;
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel9.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel9.TabIndex = 0;
             // 
@@ -369,9 +369,9 @@
             this.label16.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label16.Location = new System.Drawing.Point(3, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(133, 34);
+            this.label16.Size = new System.Drawing.Size(160, 34);
             this.label16.TabIndex = 2;
-            this.label16.Text = "Type:";
+            this.label16.Text = "Unit number:";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit2
@@ -382,25 +382,25 @@
             this.cbIdUnit2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit2.FormattingEnabled = true;
             this.cbIdUnit2.ItemHeight = 23;
-            this.cbIdUnit2.Location = new System.Drawing.Point(142, 3);
+            this.cbIdUnit2.Location = new System.Drawing.Point(169, 3);
             this.cbIdUnit2.MaxDropDownItems = 30;
             this.cbIdUnit2.Name = "cbIdUnit2";
-            this.cbIdUnit2.Size = new System.Drawing.Size(133, 31);
+            this.cbIdUnit2.Size = new System.Drawing.Size(106, 31);
             this.cbIdUnit2.TabIndex = 3;
             this.cbIdUnit2.SelectedIndexChanged += new System.EventHandler(this.cbIdUnit2_SelectedIndexChanged);
             // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.ColumnCount = 2;
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel11.Controls.Add(this.label17, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.cbTurnout2, 1, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(287, 3);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 1;
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel11.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel11.TabIndex = 1;
             // 
@@ -411,9 +411,9 @@
             this.label17.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label17.Location = new System.Drawing.Point(3, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(133, 34);
+            this.label17.Size = new System.Drawing.Size(160, 34);
             this.label17.TabIndex = 5;
-            this.label17.Text = "Position:";
+            this.label17.Text = "Bit position:";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbTurnout2
@@ -433,25 +433,25 @@
             "6",
             "7",
             "8"});
-            this.cbTurnout2.Location = new System.Drawing.Point(142, 3);
+            this.cbTurnout2.Location = new System.Drawing.Point(169, 3);
             this.cbTurnout2.MaxDropDownItems = 15;
             this.cbTurnout2.Name = "cbTurnout2";
-            this.cbTurnout2.Size = new System.Drawing.Size(133, 31);
+            this.cbTurnout2.Size = new System.Drawing.Size(106, 31);
             this.cbTurnout2.TabIndex = 5;
             this.cbTurnout2.SelectedIndexChanged += new System.EventHandler(this.cbTurnout2_SelectedIndexChanged);
             // 
             // tableLayoutPanel12
             // 
             this.tableLayoutPanel12.ColumnCount = 2;
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel12.Controls.Add(this.cbValue2, 1, 0);
             this.tableLayoutPanel12.Controls.Add(this.label18, 0, 0);
             this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel12.Location = new System.Drawing.Point(571, 3);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             this.tableLayoutPanel12.RowCount = 1;
-            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel12.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel12.TabIndex = 2;
             // 
@@ -466,10 +466,10 @@
             this.cbValue2.Items.AddRange(new object[] {
             "0",
             "1"});
-            this.cbValue2.Location = new System.Drawing.Point(142, 3);
+            this.cbValue2.Location = new System.Drawing.Point(169, 3);
             this.cbValue2.MaxDropDownItems = 15;
             this.cbValue2.Name = "cbValue2";
-            this.cbValue2.Size = new System.Drawing.Size(133, 31);
+            this.cbValue2.Size = new System.Drawing.Size(106, 31);
             this.cbValue2.TabIndex = 8;
             this.cbValue2.SelectedIndexChanged += new System.EventHandler(this.cbValue2_SelectedIndexChanged);
             // 
@@ -480,9 +480,9 @@
             this.label18.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label18.Location = new System.Drawing.Point(3, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(133, 34);
+            this.label18.Size = new System.Drawing.Size(160, 34);
             this.label18.TabIndex = 7;
-            this.label18.Text = "Value:";
+            this.label18.Text = "Value of bit:";
             this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel2
@@ -524,15 +524,15 @@
             // tableLayoutPanel8
             // 
             this.tableLayoutPanel8.ColumnCount = 2;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel8.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.cbIdUnit3, 1, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel8.TabIndex = 0;
             // 
@@ -543,9 +543,9 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(133, 34);
+            this.label2.Size = new System.Drawing.Size(160, 34);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Type:";
+            this.label2.Text = "Unit number:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit3
@@ -556,25 +556,25 @@
             this.cbIdUnit3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit3.FormattingEnabled = true;
             this.cbIdUnit3.ItemHeight = 23;
-            this.cbIdUnit3.Location = new System.Drawing.Point(142, 3);
+            this.cbIdUnit3.Location = new System.Drawing.Point(169, 3);
             this.cbIdUnit3.MaxDropDownItems = 30;
             this.cbIdUnit3.Name = "cbIdUnit3";
-            this.cbIdUnit3.Size = new System.Drawing.Size(133, 31);
+            this.cbIdUnit3.Size = new System.Drawing.Size(106, 31);
             this.cbIdUnit3.TabIndex = 3;
             this.cbIdUnit3.SelectedIndexChanged += new System.EventHandler(this.cbIdUnit3_SelectedIndexChanged);
             // 
             // tableLayoutPanel10
             // 
             this.tableLayoutPanel10.ColumnCount = 2;
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel10.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.cbTurnout3, 1, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(287, 3);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 1;
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel10.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel10.TabIndex = 1;
             // 
@@ -585,9 +585,9 @@
             this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label3.Location = new System.Drawing.Point(3, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(133, 34);
+            this.label3.Size = new System.Drawing.Size(160, 34);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Position:";
+            this.label3.Text = "Bit position:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbTurnout3
@@ -607,25 +607,25 @@
             "6",
             "7",
             "8"});
-            this.cbTurnout3.Location = new System.Drawing.Point(142, 3);
+            this.cbTurnout3.Location = new System.Drawing.Point(169, 3);
             this.cbTurnout3.MaxDropDownItems = 15;
             this.cbTurnout3.Name = "cbTurnout3";
-            this.cbTurnout3.Size = new System.Drawing.Size(133, 31);
+            this.cbTurnout3.Size = new System.Drawing.Size(106, 31);
             this.cbTurnout3.TabIndex = 5;
             this.cbTurnout3.SelectedIndexChanged += new System.EventHandler(this.cbTurnout3_SelectedIndexChanged);
             // 
             // tableLayoutPanel13
             // 
             this.tableLayoutPanel13.ColumnCount = 2;
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel13.Controls.Add(this.cbValue3, 1, 0);
             this.tableLayoutPanel13.Controls.Add(this.label12, 0, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel13.Location = new System.Drawing.Point(571, 3);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 1;
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel13.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel13.TabIndex = 2;
             // 
@@ -640,10 +640,10 @@
             this.cbValue3.Items.AddRange(new object[] {
             "0",
             "1"});
-            this.cbValue3.Location = new System.Drawing.Point(142, 3);
+            this.cbValue3.Location = new System.Drawing.Point(169, 3);
             this.cbValue3.MaxDropDownItems = 15;
             this.cbValue3.Name = "cbValue3";
-            this.cbValue3.Size = new System.Drawing.Size(133, 31);
+            this.cbValue3.Size = new System.Drawing.Size(106, 31);
             this.cbValue3.TabIndex = 8;
             this.cbValue3.SelectedIndexChanged += new System.EventHandler(this.cbValue3_SelectedIndexChanged);
             // 
@@ -654,9 +654,9 @@
             this.label12.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label12.Location = new System.Drawing.Point(3, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(133, 34);
+            this.label12.Size = new System.Drawing.Size(160, 34);
             this.label12.TabIndex = 8;
-            this.label12.Text = "Value:";
+            this.label12.Text = "Value of bit:";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel4
@@ -772,15 +772,15 @@
             // tableLayoutPanel15
             // 
             this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel15.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel15.Controls.Add(this.cbIdUnit4, 1, 0);
             this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel15.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel15.Name = "tableLayoutPanel15";
             this.tableLayoutPanel15.RowCount = 1;
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel15.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel15.TabIndex = 0;
             // 
@@ -791,9 +791,9 @@
             this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label4.Location = new System.Drawing.Point(3, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(133, 34);
+            this.label4.Size = new System.Drawing.Size(160, 34);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Type:";
+            this.label4.Text = "Unit number:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit4
@@ -804,25 +804,25 @@
             this.cbIdUnit4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit4.FormattingEnabled = true;
             this.cbIdUnit4.ItemHeight = 23;
-            this.cbIdUnit4.Location = new System.Drawing.Point(142, 3);
+            this.cbIdUnit4.Location = new System.Drawing.Point(169, 3);
             this.cbIdUnit4.MaxDropDownItems = 15;
             this.cbIdUnit4.Name = "cbIdUnit4";
-            this.cbIdUnit4.Size = new System.Drawing.Size(133, 31);
+            this.cbIdUnit4.Size = new System.Drawing.Size(106, 31);
             this.cbIdUnit4.TabIndex = 3;
             this.cbIdUnit4.SelectedIndexChanged += new System.EventHandler(this.cbIdUnit4_SelectedIndexChanged);
             // 
             // tableLayoutPanel16
             // 
             this.tableLayoutPanel16.ColumnCount = 2;
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel16.Controls.Add(this.label5, 0, 0);
             this.tableLayoutPanel16.Controls.Add(this.cbTurnout4, 1, 0);
             this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel16.Location = new System.Drawing.Point(287, 3);
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 1;
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel16.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel16.TabIndex = 1;
             // 
@@ -833,9 +833,9 @@
             this.label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label5.Location = new System.Drawing.Point(3, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(133, 34);
+            this.label5.Size = new System.Drawing.Size(160, 34);
             this.label5.TabIndex = 7;
-            this.label5.Text = "Position:";
+            this.label5.Text = "Bit position:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbTurnout4
@@ -855,25 +855,25 @@
             "6",
             "7",
             "8"});
-            this.cbTurnout4.Location = new System.Drawing.Point(142, 3);
+            this.cbTurnout4.Location = new System.Drawing.Point(169, 3);
             this.cbTurnout4.MaxDropDownItems = 15;
             this.cbTurnout4.Name = "cbTurnout4";
-            this.cbTurnout4.Size = new System.Drawing.Size(133, 31);
+            this.cbTurnout4.Size = new System.Drawing.Size(106, 31);
             this.cbTurnout4.TabIndex = 5;
             this.cbTurnout4.SelectedIndexChanged += new System.EventHandler(this.cbTurnout4_SelectedIndexChanged);
             // 
             // tableLayoutPanel17
             // 
             this.tableLayoutPanel17.ColumnCount = 2;
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel17.Controls.Add(this.cbValue4, 1, 0);
             this.tableLayoutPanel17.Controls.Add(this.label13, 0, 0);
             this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel17.Location = new System.Drawing.Point(571, 3);
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 1;
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel17.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel17.TabIndex = 2;
             // 
@@ -888,10 +888,10 @@
             this.cbValue4.Items.AddRange(new object[] {
             "0",
             "1"});
-            this.cbValue4.Location = new System.Drawing.Point(142, 3);
+            this.cbValue4.Location = new System.Drawing.Point(169, 3);
             this.cbValue4.MaxDropDownItems = 15;
             this.cbValue4.Name = "cbValue4";
-            this.cbValue4.Size = new System.Drawing.Size(133, 31);
+            this.cbValue4.Size = new System.Drawing.Size(106, 31);
             this.cbValue4.TabIndex = 8;
             this.cbValue4.SelectedIndexChanged += new System.EventHandler(this.cbValue4_SelectedIndexChanged);
             // 
@@ -902,9 +902,9 @@
             this.label13.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label13.Location = new System.Drawing.Point(3, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(133, 34);
+            this.label13.Size = new System.Drawing.Size(160, 34);
             this.label13.TabIndex = 9;
-            this.label13.Text = "Value:";
+            this.label13.Text = "Value of bit:";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel8
@@ -946,15 +946,15 @@
             // tableLayoutPanel19
             // 
             this.tableLayoutPanel19.ColumnCount = 2;
-            this.tableLayoutPanel19.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel19.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel19.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel19.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel19.Controls.Add(this.label7, 0, 0);
             this.tableLayoutPanel19.Controls.Add(this.cbIdUnit5, 1, 0);
             this.tableLayoutPanel19.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel19.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel19.Name = "tableLayoutPanel19";
             this.tableLayoutPanel19.RowCount = 1;
-            this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel19.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel19.TabIndex = 0;
             // 
@@ -965,9 +965,9 @@
             this.label7.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label7.Location = new System.Drawing.Point(3, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(133, 34);
+            this.label7.Size = new System.Drawing.Size(160, 34);
             this.label7.TabIndex = 5;
-            this.label7.Text = "Type:";
+            this.label7.Text = "Unit number:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbIdUnit5
@@ -978,25 +978,25 @@
             this.cbIdUnit5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cbIdUnit5.FormattingEnabled = true;
             this.cbIdUnit5.ItemHeight = 23;
-            this.cbIdUnit5.Location = new System.Drawing.Point(142, 3);
+            this.cbIdUnit5.Location = new System.Drawing.Point(169, 3);
             this.cbIdUnit5.MaxDropDownItems = 15;
             this.cbIdUnit5.Name = "cbIdUnit5";
-            this.cbIdUnit5.Size = new System.Drawing.Size(133, 31);
+            this.cbIdUnit5.Size = new System.Drawing.Size(106, 31);
             this.cbIdUnit5.TabIndex = 3;
             this.cbIdUnit5.SelectedIndexChanged += new System.EventHandler(this.cbIdUnit5_SelectedIndexChanged);
             // 
             // tableLayoutPanel20
             // 
             this.tableLayoutPanel20.ColumnCount = 2;
-            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel20.Controls.Add(this.label8, 0, 0);
             this.tableLayoutPanel20.Controls.Add(this.cbTurnout5, 1, 0);
             this.tableLayoutPanel20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel20.Location = new System.Drawing.Point(287, 3);
             this.tableLayoutPanel20.Name = "tableLayoutPanel20";
             this.tableLayoutPanel20.RowCount = 1;
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel20.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel20.TabIndex = 1;
             // 
@@ -1007,9 +1007,9 @@
             this.label8.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label8.Location = new System.Drawing.Point(3, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(133, 34);
+            this.label8.Size = new System.Drawing.Size(160, 34);
             this.label8.TabIndex = 8;
-            this.label8.Text = "Position:";
+            this.label8.Text = "Bit position:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbTurnout5
@@ -1029,25 +1029,25 @@
             "6",
             "7",
             "8"});
-            this.cbTurnout5.Location = new System.Drawing.Point(142, 3);
+            this.cbTurnout5.Location = new System.Drawing.Point(169, 3);
             this.cbTurnout5.MaxDropDownItems = 15;
             this.cbTurnout5.Name = "cbTurnout5";
-            this.cbTurnout5.Size = new System.Drawing.Size(133, 31);
+            this.cbTurnout5.Size = new System.Drawing.Size(106, 31);
             this.cbTurnout5.TabIndex = 5;
             this.cbTurnout5.SelectedIndexChanged += new System.EventHandler(this.cbTurnout5_SelectedIndexChanged);
             // 
             // tableLayoutPanel21
             // 
             this.tableLayoutPanel21.ColumnCount = 2;
-            this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel21.Controls.Add(this.label14, 0, 0);
             this.tableLayoutPanel21.Controls.Add(this.cbValue5, 1, 0);
             this.tableLayoutPanel21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel21.Location = new System.Drawing.Point(571, 3);
             this.tableLayoutPanel21.Name = "tableLayoutPanel21";
             this.tableLayoutPanel21.RowCount = 1;
-            this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel21.Size = new System.Drawing.Size(278, 34);
             this.tableLayoutPanel21.TabIndex = 2;
             // 
@@ -1058,9 +1058,9 @@
             this.label14.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label14.Location = new System.Drawing.Point(3, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(133, 34);
+            this.label14.Size = new System.Drawing.Size(160, 34);
             this.label14.TabIndex = 10;
-            this.label14.Text = "Value:";
+            this.label14.Text = "Value of bit:";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbValue5
@@ -1074,10 +1074,10 @@
             this.cbValue5.Items.AddRange(new object[] {
             "0",
             "1"});
-            this.cbValue5.Location = new System.Drawing.Point(142, 3);
+            this.cbValue5.Location = new System.Drawing.Point(169, 3);
             this.cbValue5.MaxDropDownItems = 15;
             this.cbValue5.Name = "cbValue5";
-            this.cbValue5.Size = new System.Drawing.Size(133, 31);
+            this.cbValue5.Size = new System.Drawing.Size(106, 31);
             this.cbValue5.TabIndex = 8;
             this.cbValue5.SelectedIndexChanged += new System.EventHandler(this.cbValue5_SelectedIndexChanged);
             // 
@@ -1086,10 +1086,10 @@
             this.label9.Dock = System.Windows.Forms.DockStyle.Top;
             this.label9.Location = new System.Drawing.Point(0, 360);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(852, 30);
+            this.label9.Size = new System.Drawing.Size(852, 60);
             this.label9.TabIndex = 17;
-            this.label9.Text = "Note: Position is 0 (the lowest bit - 0000 0001) to 7 (1000 0000); Values are 0 t" +
-    "o turn it right (train will go right), 1 to turn it left";
+            this.label9.Text = "Note: Position is 1 (the lowest bit - 0000 0001) to 8 (1000 0000); Values are 0 t" +
+    "o turn switch right (train will go right), 1 to turn switch left";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UCTurnouts

@@ -18,14 +18,18 @@ namespace TestDesignTT
         [Category("Action")]
         [Description("Invoked when user clicks button")]
         public event EventHandler TurnoutInstructionSetClick;
+        //Event handler pro nastaveni jednotky vyhybek
 
         [Browsable(true)]
         [Category("Action")]
         [Description("Invoked when user clicks button")]
         public event EventHandler TurnoutDefinitionStopsClick;
+        //Event handler pro nastaveni softwarovych dorazu
 
+        //list s daty pro nastaveni jednotky vyhybek
         public List<SetNewTurnoutUnitData> newTurnoutData = new List<SetNewTurnoutUnitData>(); //pro ulozeni dat urcenych jednotce
 
+        //list s daty pro nastaveni softwarovych dorazu
         public List<SetNewTurnoutStops> newTurnoutStops = new List<SetNewTurnoutStops>(); //pro ulozeni dat na nastaveni dorazu
 
 
@@ -34,6 +38,9 @@ namespace TestDesignTT
             InitializeComponent();
             CheckStates();
 
+            cbUnitNumber.Items.Clear();
+
+            //vlozeni IDs jednotek vyhybek
             IEnumerable<int> UnitIDs = ControlLogic.SearchLogic.GetTurnoutIDs();
             foreach (int id in UnitIDs)
             {
@@ -96,6 +103,7 @@ namespace TestDesignTT
         private void CheckStates()
         {
             bool bb = false;
+            //Pokud neni zvoleno cislo jendotky, nelze provest zadnou dalsi akci
             if (cbUnitNumber.SelectedIndex < 0)
             {
                 bb = false;
@@ -108,11 +116,13 @@ namespace TestDesignTT
             else
                 bb = true;
 
+            //povol/zakaz jednotliva tlacitka a comboboxy
             cbTimeDelay.Enabled = bb;
             cbPickTurnout.Enabled = bb;
             btnReadState.Enabled = bb;
             btnReset.Enabled = bb;
 
+            //logika pro spravny vyber hodnot na softwarove dorazy
             if (cbPickTurnout.SelectedIndex > -1)
                 cbLeftStop.Enabled = true;
             else
@@ -136,41 +146,30 @@ namespace TestDesignTT
             //zjisteni stisknuteho elementu
             var control = sender as Control;
 
-            /*
-            string selectedItem = cbUnitNumber.SelectedItem as string;
-
-            //kontrola pred crashnutim aplikace
-            if (selectedItem == null)
-                return;
-
-            //vybrane  cislo jednotky z comboboxu
-            byte numberOfUnit = byte.Parse(selectedItem);
-            */
-
-
+            //otestovani, ze bylo skutecne vybrano ID jednotky
             if (cbUnitNumber.SelectedItem == null)
                 return;
 
+            //ziskani ID jednotky
             if (!int.TryParse(cbUnitNumber.SelectedItem.ToString(), out int selectedItem))
                 return;
-
             byte numberOfUnit = (byte)selectedItem;
+
 
             if (cbRightStop.SelectedIndex < 0)
             {
                 //pozadavek na zmenu prodlevy pred natocenim
                 if (control == cbTimeDelay)
                 {
+                    //vyber instrukce pro nastaveni prodlevy
                     turnoutInstruction ti = Packet.turnoutInstruction.nastaveni_prodlevy_pred_natocenim;
 
+                    //zjisteni hodnoty prodlevy mezi odesilanim odberu proudu
                     string value = cbTimeDelay.SelectedItem.ToString();
 
-                    //extrakce doby prodlevy ze stringu stisknuteho
+                    //extrakce doby prodlevy ze stringu stisknuteho, Prevod na integer a nadledne na byte
                     string numericString = value.Split(' ')[0];
-
-                    // Prevod na integer a nadledne na byte
                     int myValue = int.Parse(numericString) / 10;
-
                     byte data = (byte)myValue;
 
                     //ulozeni dat
@@ -180,19 +179,26 @@ namespace TestDesignTT
                 //pozadavek na precteni aktualniho stavu
                 if (control == btnReadState)
                 {
+                    //vyber instrukce pro zjisteni stavu natoceni vyhybek
                     turnoutInstruction ti = Packet.turnoutInstruction.precteni_stavu_natoceni;
 
+                    //vlozeni dat pro precteni stavu
                     byte data = 0x01;
 
+                    //ulozeni dat
                     addNewTurnoutUnitData(ti, numberOfUnit, data);
                 }
 
+                //pozadavek na reser jednotky
                 if (control == btnReset)
                 {
+                    //vyber instrukce pro reset jednotky
                     turnoutInstruction ti = Packet.turnoutInstruction.restart_jednotky;
 
+                    //vlozeni dat pro reset jednotky
                     byte data = 0x01;
 
+                    //ulozeni dat
                     addNewTurnoutUnitData(ti, numberOfUnit, data);
                 }
 
@@ -205,14 +211,15 @@ namespace TestDesignTT
             }
             else
             {
+                //vyber instrukce pro nastaveni softwarovych dorazu
                 turnoutInstruction ti = Packet.turnoutInstruction.nastaveni_dorazu;
 
+                //zjisteni vybrane vyhybky a kontrola pred crashnutim aplikace
                 string selectedTurnout = cbPickTurnout.SelectedItem as string;
-
-                //kontrola pred crashnutim aplikace
                 if (selectedTurnout == null)
                     return;
 
+                //zjisteni bytove hodnoty vyhybky
                 byte numberOfTurnout;
                 if (selectedTurnout == "All")
                     numberOfTurnout = 0xAA;
@@ -248,8 +255,10 @@ namespace TestDesignTT
 
                 byte right = (byte)myValueRight;
 
+                //ulozeni dat
                 addNewTurnoutStops(ti,numberOfUnit,numberOfTurnout,left,right);
 
+                //data byla ulozena, nyni vymazani jednotky a zrusit zaktivneni tlacitek
                 cbUnitNumber.SelectedIndex = -1;
                 CheckStates();
 
@@ -258,17 +267,34 @@ namespace TestDesignTT
             }
         }
 
+        /// <summary>
+        /// Metoda pro ulozeni nastaveni jednotky vyhybek (mimo nastaveni dorazu)
+        /// </summary>
+        /// <param name="type">Typ instrukce</param>
+        /// <param name="numberOfUnit">ID jednotky</param>
+        /// <param name="data">Data</param>
         public void addNewTurnoutUnitData(turnoutInstruction type, byte numberOfUnit, byte data)
         {
             newTurnoutData.Add(new SetNewTurnoutUnitData { Type = type, NumberOfUnit = numberOfUnit, Data = data });
         }
 
+        /// <summary>
+        /// Metoda pro ulozeni nastaveni softwarovych dorazu
+        /// </summary>
+        /// <param name="type">Typ instrukce</param>
+        /// <param name="numberOfUnit">ID jednotky</param>
+        /// <param name="numberOfTurnout">ID vybrane vyhybky /vsech vyhybek</param>
+        /// <param name="left">Hodnota leveho dorazu</param>
+        /// <param name="right">Hodnota praveho dorazu</param>
         public void addNewTurnoutStops(turnoutInstruction type, byte numberOfUnit, byte numberOfTurnout, byte left, byte right)
         {
             newTurnoutStops.Add(new SetNewTurnoutStops { Type = type, NumberOfUnit = numberOfUnit, NumberOfTurnout = numberOfTurnout, LeftStop = left, RightStop = right });
         }
     }
 
+    /// <summary>
+    /// Trida pro uchovani dat pro nastaveni jednotky vyhybek
+    /// </summary>
     public class SetNewTurnoutUnitData
     {
         public turnoutInstruction Type { get; set; }
@@ -276,6 +302,9 @@ namespace TestDesignTT
         public byte Data { get; set; }
     }
 
+    /// <summary>
+    /// Trida pro nastaveni softwarovych dorazu
+    /// </summary>
     public class SetNewTurnoutStops
     {
         public turnoutInstruction Type { get; set; }

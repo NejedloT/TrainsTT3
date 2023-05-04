@@ -19,6 +19,7 @@ namespace TestDesignTT
         [Description("Invoked when user clicks button")]
         public event EventHandler MultiTurnoutButtonAddClick;
 
+        //list s daty pro zmenu vyhybek
         public List<Turnouts> turnouts = new List<Turnouts>();
 
         public UCTurnoutsMulti()
@@ -26,6 +27,7 @@ namespace TestDesignTT
             InitializeComponent();
             ClearData();
 
+            //vlozeni jendotlivych IDs vyhybek z konfiguracniho souboru
             IEnumerable<int> UnitIDs = ControlLogic.SearchLogic.GetTurnoutIDs();
             foreach (int id in UnitIDs)
             {
@@ -176,6 +178,12 @@ namespace TestDesignTT
             // nasazena jednotka prestavniku - pro cteni: 10000000 00100000 → 1000 | 0000001 → 0x401 (8 a 1) - pro cteni
         }
 
+        /// <summary>
+        /// Pridani dat pro pretoceni vyhybek do listu
+        /// </summary>
+        /// <param name="id">ID jednotky vyhybek</param>
+        /// <param name="change">Vyber vyhybek k pretoceni (1.byte)</param>
+        /// <param name="turnPosition">Data pro nastaveni vyhybek do spravne polohy (2.byte)</param>
         public void addTurnout(UInt32 id, byte change, byte turnPosition)
         {
             turnouts.Add(new Turnouts { UnitID = id, Change = change, Position = turnPosition });

@@ -55,6 +55,18 @@ namespace ControlLogic
             return sortedUnitIDs;
         }
 
+        public static XElement GetCoordinatesForSection(string currentPosition)
+        {
+            if (xdoc.Root == null)
+                xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+
+            XElement section = xdoc.Descendants("section")
+                                  .Where(s => (string)s.Attribute("id") == currentPosition)
+                                  .FirstOrDefault();
+
+            // Return the mapcoordinates element
+            return section?.Element("mapcoordinates");
+        }
 
         public static IEnumerable<XElement> GetFromElements(Trains train)
         {

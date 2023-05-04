@@ -30,6 +30,9 @@ namespace ControlLogic
         //event handler na zobrazeni zpravy z logiky rizeni
         public event EventHandler<InfoMessageSend> InfoMessageEvent;
 
+        //event handler na zobrazeni notifikace z logiky rizeni
+        public event EventHandler<NotificationSend> NotificationMessageEvent;
+
         //instance ktera je vyvolana z windows form
         private static MainLogic instance = null;
 
@@ -302,6 +305,8 @@ namespace ControlLogic
 
                         dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = train.speed });
                         ml.OnMyEventLoco(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = train.speed });
+                        ml.OnMyEventNotification(new NotificationSend { NotificationType = "success", InfoMessage = "Train " + train.name + " will start its movement in a second." });
+                        
                     }
                 }
 
@@ -415,10 +420,14 @@ namespace ControlLogic
                     }
 
                     //zastav vlak po vterine
-                    var timer = new System.Timers.Timer(1000);
+                    var timer = new System.Timers.Timer(50);
                     timer.Elapsed += (sender, e) => Timer_Elapsed(sender, e, train, 0);
                     timer.Start();
                     timeToStop[train] = timer;
+
+                    MainLogic ml = GetInstance();
+                    ml.OnMyEventNotification(new NotificationSend {NotificationType = "success", InfoMessage = "Train " + train.name + " will stop its movement in a second because it is in the final station." });
+                    //warning, success, error
                 }
             }
             else
@@ -504,8 +513,9 @@ namespace ControlLogic
 
                     Locomotive locomotive = new Locomotive(train.name);
 
-                    ml.OnMyEventMessage(new InfoMessageSend { InfoMessage = "Vlak " + train.name + " se nenachazi v ocekavane poloze, zastavuji vsechny vlaky!" });
-
+                    ml.OnMyEventMessage(new InfoMessageSend { InfoMessage = "Train " + train.name + " is not in expected position! All trains will be stopped!" });
+                    ml.OnMyEventNotification(new NotificationSend { NotificationType = "error", InfoMessage = "Train " + train.name + " is moving and doesn't have a current consumption. All trains will be stopped!" });
+                    //warning, success, error
                     dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 0 });
                     ml.OnMyEventLoco(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 0 });
 
@@ -563,6 +573,8 @@ namespace ControlLogic
 
             dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 3 });
             ml.OnMyEventLoco(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 3 });
+            ml.OnMyEventNotification(new NotificationSend { NotificationType = "warning", InfoMessage = "Train " + train.name + " is temporarily stopped because of the possibility of collision." });
+            //warning, success, error
 
             train.move = 2;
         }
@@ -907,26 +919,22 @@ namespace ControlLogic
 
                     dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = (byte)3 });
                     ml.OnMyEventLoco(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = (byte)3 });
+
+                    ml.OnMyEventNotification(new NotificationSend { NotificationType = "warning", InfoMessage = "Train " + train.name + " have been stopped because of the check in critical circuit." });
                 }
 
                 else
                 {
-                    /*
-                    timeToStop = new System.Timers.Timer(1000);
-
-                    // Set the event handler for the Elapsed event
-                    timeToStop.Elapsed += (sender, e) => Timer_Elapsed(sender, e, train);
-
-                    // Start the timer
-                    timeToStop.Start();
-                    */
-
+                    //
                     if (train.move == 1)
                     {
                         var timer = new System.Timers.Timer(1000);
                         timer.Elapsed += (sender, e) => Timer_Elapsed(sender, e, train, 2);
                         timer.Start();
                         timeToStop[train] = timer;
+
+                        MainLogic ml = GetInstance();
+                        ml.OnMyEventNotification(new NotificationSend { NotificationType = "warning", InfoMessage = "Train " + train.name + " will be stopped because of the check in critical circuit." });
                     }
                 }
             }
@@ -1043,7 +1051,7 @@ namespace ControlLogic
                             .Where(rs => rs.TrainIdReserved != train.id)
                             .ToList();
 
-                        //kontrola priority - pokud nemaji tyto useky rezervovane vlaky, ktere nejedou, tak v poradku a pravo priority pr ovlak, ktery stoji ve vyhybkach
+                        //kontrola priority - pokud nemaji tyto useky rezervovane vlaky, ktere nejedou, tak v poradku a pravo priority pro vlak, ktery stoji ve vyhybkach
                         for (int i = 0; i < checkPriority.Count(); i++)
                         {
                             //checkSameReserved
@@ -1239,7 +1247,7 @@ namespace ControlLogic
         /// <param name="speed">rychlost</param>
         /// <param name="reverse">jede obracenym smerem? (pozpatku)</param>
         /// <param name="final">Nazev cilove stanice/koleje</param>
-        public static void addNewTrainDataFromClient(string name, string currentPosition, byte speed, bool reverse, string final)
+        public static void addNewTrainDataFromClient(string name, string currentPosition, byte speed, bool reverse, string start, string final)
         {
             lock (lockingLogic)
             {
@@ -1283,6 +1291,7 @@ namespace ControlLogic
                             t.nextPosition = nextSecId;
                             t.reverse = reverse;
                             t.speed = speed;
+                            t.startPosition = start;
                             t.finalPosition = final;
                             t.mapOrientation = orientation;
                             t.move = 2;
@@ -1291,6 +1300,16 @@ namespace ControlLogic
                     }
                 }
             }
+        }
+
+        protected void OnMyEventNotification(NotificationSend e)
+        {
+            try
+            {
+                NotificationMessageEvent?.Invoke(this, e);
+            }
+            catch
+            { }
         }
 
         protected void OnMyEventMessage(InfoMessageSend e)
@@ -1326,6 +1345,13 @@ namespace ControlLogic
             { }
 
         }
+    }
+
+    public class NotificationSend
+    {
+        public string NotificationType { get; set; } //"warning", success, error
+
+        public string InfoMessage { get; set; }
     }
 
     public class InfoMessageSend

@@ -78,7 +78,7 @@
             this.textBoxPath.Name = "textBoxPath";
             this.textBoxPath.Size = new System.Drawing.Size(493, 44);
             this.textBoxPath.TabIndex = 2;
-            this.textBoxPath.Text = "Please enter fath to you CSV file...";
+            this.textBoxPath.Text = "Please enter path to your CSV file...";
             this.textBoxPath.TextChanged += new System.EventHandler(this.textBoxPath_TextChanged);
             this.textBoxPath.Enter += new System.EventHandler(this.textBoxPath_Enter);
             this.textBoxPath.Leave += new System.EventHandler(this.textBoxPath_Leave);
@@ -106,7 +106,6 @@
             // label1
             // 
             this.label1.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;

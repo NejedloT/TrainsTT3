@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,8 @@ namespace TestDesignTT
         private void UCHome_Load()
         {
             timer1.Start();
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+
             labelTime.Text = DateTime.Now.ToLongTimeString();
             labelDate.Text = DateTime.Now.ToLongDateString();
         }
@@ -35,7 +38,10 @@ namespace TestDesignTT
         /// <param name="e">Event Handler na kazdou vterinu</param>
         private void timer1_Tick(object sender, EventArgs e)
         {
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+
             labelTime.Text = DateTime.Now.ToLongTimeString();
+            labelDate.Text = DateTime.Now.ToLongDateString();
         }
     }
 }

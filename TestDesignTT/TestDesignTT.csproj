@@ -17,6 +17,8 @@
     <Compile Remove="UCEditTimetable.Designer.cs" />
     <Compile Remove="UCOccupancy.cs" />
     <Compile Remove="UCOccupancy.Designer.cs" />
+    <Compile Remove="UCSettings.cs" />
+    <Compile Remove="UCSettings.Designer.cs" />
     <Compile Remove="UCTrainMoving.cs" />
     <Compile Remove="UCTrainMoving.Designer.cs" />
   </ItemGroup>
@@ -26,6 +28,7 @@
     <EmbeddedResource Remove="UCEditMoving.resx" />
     <EmbeddedResource Remove="UCEditTimetable.resx" />
     <EmbeddedResource Remove="UCOccupancy.resx" />
+    <EmbeddedResource Remove="UCSettings.resx" />
     <EmbeddedResource Remove="UCTrainMoving.resx" />
   </ItemGroup>
 

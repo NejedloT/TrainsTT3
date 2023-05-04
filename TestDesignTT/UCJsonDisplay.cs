@@ -15,29 +15,76 @@ namespace TestDesignTT
 
     public partial class UCJsonDisplay : UserControl
     {
+        //list nesouci data JSONu preo zobrazeni
         private static List<Trains> trainsList = new List<Trains>();
+
+        //timer, diky ktreremu dojde v pravidelnem intervalu ke znovunacteni dat
+        private static System.Timers.Timer refreshData;
 
         public UCJsonDisplay()
         {
             InitializeComponent();
+            startTimer();
         }
 
+        /// <summary>
+        /// Spsuteni timeru aby dochazelo pravidelne k aktualizaci dat
+        /// </summary>
+        public void startTimer()
+        {
+            refreshData = new System.Timers.Timer(1000);
+
+            refreshData.Elapsed += UpdateData_Tick;
+
+            refreshData.AutoReset = true;
+
+            refreshData.Enabled = true;
+        }
+
+        /// <summary>
+        /// Timer, ktery kazdou vterinu aktualizuje data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UpdateData_Tick(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            displayJson();
+        }
+
+        /// <summary>
+        /// Metoda, ktera slouzi k zobrazeni aktualnich JSON hodnot
+        /// </summary>
         public void displayJson()
         {
             //data z JSONu
             TrainDataJSON td = new TrainDataJSON();
             trainsList = td.LoadJson();
 
+            //data do tabulky
             dataGridView1.DataSource = trainsList;
-
             BindingList<Trains> data = new BindingList<Trains>();
 
+            //pridani jednotlivych radku
             for (int i = 0; i < trainsList.Count; i++)
             {
                 data.Add(trainsList[i]);
             }
 
             dataGridView1.DataSource = data;
+
+            //nastaveni nazvu hlavicky pro kazdy sloupec JSONu
+            dataGridView1.Columns[0].HeaderText = "ID";
+            dataGridView1.Columns[1].HeaderText = "Name";
+            dataGridView1.Columns[2].HeaderText = "Current position";
+            dataGridView1.Columns[3].HeaderText = "Last position";
+            dataGridView1.Columns[4].HeaderText = "Next position";
+            dataGridView1.Columns[5].HeaderText = "Moving";
+            dataGridView1.Columns[6].HeaderText = "Speed";
+            dataGridView1.Columns[7].HeaderText = "Reverze";
+            dataGridView1.Columns[8].HeaderText = "Orientation";
+            dataGridView1.Columns[9].HeaderText = "Circuit";
+            dataGridView1.Columns[10].HeaderText = "Start";
+            dataGridView1.Columns[11].HeaderText = "End";
         }
     }
 }

@@ -155,14 +155,14 @@
             // label1
             // 
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(934, 120);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Poznámka: Pokud používáte DEBUG mode, aktualizuje před ukončením pozice vlaků pře" +
-    "s tlačítku Update JSON a nastavte jejich současnou polohu, směr atd. !!!";
+            this.label1.Text = "Note: If you are using DEBUG mode, don\'t forget to update train position using \"U" +
+    "pdate JSON\" button and set actual values!!";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel6
@@ -183,7 +183,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(934, 50);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Tomáš Nejedlo, 2023";
+            this.label2.Text = "created by: Tomáš Nejedlo, 2023";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // UCHome

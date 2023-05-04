@@ -41,10 +41,8 @@
             this.cbFinalStation = new System.Windows.Forms.ComboBox();
             this.labelFinalStation = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.cbExitPoint = new System.Windows.Forms.ComboBox();
             this.cbDirect = new System.Windows.Forms.ComboBox();
             this.cbSpeed = new System.Windows.Forms.ComboBox();
-            this.labelExitPoint = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -165,10 +163,8 @@
             this.tableLayoutPanel2.Controls.Add(this.cbFinalStation, 2, 5);
             this.tableLayoutPanel2.Controls.Add(this.labelFinalStation, 1, 5);
             this.tableLayoutPanel2.Controls.Add(this.label6, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.cbExitPoint, 2, 4);
             this.tableLayoutPanel2.Controls.Add(this.cbDirect, 2, 2);
             this.tableLayoutPanel2.Controls.Add(this.cbSpeed, 2, 3);
-            this.tableLayoutPanel2.Controls.Add(this.labelExitPoint, 1, 4);
             this.tableLayoutPanel2.Controls.Add(this.label4, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.label2, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.label3, 1, 0);
@@ -272,20 +268,6 @@
             this.label6.Text = "Start position:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // cbExitPoint
-            // 
-            this.cbExitPoint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbExitPoint.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbExitPoint.FormattingEnabled = true;
-            this.cbExitPoint.Items.AddRange(new object[] {
-            "1"});
-            this.cbExitPoint.Location = new System.Drawing.Point(462, 135);
-            this.cbExitPoint.Name = "cbExitPoint";
-            this.cbExitPoint.Size = new System.Drawing.Size(344, 23);
-            this.cbExitPoint.TabIndex = 9;
-            this.cbExitPoint.Visible = false;
-            this.cbExitPoint.SelectedIndexChanged += new System.EventHandler(this.cbExitPoint_SelectedIndexChanged);
-            // 
             // cbDirect
             // 
             this.cbDirect.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -329,21 +311,6 @@
             this.cbSpeed.TabIndex = 7;
             this.cbSpeed.SelectedIndexChanged += new System.EventHandler(this.cbSpeed_SelectedIndexChanged);
             // 
-            // labelExitPoint
-            // 
-            this.labelExitPoint.AutoSize = true;
-            this.labelExitPoint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelExitPoint.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelExitPoint.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.labelExitPoint.Location = new System.Drawing.Point(109, 132);
-            this.labelExitPoint.Margin = new System.Windows.Forms.Padding(0);
-            this.labelExitPoint.Name = "labelExitPoint";
-            this.labelExitPoint.Size = new System.Drawing.Size(350, 33);
-            this.labelExitPoint.TabIndex = 5;
-            this.labelExitPoint.Text = "Exit point:";
-            this.labelExitPoint.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.labelExitPoint.Visible = false;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -369,7 +336,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(350, 33);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Position its speed:";
+            this.label2.Text = "Set its speed:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
@@ -486,10 +453,8 @@
         private Panel panel1;
         private Panel panel2;
         private TableLayoutPanel tableLayoutPanel2;
-        private ComboBox cbExitPoint;
         private ComboBox cbDirect;
         private ComboBox cbSpeed;
-        private Label labelExitPoint;
         private Label label4;
         private Label label2;
         private Label label3;

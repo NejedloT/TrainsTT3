@@ -24,8 +24,10 @@ namespace TestDesignTT
         public event EventHandler ButtonChangeJsonClick;
         //Event znacici, ze maji byt zmenena data v JSONu
 
+        //list s JSON daty vlaku
         private static List<Trains> trainsList = new List<Trains>();
 
+        //list pro ulozeni zmeny dat JSONu
         public List<ChangeJsonData> changeJsonData = new List<ChangeJsonData>();
 
         public UCJsonEdit()
@@ -106,16 +108,19 @@ namespace TestDesignTT
         /// <param name="e">Event, kdyz byla zmenena soucasna pozice</param>
         private void cbCurrentPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Najde casti, ktere se nachazi na minule a soucasne pozici
-
+            //Pokud nebyl vybran soucasny usek, ukonci to
             if (cbCurrentPosition.SelectedItem == null)
                 return;
 
+            //zjisti sousedni useky od aktualni polohy vlaku
             IEnumerable<string> nextPositions = SearchLogic.GetNextPositions(cbCurrentPosition.SelectedItem.ToString());
+            
+            //vymaz data pro minuly usek a vloz nova
             cbPreviousPosition.Items.Clear();
             cbStart.SelectedIndex = -1;
             foreach (string position in nextPositions)
             {
+                //vlozi data, ktera jeste nebyla pridana a ktera nejsou prazdna
                 if (!cbPreviousPosition.Items.Contains(position) && position != "")
                 {
                     cbPreviousPosition.Items.Add(position);
@@ -125,21 +130,28 @@ namespace TestDesignTT
             checkSaveButton();
         }
 
+        /// <summary>
+        /// Event po vybrani minule polohy vlaku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbPreviousPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkSaveButton();
 
+            //pokud nebyla vybrana soucasna poloha, tak konec
             if (cbCurrentPosition.SelectedItem == null)
                 return;
 
             cbStart.Text = null;
 
+            //zjisteni aktualni hodnoty okruhu
             int circuit = SearchLogic.GetCurrentCircuit(cbCurrentPosition.SelectedItem.ToString());
-            if (circuit == 0)
+
+            //Pokud je vlak u nadrazi, hledej polohu mozne pocatecni stanice v definovanych cestach a zobraz prvni z nich
+            if (circuit == 0 || circuit == 4 || circuit == 7)
             {
                 IEnumerable<string> fromStart = SearchLogic.GetStartStationInCritical(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
-                //string fromStart = toElement.FirstOrDefault();
-                //cbStart.Text = fromStart;
                 string startStation = fromStart.FirstOrDefault();
                 if (startStation != null)
                 {
@@ -148,9 +160,8 @@ namespace TestDesignTT
             }
             else
             {
+                //najdi pocatecni stanici mimo kriticke useky
                 IEnumerable<string> fromStart = SearchLogic.GetStartStationOutside(cbCurrentPosition.SelectedItem.ToString(), cbPreviousPosition.SelectedItem.ToString());
-                //string fromStart = toElement.FirstOrDefault();
-                //cbStart.Text = fromStart;
                 string startStation = fromStart.FirstOrDefault();
                 if (startStation != null)
                 {
@@ -159,6 +170,11 @@ namespace TestDesignTT
             }
         }
 
+        /// <summary>
+        /// Akce po zmene orientace vlaku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbDirection_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkSaveButton();
@@ -171,11 +187,14 @@ namespace TestDesignTT
         /// <param name="e">Event po kliknuti do comboboxu pro vyber vlaku</param>
         private void cbPickTrain_Click(object sender, EventArgs e)
         {
+            //najdi JSON
             TrainDataJSON td = new TrainDataJSON();
             trainsList = td.LoadJson();
 
+            //vymaz data
             cbPickTrain.Items.Clear();
 
+            //vloz jednotlive vlaky, ktere maji priznak ze nejedou
             foreach (Trains train in trainsList)
             {
                 if (train.move == 0)
@@ -194,6 +213,8 @@ namespace TestDesignTT
         private void cbCurrentPosition_Click(object sender, EventArgs e)
         {
             cbCurrentPosition.Items.Clear();
+
+            //zobraz vsechny pozice, ktere jsou mozne vlozit
             foreach (Section sec in SectionInfo.listOfSection)
             {
                 cbCurrentPosition.Items.Add(sec.Name);
@@ -211,13 +232,18 @@ namespace TestDesignTT
             checkSaveButton();
         }
 
+        /// <summary>
+        /// Metoda po stisknuti buttonu pro vymazani vsech dat z jednotlivych boxu a fieldu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearData();
         }
 
         /// <summary>
-        /// Ulozeni vybranych dat
+        /// Ulozeni vybranych dat a vyvolani eventu
         /// </summary>
         /// <param name="sender">Kliknuti na ulozit</param>
         /// <param name="e">Kliknuti na ulozit</param>
@@ -234,19 +260,22 @@ namespace TestDesignTT
         /// Ulozeni novych informaci
         /// Tyto informace jsou pote ulozeny do JSONu
         /// </summary>
-        /// <param name="id">ID vlaku</param>
+        /// <param name="name">ID vlaku</param>
         /// <param name="currentPosition">Soucasna pozice</param>
         /// <param name="previousPosition">Minula pozice</param>
         /// <param name="direction">Dostal se vlak do teto pozice popredu/pozadu</param>
-        public void addJsonChange(string id, string currentPosition, string previousPosition, bool direction, string startPosition, string orientation)
+        public void addJsonChange(string name, string currentPosition, string previousPosition, bool direction, string startPosition, string orientation)
         {
-            changeJsonData.Add(new ChangeJsonData { Id = id, CurrentPosition = currentPosition, PreviousPosition = previousPosition, Reverse = direction, StartPosition = startPosition, Orientation = orientation });
+            changeJsonData.Add(new ChangeJsonData { Name = name, CurrentPosition = currentPosition, PreviousPosition = previousPosition, Reverse = direction, StartPosition = startPosition, Orientation = orientation });
         }
     }
 
+    /// <summary>
+    /// Trida nesouci data o zmene JSON dat pro dany vlak
+    /// </summary>
     public class ChangeJsonData
     {
-        public string Id { get; set; }
+        public string Name { get; set; }
         public string CurrentPosition { get; set; }
         public string PreviousPosition { get; set; }
         public bool Reverse { get; set; }

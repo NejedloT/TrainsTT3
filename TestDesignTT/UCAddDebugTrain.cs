@@ -16,10 +16,7 @@ namespace TestDesignTT
     public partial class UCAddDebugTrain : UserControl
     {
 
-        // Event Handler, ktery znaci, ze doslo k pozadavku na rozjeti ci zastaveni lokomotivy
-        [Browsable(true)]
-        [Category("Action")]
-        [Description("Invoked when user clicks button")]
+        //Event Handler, ktery znaci, ze doslo k pozadavku na rozjeti ci zastaveni lokomotivy
         public event EventHandler ChangeOfTrainData;
 
         //seznam lokomotiv, ktere jsou vlozeny v jinem radku
@@ -27,6 +24,7 @@ namespace TestDesignTT
 
         //list s daty na zmenu lokomotivy
         public List<ChangeTrainData> trainDataChange = new List<ChangeTrainData>();
+
         public UCAddDebugTrain()
         {
             InitializeComponent();
@@ -63,6 +61,7 @@ namespace TestDesignTT
 
             for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
             {
+                //nedoslo k akci v danem radku, pokracuj k dalsi otocce v cyklu
                 if (i == rowIndex)
                     continue;
 
@@ -72,6 +71,7 @@ namespace TestDesignTT
                     addedLocomotives.Add(cbTrain.SelectedItem.ToString());
             }
 
+            //pro dany radek jsou smazana data a nahrana nova
             for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
             {
                 if (i == rowIndex)
@@ -79,6 +79,8 @@ namespace TestDesignTT
                     //vymaz data pro dany vlak a nasun nova (nova data jsou data vlaku, ktere nebyly jeste vybrany)
                     ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
                     cbTrain.Items.Clear();
+
+                    //prida lokomotivy pro vyber. Pokud dana lokomotiva jiz je na obrazovce, tak nebude pridana
                     for (int j = 0; j < LocomotiveInfo.listOfLocomotives.Count; j++)
                     {
                         string loco = Packet.UnderLineToGap(LocomotiveInfo.listOfLocomotives[j].Name);
@@ -107,15 +109,6 @@ namespace TestDesignTT
             //nacti velikost radku
             int[] rowHeights = tableLayoutPanel1.GetRowHeights();
 
-            /*
-            for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
-            {
-                ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
-                if (cbTrain.SelectedIndex > -1)
-                    addedLocomotives.Add(cbTrain.SelectedItem.ToString());
-            }
-            */
-
             for (int i = 0; i < tableLayoutPanel1.RowCount; i++)
             {
                 if (rowHeights[i] < 0.5)
@@ -128,236 +121,381 @@ namespace TestDesignTT
         }
 
         #region Buttons Start/Stop click events
+        /// <summary>
+        /// Akce po stisknuti tlacitka Start/Stop na 1. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartStop1_Click(object sender, EventArgs e)
         {
             startStopAction(sender, e);
         }
 
+        /// <summary>
+        /// Akce po stisknuti tlacitka Start/Stop na 2. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartStop2_Click(object sender, EventArgs e)
         {
             startStopAction(sender, e);
         }
 
+        /// <summary>
+        /// Akce po stisknuti tlacitka Start/Stop na 3. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartStop3_Click(object sender, EventArgs e)
         {
             startStopAction(sender, e);
         }
 
+        /// <summary>
+        /// Akce po stisknuti tlacitka Start/Stop na 4. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartStop4_Click(object sender, EventArgs e)
         {
             startStopAction(sender, e);
         }
 
+        /// <summary>
+        /// Akce po stisknuti tlacitka Start/Stop na 5. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartStop5_Click(object sender, EventArgs e)
         {
             startStopAction(sender, e);
         }
 
+        /// <summary>
+        /// Akce po stisknuti tlacitka Start/Stop na 6. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartStop6_Click(object sender, EventArgs e)
         {
             startStopAction(sender, e);
         }
 
+        /// <summary>
+        /// Akce po stisknuti tlacitka Start/Stop na 7. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartStop7_Click(object sender, EventArgs e)
         {
             startStopAction(sender, e);
         }
 
+        /// <summary>
+        /// Akce po stisknuti tlacitka Start/Stop na 8. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartStop8_Click(object sender, EventArgs e)
         {
             startStopAction(sender, e);
         }
 
+        /// <summary>
+        /// Akce po stisknuti tlacitka Start/Stop na 9. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartStop9_Click(object sender, EventArgs e)
         {
             startStopAction(sender, e);
         }
         #endregion
 
-        #region Comboboxes for train and speed, click events and logic
+        #region Comboboxes for train, trackbar for speed, click events and logic
 
+        /// <summary>
+        /// Stisknuti comboboxu pro vyber lokomotivy na 1. radku
+        /// Vsechna data budou smazana a nahrazena validnimi lokomotivami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain1_Click(object sender, EventArgs e)
         {
             updateHashLoco(sender,e);
         }
 
+        /// <summary>
+        /// Stisknuti comboboxu pro vyber lokomotivy na 2. radku
+        /// Vsechna data budou smazana a nahrazena validnimi lokomotivami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain2_Click(object sender, EventArgs e)
         {
             updateHashLoco(sender, e);
         }
 
+        /// <summary>
+        /// Stisknuti comboboxu pro vyber lokomotivy na 3. radku
+        /// Vsechna data budou smazana a nahrazena validnimi lokomotivami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain3_Click(object sender, EventArgs e)
         {
             updateHashLoco(sender, e);
         }
 
+        /// <summary>
+        /// Stisknuti comboboxu pro vyber lokomotivy na 4. radku
+        /// Vsechna data budou smazana a nahrazena validnimi lokomotivami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain4_Click(object sender, EventArgs e)
         {
             updateHashLoco(sender, e);
         }
 
+        /// <summary>
+        /// Stisknuti comboboxu pro vyber lokomotivy na 5. radku
+        /// Vsechna data budou smazana a nahrazena validnimi lokomotivami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain5_Click(object sender, EventArgs e)
         {
             updateHashLoco(sender, e);
         }
 
+        /// <summary>
+        /// Stisknuti comboboxu pro vyber lokomotivy na 6. radku
+        /// Vsechna data budou smazana a nahrazena validnimi lokomotivami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain6_Click(object sender, EventArgs e)
         {
             updateHashLoco(sender, e);
         }
 
+        /// <summary>
+        /// Stisknuti comboboxu pro vyber lokomotivy na 7. radku
+        /// Vsechna data budou smazana a nahrazena validnimi lokomotivami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain7_Click(object sender, EventArgs e)
         {
             updateHashLoco(sender, e);
         }
 
+        /// <summary>
+        /// Stisknuti comboboxu pro vyber lokomotivy na 8. radku
+        /// Vsechna data budou smazana a nahrazena validnimi lokomotivami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain8_Click(object sender, EventArgs e)
         {
             updateHashLoco(sender, e);
         }
 
+        /// <summary>
+        /// Stisknuti comboboxu pro vyber lokomotivy na 9. radku
+        /// Vsechna data budou smazana a nahrazena validnimi lokomotivami
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain9_Click(object sender, EventArgs e)
         {
             updateHashLoco(sender, e);
         }
+
+        /// <summary>
+        /// Doslo k vyberu lokomotivy v comboboxu lokomotiv na 1. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain1_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
         }
 
-        private void cbSpeed1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkStartStopButton();
-        }
-
+        /// <summary>
+        /// Doslo k vyberu lokomotivy v comboboxu lokomotiv na 2. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain2_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
         }
 
-        private void cbSpeed2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkStartStopButton();
-        }
-
+        /// <summary>
+        /// Doslo k vyberu lokomotivy v comboboxu lokomotiv na 3. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain3_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
         }
 
-        private void cbSpeed3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkStartStopButton();
-        }
-
+        /// <summary>
+        /// Doslo k vyberu lokomotivy v comboboxu lokomotiv na 4. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain4_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
         }
 
-        private void cbSpeed4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkStartStopButton();
-        }
-
+        /// <summary>
+        /// Doslo k vyberu lokomotivy v comboboxu lokomotiv na 5. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain5_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
         }
 
-        private void cbSpeed5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkStartStopButton();
-        }
-
+        /// <summary>
+        /// Doslo k vyberu lokomotivy v comboboxu lokomotiv na 6. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain6_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
         }
 
-        private void cbSpeed6_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkStartStopButton();
-        }
-
+        /// <summary>
+        /// Doslo k vyberu lokomotivy v comboboxu lokomotiv na 7. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain7_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
         }
 
-        private void cbSpeed7_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkStartStopButton();
-        }
-
+        /// <summary>
+        /// Doslo k vyberu lokomotivy v comboboxu lokomotiv na 8. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain8_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
         }
 
-        private void cbSpeed8_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkStartStopButton();
-        }
-
+        /// <summary>
+        /// Doslo k vyberu lokomotivy v comboboxu lokomotiv na 9. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTrain9_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkStartStopButton();
         }
 
-        private void cbSpeed9_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkStartStopButton();
-        }
-
+        /// <summary>
+        /// Doslo ke zmene rychlosti pro lokomotivu na 1. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             speedChanged(sender, e);
             checkStartStopButton();
         }
 
+        /// <summary>
+        /// Doslo ke zmene rychlosti pro lokomotivu na 2. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
             speedChanged(sender, e);
             checkStartStopButton();
         }
 
+        /// <summary>
+        /// Doslo ke zmene rychlosti pro lokomotivu na 3. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
             speedChanged(sender, e);
             checkStartStopButton();
         }
 
+        /// <summary>
+        /// Doslo ke zmene rychlosti pro lokomotivu na 4. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar4_Scroll(object sender, EventArgs e)
         {
             speedChanged(sender, e);
             checkStartStopButton();
         }
 
+        /// <summary>
+        /// Doslo ke zmene rychlosti pro lokomotivu na 5. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar5_Scroll(object sender, EventArgs e)
         {
             speedChanged(sender, e);
             checkStartStopButton();
         }
 
+        /// <summary>
+        /// Doslo ke zmene rychlosti pro lokomotivu na 6. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar6_Scroll(object sender, EventArgs e)
         {
             speedChanged(sender, e);
             checkStartStopButton();
         }
 
+        /// <summary>
+        /// Doslo ke zmene rychlosti pro lokomotivu na 7. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar7_Scroll(object sender, EventArgs e)
         {
             speedChanged(sender, e);
             checkStartStopButton();
         }
 
+        /// <summary>
+        /// Doslo ke zmene rychlosti pro lokomotivu na 8. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar8_Scroll(object sender, EventArgs e)
         {
             speedChanged(sender, e);
             checkStartStopButton();
         }
 
+        /// <summary>
+        /// Doslo ke zmene rychlosti pro lokomotivu na 9. radku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar9_Scroll(object sender, EventArgs e)
         {
             speedChanged(sender, e);
@@ -373,14 +511,13 @@ namespace TestDesignTT
         {
             for (int i = 0; i < 8; i++)
             {
-                //ziskani vlastnosti comboboxu a tlacitek
+                //ziskani vlastnosti comboboxu a tlacitek pro dany radek
                 ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, i) as ComboBox;
                 TrackBar tbSpeed = tableLayoutPanel1.GetControlFromPosition(2, i) as TrackBar;
                 CheckBox reverse = tableLayoutPanel1.GetControlFromPosition(3, i) as CheckBox;
                 Button btnStartStop = tableLayoutPanel1.GetControlFromPosition(4, i) as Button;
 
                 //je zvolen vlak a jsou vyplnena data? Povol stisknuti tlacitka Start
-                //if ((tbSpeed.SelectedIndex > -1) && (cbTrain.SelectedIndex > -1))
                 if (cbTrain.SelectedIndex > -1)
                 {
                     if (btnStartStop.Text != "Stop")
@@ -394,19 +531,17 @@ namespace TestDesignTT
 
                 }
 
-                //button Start bude neaktivni
+                //button Start bude neaktivni, neni vybran vlak
                 else
                 {
                     btnStartStop.Enabled = false;
                     tbSpeed.Value = tbSpeed.Minimum;
                     tbSpeed.Enabled = false;
                     reverse.Enabled = false;
-
-                    //btnStartStop.ForeColor = SystemColors.ControlDark;
                 }
             }
 
-            //omezeni mozneho poctu lokomotiv pro rizeni
+            //omezeni mozneho poctu lokomotiv pro rizeni - bude mozne pridat vzdy maximalne 9 lokomotiv
             int[] rowHeights = tableLayoutPanel1.GetRowHeights();
             if (rowHeights[8] > 20)
             {
@@ -425,23 +560,24 @@ namespace TestDesignTT
         private void startStopAction(object sender, EventArgs e)
         {
             Button button = sender as Button;
+
+            //Nebylo vybrano tlacitko? Ukonci metodu
             if (button == null)
-                return; // Exit if sender is not a button
+                return;
 
             //radek daneho tlacitka
             int rowIndex = tableLayoutPanel1.GetRow(button);
 
-            //ziskani vlastnosti comboboxu a tlacitek
+            //ziskani vlastnosti comboboxu, checkboxu a tlacitek
             ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, rowIndex) as ComboBox;
             TrackBar tbSpeed = tableLayoutPanel1.GetControlFromPosition(2, rowIndex) as TrackBar;
             CheckBox cbReverse = tableLayoutPanel1.GetControlFromPosition(3, rowIndex) as CheckBox;
 
-            //Zmena textu Start/Stop a deaktivace ostatnich tlacitek/comboboxu, pokud vlak jede
+            //Zmena textu Start/Stop a deaktivace ostatnich comboboxu/checkboxu, pokud vlak jede
             if (button.Text == "Start")
             {
                 button.Text = "Stop";
                 cbTrain.Enabled = false;
-                //tbSpeed.Enabled = false;
                 cbReverse.Enabled = false;
                 button.ForeColor = Color.Red;
                 button.Font = new Font(button.Font, FontStyle.Bold);
@@ -459,7 +595,6 @@ namespace TestDesignTT
 
             //ziskani rychlosti z trackbaru
             byte speedToByte = (byte)tbSpeed.Value;
-            //byte.TryParse(value, out speedToByte);
 
             //Najit konkretni lokomotivu z konfiguracniho seznamu
             ChangeTrainData matchingTrain = trainDataChange.FirstOrDefault(t => t.Lokomotive == cbTrain.SelectedItem.ToString());
@@ -494,28 +629,39 @@ namespace TestDesignTT
             trainDataChange.Add(new ChangeTrainData { Lokomotive = locomotive, Speed = speed, Reverze = reverze, StartStop = startStop });
         }
 
+        /// <summary>
+        /// Metoda, ktera je vyvolana pri zmene rychlosti pomoci posunuti na trackbaru
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void speedChanged(object sender, EventArgs e)
         {
             TrackBar trackBar = sender as TrackBar;
+            
+            //trackbar nenalazen - ukonci, aby nedoslo k erroru
             if (trackBar == null)
-                return; // Exit if sender is not a button
+                return;
 
+            //zjisteni radku polohy daneho trackbaru
             int rowIndex = tableLayoutPanel1.GetRow(trackBar);
 
+            //zjisteni tlacitko Start/stop a danem radku. Pokud je zobrazen text "Start", tak lokomotiva stoji a neni potreba aktualizovat rychlost
             Button btn = tableLayoutPanel1.GetControlFromPosition(4, rowIndex) as Button;
             if (btn.Text == "Start")
                 return;
 
+            //ziskani vlastnosti comboboxu, checkboxu a tlacitek
             ComboBox cbTrain = tableLayoutPanel1.GetControlFromPosition(1, rowIndex) as ComboBox;
             TrackBar tbSpeed = tableLayoutPanel1.GetControlFromPosition(2, rowIndex) as TrackBar;
             CheckBox cbReverse = tableLayoutPanel1.GetControlFromPosition(3, rowIndex) as CheckBox;
 
+            //prepocitej rychlost na byte
             byte speedToByte = (byte)tbSpeed.Value;
-            //byte.TryParse(value, out speedToByte);
 
             //Najit konkretni lokomotivu z konfiguracniho seznamu
             ChangeTrainData matchingTrain = trainDataChange.FirstOrDefault(t => t.Lokomotive == cbTrain.SelectedItem.ToString());
 
+            //pokud vlak pojede, tak deaktivuj moznost zmenit orientaci lokomotivy vpred/vzad
             cbReverse.Enabled = false;
 
             //pokud data jsou nulova (mela by byt na 100%, ale overeni, ze nebudou dva pozadavky na stejnou lokomotivu)

@@ -60,7 +60,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(892, 100);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Set settings of the turnout";
+            this.label1.Text = "Set settings of the turnout unit";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel4
@@ -206,7 +206,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(350, 45);
             this.label10.TabIndex = 30;
-            this.label10.Text = "Hodnota pravého dorazu:";
+            this.label10.Text = "Value for right stop:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label9
@@ -220,7 +220,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(350, 45);
             this.label9.TabIndex = 29;
-            this.label9.Text = "Hodnota levého dorazu:";
+            this.label9.Text = "Value for left stop:";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label7
@@ -234,7 +234,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(350, 45);
             this.label7.TabIndex = 28;
-            this.label7.Text = "Výběr výhybky:";
+            this.label7.Text = "Pick switches:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnReadState
@@ -254,7 +254,7 @@
             this.btnReadState.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnReadState.Size = new System.Drawing.Size(344, 39);
             this.btnReadState.TabIndex = 27;
-            this.btnReadState.Text = "Zobrazit stav";
+            this.btnReadState.Text = "Current status";
             this.btnReadState.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnReadState.UseVisualStyleBackColor = false;
             this.btnReadState.Click += new System.EventHandler(this.btnReadState_Click);
@@ -270,7 +270,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(350, 45);
             this.label8.TabIndex = 26;
-            this.label8.Text = "Přečíst stav jednotky:";
+            this.label8.Text = "Get setting of the unit:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label6
@@ -285,7 +285,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(700, 45);
             this.label6.TabIndex = 22;
-            this.label6.Text = "Ostatní nastavení jednotky";
+            this.label6.Text = "Other setting";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnReset
@@ -305,7 +305,7 @@
             this.btnReset.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnReset.Size = new System.Drawing.Size(344, 39);
             this.btnReset.TabIndex = 21;
-            this.btnReset.Text = "Resetovat jednotku";
+            this.btnReset.Text = "Restart of the unit";
             this.btnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnReset.UseVisualStyleBackColor = false;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
@@ -351,7 +351,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(350, 45);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Resetování jednotky:";
+            this.label5.Text = "Restart of the unit:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label4
@@ -366,7 +366,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(700, 45);
             this.label4.TabIndex = 12;
-            this.label4.Text = "Nastavení softwarových dorazů";
+            this.label4.Text = "Setting for software stops";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
@@ -380,7 +380,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(350, 45);
             this.label2.TabIndex = 11;
-            this.label2.Text = "Prodleva před natočením:";
+            this.label2.Text = "Delay before turning switches:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3

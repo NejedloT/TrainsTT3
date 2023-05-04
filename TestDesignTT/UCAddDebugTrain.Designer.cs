@@ -807,13 +807,13 @@
             this.trackBar2.Value = 3;
             this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
             // 
-            // UCLokomotives
+            // UCAddDebugTrain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.label1);
-            this.Name = "UCLokomotives";
+            this.Name = "UCAddDebugTrain";
             this.Size = new System.Drawing.Size(900, 600);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();

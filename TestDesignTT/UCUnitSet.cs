@@ -21,6 +21,7 @@ namespace TestDesignTT
         [Description("Invoked when user clicks button")]
         public event EventHandler UnitInstructionEventClick;
 
+        //list pro uchovani dat na nastaveni usekove jednotky
         public List<SetNewUnitData> newUnit = new List<SetNewUnitData>();
 
         public UCUnitSet()
@@ -28,6 +29,7 @@ namespace TestDesignTT
             InitializeComponent();
             CheckStates();
 
+            //vlozeni IDs usekovych jednotek do comboboxu
             IEnumerable<int> UnitIDs = ControlLogic.SearchLogic.GetModulesId();
             foreach (int id in UnitIDs)
             {
@@ -101,6 +103,7 @@ namespace TestDesignTT
             else
                 bb = true;
 
+            //povoleni/zakazani sitknuti tlacitek/comboboxu pokud je/neni vybrano ID jednotky
             cbCurrentConsumption.Enabled = bb;
             btnPowerOff.Enabled = bb;
             btnPowerOn.Enabled = bb;
@@ -118,85 +121,91 @@ namespace TestDesignTT
         /// <param name="e">Event stisknutim nejakeho controlu</param>
         private void Control_Click(object sender, EventArgs e)
         {
+            //zjisteni stisknuteho controlu (tlacitko, combobox..)
             var control = sender as Control;
 
-            /*
-            string selectedItem = cbUnitNumber.SelectedItem as string;
-
-            if (selectedItem == null)
-                return;
-            */
-
-
+            //overeni, ze bylo vybrano ID jednotky
             if (cbUnitNumber.SelectedItem == null)
                 return;
 
+            //vybrane  cislo jednotky z comboboxu
             if (!int.TryParse(cbUnitNumber.SelectedItem.ToString(), out int selectedItem))
                 return;
-
-
-            //vybrane  cislo jednotky z comboboxu
             byte numberOfUnit = (byte)(selectedItem);
 
             //pozadavek na zmenu prodlevy odesilani proudu
             if (control == cbCurrentConsumption)
             { 
+                //vyber instrukce pro zmenu nastaveni prodlevy odeslanych proudu
                 unitInstruction ui = Packet.unitInstruction.prodleva_odesilani_zmerenych_proudu;
 
+                //extrakce doby prodlevy ze stringu stisknuteho a prevod na byte
                 string value = cbCurrentConsumption.SelectedItem.ToString();
-
-                //extrakce doby prodlevy ze stringu stisknuteho
                 string numericString = value.Split(' ')[0];
-
-                // Parse the numeric string into an integer
                 int myValue = int.Parse(numericString)/10;
-
                 byte data = (byte)myValue;
+
+                //ulozeni instrukce
                 addUnitInstruction(ui, numberOfUnit, data);
             }
             //pozadavek na restart procesoru ridici jednotky
             else if (control == btnResetProcessor)
             {
+                //vyber instrukce pro restart ridici jednotky
                 unitInstruction ui = Packet.unitInstruction.restart_jednotky;
 
+                //vlozeni patricnych dat
                 byte data = 0x01;
 
+                //ulozeni instrukce
                 addUnitInstruction(ui, numberOfUnit, data);
             }
             //pozadavek na restarh H mustku
             else if (control == btnResetH)
             {
+                //vyber instrukce pro restart H-mustku ridici jednotky
                 unitInstruction ui = Packet.unitInstruction.restart_H_mustku;
 
+                //vlozeni patricnych dat
                 byte data = 0x01;
 
+                //ulozeni instrukce
                 addUnitInstruction(ui, numberOfUnit, data);
             }
             //pozadavek na vypnuti napajeni
             else if (control == btnPowerOff)
             {
+                //vyber instrukce pro nastaveni zdroje
                 unitInstruction ui = Packet.unitInstruction.nastaveni_zdroje;
 
+                //data pro vypnuti zdroje
                 byte data = 0x00;
 
+                //ulozeni instrukce
                 addUnitInstruction(ui, numberOfUnit, data);
             }
             //pozadavek na zapnuti napajeni
             else if (control == btnPowerOn)
             {
+                //vyber instrukce pro nastaveni zdroje
                 unitInstruction ui = Packet.unitInstruction.nastaveni_zdroje;
 
+                //data pro spusteni zdroje
                 byte data = 0x01;
 
+                //ulozeni instrukce
                 addUnitInstruction(ui, numberOfUnit, data);
             }
             //pozadavek na ziskani dat z ridici jednotky
             else if (control == btnReadUnitInstruction)
             {
+                //vyber instrukce pro precteni aktualniho stavu
                 unitInstruction ui = Packet.unitInstruction.precteni_stavu_jednotky;
 
+                //data pro precteni aktualniho stavu
                 byte data = 0x01;
 
+                //ulozeni instrukce
                 addUnitInstruction(ui, numberOfUnit, data);
             }
 
@@ -221,6 +230,9 @@ namespace TestDesignTT
 
     }
 
+    /// <summary>
+    /// Trida k uchovani dat pro zmenu nastaveni usekovych jednotek
+    /// </summary>
     public class SetNewUnitData
     {
         public unitInstruction Type { get; set; }

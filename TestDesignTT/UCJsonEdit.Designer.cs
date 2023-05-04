@@ -73,7 +73,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(996, 100);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Update train current and previous position";
+            this.label1.Text = "Update train data in JSON file";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel2

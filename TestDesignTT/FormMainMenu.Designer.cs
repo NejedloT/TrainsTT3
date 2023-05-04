@@ -60,7 +60,7 @@
             this.labelHeader.Name = "labelHeader";
             this.labelHeader.Size = new System.Drawing.Size(1184, 100);
             this.labelHeader.TabIndex = 0;
-            this.labelHeader.Text = "Position your prefered option";
+            this.labelHeader.Text = "Choose your prefered mode!";
             this.labelHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel2

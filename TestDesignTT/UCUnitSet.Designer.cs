@@ -58,7 +58,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(961, 100);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Set settings of the unit";
+            this.label1.Text = "Set settings of the section unit";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel4
@@ -72,10 +72,10 @@
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 420F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 350F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 350F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.tableLayoutPanel2.Controls.Add(this.btnReadUnitInstruction, 2, 6);
             this.tableLayoutPanel2.Controls.Add(this.label8, 1, 6);
             this.tableLayoutPanel2.Controls.Add(this.btnPowerOff, 2, 4);
@@ -117,12 +117,12 @@
             this.btnReadUnitInstruction.IconColor = System.Drawing.Color.Red;
             this.btnReadUnitInstruction.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnReadUnitInstruction.IconSize = 32;
-            this.btnReadUnitInstruction.Location = new System.Drawing.Point(457, 273);
+            this.btnReadUnitInstruction.Location = new System.Drawing.Point(480, 273);
             this.btnReadUnitInstruction.Name = "btnReadUnitInstruction";
             this.btnReadUnitInstruction.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnReadUnitInstruction.Size = new System.Drawing.Size(344, 39);
             this.btnReadUnitInstruction.TabIndex = 27;
-            this.btnReadUnitInstruction.Text = "Zobrazit nastavení";
+            this.btnReadUnitInstruction.Text = "Current status";
             this.btnReadUnitInstruction.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnReadUnitInstruction.UseVisualStyleBackColor = false;
             this.btnReadUnitInstruction.Click += new System.EventHandler(this.btnReadUnitInstruction_Click);
@@ -133,12 +133,12 @@
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label8.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label8.Location = new System.Drawing.Point(104, 270);
+            this.label8.Location = new System.Drawing.Point(57, 270);
             this.label8.Margin = new System.Windows.Forms.Padding(0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(350, 45);
+            this.label8.Size = new System.Drawing.Size(420, 45);
             this.label8.TabIndex = 26;
-            this.label8.Text = "Přečíst nastavení jednotky:";
+            this.label8.Text = "Get setting of the unit:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnPowerOff
@@ -153,12 +153,12 @@
             this.btnPowerOff.IconColor = System.Drawing.Color.Red;
             this.btnPowerOff.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnPowerOff.IconSize = 32;
-            this.btnPowerOff.Location = new System.Drawing.Point(457, 183);
+            this.btnPowerOff.Location = new System.Drawing.Point(480, 183);
             this.btnPowerOff.Name = "btnPowerOff";
             this.btnPowerOff.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnPowerOff.Size = new System.Drawing.Size(344, 39);
             this.btnPowerOff.TabIndex = 25;
-            this.btnPowerOff.Text = "Vypnout zdroj";
+            this.btnPowerOff.Text = "Power off";
             this.btnPowerOff.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnPowerOff.UseVisualStyleBackColor = false;
             this.btnPowerOff.Click += new System.EventHandler(this.btnPowerOff_Click);
@@ -175,12 +175,12 @@
             this.btnPowerOn.IconColor = System.Drawing.Color.Red;
             this.btnPowerOn.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnPowerOn.IconSize = 32;
-            this.btnPowerOn.Location = new System.Drawing.Point(457, 228);
+            this.btnPowerOn.Location = new System.Drawing.Point(480, 228);
             this.btnPowerOn.Name = "btnPowerOn";
             this.btnPowerOn.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnPowerOn.Size = new System.Drawing.Size(344, 39);
             this.btnPowerOn.TabIndex = 24;
-            this.btnPowerOn.Text = "Zapnout zdroj";
+            this.btnPowerOn.Text = "Power on";
             this.btnPowerOn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnPowerOn.UseVisualStyleBackColor = false;
             this.btnPowerOn.Click += new System.EventHandler(this.btnPowerOn_Click);
@@ -191,12 +191,12 @@
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label7.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label7.Location = new System.Drawing.Point(104, 225);
+            this.label7.Location = new System.Drawing.Point(57, 225);
             this.label7.Margin = new System.Windows.Forms.Padding(0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(350, 45);
+            this.label7.Size = new System.Drawing.Size(420, 45);
             this.label7.TabIndex = 23;
-            this.label7.Text = "Zapnutí zdroje:";
+            this.label7.Text = "Switching on the voltage source:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label6
@@ -205,12 +205,12 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label6.Location = new System.Drawing.Point(104, 180);
+            this.label6.Location = new System.Drawing.Point(57, 180);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(350, 45);
+            this.label6.Size = new System.Drawing.Size(420, 45);
             this.label6.TabIndex = 22;
-            this.label6.Text = "Vypnutí zdroje:";
+            this.label6.Text = "Switching off the voltage source:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnResetH
@@ -225,12 +225,12 @@
             this.btnResetH.IconColor = System.Drawing.Color.Red;
             this.btnResetH.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnResetH.IconSize = 32;
-            this.btnResetH.Location = new System.Drawing.Point(457, 138);
+            this.btnResetH.Location = new System.Drawing.Point(480, 138);
             this.btnResetH.Name = "btnResetH";
             this.btnResetH.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnResetH.Size = new System.Drawing.Size(344, 39);
             this.btnResetH.TabIndex = 21;
-            this.btnResetH.Text = "Resetovat můstek";
+            this.btnResetH.Text = "Reset H-bridge";
             this.btnResetH.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnResetH.UseVisualStyleBackColor = false;
             this.btnResetH.Click += new System.EventHandler(this.btnResetH_Click);
@@ -240,13 +240,14 @@
             this.cbCurrentConsumption.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbCurrentConsumption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCurrentConsumption.FormattingEnabled = true;
+            this.cbCurrentConsumption.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.cbCurrentConsumption.Items.AddRange(new object[] {
             "250 ms",
             "500 ms",
             "1000 ms",
             "1500 ms",
             "2000 ms"});
-            this.cbCurrentConsumption.Location = new System.Drawing.Point(457, 48);
+            this.cbCurrentConsumption.Location = new System.Drawing.Point(480, 48);
             this.cbCurrentConsumption.Name = "cbCurrentConsumption";
             this.cbCurrentConsumption.Size = new System.Drawing.Size(344, 23);
             this.cbCurrentConsumption.TabIndex = 20;
@@ -257,7 +258,8 @@
             this.cbUnitNumber.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbUnitNumber.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUnitNumber.FormattingEnabled = true;
-            this.cbUnitNumber.Location = new System.Drawing.Point(457, 3);
+            this.cbUnitNumber.ItemHeight = 15;
+            this.cbUnitNumber.Location = new System.Drawing.Point(480, 3);
             this.cbUnitNumber.Name = "cbUnitNumber";
             this.cbUnitNumber.Size = new System.Drawing.Size(344, 23);
             this.cbUnitNumber.TabIndex = 19;
@@ -276,12 +278,12 @@
             this.btnResetProcessor.IconColor = System.Drawing.Color.Red;
             this.btnResetProcessor.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnResetProcessor.IconSize = 32;
-            this.btnResetProcessor.Location = new System.Drawing.Point(457, 93);
+            this.btnResetProcessor.Location = new System.Drawing.Point(480, 93);
             this.btnResetProcessor.Name = "btnResetProcessor";
             this.btnResetProcessor.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btnResetProcessor.Size = new System.Drawing.Size(344, 39);
             this.btnResetProcessor.TabIndex = 18;
-            this.btnResetProcessor.Text = "Reset procesoru";
+            this.btnResetProcessor.Text = "Reset the processor";
             this.btnResetProcessor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnResetProcessor.UseVisualStyleBackColor = false;
             this.btnResetProcessor.Click += new System.EventHandler(this.btnResetProcessor_Click);
@@ -292,12 +294,12 @@
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label5.Location = new System.Drawing.Point(104, 135);
+            this.label5.Location = new System.Drawing.Point(57, 135);
             this.label5.Margin = new System.Windows.Forms.Padding(0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(350, 45);
+            this.label5.Size = new System.Drawing.Size(420, 45);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Resetování H-můstku:";
+            this.label5.Text = "Restart of H-bridge:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label4
@@ -306,12 +308,12 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label4.Location = new System.Drawing.Point(104, 90);
+            this.label4.Location = new System.Drawing.Point(57, 90);
             this.label4.Margin = new System.Windows.Forms.Padding(0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(350, 45);
+            this.label4.Size = new System.Drawing.Size(420, 45);
             this.label4.TabIndex = 12;
-            this.label4.Text = "Resetování řídící jednotky:";
+            this.label4.Text = "Restart of section unit:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label2
@@ -320,12 +322,12 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(104, 45);
+            this.label2.Location = new System.Drawing.Point(57, 45);
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(350, 45);
+            this.label2.Size = new System.Drawing.Size(420, 45);
             this.label2.TabIndex = 11;
-            this.label2.Text = "Perioda odesílání úseků:";
+            this.label2.Text = "Current consumption sending period:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
@@ -334,10 +336,10 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Location = new System.Drawing.Point(104, 0);
+            this.label3.Location = new System.Drawing.Point(57, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(350, 45);
+            this.label3.Size = new System.Drawing.Size(420, 45);
             this.label3.TabIndex = 10;
             this.label3.Text = "Pick unit number:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

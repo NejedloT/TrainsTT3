@@ -55,7 +55,7 @@ namespace TCPServerTrainTT
             
             try
             {
-                serialPort.PortName = Settings.Default.Port; //Port jsou vláčky, VirtualPort je můj virtuální pro odladování
+                serialPort.PortName = Settings.Default.Port; //Port jsou vláčky, VirtualPort je  virtuální pro odladování
                 serialPort.BaudRate = 115200;
                 serialPort.ReadBufferSize = 4096;
                 serialPort.Open();
@@ -211,6 +211,7 @@ namespace TCPServerTrainTT
                 {
                     Packet p;
 
+                    //nepodazio se rozlustit packet
                     if (!packet.TryDequeue(out p))
                     {
                         Console.Write("Error, data from queue are not retrieved", TCPError);

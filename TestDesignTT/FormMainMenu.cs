@@ -18,9 +18,7 @@ namespace TestDesignTT
             InitializeComponent();
         }
 
-        public Point FormLocation { get; set; }
-        public Size FormSize { get; set; }
-
+        //stisknuti tlacitka pro zobrazeni aplikace na rizeni kolejiste pomoci jizdniho radu
         private void btnTimetable_Click(object sender, EventArgs e)
         {
             FormTimetable formtt = new FormTimetable();
@@ -31,6 +29,7 @@ namespace TestDesignTT
             this.Hide();
         }
 
+        //stisknuti tlacitka pro zobrazeni aplikace na manualni rizeni kolejiste
         private void btnManual_Click(object sender, EventArgs e)
         {
             FormManual formman = new FormManual();
@@ -41,6 +40,7 @@ namespace TestDesignTT
             this.Hide();
         }
 
+        //stisknuti tlacitka pro plne manualni rizeni kolejiste
         private void btnDebug_Click(object sender, EventArgs e)
         {
             FormDebug formdeb = new FormDebug();
@@ -49,16 +49,6 @@ namespace TestDesignTT
             formdeb.Size = this.Size;
             formdeb.Show();
             this.Hide();
-        }
-
-        
-        /*
-        private void FormMainMenu_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //FormLocation = this.Location;
-            //FormSize = this.Size;
-        }
-        */
-        
+        }        
     }
 }

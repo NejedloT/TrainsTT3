@@ -21,6 +21,7 @@ namespace TestDesignTT
         [Description("Invoked when user clicks button")]
         public event EventHandler TurnoutButtonSendClick;
 
+        //list s daty pro zmenu vyhybek
         public List<Turnouts> turnouts = new List<Turnouts>();
 
         public UCTurnouts()
@@ -29,7 +30,7 @@ namespace TestDesignTT
             clearData();
 
 
-            //nacteni IDs vyhybek, ktere se nachazi v konfiguracnim souboru
+            //nacteni IDs jednotek vyhybek, ktere se nachazi v konfiguracnim souboru
             IEnumerable<int> UnitIDs = SearchLogic.GetTurnoutIDs();
             foreach (int id in UnitIDs)
             {
@@ -61,10 +62,8 @@ namespace TestDesignTT
             cbValue3.SelectedIndex = -1;
             cbValue4.SelectedIndex = -1;
             cbValue5.SelectedIndex = -1;
-            //btnSave.SelectedIndex = -1;
             disableButtons();
             saveButtonReady();
-            //addButtonReady();
         }
 
         /// <summary>
@@ -250,9 +249,7 @@ namespace TestDesignTT
                 //id ridici jednotky
                 if (!int.TryParse(cbUnits[i].SelectedItem.ToString(), out int selectedItem))
                     return;
-
                 UInt32 id = (UInt32)selectedItem;
-                //id = Convert.ToUInt32(cbUnits[i].Text, 16);
 
                 //zjisteni, zdali jiz data pro jednotku existuji
                 Turnouts matchingTurnouts = turnouts.FirstOrDefault(t => t.UnitID == id);
@@ -284,9 +281,9 @@ namespace TestDesignTT
         /// <summary>
         /// Ulozeni dat pro zmenu vyhybek
         /// </summary>
-        /// <param name="id">ID jednotky</param>
-        /// <param name="change">Pozice, ktera se ma zmenit</param>
-        /// <param name="turnPosition">Hodnota na pozici "change"</param>
+        /// <param name="id">ID jednotky vyhybek</param>
+        /// <param name="change">Vyber vyhybek k pretoceni (1.byte)</param>
+        /// <param name="turnPosition">Data pro nastaveni vyhybek do spravne polohy (2.byte)"</param>
         public void addTurnout(UInt32 id, byte change, byte turnPosition)
         {
             turnouts.Add(new Turnouts { UnitID = id, Change = change, Position = turnPosition });

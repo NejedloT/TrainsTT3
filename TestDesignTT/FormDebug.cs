@@ -1,5 +1,4 @@
 ﻿using ControlLogic;
-using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,27 +15,30 @@ using System.Windows.Markup;
 using System.Xml;
 using System.Xml.Linq;
 using TrainTTLibrary;
+using Tulpep.NotificationWindow;
 using static TrainTTLibrary.Packet;
 
 namespace TestDesignTT
 {
     public partial class FormDebug : Form
     {
+        //bool hodnota, zdali je pripojen klient k TCP serveru
         private bool IsConnect = false;
 
+        //TCP klient
         private static TCPClient klient = null;
 
         private static System.Timers.Timer timeToInitSoftwareStops;
 
-        //private static Dictionary<uint, DateTime> lastPacketTimeByNumberOfUnit = new Dictionary<uint, DateTime>();
-        //private static Dictionary<uint, System.Timers.Timer> timersByNumberOfUnit = new Dictionary<uint, System.Timers.Timer>();
+        //enum pro typy notifikaci
+        private enum notificationType
+        {
+            warning,
+            success,
+            error,
+        }
 
-
-
-        //UCEditTimetable ucEditTimetable = new UCEditTimetable();
-        //UCTrainTimetable ucTrainTimetable = new UCTrainTimetable();
-        //UCEditMoving ucEditMoving = new UCEditMoving();
-        //UCTrainMoving ucTrainMoving = new UCTrainMoving();
+        //definice user controlu
         UCHome uCHome = new UCHome();
         UCTurnouts uCTurnouts = new UCTurnouts();
         UCMap uCMap = new UCMap();
@@ -46,23 +48,23 @@ namespace TestDesignTT
         UCUnitSet uCUnitSet = new UCUnitSet();
         UCTurnoutsSettings uCTurnoutSet = new UCTurnoutsSettings();
 
-
+        //list pro data z JSONu
         private static List<Trains> trainsList = new List<Trains>();
 
         public FormDebug()
         {
+            //inicializace vsech komponent
             InitializeComponent();
+
+            //zobrazeni domovske obrazovky user controlu
             DisplayInstance(uCHome);
 
+            //inicializace logiky vyhledavani
             SearchLogic.InitSearch();
-
-            //MainLogic.Initialization();
-            //MainLogic.InitTrainListAndXdoc();
-            //ControlLogic.ProcessDataFromTCP.Initialization();
         }
 
         #region Form actions (Load, Init, Closed, Resized)
-        
+
         /// <summary>
         /// Definice event handleru vyvolanych v user controlech, spusteni TCP serveru a casovacu ridicich jednotek
         /// </summary>
@@ -71,7 +73,7 @@ namespace TestDesignTT
         private void FormDebug_Load(object sender, EventArgs e)
         {
 
-            //definice event handleru vyuzivanych v user controlech
+            //inicializace eventu v user controlech pouzivanych v aplikaci
             uCmulti.MultiTurnoutButtonAddClick += new EventHandler(UserControl_MultiTurnoutClick); //user control pro screen Multiturnout
             uCTurnouts.TurnoutButtonSendClick += new EventHandler(UserControl_TurnoutClick); //user control pro screen Turnout
             uCAddDebugTrain.ChangeOfTrainData += new EventHandler(UserControl_TrainDataChange); //user control pro zmenu rizeni vlaku
@@ -80,17 +82,12 @@ namespace TestDesignTT
             uCTurnoutSet.TurnoutDefinitionStopsClick += new EventHandler(UserControl_TurnoutInstructionStops);
             uCTurnoutSet.TurnoutInstructionSetClick += new EventHandler(UserControl_TurnoutInstructionSet);
 
-            //Thread.Sleep(1000);
-
             //spusteni tcp serveru
             StartTCPClient();
 
+            //nastav time handler na nastaveni usekovych jednotek a jednotek vyhybek
             timeToInitSoftwareStops = new System.Timers.Timer(1000);
-
-            // Set the event handler for the Elapsed event
             timeToInitSoftwareStops.Elapsed += (sender, e) => Timer_Elapsed_SW_Stops(sender, e);
-
-            // Start the timer
             timeToInitSoftwareStops.Start();
         }
 
@@ -127,7 +124,6 @@ namespace TestDesignTT
         {
             if (this.WindowState == FormWindowState.Maximized)
             {
-                uCMap.setLabels();
                 // form is in full screen mode
             }
         }
@@ -139,16 +135,10 @@ namespace TestDesignTT
         /// <param name="e">Event vyvolany zmenou velikosti okna</param>
         private void FormDebug_SizeChanged(object sender, EventArgs e)
         {
-            /*
-            if (panelDesktopPanel.Controls.Contains(ucEditMoving)) //
-                ucEditMoving.changeSize();
-            if (panelDesktopPanel.Controls.Contains(ucTrainTimetable))
-                ucTrainTimetable.changeSize();
-            if (panelDesktopPanel.Controls.Contains(ucEditTimetable))
-                ucEditTimetable.changeSize();
-            if (panelDesktopPanel.Controls.Contains(ucTrainMoving))
-                ucTrainMoving.changeSize();
-            */
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                // form is in full screen mode
+            }
         }
 
         #endregion
@@ -176,6 +166,9 @@ namespace TestDesignTT
             {
                 KlientCleanUp();
             }
+
+            //zaslani notifikace, ze byl spusten TCP server
+            popUpNotification(notificationType.success, "TCP server has been started.");
         }
 
         /// <summary>
@@ -230,6 +223,8 @@ namespace TestDesignTT
 
                 klient.Dispose();
                 klient = null;
+
+                popUpNotification(notificationType.warning, "TCP server has been stopped and all trains are stopped.");
             }
         }
 
@@ -254,16 +249,22 @@ namespace TestDesignTT
         /// <param name="e">Event na prichozi data z portu</param>
         private void DataProcessing(TCPReceivedEventArgs e)
         {
+            //zasle prijata data ke zpracovani
             ProcessDataFromTCP.ProcessData(e);
 
+            //testovani, zdali byl detekovan error ridicich jednotek
             bool testError = ProcessDataFromTCP.getErrors();
 
+            //doslo k detekci erroru usekove jednotky nebo jednotky vyhybek
+            //zastav vsechny vlaky, zobraz message box a pop up notifikaci
             if (testError)
             {
                 StopAll();
                 ProcessDataFromTCP.setErrors(false);
                 DialogResult result = MessageBox.Show("Section unit or switch unit error has occurred! All trains have been stopped!", "IMPORTANT!!!",
                 MessageBoxButtons.OK);
+
+                popUpNotification(notificationType.error, "Section unit or switch unit error has occurred! All trains have been stopped!");
             }
         }
 
@@ -315,25 +316,15 @@ namespace TestDesignTT
         /// <param name="e">Event na stisknuti tlacitka</param>
         private void btnExit_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Opravdu chcete odejít? JSte si jisti, že je nastavena správná poloha vlaků v JSONu?!?!", "DŮLEŽITÉ!!!",
+            //zobrazeni dialogu na potvrzeni, ze uzivatel skutecne chce ukoncit aplikaci
+            DialogResult result = MessageBox.Show("Do you really want to leave the app? Are you sure that correct JSON values were set using 'Update JSON' button?!?!", "WARNING!!!",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning,
                 MessageBoxDefaultButton.Button2);
 
+            //pokud chce skutecne ukoncit apliakce, ukonci aplikaci
             if (result == DialogResult.Yes)
             {
-                //StopAll(); //zastav vlaky
-
-                //vynulovani priznaku jizdy vsech vlaku (nemusi byt ale pro jistotu)
-                //trainsList = ControlLogic.JsonLogic.LoadJson();
-
-                TrainDataJSON td = new TrainDataJSON();
-                trainsList = td.LoadJson();
-                foreach (Trains train in trainsList)
-                {
-                    train.move = 0;
-                }
-
                 //zobrazeni hlavniho menu
                 FormMainMenu formmm = new FormMainMenu();   //nacti windows form pro hlavni menu
                 formmm.StartPosition = FormStartPosition.Manual;
@@ -440,8 +431,11 @@ namespace TestDesignTT
         /// <param name="e"></param>
         private void btnCentralStop_Click(object sender, EventArgs e)
         {
-            //Stop all trains
+            //zastav vsechny vlaky!
             StopAll();
+
+            popUpNotification(notificationType.warning, "All trains have been stopped because Central Stop button has been clicked.");
+
         }
 
 
@@ -453,8 +447,10 @@ namespace TestDesignTT
         /// </summary>
         private void softwareStops()
         {
+            //pridani typu instrukce
             turnoutInstruction ti = turnoutInstruction.nastaveni_dorazu;
 
+            //nacti vsechny ID ridicich jednotek kolejovych useku
             List<XElement> turnoutStopDefinition = SearchLogic.GetTurnoutStopDefinitions();
 
             foreach (XElement turnout in turnoutStopDefinition)
@@ -467,6 +463,10 @@ namespace TestDesignTT
                 TurnoutInstructionPacket turnoutInst = new TurnoutInstructionPacket(ti, unit, pos, leftStop, rightStop);
                 SendTCPData(turnoutInst.TCPPacket);
             }
+
+            //softwarove dorazy byly nastaveny
+            string msg = "Software stops for switches from configuration file were set!";
+            popUpNotification(notificationType.success, msg);
         }
 
         /// <summary>
@@ -500,12 +500,12 @@ namespace TestDesignTT
 
             bool foundMatch = false;
 
+            //projed vsechny lokomotivy z konfiguracniho souboru
             foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
             {
                 string loco = locomotive.Name.ToString();
 
                 foreach (ChangeTrainData data in trainDataChange)
-                //for (int i = 0; i <trainDataChange.Count - 1; i++)
                 {
                     //ChangeTrainData data = trainDataChange[i];
                     string loc = Packet.GapToUnderLine(data.Lokomotive);
@@ -527,9 +527,14 @@ namespace TestDesignTT
                             TrainFunctionPacket trainFunctionPacket = new TrainFunctionPacket(locomotive, true);
 
                             SendTCPData(trainFunctionPacket.TCPPacket);
+
+                            string msg = "Train " + locomotive.Name + " start moving with speed " + speed + " and in direction " + (reverse ? "reverse" : "ahaed" + ".");
+                            popUpNotification(notificationType.success, msg);
+
                         }
 
                         //zastavit lokomotivu, pro niz byla poslana data
+                        //vytvori se packet a posle se
                         else
                         {
                             TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 3);
@@ -539,10 +544,10 @@ namespace TestDesignTT
                             TrainFunctionPacket trainFunctionPacket = new TrainFunctionPacket(locomotive, false);
 
                             SendTCPData(trainFunctionPacket.TCPPacket);
-                        }
 
-                        //trainDataChange.RemoveAt(i);
-                        //i--;
+                            string stopmsg = "Train " + locomotive.Name + " has been stopped.";
+                            popUpNotification(notificationType.success, stopmsg);
+                        }
 
                         foundMatch = true;
                         break;
@@ -553,6 +558,7 @@ namespace TestDesignTT
             }
             //vycisti seznam pozadavku na zmenu
             trainDataChange.Clear();
+
         }
 
         /// <summary>
@@ -572,13 +578,18 @@ namespace TestDesignTT
 
             bool foundMatch = false;
 
+            string name = null;
+
+            //najdi data, ktera maji shodny nazev lokomotivy s lokomotivou z jsonu
             foreach (Trains train in trainsList)
             {
                 foreach (ChangeJsonData data in changeData)
                 {
                     //nalezena shoda mezi vlakem v JSONu a vybranym vlakem
-                    if (train.name == data.Id)
+                    if (train.name == data.Name)
                     {
+                        name = train.name;
+
                         //aktualizace dat, aby bylo mozne automaticke rizeni
                         train.currentPosition = data.CurrentPosition;
                         train.lastPosition = data.PreviousPosition;
@@ -590,6 +601,7 @@ namespace TestDesignTT
                         train.mapOrientation = data.Orientation;
                         foundMatch = true;
                         break;
+
                     }
                 }
                 if (foundMatch)
@@ -597,6 +609,9 @@ namespace TestDesignTT
             }
             //uloz zpet do JSONu
             td.SaveJson(trainsList);
+
+            string msg = "Json data for train " + name + " have been updated.";
+            popUpNotification(notificationType.success, msg);
 
             //vycisti prijata data
             changeData.Clear();
@@ -610,7 +625,10 @@ namespace TestDesignTT
         /// <param name="e">Event Handler z user controlu</param>
         protected void UserControl_MultiTurnoutClick(object sender, EventArgs e)
         {
+            //zjisteni dat pro nastaveni vyhybek
             List<Turnouts> turnouts = uCmulti.turnouts;
+
+            //vyber jednotliva data ulozena a zasli je
             for (int i = 0; i < turnouts.Count; i++)
             {
                 uint numberOfUnit = turnouts[i].UnitID;
@@ -626,6 +644,8 @@ namespace TestDesignTT
             }
             //vymaz prijata data
             turnouts.Clear();
+            string msg = "Switches have been set.";
+            popUpNotification(notificationType.success, msg);
         }
 
         /// <summary>
@@ -636,6 +656,7 @@ namespace TestDesignTT
         /// <param name="e">Event Handler z user controlu</param>
         protected void UserControl_TurnoutClick(object sender, EventArgs e)
         {
+            //zjisteni dat pro nastaveni vyhybek
             List<Turnouts> turnouts = uCTurnouts.turnouts;
 
             //vlozeni prijatych dat do promennych, vytvoreni packetu a zaslani
@@ -654,6 +675,10 @@ namespace TestDesignTT
             }
             //vycisti prijata data
             turnouts.Clear();
+
+            //vytvor push notifikaci o nastaveni vyhybek
+            string msg = "Switches have been set.";
+            popUpNotification(notificationType.success, msg);
         }
 
         /// <summary>
@@ -664,6 +689,7 @@ namespace TestDesignTT
         /// <param name="e">Event Handler z user controlu</param>
         protected void UserControl_UnitInstructionClick(object sender, EventArgs e)
         {
+            //vyzvednuti ulozenych dat
             List<SetNewUnitData> newUnit = uCUnitSet.newUnit;
 
             //vlozeni prijatych dat do promennych, vytvoreni packetu a zaslani
@@ -680,6 +706,10 @@ namespace TestDesignTT
                 SendTCPData(unitInst.TCPPacket);
 
             }
+            
+            //vytvor popup notifikaci o nastaveni vyhybek
+            string msg = "Unit section data has been set.";
+            popUpNotification(notificationType.success, msg);
 
             //smazani prijatych dat pro nastaveni ridici jednotky
             newUnit.Clear();
@@ -694,8 +724,10 @@ namespace TestDesignTT
         /// <param name="e">Event Handler z user controlu</param>
         protected void UserControl_TurnoutInstructionStops(object sender, EventArgs e)
         {
+            //vyzvednuti ulozenych dat
             List<SetNewTurnoutStops> newTurnoutStops = uCTurnoutSet.newTurnoutStops;
 
+            //vlozeni prijatych dat do promennych, vytvoreni packetu a zaslani
             for (int i = 0; i < newTurnoutStops.Count; i++)
             {
                 turnoutInstruction ti = newTurnoutStops[i].Type;
@@ -713,6 +745,10 @@ namespace TestDesignTT
                 SendTCPData(turnoutInst.TCPPacket);
             }
 
+            //vytvor popup notifikaci o nastaveni softwarovych dorazu
+            string msg = "Turnout unit data for software stops has been set";
+            popUpNotification(notificationType.success, msg);
+
             newTurnoutStops.Clear();
         }
 
@@ -725,8 +761,10 @@ namespace TestDesignTT
         /// <param name="e"></param>
         protected void UserControl_TurnoutInstructionSet(object sender, EventArgs e)
         {
+            //vyzvednuti ulozenych dat
             List<SetNewTurnoutUnitData> newTurnoutData = uCTurnoutSet.newTurnoutData;
 
+            //vlozeni prijatych dat do promennych, vytvoreni packetu a zaslani
             for (int i = 0; i < newTurnoutData.Count; i++)
             {
                 turnoutInstruction ti = newTurnoutData[i].Type;
@@ -739,6 +777,11 @@ namespace TestDesignTT
 
                 SendTCPData(turnoutInst.TCPPacket);
             }
+
+            //vytvor popup notifikaci o nastaveni ridici jednotky vyhybek
+            string msg = "Turnout unit data has been sent";
+            popUpNotification(notificationType.success, msg);
+
             newTurnoutData.Clear();
         }
         #endregion
@@ -748,11 +791,90 @@ namespace TestDesignTT
         /// </summary>
         private void StopAll()
         {
+            //zastav vsechny lokomotivy
             foreach (Locomotive locomotive in LocomotiveInfo.listOfLocomotives)
             {
                 TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 0);
 
                 SendTCPData(trainMotionPacket.TCPPacket);
+            }
+
+            //nastav hodnotu vsech vlaku na to, ze stoji a nemaji povel k jizde(nejedou ani necekaji na rozjezd)
+            TrainDataJSON td = new TrainDataJSON();
+            trainsList = td.LoadJson();
+            foreach (Trains train in trainsList)
+            {
+                train.move = 0;
+            }
+
+            //uloz JSON
+            td.SaveJson(trainsList);
+
+            //vytvor popup notifikaci o zastaveni vsech vlaku
+            string msg = "All trains have been stoped!";
+            popUpNotification(notificationType.warning, msg);
+        }
+
+        /// <summary>
+        /// MEtoda pro popup notifikace pro lepsi prehled uzivatele nad kolejistem
+        /// </summary>
+        /// <param name="type">Typ popup zpravy</param>
+        /// <param name="msg">Zprava</param>
+        private void popUpNotification(notificationType type, string msg)
+        {
+            //vytvoreni nove notifikace
+            PopupNotifier popup = new PopupNotifier();
+
+            //konkretni data k zobrazeni na zaklade typu notifikace
+            switch (type)
+            {
+                case notificationType.warning:
+                    popup.Image = Properties.Resources.warning;
+                    popup.ImageSize = new(80, 80);
+
+                    popup.BodyColor = Color.FromArgb(255, 193, 7);
+                    popup.TitleText = "Warning!";
+                    popup.TitleColor = Color.White;
+                    popup.TitleFont = new Font("Century Gothic", 18, FontStyle.Bold);
+
+                    popup.ContentText = msg;
+                    popup.ContentColor = Color.White;
+                    popup.ContentFont = new Font("Century Gothic", 12);
+
+                    popup.Popup();
+                    break;
+
+                case notificationType.success:
+                    popup.Image = Properties.Resources.success;
+                    popup.ImageSize = new(80, 80);
+
+                    popup.BodyColor = Color.FromArgb(40, 120, 69);
+                    popup.TitleText = "Success";
+                    popup.TitleColor = Color.White;
+                    popup.TitleFont = new Font("Century Gothic", 18, FontStyle.Bold);
+
+                    popup.ContentText = msg;
+                    popup.ContentColor = Color.White;
+                    popup.ContentFont = new Font("Century Gothic", 12);
+
+                    popup.Popup();
+
+                    break;
+                case notificationType.error:
+                    popup.Image = Properties.Resources.error;
+                    popup.ImageSize = new(80, 80);
+
+                    popup.BodyColor = Color.FromArgb(220, 23, 29);
+                    popup.TitleText = "Error!";
+                    popup.TitleColor = Color.White;
+                    popup.TitleFont = new Font("Century Gothic", 18, FontStyle.Bold);
+
+                    popup.ContentText = msg;
+                    popup.ContentColor = Color.White;
+                    popup.ContentFont = new Font("Century Gothic", 12);
+                    popup.Popup();
+                    break;
+
             }
         }
     }

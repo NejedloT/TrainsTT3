@@ -123,7 +123,7 @@ namespace TrainTTLibrary
 
                 case (int)unitAdress.generator_DCC_R: //zprava od generatoru
 
-                    if ((Head == 0x01) && (Data[0] == 0x55)) 
+                    if ((Head == 0x01) && (Data[0] == 0x55))
                     {
                         Type = dataType.watchdog.ToString(); // watchdog message: 01 20 20 55 88
                         break;
@@ -1134,7 +1134,7 @@ namespace TrainTTLibrary
             SetBytePacket();
 
             TCPPacket = (Type + ":" + TurnoutInstruction.ToString() + "," + NumberOfUnit + "," + Data[0] + "," + Data[1] + "," + Data[2] + "," + Data[3] + "," + Data[4] + "," + Data[5] + "," + Data[6] + "," + Data[7] + "\n");
-        } 
+        }
 
         /// <summary>
         /// Nastaveni vybranych vyhybek vlevo ci vpravo
@@ -1216,7 +1216,7 @@ namespace TrainTTLibrary
                 Data.Add(0xB7);
 
                 //omezeni meznich hodnot
-                if (data > 0xFA) 
+                if (data > 0xFA)
                     Data.Add(0xFA);
                 else
                     Data.Add(data);
@@ -1532,7 +1532,7 @@ namespace TrainTTLibrary
 
             AssingType(); //prirad adresu jednotky
 
-            TCPPacket = (Type + ":" + Name + "," +  Speed + "," + ((Reverse) ? "reverse\n" : "ahead\n"));
+            TCPPacket = (Type + ":" + Name + "," + Speed + "," + ((Reverse) ? "reverse\n" : "ahead\n"));
 
 
         }
@@ -2074,7 +2074,7 @@ namespace TrainTTLibrary
                         }
                         break;
                     }
-                    
+
                 case 3:
                     {
                         for (int i = 16; i < 24; i++)
@@ -2085,14 +2085,46 @@ namespace TrainTTLibrary
                     }
                 case 4:
                     {
+
+                        for (int i = 24; i < 32; i++)
                         {
-                            for (int i = 24; i < 32; i++)
-                            {
-                                Sections.Add(SectionInfo.listOfSection[i]);
-                            }
-                            break;
+                            Sections.Add(SectionInfo.listOfSection[i]);
                         }
+                        break;
+
                     }
+                case 5:
+                    {
+
+                        for (int i = 32; i < 40; i++)
+                        {
+                            Sections.Add(SectionInfo.listOfSection[i]);
+                        }
+                        break;
+
+                    }
+                case 6:
+                    {
+
+                        for (int i = 40; i < 48; i++)
+                        {
+                            Sections.Add(SectionInfo.listOfSection[i]);
+                        }
+                        break;
+
+                    }
+                case 7:
+                    {
+
+                        for (int i = 48; i < 56; i++)
+                        {
+                            Sections.Add(SectionInfo.listOfSection[i]);
+                        }
+                        break;
+
+                    }
+                default:
+                    break;
             }
         }
     }
