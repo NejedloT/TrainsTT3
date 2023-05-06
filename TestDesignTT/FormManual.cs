@@ -179,7 +179,7 @@ namespace TestDesignTT
             }
 
             //zaslani notifikace, ze byl spusten TCP server
-            popUpNotification(notificationType.success, "TCP server has been started.");
+            popUpNotification(notificationType.success, "The TCP server has been started.");
         }
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace TestDesignTT
 
             labelTitle.Text = (sender as Button).Text;
 
-            uCdisplayJson.displayJson();
+            //uCdisplayJson.displayJson();
 
             panelSettings.Visible = false;
         }
@@ -439,7 +439,7 @@ namespace TestDesignTT
         private void btnCentralStop_Click(object sender, EventArgs e)
         {
             StopAll();
-            popUpNotification(notificationType.warning, "All trains have been stopped because Central Stop button has been clicked.");
+            popUpNotification(notificationType.warning, "All trains were stopped because the 'Central stop' button was clicked.");
         }
 
         /// <summary>
@@ -770,7 +770,7 @@ namespace TestDesignTT
                 SendTCPData(turnoutInst.TCPPacket);
             }
 
-            string msg = "Software stops for switches from configuration file were set!";
+            string msg = "Stops for the switches have been set from the configuration file.";
             popUpNotification(notificationType.success, msg);
         }
 

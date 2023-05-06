@@ -22,7 +22,7 @@ namespace TestDesignTT
             if (timetable.Count < 1)
                 titleDisplayData.Text = "No timetable have been loaded.";
             else
-                titleDisplayData.Text = "These are loaded timetable data.";
+                titleDisplayData.Text = "This is the loaded timetable.";
 
             //pridani zdroje
             dataGridView1.DataSource = timetable;

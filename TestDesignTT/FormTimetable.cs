@@ -167,7 +167,7 @@ namespace TestDesignTT
             }
 
             //zaslani notifikace, ze byl spusten TCP server
-            popUpNotification(notificationType.success, "TCP server has been started.");
+            popUpNotification(notificationType.success, "The TCP server has been started.");
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace TestDesignTT
 
             labelTitle.Text = (sender as Button).Text;
 
-            uCJsonDisplay.displayJson();
+            //uCJsonDisplay.displayJson();
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace TestDesignTT
             btnPlay.Text = "Play";
             btnPlay.IconChar = FontAwesome.Sharp.IconChar.Play;
 
-            popUpNotification(notificationType.warning, "All trains have been stopped because Central Stop button has been clicked.");
+            popUpNotification(notificationType.warning, "All trains were stopped because the 'Central stop' button was clicked.");
 
             checkBtnLogic();
         }
@@ -697,7 +697,7 @@ namespace TestDesignTT
                 catch (IOException)
                 {
                     MessageBox.Show("An I/O error occurred while opening the file...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    popUpNotification(notificationType.error, "Timetable couldn't be loaded due to some error!");
+                    popUpNotification(notificationType.error, "Timetable couldn't be loaded due to the error!");
                 }
             }
             else
@@ -767,7 +767,7 @@ namespace TestDesignTT
                             //vlak se jiz nachazi v cilove stanici - neni potreba zadna dalsi akce
                             if (train.currentPosition == timetable[i].FinalStation || getTracksForFinalPositon.Contains(train.currentPosition))
                             {
-                                textForMsgBox = "Train " + train.name + " is already in the final station!";
+                                textForMsgBox = "The train " + train.name + " is already in the final station!";
 
                                 popUpNotification(notificationType.warning, textForMsgBox);
                                 break;
@@ -825,7 +825,7 @@ namespace TestDesignTT
                                 if (!uniqueStart.Contains(timetable[i].StartStation))
                                 {
                                     //neni, konec, vlak nemuze jet
-                                    textForMsgBox = train.name + " will not start. It's timetable data doesn't match possible START position with current direction " + (timetable[i].Reverse ? "reverse" : "ahaed" + ".");
+                                    textForMsgBox = train.name + " will not start. Its timetable data doesn't match the possible Start position with the direction " + (timetable[i].Reverse ? "reverse" : "ahaed" + ".");
                                     popUpNotification(notificationType.error, textForMsgBox);
                                     break;
                                 }
@@ -841,7 +841,7 @@ namespace TestDesignTT
                                 if (!uniqueStart.Contains(timetable[i].StartStation))
                                 {
                                     //neni, konec, vlak nemuze jet
-                                    textForMsgBox = train.name + " will not start. It's timetable data doesn't match possible START position with current direction " + (timetable[i].Reverse ? "reverse" : "ahaed" + ".");
+                                    textForMsgBox = train.name + " will not start. Its timetable data doesn't match the possible Start position with the direction " + (timetable[i].Reverse ? "reverse" : "ahaed" + ".");
                                     popUpNotification(notificationType.error, textForMsgBox);
                                     break;
                                 }
@@ -856,7 +856,7 @@ namespace TestDesignTT
                                 if (!uniqueFinal.Contains(timetable[i].FinalStation))
                                 {
                                     //neni, konec, vlak nemuze jet
-                                    textForMsgBox = train.name + " will not start. It's timetable data doesn't match possible FINAL position with current direction " + (timetable[i].Reverse ? "reverse" : "ahaed" + ".");
+                                    textForMsgBox = train.name + " will not start. Its timetable data doesn't match the possible Final position with the direction " + (timetable[i].Reverse ? "reverse" : "ahaed" + ".");
                                     popUpNotification(notificationType.error, textForMsgBox);
                                     break;
                                 }
@@ -909,7 +909,7 @@ namespace TestDesignTT
                                 //pokud na danou stanici vlak nemùže jet
                                 if (!checkFinalTrack)
                                 {
-                                    textForMsgBox = train.name + " will not start. It's timetable data doesn't match possible START position with current direction " + (timetable[i].Reverse ? "reverse" : "ahaed" + ".");
+                                    textForMsgBox = train.name + " will not start. Its timetable data doesn't match the possible Start position with the direction " + (timetable[i].Reverse ? "reverse" : "ahaed" + ".");
                                     popUpNotification(notificationType.error, textForMsgBox);
                                     break;
                                 }
@@ -977,7 +977,7 @@ namespace TestDesignTT
             dataLoad.Clear();
             checkBtnLogic();
 
-            string msg = "Timetable was successfully loaded!";
+            string msg = "The timetable was successfully loaded!";
             popUpNotification(notificationType.success, msg);
 
 
@@ -1286,7 +1286,7 @@ namespace TestDesignTT
                 SendTCPData(turnoutInst.TCPPacket);
             }
 
-            string msg = "Software stops for switches from configuration file were set!";
+            string msg = "Stops for the switches have been set from the configuration file.";
             popUpNotification(notificationType.success, msg);
         }
 

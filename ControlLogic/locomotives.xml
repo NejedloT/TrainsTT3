@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Item>
+    <Str>Brejlovec</Str>
+    <Num>3</Num>
+  </Item>
+  <Item>
+    <Str>Ragulin</Str>
+    <Num>9</Num>
+  </Item>
+  <Item>
+    <Str>ICE</Str>
+    <Num>10</Num>
+  </Item>
+  <Item>
+    <Str>Herkules_Priessnitz</Str>
+    <Num>12</Num>
+  </Item>
+  <Item>
+    <Str>Taurus_EVB</Str>
+    <Num>16</Num>
+  </Item>
+</ArrayOfItem>

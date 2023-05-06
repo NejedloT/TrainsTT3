@@ -161,8 +161,8 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(934, 120);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Note: If you are using DEBUG mode, don\'t forget to update train position using \"U" +
-    "pdate JSON\" button and set actual values!!";
+            this.label1.Text = "Note: If you are using DEBUG mode, don\'t forget to update the train position usin" +
+    "g \"Update JSON\" button and to set actual values!!";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel6

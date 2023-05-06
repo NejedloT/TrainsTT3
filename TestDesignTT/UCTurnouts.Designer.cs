@@ -1088,8 +1088,8 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(852, 60);
             this.label9.TabIndex = 17;
-            this.label9.Text = "Note: Position is 1 (the lowest bit - 0000 0001) to 8 (1000 0000); Values are 0 t" +
-    "o turn switch right (train will go right), 1 to turn switch left";
+            this.label9.Text = "Note: Position is 1 (the lowest bit - 0000 0001) to 8 (1000 0000); Put the value " +
+    "0 to turn switch right (train will go right), 1 to turn switch left";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UCTurnouts

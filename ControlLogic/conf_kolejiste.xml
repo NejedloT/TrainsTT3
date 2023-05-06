@@ -476,7 +476,7 @@
 				<xpos>510</xpos>
 				<ypos>1105</ypos>
 			</mapcoordinates>
-			<moduleid>6</moduleid>
+			<moduleid>7</moduleid>
 			<moduleposition>0</moduleposition>
 		</section>
 		<section id = "u042" type="switch">
@@ -490,7 +490,7 @@
 				<xpos>525</xpos>
 				<ypos>1135</ypos>
 			</mapcoordinates>
-			<moduleid>6</moduleid>
+			<moduleid>7</moduleid>
 			<moduleposition>1</moduleposition>
 		</section>
 		<section id = "u043" type="track">
@@ -501,7 +501,7 @@
 				<xpos>575</xpos>
 				<ypos>1145</ypos>
 			</mapcoordinates>
-			<moduleid>6</moduleid>
+			<moduleid>7</moduleid>
 			<moduleposition>2</moduleposition>
 		</section>
 		<section id = "u044" type="switch">
@@ -518,7 +518,7 @@
 				<xpos>585</xpos>
 				<ypos>1165</ypos>
 			</mapcoordinates>
-			<moduleid>6</moduleid>
+			<moduleid>7</moduleid>
 			<moduleposition>3</moduleposition>
 		</section>
 		<section id = "u045" type="switch">
@@ -532,7 +532,7 @@
 				<xpos>595</xpos>
 				<ypos>1015</ypos>
 			</mapcoordinates>
-			<moduleid>6</moduleid>
+			<moduleid>7</moduleid>
 			<moduleposition>4</moduleposition>
 		</section>
 		<section id = "u046" type="track">
@@ -543,7 +543,7 @@
 				<xpos>640</xpos>
 				<ypos>1180</ypos>
 			</mapcoordinates>
-			<moduleid>6</moduleid>
+			<moduleid>7</moduleid>
 			<moduleposition>5</moduleposition>
 		</section>
 		<section id = "u047" type="switch">
@@ -560,16 +560,110 @@
 				<xpos>645</xpos>
 				<ypos>1205</ypos>
 			</mapcoordinates>
-			<moduleid>6</moduleid>
+			<moduleid>7</moduleid>
 			<moduleposition>6</moduleposition>
 		</section>
 		<section id = "Beroun_kolej_7" type="track">
-			<prevsec>Pred_Berounem_kolej_7</prevsec>
+			<prevsec>Beroun_pred_koleji_7</prevsec>
 			<nextsec>u046</nextsec>
 			<circuit>0</circuit>
 			<mapcoordinates>
 				<xpos>775</xpos>
 				<ypos>1220</ypos>
+			</mapcoordinates>
+			<moduleid>7</moduleid>
+			<moduleposition>7</moduleposition>
+		</section>
+		<section id = "Beroun_kolej_3" type="track">
+			<prevsec>Beroun_pred_koleji_3</prevsec>
+			<nextsec>u041</nextsec>
+			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>0</xpos>
+				<ypos>0</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>0</moduleposition>
+		</section>
+		<section id = "Beroun_kolej_4" type="track">
+			<prevsec>Beroun_pred_koleji_4</prevsec>
+			<nextsec>u037</nextsec>
+			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>0</xpos>
+				<ypos>0</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>1</moduleposition>
+		</section>
+		<section id = "u051" type="track">
+			<prevsec>Beroun_kolej_6</prevsec>
+			<nextsec>u045</nextsec>
+			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>0</xpos>
+				<ypos>0</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>2</moduleposition>
+		</section>
+		<section id = "Beroun_kolej_6" type="track">
+			<prevsec>Beroun_pred_koleji_6</prevsec>
+			<nextsec>u051</nextsec>
+			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>0</xpos>
+				<ypos>0</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>3</moduleposition>
+		</section>
+		<section id = "u053" type="track">
+			<prevsec>Beroun_kolej_8</prevsec>
+			<nextsec>u045</nextsec>
+			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>0</xpos>
+				<ypos>0</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>4</moduleposition>
+		</section>
+		<section id = "Beroun_kolej_8" type="track">
+			<prevsec>Beroun_pred_koleji_8</prevsec>
+			<nextsec>u053</nextsec>
+			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>0</xpos>
+				<ypos>0</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>5</moduleposition>
+		</section>
+		<section id = "u055" type="track">
+			<prevsec></prevsec>
+			<nextsec>u047</nextsec>
+			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>0</xpos>
+				<ypos>0</ypos>
+			</mapcoordinates>
+			<moduleid>6</moduleid>
+			<moduleposition>6</moduleposition>
+		</section>
+		<section id = "u056" type="switch">
+			<prevsections>
+				<prevsec1></prevsec1>
+				<prevsec2></prevsec2>
+			</prevsections>
+			<nextsections>
+				<nextsec1>u047</nextsec1>
+				<nextsec2></nextsec2>
+			</nextsections>
+			<circuit>0</circuit>
+			<mapcoordinates>
+				<xpos>0</xpos>
+				<ypos>0</ypos>
 			</mapcoordinates>
 			<moduleid>6</moduleid>
 			<moduleposition>7</moduleposition>
@@ -655,6 +749,8 @@
 					<part6>u001</part6>
 					<part7>u034</part7>
 					<part8>u037</part8>
+					<part9>Beroun_kolej_4</part9>
+					<part10>Beroun_pred_koleji_4</part10>
 				</parts>
 				<switches>
 					<unit1>
@@ -1187,7 +1283,7 @@
 		</cir>
 	</circuits>
 
-	<!-- Predefined critical routes -->
+	<!-- Predefined critical routes for searching new roads -->
 	<criticalroutes>
 		<crit id = "cr1">
 			<last>u020</last>
@@ -1309,7 +1405,7 @@
 		<item3>
 			<unit>1</unit>
 			<pos>2</pos>
-			<leftStop>100</leftStop>
+			<leftStop>90</leftStop>
 			<rightStop>130</rightStop>
 		</item3>
 		<item4>
@@ -1321,20 +1417,26 @@
 		<item5>
 			<unit>1</unit>
 			<pos>4</pos>
-			<leftStop>100</leftStop>
-			<rightStop>130</rightStop>
+			<leftStop>110</leftStop>
+			<rightStop>140</rightStop>
 		</item5>
 		<item6>
 			<unit>1</unit>
 			<pos>5</pos>
-			<leftStop>60</leftStop>
-			<rightStop>140</rightStop>
+			<leftStop>80</leftStop>
+			<rightStop>110</rightStop>
 		</item6>
 		<item7>
 			<unit>1</unit>
 			<pos>6</pos>
 			<leftStop>90</leftStop>
-			<rightStop>120</rightStop>
+			<rightStop>130</rightStop>
 		</item7>
+		<item8>
+			<unit>1</unit>
+			<pos>7</pos>
+			<leftStop>75</leftStop>
+			<rightStop>115</rightStop>
+		</item8>
 	</turnoutStopDefinitions>
 </model>

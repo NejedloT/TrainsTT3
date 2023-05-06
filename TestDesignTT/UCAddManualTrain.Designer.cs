@@ -67,7 +67,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(974, 100);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Add train that you want to start moving";
+            this.label1.Text = "Add a train you want to start moving";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel1
@@ -154,7 +154,7 @@
             this.tableLayoutPanel2.AutoSize = true;
             this.tableLayoutPanel2.ColumnCount = 4;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 350F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 450F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 350F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel2.Controls.Add(this.cbFinalTrack, 2, 7);
@@ -193,7 +193,7 @@
             this.cbFinalTrack.FormattingEnabled = true;
             this.cbFinalTrack.Items.AddRange(new object[] {
             "1"});
-            this.cbFinalTrack.Location = new System.Drawing.Point(462, 234);
+            this.cbFinalTrack.Location = new System.Drawing.Point(522, 234);
             this.cbFinalTrack.Name = "cbFinalTrack";
             this.cbFinalTrack.Size = new System.Drawing.Size(344, 23);
             this.cbFinalTrack.TabIndex = 17;
@@ -205,12 +205,12 @@
             this.labelSpecificTrack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelSpecificTrack.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelSpecificTrack.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.labelSpecificTrack.Location = new System.Drawing.Point(109, 198);
+            this.labelSpecificTrack.Location = new System.Drawing.Point(69, 198);
             this.labelSpecificTrack.Margin = new System.Windows.Forms.Padding(0);
             this.labelSpecificTrack.Name = "labelSpecificTrack";
-            this.labelSpecificTrack.Size = new System.Drawing.Size(350, 33);
+            this.labelSpecificTrack.Size = new System.Drawing.Size(450, 33);
             this.labelSpecificTrack.TabIndex = 15;
-            this.labelSpecificTrack.Text = "Want to pick specific track?";
+            this.labelSpecificTrack.Text = "Do you want to choose a specific track?";
             this.labelSpecificTrack.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // labelFinalTrack
@@ -219,10 +219,10 @@
             this.labelFinalTrack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelFinalTrack.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelFinalTrack.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.labelFinalTrack.Location = new System.Drawing.Point(109, 231);
+            this.labelFinalTrack.Location = new System.Drawing.Point(69, 231);
             this.labelFinalTrack.Margin = new System.Windows.Forms.Padding(0);
             this.labelFinalTrack.Name = "labelFinalTrack";
-            this.labelFinalTrack.Size = new System.Drawing.Size(350, 33);
+            this.labelFinalTrack.Size = new System.Drawing.Size(450, 33);
             this.labelFinalTrack.TabIndex = 14;
             this.labelFinalTrack.Text = "Final track:";
             this.labelFinalTrack.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -234,7 +234,7 @@
             this.cbFinalStation.FormattingEnabled = true;
             this.cbFinalStation.Items.AddRange(new object[] {
             "1"});
-            this.cbFinalStation.Location = new System.Drawing.Point(462, 168);
+            this.cbFinalStation.Location = new System.Drawing.Point(522, 168);
             this.cbFinalStation.Name = "cbFinalStation";
             this.cbFinalStation.Size = new System.Drawing.Size(344, 23);
             this.cbFinalStation.TabIndex = 12;
@@ -246,10 +246,10 @@
             this.labelFinalStation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelFinalStation.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelFinalStation.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.labelFinalStation.Location = new System.Drawing.Point(109, 165);
+            this.labelFinalStation.Location = new System.Drawing.Point(69, 165);
             this.labelFinalStation.Margin = new System.Windows.Forms.Padding(0);
             this.labelFinalStation.Name = "labelFinalStation";
-            this.labelFinalStation.Size = new System.Drawing.Size(350, 33);
+            this.labelFinalStation.Size = new System.Drawing.Size(450, 33);
             this.labelFinalStation.TabIndex = 11;
             this.labelFinalStation.Text = "Final Station:";
             this.labelFinalStation.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -260,10 +260,10 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label6.Location = new System.Drawing.Point(109, 33);
+            this.label6.Location = new System.Drawing.Point(69, 33);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(350, 33);
+            this.label6.Size = new System.Drawing.Size(450, 33);
             this.label6.TabIndex = 10;
             this.label6.Text = "Start position:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -276,7 +276,7 @@
             this.cbDirect.Items.AddRange(new object[] {
             "Direct",
             "Reverse"});
-            this.cbDirect.Location = new System.Drawing.Point(462, 69);
+            this.cbDirect.Location = new System.Drawing.Point(522, 69);
             this.cbDirect.Name = "cbDirect";
             this.cbDirect.Size = new System.Drawing.Size(344, 23);
             this.cbDirect.TabIndex = 8;
@@ -305,7 +305,7 @@
             "18",
             "19",
             "20"});
-            this.cbSpeed.Location = new System.Drawing.Point(462, 102);
+            this.cbSpeed.Location = new System.Drawing.Point(522, 102);
             this.cbSpeed.Name = "cbSpeed";
             this.cbSpeed.Size = new System.Drawing.Size(344, 23);
             this.cbSpeed.TabIndex = 7;
@@ -317,10 +317,10 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label4.Location = new System.Drawing.Point(109, 66);
+            this.label4.Location = new System.Drawing.Point(69, 66);
             this.label4.Margin = new System.Windows.Forms.Padding(0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(350, 33);
+            this.label4.Size = new System.Drawing.Size(450, 33);
             this.label4.TabIndex = 4;
             this.label4.Text = "Reverse/Direct:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -331,12 +331,12 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(109, 99);
+            this.label2.Location = new System.Drawing.Point(69, 99);
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(350, 33);
+            this.label2.Size = new System.Drawing.Size(450, 33);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Set its speed:";
+            this.label2.Text = "Speed:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
@@ -345,12 +345,12 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Location = new System.Drawing.Point(109, 0);
+            this.label3.Location = new System.Drawing.Point(69, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(350, 33);
+            this.label3.Size = new System.Drawing.Size(450, 33);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Pick train:";
+            this.label3.Text = "Pick a train:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbPickTrain
@@ -358,7 +358,7 @@
             this.cbPickTrain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbPickTrain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPickTrain.FormattingEnabled = true;
-            this.cbPickTrain.Location = new System.Drawing.Point(462, 3);
+            this.cbPickTrain.Location = new System.Drawing.Point(522, 3);
             this.cbPickTrain.Name = "cbPickTrain";
             this.cbPickTrain.Size = new System.Drawing.Size(344, 23);
             this.cbPickTrain.TabIndex = 6;
@@ -373,7 +373,7 @@
             this.tableLayoutPanel3.Controls.Add(this.radioButtonNo, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.radioButtonYes, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(462, 201);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(522, 201);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -415,7 +415,7 @@
             // 
             this.tbStartPosition.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbStartPosition.Enabled = false;
-            this.tbStartPosition.Location = new System.Drawing.Point(462, 36);
+            this.tbStartPosition.Location = new System.Drawing.Point(522, 36);
             this.tbStartPosition.Name = "tbStartPosition";
             this.tbStartPosition.Size = new System.Drawing.Size(344, 23);
             this.tbStartPosition.TabIndex = 18;

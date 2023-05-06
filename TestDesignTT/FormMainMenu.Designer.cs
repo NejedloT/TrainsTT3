@@ -164,7 +164,7 @@
             this.btnDebug.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
             this.btnDebug.Size = new System.Drawing.Size(1184, 100);
             this.btnDebug.TabIndex = 16;
-            this.btnDebug.Text = "Debug Mode";
+            this.btnDebug.Text = "Debug mode";
             this.btnDebug.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDebug.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDebug.UseVisualStyleBackColor = false;

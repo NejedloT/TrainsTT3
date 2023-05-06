@@ -73,7 +73,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(996, 100);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Update train data in JSON file";
+            this.label1.Text = "Update the train data in the JSON file";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel2
@@ -270,7 +270,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(350, 35);
             this.label2.TabIndex = 11;
-            this.label2.Text = "Pick current position:";
+            this.label2.Text = "Pick the current position:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
@@ -284,7 +284,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(350, 35);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Pick train:";
+            this.label3.Text = "Pick a train:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbPreviousPosition

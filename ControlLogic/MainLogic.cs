@@ -106,7 +106,7 @@ namespace ControlLogic
             trainsList = td.LoadJson();
 
             //nacteni configurace namapovaneho kolejiste
-            xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+            xdoc = XDocument.Load(SearchLogic.pathToConfigurationFile);
         }
 
 
@@ -513,8 +513,8 @@ namespace ControlLogic
 
                     Locomotive locomotive = new Locomotive(train.name);
 
-                    ml.OnMyEventMessage(new InfoMessageSend { InfoMessage = "Train " + train.name + " is not in expected position! All trains will be stopped!" });
-                    ml.OnMyEventNotification(new NotificationSend { NotificationType = "error", InfoMessage = "Train " + train.name + " is moving and doesn't have a current consumption. All trains will be stopped!" });
+                    ml.OnMyEventMessage(new InfoMessageSend { InfoMessage = "Train " + train.name + " is not in the expected position! All trains will be stopped!" });
+                    ml.OnMyEventNotification(new NotificationSend { NotificationType = "error", InfoMessage = "Train " + train.name + " is moving and has no current consumption. All trains will be stopped!" });
                     //warning, success, error
                     dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 0 });
                     ml.OnMyEventLoco(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 0 });
@@ -573,7 +573,7 @@ namespace ControlLogic
 
             dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 3 });
             ml.OnMyEventLoco(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = 3 });
-            ml.OnMyEventNotification(new NotificationSend { NotificationType = "warning", InfoMessage = "Train " + train.name + " is temporarily stopped because of the possibility of collision." });
+            ml.OnMyEventNotification(new NotificationSend { NotificationType = "warning", InfoMessage = "Train " + train.name + " is temporarily stopped due to the possibility of a collision." });
             //warning, success, error
 
             train.move = 2;
@@ -610,16 +610,6 @@ namespace ControlLogic
         /// <param name="train"></param>
         public static void FindRouteOutsideCritical(Trains train)
         {
-            /*
-            //kontrola, ze jsou nactena data vlaku
-            if (!(trainsList.Count() > 0))
-            {
-                TrainDataJSON td = new TrainDataJSON();
-                trainsList = td.LoadJson();
-            }
-            */
-
-
             //bool testujici volnou cilovou kolej ci ze vlak bude odjizdet
             bool fintrack = false;
 
@@ -920,7 +910,7 @@ namespace ControlLogic
                     dataToSendLoco.Add(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = (byte)3 });
                     ml.OnMyEventLoco(new LocomotiveDataSend { Loco = locomotive, Reverze = train.reverse, Speed = (byte)3 });
 
-                    ml.OnMyEventNotification(new NotificationSend { NotificationType = "warning", InfoMessage = "Train " + train.name + " have been stopped because of the check in critical circuit." });
+                    ml.OnMyEventNotification(new NotificationSend { NotificationType = "warning", InfoMessage = "Train " + train.name + " have been stopped for inspection in a critical circuit." });
                 }
 
                 else
@@ -934,7 +924,7 @@ namespace ControlLogic
                         timeToStop[train] = timer;
 
                         MainLogic ml = GetInstance();
-                        ml.OnMyEventNotification(new NotificationSend { NotificationType = "warning", InfoMessage = "Train " + train.name + " will be stopped because of the check in critical circuit." });
+                        ml.OnMyEventNotification(new NotificationSend { NotificationType = "warning", InfoMessage = "Train " + train.name + " will be stopped for inspection in a critical circuit." });
                     }
                 }
             }
@@ -1177,6 +1167,10 @@ namespace ControlLogic
                                 .FirstOrDefault(e => e.Attribute("id")?.Value == reservedSections[i].Section);
 
                     //Ziskej "circuit" hodnotu - polohu na kolejisti
+
+                    if (mapSection == null)
+                        continue;
+
                     circuit = (int)mapSection.Element("circuit");
 
                     check = false;
@@ -1275,19 +1269,30 @@ namespace ControlLogic
 
 
                         string nextSecId;
+                        string lastSecId = train.lastPosition;
+
                         if (orientation == "nextConnection")
                         {
                             nextSecId = mapSection.Element("nextsec")?.Value;
+                            if (train.lastPosition == nextSecId)
+                            {
+                                lastSecId = mapSection.Element("prevsec")?.Value;
+                            }
                         }
                         else
                         {
                             nextSecId = mapSection.Element("prevsec")?.Value;
+                            if (train.lastPosition == nextSecId)
+                            {
+                                lastSecId = mapSection.Element("nextsec")?.Value;
+                            }
                         }
 
 
                         td.UpdateTrainData(train.name, t =>
                         {
                             //t.currentPosition = currentPosition;
+                            t.lastPosition = lastSecId;
                             t.nextPosition = nextSecId;
                             t.reverse = reverse;
                             t.speed = speed;

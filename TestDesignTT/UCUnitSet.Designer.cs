@@ -58,7 +58,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(961, 100);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Set settings of the section unit";
+            this.label1.Text = "Settings of the section unit";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel4
@@ -138,7 +138,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(420, 45);
             this.label8.TabIndex = 26;
-            this.label8.Text = "Get setting of the unit:";
+            this.label8.Text = "Get settings of the unit:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnPowerOff
@@ -299,7 +299,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(420, 45);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Restart of H-bridge:";
+            this.label5.Text = "Restart of the H-bridge:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label4
@@ -313,7 +313,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(420, 45);
             this.label4.TabIndex = 12;
-            this.label4.Text = "Restart of section unit:";
+            this.label4.Text = "Restart of the section unit:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label2

@@ -104,7 +104,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(900, 100);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Locomotives";
+            this.label1.Text = "Set speed and direction for locomotives";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel4

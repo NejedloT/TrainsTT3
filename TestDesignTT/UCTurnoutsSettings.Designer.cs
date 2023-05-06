@@ -60,7 +60,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(892, 100);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Set settings of the turnout unit";
+            this.label1.Text = "Settings of the turnout unit";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel4
@@ -206,7 +206,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(350, 45);
             this.label10.TabIndex = 30;
-            this.label10.Text = "Value for right stop:";
+            this.label10.Text = "Value for the right stop:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label9
@@ -220,7 +220,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(350, 45);
             this.label9.TabIndex = 29;
-            this.label9.Text = "Value for left stop:";
+            this.label9.Text = "Value for the left stop:";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label7
@@ -234,7 +234,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(350, 45);
             this.label7.TabIndex = 28;
-            this.label7.Text = "Pick switches:";
+            this.label7.Text = "Pick the switches:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnReadState
@@ -285,7 +285,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(700, 45);
             this.label6.TabIndex = 22;
-            this.label6.Text = "Other setting";
+            this.label6.Text = "Other settings";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnReset
@@ -366,7 +366,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(700, 45);
             this.label4.TabIndex = 12;
-            this.label4.Text = "Setting for software stops";
+            this.label4.Text = "Settings for the software stops";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2

@@ -11,12 +11,14 @@ namespace ControlLogic
     {
         private static XDocument xdoc = new XDocument();
 
+        public static readonly string pathToConfigurationFile = "C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml";
+
         /// <summary>
         /// Inicializace - nacteni konfiguracniho souboru
         /// </summary>
         public static void InitSearch()
         {
-            xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+            xdoc = XDocument.Load(pathToConfigurationFile);
         }
 
         /// <summary>
@@ -26,7 +28,7 @@ namespace ControlLogic
         public static IEnumerable<int> GetTurnoutIDs()
         {
             if (xdoc.Root == null)
-                xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+                xdoc = XDocument.Load(pathToConfigurationFile);
 
             IEnumerable<int> unitValues = xdoc.Descendants("unit")
                 .Select(u => Convert.ToInt32(u.Value))
@@ -45,7 +47,7 @@ namespace ControlLogic
         public static IEnumerable<int> GetModulesId()
         {
             if (xdoc.Root == null)
-                xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+                xdoc = XDocument.Load(pathToConfigurationFile);
 
             IEnumerable<int> moduleIds = xdoc.Descendants("section")
             .Select(x => (int)x.Element("moduleid"))
@@ -58,7 +60,7 @@ namespace ControlLogic
         public static XElement GetCoordinatesForSection(string currentPosition)
         {
             if (xdoc.Root == null)
-                xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+                xdoc = XDocument.Load(pathToConfigurationFile);
 
             XElement section = xdoc.Descendants("section")
                                   .Where(s => (string)s.Attribute("id") == currentPosition)
@@ -71,7 +73,7 @@ namespace ControlLogic
         public static IEnumerable<XElement> GetFromElements(Trains train)
         {
             if (xdoc.Root == null)
-                xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+                xdoc = XDocument.Load(pathToConfigurationFile);
 
             return xdoc.Descendants("from").Where(e => (string)e.Attribute("id") == train.currentPosition);
         }
@@ -422,7 +424,7 @@ namespace ControlLogic
         public static List<XElement> GetTurnoutStopDefinitions()
         {
             if (xdoc.Root == null)
-                xdoc = XDocument.Load("C:\\Users\\Tomáš\\Documents\\ZCU_FEL\\v1_diplomka\\TestDesign\\TestDesignTT\\ControlLogic\\conf_kolejiste.xml");
+                xdoc = XDocument.Load(pathToConfigurationFile);
 
             List<XElement> turnoutsStops = xdoc.Descendants("turnoutStopDefinitions")
                 .Elements()

@@ -33,12 +33,12 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -93,6 +93,30 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(934, 40);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // label4
+            // 
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Segoe UI Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label4.Location = new System.Drawing.Point(747, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(184, 40);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "5) 0x10 Taurus_EVB";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label2.Location = new System.Drawing.Point(561, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(180, 40);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "4) 0x0C Herkules_Priessnitz";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label5
             // 
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -138,30 +162,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(934, 751);
             this.panel2.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(561, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(180, 40);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "4) 0x0C Herkules_Priessnitz";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label4
-            // 
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Font = new System.Drawing.Font("Segoe UI Black", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label4.Location = new System.Drawing.Point(747, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(184, 40);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "5) 0x10 Taurus_EVB";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UCMap
             // 

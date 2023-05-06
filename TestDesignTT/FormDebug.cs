@@ -168,7 +168,7 @@ namespace TestDesignTT
             }
 
             //zaslani notifikace, ze byl spusten TCP server
-            popUpNotification(notificationType.success, "TCP server has been started.");
+            popUpNotification(notificationType.success, "The TCP server has been started.");
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace TestDesignTT
         private void btnExit_Click(object sender, EventArgs e)
         {
             //zobrazeni dialogu na potvrzeni, ze uzivatel skutecne chce ukoncit aplikaci
-            DialogResult result = MessageBox.Show("Do you really want to leave the app? Are you sure that correct JSON values were set using 'Update JSON' button?!?!", "WARNING!!!",
+            DialogResult result = MessageBox.Show("Do you really want to leave the app? Are you sure that the correct JSON values were set using the 'Update JSON' button?!?!", "WARNING!!!",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning,
                 MessageBoxDefaultButton.Button2);
@@ -434,7 +434,7 @@ namespace TestDesignTT
             //zastav vsechny vlaky!
             StopAll();
 
-            popUpNotification(notificationType.warning, "All trains have been stopped because Central Stop button has been clicked.");
+            popUpNotification(notificationType.warning, "All trains were stopped because the 'Central stop' button was clicked.");
 
         }
 
@@ -465,7 +465,7 @@ namespace TestDesignTT
             }
 
             //softwarove dorazy byly nastaveny
-            string msg = "Software stops for switches from configuration file were set!";
+            string msg = "Stops for the switches have been set from the configuration file.";
             popUpNotification(notificationType.success, msg);
         }
 
@@ -537,7 +537,7 @@ namespace TestDesignTT
                         //vytvori se packet a posle se
                         else
                         {
-                            TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 3);
+                            TrainMotionPacket trainMotionPacket = new TrainMotionPacket(locomotive, false, 0);
 
                             SendTCPData(trainMotionPacket.TCPPacket);
 

@@ -58,6 +58,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label3.Text" xml:space="preserve">
-    <value>Example: Switches = 00110110, Values = 00010100; Note: Indexes for switches is 8 to 1 so in this example, switches 2, 3, 5 and 6 will be changed. Value 0 is to set switch right (train will go right) and 1 to turn switch left. In this example, switches 3 and 5 will be set to the left and switches 2 and 6 to the right.</value>
+    <value>Example: Switches = 00110110, Values = 00010100; Note: The Indexes for switches is 8 to 1 so in this example, switches 2, 3, 5 and 6 will be changed. Value 0 is to set the switch right (train will go right) and 1 to turn the switch left. In this example, switches 3 and 5 will be set to the left and switches 2 and 6 to the right.</value>
   </data>
 </root>
