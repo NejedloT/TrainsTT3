@@ -584,8 +584,8 @@
 			<nextsec>u041</nextsec>
 			<circuit>0</circuit>
 			<mapcoordinates>
-				<xpos>0</xpos>
-				<ypos>0</ypos>
+				<xpos>710</xpos>
+				<ypos>1160</ypos>
 			</mapcoordinates>
 			<moduleid>6</moduleid>
 			<moduleposition>0</moduleposition>
@@ -595,8 +595,8 @@
 			<nextsec>u037</nextsec>
 			<circuit>0</circuit>
 			<mapcoordinates>
-				<xpos>0</xpos>
-				<ypos>0</ypos>
+				<xpos>740</xpos>
+				<ypos>1085</ypos>
 			</mapcoordinates>
 			<moduleid>6</moduleid>
 			<moduleposition>1</moduleposition>
@@ -606,8 +606,8 @@
 			<nextsec>u045</nextsec>
 			<circuit>0</circuit>
 			<mapcoordinates>
-				<xpos>0</xpos>
-				<ypos>0</ypos>
+				<xpos>685</xpos>
+				<ypos>1030</ypos>
 			</mapcoordinates>
 			<moduleid>6</moduleid>
 			<moduleposition>2</moduleposition>
@@ -617,8 +617,8 @@
 			<nextsec>u051</nextsec>
 			<circuit>0</circuit>
 			<mapcoordinates>
-				<xpos>0</xpos>
-				<ypos>0</ypos>
+				<xpos>940</xpos>
+				<ypos>1100</ypos>
 			</mapcoordinates>
 			<moduleid>6</moduleid>
 			<moduleposition>3</moduleposition>
@@ -628,8 +628,8 @@
 			<nextsec>u045</nextsec>
 			<circuit>0</circuit>
 			<mapcoordinates>
-				<xpos>0</xpos>
-				<ypos>0</ypos>
+				<xpos>700</xpos>
+				<ypos>1015</ypos>
 			</mapcoordinates>
 			<moduleid>6</moduleid>
 			<moduleposition>4</moduleposition>
@@ -639,8 +639,8 @@
 			<nextsec>u053</nextsec>
 			<circuit>0</circuit>
 			<mapcoordinates>
-				<xpos>0</xpos>
-				<ypos>0</ypos>
+				<xpos>850</xpos>
+				<ypos>1055</ypos>
 			</mapcoordinates>
 			<moduleid>6</moduleid>
 			<moduleposition>5</moduleposition>
@@ -650,8 +650,8 @@
 			<nextsec>u047</nextsec>
 			<circuit>0</circuit>
 			<mapcoordinates>
-				<xpos>0</xpos>
-				<ypos>0</ypos>
+				<xpos>830</xpos>
+				<ypos>1270</ypos>
 			</mapcoordinates>
 			<moduleid>6</moduleid>
 			<moduleposition>6</moduleposition>
@@ -667,8 +667,8 @@
 			</nextsections>
 			<circuit>0</circuit>
 			<mapcoordinates>
-				<xpos>0</xpos>
-				<ypos>0</ypos>
+				<xpos>705</xpos>
+				<ypos>1245</ypos>
 			</mapcoordinates>
 			<moduleid>6</moduleid>
 			<moduleposition>7</moduleposition>
@@ -1240,6 +1240,57 @@
 				<circuit>2</circuit>
 			</to>
 		</from>
+		<from id = "u028">
+			<to id = "u026">
+				<parts>
+					<part1>u026</part1>
+				</parts>
+				<switches>
+					<unit1>
+						<unit>1</unit>
+						<turnouts>0</turnouts>
+						<value>0</value>
+					</unit1>
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn_circuit1</fromStart>
+				<circuit>1</circuit>
+			</to>
+		</from>
+		<from id = "u027">
+			<to id = "u025">
+				<parts>
+					<part1>u025</part1>
+				</parts>
+				<switches>
+					<unit1>
+						<unit>1</unit>
+						<turnouts>0</turnouts>
+						<value>0</value>
+					</unit1>
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Karlstejn_circuit2</fromStart>
+				<circuit>2</circuit>
+			</to>
+		</from>
+		<from id = "u030">
+			<to id = "u029">
+				<parts>
+					<part1>u029</part1>
+				</parts>
+				<switches>
+					<unit1>
+						<unit>1</unit>
+						<turnouts>0</turnouts>
+						<value>0</value>
+					</unit1>
+				</switches>
+				<toFinal>Beroun</toFinal>
+				<fromStart>Lhota</fromStart>
+				<circuit>3</circuit>
+			</to>
+		</from>
 	</routes>
 	
 	<!-- Predefined circuits between stations -->
@@ -1375,7 +1426,7 @@
 				<item5>Beroun_kolej_6</item5>
 			</toCircuit>
 			<toCircuit name = "Karlstejn_circuit1">
-				<item1>u032</item1>
+				<item1>u028</item1>
 			</toCircuit>
 		</fromCircuit>
 		<fromCircuit id = "2">
@@ -1387,7 +1438,7 @@
 				<item5>Beroun_kolej_6</item5>
 			</toCircuit>
 			<toCircuit name ="Karlstejn_circuit2">
-				<item1>u031</item1>
+				<item1>u027</item1>
 
 			</toCircuit>
 		</fromCircuit>
@@ -1397,7 +1448,7 @@
 				<item2>Beroun_kolej_6</item2>
 			</toCircuit>
 			<toCircuit name ="Lhota">
-				<item1>u029</item1>
+				<item1>u030</item1>
 			</toCircuit>
 		</fromCircuit>
 	</circuitsToFinal>
@@ -1416,19 +1467,19 @@
 		</nameOfStation>
 		<nameOfStation id = "Karlstejn_circuit1">
 			<items>
-				<item2>u032</item2>
+				<item2>u028</item2>
 			</items>
 			<circuit>1</circuit>
 		</nameOfStation>
 		<nameOfStation id = "Karlstejn_circuit2">
 			<items>
-				<item3>u031</item3>
+				<item3>u027</item3>
 			</items>
 			<circuit>2</circuit>
 		</nameOfStation>
 		<nameOfStation id = "Lhota">
 			<items>
-				<item2>u029</item2>
+				<item2>u030</item2>
 			</items>
 			<circuit>3</circuit>
 		</nameOfStation>

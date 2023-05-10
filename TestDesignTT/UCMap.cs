@@ -28,20 +28,22 @@ namespace TestDesignTT
             320, 185, 685, 650, 360, 880, 870, 920, //17-24
             1122, 1170, 1440, 1500, 1375, 1800, 1670, 1680, //25-32
             430, 490, 455, 495, 555, 765, 505, 740, //33-40
-            510, 525, 575, 585, 595, 640, 645, 775};
+            510, 525, 575, 585, 595, 640, 645, 775, //41-48
+            710, 740, 685, 940, 700, 850, 830, 705,};
         int[] y_positions = { 1015, 1045, 1225, 1295, 995, 1040, 1220, 1470, //1-8
             1050, 1048, 1125, 1185, 1265, 1230, 1330, 1465, //9-16
             1485, 1470, 1485, 1510, 1540, 1540, 1485, 1510, //17-24
             1485, 1510, 1485, 1510, 1540, 1540, 1410, 1445, //25-32
             995, 1015, 1090, 1040, 1040, 1115, 1085, 1150, //33-40
-            1105, 1135, 1145, 1165, 1015, 1180, 1205, 1220};
+            1105, 1135, 1145, 1165, 1015, 1180, 1205, 1220, //41-48
+            1160, 1085, 1030, 1100, 1015, 1055, 1270, 1245};
 
         //konstanty odpovidajici velikosti obrazku
         int constant_x = 2000;
         int constant_y = 1610;
 
         //timer pro aktualizaci dat
-        private static System.Timers.Timer refreshData;
+        public static System.Timers.Timer refreshData;
 
         public UCMap()
         {
@@ -71,11 +73,11 @@ namespace TestDesignTT
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        private void UpdateData_Tick(object source, System.Timers.ElapsedEventArgs e)
+        public void UpdateData_Tick(object source, System.Timers.ElapsedEventArgs e)
         {
             if (pictureBox1.IsHandleCreated)
             {
-                pictureBox1.Invoke(new Action(() =>
+                pictureBox1.BeginInvoke(new Action(() =>
                 {
                     lock (locking)
                     {
@@ -97,7 +99,7 @@ namespace TestDesignTT
         public void setLabels()
         {
             //zdaĺi se jedna oa testovani a zjistovani polohy (true) nebo ma vykreslovat polohu z jsonu (false)
-            bool testing = false;
+            bool testing = true;
 
             //rozmery picture boxu pro nasledujici prepocet
             int width = pictureBox1.ClientSize.Width;
@@ -121,11 +123,14 @@ namespace TestDesignTT
                         label.Location = new Point(x, y);
                         label.BorderStyle = BorderStyle.FixedSingle;
 
+                        if (refreshData == null || !refreshData.Enabled)
+                            return;
+
 
                         if (pictureBox1.IsHandleCreated)
                         {
-                            pictureBox1.Invoke(new Action(() => pictureBox1.Controls.Add(label)));
-                            pictureBox1.Invoke(new Action(() => label.BringToFront()));
+                            pictureBox1.BeginInvoke(new Action(() => pictureBox1.Controls.Add(label)));
+                            pictureBox1.BeginInvoke(new Action(() => label.BringToFront()));
                         }
                         else
                         {
@@ -149,6 +154,10 @@ namespace TestDesignTT
                     {
                         //ziskani souradnic soucasne polohy z konfiguracniho souboru
                         XElement mapCoordinates = SearchLogic.GetCoordinatesForSection(trainsList[i].currentPosition);
+
+                        if (refreshData == null || !refreshData.Enabled)
+                            return;
+
 
                         //v pripade, ze soucasna poloha je validni, vykresli data
                         if (mapCoordinates != null)
@@ -175,8 +184,8 @@ namespace TestDesignTT
                             //vykresli data
                             if (pictureBox1.IsHandleCreated)
                             {
-                                pictureBox1.Invoke(new Action(() => pictureBox1.Controls.Add(label)));
-                                pictureBox1.Invoke(new Action(() => label.BringToFront()));
+                                pictureBox1.BeginInvoke(new Action(() => pictureBox1.Controls.Add(label)));
+                                pictureBox1.BeginInvoke(new Action(() => label.BringToFront()));
                             }
                             else
                             {

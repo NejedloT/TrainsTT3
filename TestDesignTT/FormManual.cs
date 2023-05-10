@@ -126,6 +126,15 @@ namespace TestDesignTT
                 StopAll();
             }
 
+            //vypni timery v user controlech
+            UCJsonDisplay.refreshData.Stop();
+            UCMap.refreshData.Stop();
+            UCJsonDisplay.refreshData.Enabled = false;
+            UCMap.refreshData.Enabled = false;
+            UCJsonDisplay.refreshData.Elapsed -= uCdisplayJson.UpdateData_Tick;
+            UCMap.refreshData.Elapsed -= uCMap.UpdateData_Tick;
+
+
             Thread.Sleep(350);
 
             //vypni timery v logice rizeni

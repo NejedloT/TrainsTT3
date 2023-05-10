@@ -19,7 +19,7 @@ namespace TestDesignTT
         private static List<Trains> trainsList = new List<Trains>();
 
         //timer, diky ktreremu dojde v pravidelnem intervalu ke znovunacteni dat
-        private static System.Timers.Timer refreshData;
+        public static System.Timers.Timer refreshData;
 
         private static BindingList<Trains> data = new BindingList<Trains>();
 
@@ -51,12 +51,12 @@ namespace TestDesignTT
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UpdateData_Tick(object sender, System.Timers.ElapsedEventArgs e)
+        public void UpdateData_Tick(object sender, System.Timers.ElapsedEventArgs e)
         {
             //nutno pouzit i InvokeRequired z duvodu behu samostatneho vlakna
             if (dataGridView1.InvokeRequired)
             {
-                dataGridView1.Invoke(new Action(() =>
+                dataGridView1.BeginInvoke(new Action(() =>
                 {
                     displayJson();
                 }));
@@ -78,15 +78,16 @@ namespace TestDesignTT
 
                 TrainDataJSON td = new TrainDataJSON();
                 trainsList = td.LoadJson();
-
-
                 
+                if (refreshData == null || !refreshData.Enabled)
+                    return;
+
                 //testovani, zdali mohu smazat aktualni data a jak je mohu smazat, aby nedoslo ke crashi aplikace
                 if (dataGridView1.InvokeRequired)
                 {
                     if (dataGridView1.IsHandleCreated)
                     {
-                        dataGridView1.Invoke(new Action(() =>
+                        dataGridView1.BeginInvoke(new Action(() =>
                         {
                             dataGridView1.Rows.Clear();
                             dataGridView1.DataSource = null;
@@ -98,6 +99,9 @@ namespace TestDesignTT
                     dataGridView1.Rows.Clear();
                     dataGridView1.DataSource = null;
                 }
+
+                if (refreshData == null || !refreshData.Enabled)
+                    return;
 
                 //data do tabulky
                 dataGridView1.DataSource = trainsList;

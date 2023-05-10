@@ -51,6 +51,20 @@ namespace TestDesignTT
         //list pro data z JSONu
         private static List<Trains> trainsList = new List<Trains>();
 
+        /*
+         * For future change
+        private static List<ConfigurationSections> sections = new List<ConfigurationSections>();
+        private static List<ConfigurationRoutes> routes = new List<ConfigurationRoutes>();
+        private static List<ConfigurationCriticalRoute> ciritcalRoutes = new List<ConfigurationCriticalRoute>();
+        private static List<ConfigurationCircuits> circuits = new List<ConfigurationCircuits>();
+        private static List<ConfigurationCircuitToFinal> circuitToFinal = new List<ConfigurationCircuitToFinal>();
+        private static List<ConfigurationStationTrack> stationTracks = new List<ConfigurationStationTrack>();
+        private static List<ConfigurationTurnoutStopDefinition> turnoutStopDefinitions = new List<ConfigurationTurnoutStopDefinition>();
+        */
+
+
+        //private static List<ConfigurationSections> mySectionsTest = new List<ConfigurationSections>();
+
         public FormDebug()
         {
             //inicializace vsech komponent
@@ -61,6 +75,21 @@ namespace TestDesignTT
 
             //inicializace logiky vyhledavani
             SearchLogic.InitSearch();
+
+            
+            /*
+            ConfigurationFile ls = new ConfigurationFile();
+            sections = ls.LoadSections();
+            routes = ls.LoadRoutes();
+            ciritcalRoutes = ls.LoadCriticalRoutes();
+            circuits = ls.LoadCircuits();
+            circuitToFinal = ls.LoadCircuitToFinal();
+            stationTracks = ls.LoadStationTracks();
+            turnoutStopDefinitions = ls.LoadTurnoutStopsDefinition();
+
+            int i = 0;
+            */
+
         }
 
         #region Form actions (Load, Init, Closed, Resized)

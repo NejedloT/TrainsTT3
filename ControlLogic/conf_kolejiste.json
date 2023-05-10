@@ -1,0 +1,1172 @@
+{
+    "model": {
+        "sections": [
+			{
+                "Id": "u001",
+                "Prevsecs": ["u034", "u036"],
+                "Nextsecs": ["u002"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 380,
+                    "Ypos": 1015
+                },
+                "Moduleid": 3,
+                "Moduleposition": 0
+            }, {
+                "Id": "u002",
+                "Prevsecs": ["u001"],
+                "Nextsecs": ["u010", "u003"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 210,
+                    "Ypos": 1045
+                },
+                "Moduleid": 3,
+                "Moduleposition": 1
+            }, {
+                "Id": "u003",
+                "Prevsecs": ["u002", "u012"],
+                "Nextsecs": ["u004"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 115,
+                    "Ypos": 1225
+                },
+                "Moduleid": 3,
+                "Moduleposition": 2
+            }, {
+                "Id": "u004",
+                "Prevsecs": ["u003"],
+                "Nextsecs": ["u018"],
+                "Circuit": 1,
+                "Mapcoordinates": {
+                    "Xpos": 115,
+                    "Ypos": 1225
+                },
+                "Moduleid": 3,
+                "Moduleposition": 3
+            }, {
+                "Id": "u005",
+                "Prevsecs": ["u_beroun"],
+                "Nextsecs": ["u006"],
+                "Circuit": 3,
+                "Mapcoordinates": {
+                    "Xpos": 300,
+                    "Ypos": 995
+                },
+                "Moduleid": 3,
+                "Moduleposition": 4
+            }, {
+                "Id": "u006",
+                "Prevsecs": ["u005"],
+                "Nextsecs": ["u007"],
+                "Circuit": 3,
+                "Mapcoordinates": {
+                    "Xpos": 110,
+                    "Ypos": 1040
+                },
+                "Moduleid": 3,
+                "Moduleposition": 5
+            }, {
+                "Id": "u007",
+                "Prevsecs": ["u006"],
+                "Nextsecs": ["u008"],
+                "Circuit": 3,
+                "Mapcoordinates": {
+                    "Xpos": 60,
+                    "Ypos": 1220
+                },
+                "Moduleid": 3,
+                "Moduleposition": 6
+            }, {
+                "Id": "u008",
+                "Prevsecs": ["u007"],
+                "Nextsecs": ["u021"],
+                "Circuit": 3,
+                "Mapcoordinates": {
+                    "Xpos": 85,
+                    "Ypos": 1470
+                },
+                "Moduleid": 3,
+                "Moduleposition": 7
+            }, {
+                "Id": "u009",
+                "Prevsecs": ["u039", "u035"],
+                "Nextsecs": ["u010"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 372,
+                    "Ypos": 1050
+                },
+                "Moduleid": 2,
+                "Moduleposition": 0
+            }, {
+                "Id": "u010",
+                "Prevsecs": ["u002", "u009"],
+                "Nextsecs": ["u011"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 250,
+                    "Ypos": 1048
+                },
+                "Moduleid": 2,
+                "Moduleposition": 1
+            }, {
+                "Id": "u011",
+                "Prevsecs": ["u010"],
+                "Nextsecs": ["u012", "u014"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 175,
+                    "Ypos": 1125
+                },
+                "Moduleid": 2,
+                "Moduleposition": 2
+            }, {
+                "Id": "u012",
+                "Prevsecs": ["u011"],
+                "Nextsecs": ["u003", "u013"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 140,
+                    "Ypos": 1185
+                },
+                "Moduleid": 2,
+                "Moduleposition": 3
+            }, {
+                "Id": "u013",
+                "Prevsecs": ["u012"],
+                "Nextsecs": ["u017"],
+                "Circuit": 2,
+                "Mapcoordinates": {
+                    "Xpos": 135,
+                    "Ypos": 1265
+                },
+                "Moduleid": 2,
+                "Moduleposition": 4
+            }, {
+                "Id": "u014",
+                "Prevsecs": ["u011"],
+                "Nextsecs": ["u015"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 155,
+                    "Ypos": 1230
+                },
+                "Moduleid": 2,
+                "Moduleposition": 5
+            }, {
+                "Id": "u015",
+                "Prevsecs": ["u014"],
+                "Nextsecs": ["u016"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 160,
+                    "Ypos": 1330
+                },
+                "Moduleid": 2,
+                "Moduleposition": 6
+            }, {
+                "Id": "u016",
+                "Prevsecs": ["u015"],
+                "Nextsecs": [],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 555,
+                    "Ypos": 1465
+                },
+                "Moduleid": 2,
+                "Moduleposition": 7
+            }, {
+                "Id": "u017",
+                "Prevsecs": ["u013"],
+                "Nextsecs": ["u019"],
+                "Circuit": 2,
+                "Mapcoordinates": {
+                    "Xpos": 320,
+                    "Ypos": 1485
+                },
+                "Moduleid": 1,
+                "Moduleposition": 0
+            }, {
+                "Id": "u018",
+                "Prevsecs": ["u004"],
+                "Nextsecs": ["u020"],
+                "Circuit": 1,
+                "Mapcoordinates": {
+                    "Xpos": 185,
+                    "Ypos": 1470
+                },
+                "Moduleid": 1,
+                "Moduleposition": 1
+            }, {
+                "Id": "u019",
+                "Prevsecs": ["u017"],
+                "Nextsecs": ["u023"],
+                "Circuit": 2,
+                "Mapcoordinates": {
+                    "Xpos": 685,
+                    "Ypos": 1485
+                },
+                "Moduleid": 1,
+                "Moduleposition": 2
+            }, {
+                "Id": "u020",
+                "Prevsecs": ["u018"],
+                "Nextsecs": ["u024"],
+                "Circuit": 1,
+                "Mapcoordinates": {
+                    "Xpos": 650,
+                    "Ypos": 1510
+                },
+                "Moduleid": 1,
+                "Moduleposition": 3
+            }, {
+                "Id": "u021",
+                "Prevsecs": ["u008"],
+                "Nextsecs": ["u022"],
+                "Circuit": 3,
+                "Mapcoordinates": {
+                    "Xpos": 360,
+                    "Ypos": 1540
+                },
+                "Moduleid": 1,
+                "Moduleposition": 4
+            }, {
+                "Id": "u022",
+                "Prevsecs": ["u021"],
+                "Nextsecs": ["u029"],
+                "Circuit": 3,
+                "Mapcoordinates": {
+                    "Xpos": 880,
+                    "Ypos": 1540
+                },
+                "Moduleid": 1,
+                "Moduleposition": 5
+            }, {
+                "Id": "u023",
+                "Prevsecs": ["u019"],
+                "Nextsecs": ["u025"],
+                "Circuit": 2,
+                "Mapcoordinates": {
+                    "Xpos": 870,
+                    "Ypos": 1485
+                },
+                "Moduleid": 1,
+                "Moduleposition": 6
+            }, {
+                "Id": "u024",
+                "Prevsecs": ["u020"],
+                "Nextsecs": ["u026"],
+                "Circuit": 1,
+                "Mapcoordinates": {
+                    "Xpos": 920,
+                    "Ypos": 1510
+                },
+                "Moduleid": 1,
+                "Moduleposition": 7
+            }, {
+                "Id": "u025",
+                "Prevsecs": ["u023"],
+                "Nextsecs": ["u027"],
+                "Circuit": 2,
+                "Mapcoordinates": {
+                    "Xpos": 1122,
+                    "Ypos": 1485
+                },
+                "Moduleid": 4,
+                "Moduleposition": 0
+            }, {
+                "Id": "u026",
+                "Prevsecs": ["u024"],
+                "Nextsecs": ["u028"],
+                "Circuit": 1,
+                "Mapcoordinates": {
+                    "Xpos": 1170,
+                    "Ypos": 1510
+                },
+                "Moduleid": 4,
+                "Moduleposition": 1
+            }, {
+                "Id": "u027",
+                "Prevsecs": ["u025"],
+                "Nextsecs": ["u031"],
+                "Circuit": 2,
+                "Mapcoordinates": {
+                    "Xpos": 1440,
+                    "Ypos": 1485
+                },
+                "Moduleid": 4,
+                "Moduleposition": 2
+            }, {
+                "Id": "u028",
+                "Prevsecs": ["u026"],
+                "Nextsecs": ["u032"],
+                "Circuit": 1,
+                "Mapcoordinates": {
+                    "Xpos": 1500,
+                    "Ypos": 1510
+                },
+                "Moduleid": 4,
+                "Moduleposition": 3
+            }, {
+                "Id": "u029",
+                "Prevsecs": ["u022"],
+                "Nextsecs": ["u030"],
+                "Circuit": 3,
+                "Mapcoordinates": {
+                    "Xpos": 1375,
+                    "Ypos": 1540
+                },
+                "Moduleid": 4,
+                "Moduleposition": 4
+            }, {
+                "Id": "u030",
+                "Prevsecs": ["u029"],
+                "Nextsecs": ["u_okruh3"],
+                "Circuit": 3,
+                "Mapcoordinates": {
+                    "Xpos": 1800,
+                    "Ypos": 1540
+                },
+                "Moduleid": 4,
+                "Moduleposition": 5
+            }, {
+                "Id": "u031",
+                "Prevsecs": ["u027"],
+                "Nextsecs": ["u_okruh2"],
+                "Circuit": 2,
+                "Mapcoordinates": {
+                    "Xpos": 1670,
+                    "Ypos": 1410
+                },
+                "Moduleid": 4,
+                "Moduleposition": 6
+            }, {
+                "Id": "u032",
+                "Prevsecs": ["u028"],
+                "Nextsecs": ["u_okruh1"],
+                "Circuit": 1,
+                "Mapcoordinates": {
+                    "Xpos": 1680,
+                    "Ypos": 1445
+                },
+                "Moduleid": 4,
+                "Moduleposition": 7
+            }, {
+                "Id": "u033",
+                "Prevsecs": ["u034", "u_beroun_slepa_lhota"],
+                "Nextsecs": ["u005"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 430,
+                    "Ypos": 995
+                },
+                "Moduleid": 5,
+                "Moduleposition": 0
+            }, {
+                "Id": "u034",
+                "Prevsecs": ["u037", "u045"],
+                "Nextsecs": ["u001", "u033"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 490,
+                    "Ypos": 1015
+                },
+                "Moduleid": 5,
+                "Moduleposition": 1
+            }, {
+                "Id": "u035",
+                "Prevsecs": ["u041", "u042"],
+                "Nextsecs": ["u009"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 455,
+                    "Ypos": 1090
+                },
+                "Moduleid": 5,
+                "Moduleposition": 2
+            }, {
+                "Id": "u036",
+                "Prevsecs": ["Beroun_kolej_2"],
+                "Nextsecs": ["u001"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 495,
+                    "Ypos": 1040
+                },
+                "Moduleid": 5,
+                "Moduleposition": 3
+            }, {
+                "Id": "u037",
+                "Prevsecs": ["Beroun_kolej_4"],
+                "Nextsecs": ["u034"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 555,
+                    "Ypos": 1040
+                },
+                "Moduleid": 5,
+                "Moduleposition": 4
+            }, {
+                "Id": "Beroun_kolej_2",
+                "Prevsecs": ["Beroun_pred_koleji_2"],
+                "Nextsecs": ["u036"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 765,
+                    "Ypos": 1115
+                },
+                "Moduleid": 5,
+                "Moduleposition": 5
+            }, {
+                "Id": "u039",
+                "Prevsecs": ["Beroun_kolej_1"],
+                "Nextsecs": ["u009"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 505,
+                    "Ypos": 1085
+                },
+                "Moduleid": 5,
+                "Moduleposition": 6
+            }, {
+                "Id": "Beroun_kolej_1",
+                "Prevsecs": ["Beroun_pred_koleji_1"],
+                "Nextsecs": ["u039"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 740,
+                    "Ypos": 1150
+                },
+                "Moduleid": 5,
+                "Moduleposition": 7
+            }, {
+                "Id": "u041",
+                "Prevsecs": ["Beroun_kolej_3"],
+                "Nextsecs": ["u035"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 510,
+                    "Ypos": 1105
+                },
+                "Moduleid": 7,
+                "Moduleposition": 0
+            }, {
+                "Id": "u042",
+                "Prevsecs": ["u043", "u044"],
+                "Nextsecs": ["u035"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 525,
+                    "Ypos": 1135
+                },
+                "Moduleid": 7,
+                "Moduleposition": 1
+            }, {
+                "Id": "u043",
+                "Prevsecs": ["Beroun_kolej_5"],
+                "Nextsecs": ["u042"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 575,
+                    "Ypos": 1145
+                },
+                "Moduleid": 7,
+                "Moduleposition": 2
+            }, {
+                "Id": "u044",
+                "Prevsecs": ["u046", "u047"],
+                "Nextsecs": ["u042"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 585,
+                    "Ypos": 1165
+                },
+                "Moduleid": 7,
+                "Moduleposition": 3
+            }, {
+                "Id": "u045",
+                "Prevsecs": ["u051", "u053"],
+                "Nextsecs": ["u034"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 595,
+                    "Ypos": 1015
+                },
+                "Moduleid": 7,
+                "Moduleposition": 4
+            }, {
+                "Id": "u046",
+                "Prevsecs": ["Beroun_kolej_7"],
+                "Nextsecs": ["u044"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 640,
+                    "Ypos": 1180
+                },
+                "Moduleid": 7,
+                "Moduleposition": 5
+            }, {
+                "Id": "u047",
+                "Prevsecs": ["u055", "u056"],
+                "Nextsecs": ["u044"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 645,
+                    "Ypos": 1205
+                },
+                "Moduleid": 7,
+                "Moduleposition": 6
+            }, {
+                "Id": "Beroun_kolej_7",
+                "Prevsecs": ["Beroun_pred_koleji_7"],
+                "Nextsecs": ["u046"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 775,
+                    "Ypos": 1220
+                },
+                "Moduleid": 7,
+                "Moduleposition": 7
+            }, {
+                "Id": "Beroun_kolej_3",
+                "Prevsecs": ["Beroun_pred_koleji_3"],
+                "Nextsecs": ["u041"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 0,
+                    "Ypos": 0
+                },
+                "Moduleid": 6,
+                "Moduleposition": 0
+            }, {
+                "Id": "Beroun_kolej_4",
+                "Prevsecs": ["Beroun_pred_koleji_4"],
+                "Nextsecs": ["u037"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 0,
+                    "Ypos": 0
+                },
+                "Moduleid": 6,
+                "Moduleposition": 1
+            }, {
+                "Id": "u051",
+                "Prevsecs": ["Beroun_kolej_6"],
+                "Nextsecs": ["u045"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 0,
+                    "Ypos": 0
+                },
+                "Moduleid": 6,
+                "Moduleposition": 2
+            }, {
+                "Id": "Beroun_kolej_6",
+                "Prevsecs": ["Beroun_pred_koleji_6"],
+                "Nextsecs": ["u051"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 0,
+                    "Ypos": 0
+                },
+                "Moduleid": 6,
+                "Moduleposition": 3
+            }, {
+                "Id": "u053",
+                "Prevsecs": ["Beroun_kolej_8"],
+                "Nextsecs": ["u045"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 0,
+                    "Ypos": 0
+                },
+                "Moduleid": 6,
+                "Moduleposition": 4
+            }, {
+                "Id": "Beroun_kolej_8",
+                "Prevsecs": ["Beroun_pred_koleji_8"],
+                "Nextsecs": ["u053"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 0,
+                    "Ypos": 0
+                },
+                "Moduleid": 6,
+                "Moduleposition": 5
+            }, {
+                "Id": "u055",
+                "Prevsecs": ["Beroun_kolej_9"],
+                "Nextsecs": ["u047"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 0,
+                    "Ypos": 0
+                },
+                "Moduleid": 6,
+                "Moduleposition": 6
+            }, {
+                "Id": "u056",
+                "Prevsecs": [],
+                "Nextsecs": ["u047"],
+                "Circuit": 0,
+                "Mapcoordinates": {
+                    "Xpos": 0,
+                    "Ypos": 0
+                },
+                "Moduleid": 6,
+                "Moduleposition": 7
+            }
+        ],
+
+        "routes": {
+            "from": [
+			{
+                    "FromId": "u017",
+                    "To": [{
+                            "Id": "Beroun_kolej_1",
+                            "Parts": ["u013", "u012", "u011", "u010", "u009", "u039", "Beroun_kolej_1", "Beroun_pred_koleji_1"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 26,
+                                    "Value": 18
+                                }, {
+                                    "Id": 2,
+                                    "Turnouts": 38,
+                                    "Value": 29
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit2",
+                            "Circuit": 0
+                        }, {
+                            "Id": "Beroun_kolej_3",
+                            "Parts": ["u013", "u012", "u011", "u010", "u009", "u035", "u041", "Beroun_kolej_3", "Beroun_pred_koleji_3"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 26,
+                                    "Value": 16
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit2",
+                            "Circuit": 0
+                        }, {
+                            "Id": "Beroun_kolej_2",
+                            "Parts": ["u013", "u012", "u011", "u010", "u002", "u001", "u036", "Beroun_kolej_2", "Beroun_pred_koleji_2"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 29,
+                                    "Value": 25
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit2",
+                            "Circuit": 0
+                        }, {
+                            "Id": "Beroun_kolej_4",
+                            "Parts": ["u013", "u012", "u011", "u010", "u002", "u001", "u034", "u037", "Beroun_kolej_4", "Beroun_pred_koleji_4"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 221,
+                                    "Value": 93
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit2",
+                            "Circuit": 0
+                        }, {
+                            "Id": "Beroun_kolej_6",
+                            "Parts": ["u013", "u012", "u011", "u010", "u002", "u001", "u034", "u045", "u051", "Beroun_kolej_6", "Beroun_pred_koleji_6"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 221,
+                                    "Value": 221
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit2",
+                            "Circuit": 0
+                        }
+                    ]
+                }, {
+                    "FromId": "u018",
+                    "To": [{
+                            "Id": "Beroun_kolej_2",
+                            "Parts": ["u004", "u003", "u002", "u001", "u036", "Beroun_kolej_2", "Beroun_pred_koleji_2"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 37,
+                                    "Value": 32
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit1",
+                            "Circuit": 0
+                        }, {
+                            "Id": "Beroun_kolej_4",
+                            "Parts": ["u004", "u003", "u002", "u001", "u034", "u037", "Beroun_kolej_4", "Beroun_pred_koleji_4"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 229,
+                                    "Value": 100
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit1",
+                            "Circuit": 0
+                        }, {
+                            "Id": "Beroun_kolej_6",
+                            "Parts": ["u004", "u003", "u002", "u001", "u034", "u045", "u051", "Beroun_kolej_6", "Beroun_pred_koleji_6"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 221,
+                                    "Value": 217
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit1",
+                            "Circuit": 0
+                        }, {
+                            "Id": "Beroun_kolej_1",
+                            "Parts": ["u004", "u003", "u012", "u011", "u010", "u009", "u039", "Beroun_kolej_1", "Beroun_pred_koleji_1"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 26,
+                                    "Value": 1
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit1",
+                            "Circuit": 0
+                        }, {
+                            "Id": "Beroun_kolej_3",
+                            "Parts": ["u004", "u003", "u012", "u011", "u010", "u009", "u035", "u041", "Beroun_kolej_3", "Beroun_pred_koleji_3"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 26,
+                                    "Value": 0
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit1",
+                            "Circuit": 0
+                        }
+                    ]
+                }, {
+                    "FromId": "u006",
+                    "To": [{
+                            "Id": "Beroun_kolej_4",
+                            "Parts": ["u005", "u033", "u034", "u037", "Beroun_kolej_4", "Beroun_pred_koleji_4"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 192,
+                                    "Value": 0
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Lhota",
+                            "Circuit": 0
+                        }, {
+                            "Id": "Beroun_kolej_6",
+                            "Parts": ["u005", "u033", "u034", "u045", "u051", "Beroun_kolej_6", "Beroun_pred_koleji_6"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 192,
+                                    "Value": 128
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Lhota",
+                            "Circuit": 0
+                        }
+                    ]
+                }, {
+                    "FromId": "Beroun_kolej_1",
+                    "To": [{
+                            "Id": "u018",
+                            "Parts": ["Beroun_pred_koleji_1", "Beroun_kolej_1", "u039", "u009", "u010", "u011", "u012", "u003", "u004"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 26,
+                                    "Value": 1
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit1",
+                            "FromStart": "Beroun",
+                            "Circuit": 1
+                        }, {
+                            "Id": "u017",
+                            "Parts": ["Beroun_pred_koleji_1", "Beroun_kolej_1", "u039", "u009", "u010", "u011", "u012", "u013"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 26,
+                                    "Value": 18
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit1",
+                            "FromStart": "Beroun",
+                            "Circuit": 2
+                        }
+                    ]
+                }, {
+                    "FromId": "Beroun_kolej_2",
+                    "To": [{
+                            "Id": "u018",
+                            "Parts": ["Beroun_pred_koleji_2", "Beroun_kolej_2", "u036", "u001", "u002", "u003", "u004"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 37,
+                                    "Value": 32
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit1",
+                            "FromStart": "Beroun",
+                            "Circuit": 1
+                        }, {
+                            "Id": "u017",
+                            "Parts": ["Beroun_pred_koleji_2", "Beroun_kolej_2", "u036", "u001", "u002", "u010", "u011", "u012", "u013"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 29,
+                                    "Value": 25
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit2",
+                            "FromStart": "Beroun",
+                            "Circuit": 2
+                        }
+                    ]
+                }, {
+                    "FromId": "Beroun_kolej_3",
+                    "To": [{
+                            "Id": "u018",
+                            "Parts": ["Beroun_pred_koleji_3", "Beroun_kolej_3", "u041", "u035", "u009", "u010", "u011", "u012", "u003", "u004"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 58,
+                                    "Value": 0
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit1",
+                            "FromStart": "Beroun",
+                            "Circuit": 1
+                        }, {
+                            "Id": "u017",
+                            "Parts": ["Beroun_pred_koleji_3", "Beroun_kolej_3", "u041", "u035", "u009", "u010", "u011", "u012", "u013"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 26,
+                                    "Value": 16
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit2",
+                            "FromStart": "Beroun",
+                            "Circuit": 2
+                        }
+                    ]
+                }, {
+                    "FromId": "Beroun_kolej_4",
+                    "To": [{
+                            "Id": "u018",
+                            "Parts": ["Beroun_pred_koleji_4", "Beroun_kolej_4", "u037", "u034", "u001", "u002", "u003", "u004"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 229,
+                                    "Value": 100
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit1",
+                            "FromStart": "Beroun",
+                            "Circuit": 1
+                        }, {
+                            "Id": "u006",
+                            "Parts": ["Beroun_pred_koleji_4", "Beroun_kolej_4", "u037", "u034", "u033", "u005"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 192,
+                                    "Value": 0
+                                }
+                            ],
+                            "ToFinal": "Lhota",
+                            "FromStart": "Beroun",
+                            "Circuit": 3
+                        }, {
+                            "Id": "u017",
+                            "Parts": ["Beroun_pred_koleji_4", "Beroun_kolej_4", "u037", "u034", "u001", "u002", "u010", "u011", "u012", "u013"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 221,
+                                    "Value": 93
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit2",
+                            "FromStart": "Beroun",
+                            "Circuit": 2
+                        }
+                    ]
+                }, {
+                    "FromId": "Beroun_kolej_6",
+                    "To": [{
+                            "Id": "u018",
+                            "Parts": ["Beroun_pred_koleji_6", "Beroun_kolej_6", "u051", "u045", "u034", "u001", "u002", "u003", "u004"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 221,
+                                    "Value": 217
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit1",
+                            "FromStart": "Beroun",
+                            "Circuit": 1
+                        }, {
+                            "Id": "u006",
+                            "Parts": ["Beroun_pred_koleji_6", "Beroun_kolej_6", "u051", "u045", "u034", "u033", "u005", "u003", "u004"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 192,
+                                    "Value": 128
+                                }
+                            ],
+                            "ToFinal": "Lhota",
+                            "FromStart": "Beroun",
+                            "Circuit": 3
+                        }, {
+                            "Id": "u017",
+                            "Parts": ["Beroun_pred_koleji_6", "Beroun_kolej_6", "u051", "u045", "u034", "u001", "u002", "u010", "u011", "u012", "u013"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 221,
+                                    "Value": 221
+                                }
+                            ],
+                            "ToFinal": "Karlstejn_circuit2",
+                            "FromStart": "Beroun",
+                            "Circuit": 2
+                        }
+                    ]
+                }, 
+				{
+                    "FromId": "u028",
+                    "To": [{
+                            "Id": "u026",
+                            "Parts": ["u026"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 0,
+                                    "Value": 0
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit1",
+                            "Circuit": 1
+                        }
+                    ]
+                },
+				{
+                    "FromId": "u027",
+                    "To": [{
+                            "Id": "u025",
+                            "Parts": ["u025"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 0,
+                                    "Value": 0
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Karlstejn_circuit2",
+                            "Circuit": 2
+                        }
+                    ]
+                },
+				{
+                    "FromId": "u030",
+                    "To": [{
+                            "Id": "u029",
+                            "Parts": ["u029"],
+                            "Switches": [{
+                                    "Id": 1,
+                                    "Turnouts": 0,
+                                    "Value": 0
+                                }
+                            ],
+                            "ToFinal": "Beroun",
+                            "FromStart": "Lhota",
+                            "Circuit": 3
+                        }
+                    ]
+                }
+			]
+        },
+
+        "circuits":
+        [{
+                "Id": 1,
+                "fromStartOutside": [{
+                        "Name": "Beroun",
+                        "Items": ["u003", "u004", "u018", "u020", "u024", "u026", "u028", "u032"],
+                        "ToFinalPosition": "Karlstejn_circuit1"
+                    }, {
+                        "Name": "Karlstejn_circuit1",
+                        "Items": ["u032", "u028", "u026", "u024", "u020", "u018", "u004"],
+                        "ToFinalPosition": "Beroun"
+                    }
+                ]
+            }, {
+                "Id": 2,
+                "fromStartOutside": [{
+                        "Name": "Beroun",
+                        "Items": ["u012", "u013", "u017", "u019", "u023", "u025", "u027", "u031"],
+                        "ToFinalPosition": "Karlstejn_circuit2"
+                    }, {
+                        "Name": "Karlstejn_circuit2",
+                        "Items": ["u031", "u027", "u025", "u023", "u019", "u017", "u013"],
+                        "ToFinalPosition": "Beroun"
+                    }
+                ]
+            }, {
+                "Id": 3,
+                "fromStartOutside": [{
+                        "Name": "Beroun",
+                        "Items": ["u033", "u005", "u006", "u007", "u008", "u021", "u022", "u029", "u030"],
+                        "ToFinalPosition": "Lhota"
+                    }, {
+                        "Name": "Lhota",
+                        "Items": ["u030", "u029", "u022", "u021", "u008", "u007", "u006", "u005"],
+                        "ToFinalPosition": "Beroun"
+                    }
+                ]
+            }
+        ],
+
+        "criticalroutes": [{
+                "Last": "u020",
+                "Current": "u018"
+            }, {
+                "Last": "u019",
+                "Current": "u017"
+            }, {
+                "Last": "u007",
+                "Current": "u006"
+            }
+        ],
+
+        "circuitsToFinal": {
+            "fromCircuit": [{
+                    "Id": 0,
+                    "toCircuit": [{
+                            "Name": "Lhota",
+                            "Items": ["LhotaOsazena1", "LhotaOsazena2"]
+                        }, {
+                            "Name": "Beroun",
+                            "Items": ["Beroun_kolej_1", "Beroun_kolej_3", "Beroun_kolej_2", "Beroun_kolej_4", "Beroun_kolej_6"]
+                        }, {
+                            "Name": "Karlstejn_circuit1",
+                            "Items": ["u028"]
+                        }, {
+                            "Name": "Karlstejn_circuit2",
+                            "Items": ["u027"]
+                        }
+                    ]
+                }, {
+                    "Id": 1,
+                    "toCircuit": [{
+                            "Name": "Beroun",
+                            "Items": ["Beroun_kolej_1", "Beroun_kolej_3", "Beroun_kolej_2", "Beroun_kolej_4", "Beroun_kolej_6"]
+                        }, {
+                            "Name": "Karlstejn_circuit1",
+                            "Items": ["u028"]
+                        }
+                    ]
+                }, {
+                    "Id": 2,
+                    "toCircuit": [{
+                            "Name": "Beroun",
+                            "Items": ["Beroun_kolej_1", "Beroun_kolej_3", "Beroun_kolej_2", "Beroun_kolej_4", "Beroun_kolej_6"]
+                        }, {
+                            "Name": "Karlstejn_circuit2",
+                            "Items": ["u027"]
+                        }
+                    ]
+                }, {
+                    "Id": 3,
+                    "toCircuit": [{
+                            "Name": "Beroun",
+                            "Items": ["Beroun_kolej_4", "Beroun_kolej_6"]
+                        }, {
+                            "Name": "Lhota",
+                            "Items": ["u030"]
+                        }
+                    ]
+                }
+            ]
+        },
+        "stationTracks": {
+            "nameOfStation": [{
+                    "Name": "Beroun",
+                    "Items": ["Beroun_kolej_1", "Beroun_kolej_2", "Beroun_kolej_3", "Beroun_kolej_4", "Beroun_kolej_6"],
+                    "Circuit": 0
+                }, {
+                    "Name": "Karlstejn_circuit1",
+                    "Items": ["u028"],
+                    "Circuit": 1
+                }, {
+                    "Name": "Karlstejn_circuit2",
+                    "Items": ["u027"],
+                    "Circuit": 2
+                }, {
+                    "Name": "Lhota",
+                    "Items": ["u030"],
+                    "Circuit": 3
+                }
+            ]
+        },
+
+        "turnoutStopDefinitions": {
+            "Items": [{
+                    "unit": 1,
+                    "pos": 0,
+                    "leftStop": 90,
+                    "rightStop": 110
+                }, {
+                    "unit": 1,
+                    "pos": 1,
+                    "leftStop": 90,
+                    "rightStop": 120
+                }, {
+                    "unit": 1,
+                    "pos": 2,
+                    "leftStop": 90,
+                    "rightStop": 130
+                }, {
+                    "unit": 1,
+                    "pos": 3,
+                    "leftStop": 100,
+                    "rightStop": 130
+                }, {
+                    "unit": 1,
+                    "pos": 4,
+                    "leftStop": 110,
+                    "rightStop": 140
+                }, {
+                    "unit": 1,
+                    "pos": 5,
+                    "leftStop": 80,
+                    "rightStop": 110
+                }, {
+                    "unit": 1,
+                    "pos": 6,
+                    "leftStop": 90,
+                    "rightStop": 130
+                }, {
+                    "unit": 1,
+                    "pos": 7,
+                    "leftStop": 75,
+                    "rightStop": 115
+                }
+            ]
+        }
+    }
+}

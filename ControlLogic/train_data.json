@@ -17,7 +17,7 @@
     {
       "id": 9,
       "name": "Ragulin",
-      "currentPosition": "KarlstejnTest_u031",
+      "currentPosition": "u031",
       "lastPosition": "u027",
       "nextPosition": null,
       "move": 0,
@@ -26,7 +26,7 @@
       "mapOrientation": "nextConnection",
       "circuit": 2,
       "startPosition": "Beroun",
-      "finalPosition": "KarlstejnTest_u031"
+      "finalPosition": "u031"
     },
     {
       "id": 10,
