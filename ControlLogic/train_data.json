@@ -5,14 +5,14 @@
       "name": "Brejlovec",
       "currentPosition": "u034",
       "lastPosition": "u033",
-      "nextPosition": null,
+      "nextPosition": "u037",
       "move": 0,
-      "speed": 15,
+      "speed": 13,
       "reverse": false,
       "mapOrientation": "prevConnection",
       "circuit": 0,
       "startPosition": "Lhota",
-      "finalPosition": null
+      "finalPosition": "Beroun_kolej_4"
     },
     {
       "id": 9,
